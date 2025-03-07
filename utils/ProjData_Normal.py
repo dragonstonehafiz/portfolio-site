@@ -144,5 +144,5 @@ PortfolioSite = ProjectObject(
         "images/other/portfolio_homepage.png",
         "images/other/portfolio_projects.png"
     ],
-    tags=["python", "streamlit", "portfolio", "web-development"]
+    tags=["python", "streamlit"]
 )

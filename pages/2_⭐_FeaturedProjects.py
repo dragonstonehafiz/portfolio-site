@@ -5,6 +5,7 @@ import utils.ProjData_Translate as ProjData_Translate
 from utils.ProjectFunctions import CreateTagList, CreateSidebar, CreateSortedList, RenderAndNavigation
 
 projects = {
+    "Personal Portfolio Website": ProjData_Normal.PortfolioSite,
     "Translator Helper": ProjData_MiniProject.TranslatorHelper,
     "Too Many Losing Heroines!!! Drama CD Vol. 1 Story 1": ProjData_Translate.makeine_vol1ep1,
     "Anime Image Upscaler": ProjData_Normal.ESRGAN_M,

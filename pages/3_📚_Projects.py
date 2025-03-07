@@ -3,6 +3,7 @@ import utils.ProjData_Normal as ProjectData
 from utils.ProjectFunctions import CreateTagList, CreateSidebar, CreateSortedList, RenderAndNavigation
 
 projects = {
+    "Personal Portfolio Website": ProjectData.PortfolioSite,
     "Anime Image Upscaler": ProjectData.ESRGAN_M,
     "Resource Management Game": ProjectData.ResourceManagementGame,
     "Electronica": ProjectData.Electronica,

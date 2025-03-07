@@ -123,3 +123,26 @@ ESRGAN_M = ProjectObject(
         "images/sit/aai3001_3_upscale.png"],
     tags=["python", "machine-learning", "streamlit", "sit", "anime"])
 
+
+PortfolioSite = ProjectObject(
+    title="Personal Portfolio Website",
+    description="""
+    A dynamic and interactive portfolio website built using **Streamlit** and **Docker**.  
+    This site showcases various projects, including machine learning, game development, automation,  
+    and translation work, with a focus on **interactive project displays** and **tag-based filtering**  
+    for better accessibility.
+    """,
+    date_=date(year=2025, month=3, day=7),
+    github_link="https://github.com/dragonstonehafiz/portfolio",
+    what_i_did=[
+        "**Designed and developed** a responsive portfolio site using **Streamlit**, ensuring a clean and accessible UI.",
+        "**Implemented a project filtering system** based on tags and categories, allowing users to easily browse different projects.",
+        "**Integrated Google Cloud and Docker for hosting**, enabling seamless updates and version control.",
+        "**Developed an automatic project rendering system**, using a custom `ProjectObject` class for consistency and maintainability."
+    ],
+    img_paths=[
+        "images/other/portfolio_homepage.png",
+        "images/other/portfolio_projects.png"
+    ],
+    tags=["python", "streamlit", "portfolio", "web-development"]
+)

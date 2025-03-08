@@ -127,13 +127,16 @@ ESRGAN_M = ProjectObject(
 PortfolioSite = ProjectObject(
     title="Personal Portfolio Website",
     description="""
-    A dynamic and interactive portfolio website built using **Streamlit** and **Docker**.  
-    This site showcases various projects, including machine learning, game development, automation,  
-    and translation work, with a focus on **interactive project displays** and **tag-based filtering**  
-    for better accessibility.
+    This portfolio website isn't just a showcase of my work—it’s a project in itself.  
+    Built with **Streamlit** and **Docker**, it dynamically displays my projects,  
+    allowing for **tag-based filtering** and easy navigation.
+
+    Instead of manually updating project entries, the site uses a **custom `ProjectObject` system**  
+    to automatically render content based on structured metadata.  
+    This keeps everything **organized, scalable, and easy to maintain**.
     """,
     date_=date(year=2025, month=3, day=7),
-    github_link="https://github.com/dragonstonehafiz/portfolio",
+    github_link="https://github.com/dragonstonehafiz/portfolio-site",
     what_i_did=[
         "**Designed and developed** a responsive portfolio site using **Streamlit**, ensuring a clean and accessible UI.",
         "**Implemented a project filtering system** based on tags and categories, allowing users to easily browse different projects.",

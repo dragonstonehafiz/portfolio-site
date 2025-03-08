@@ -10,7 +10,7 @@ st.set_page_config(
     page_title="Japanese Fan Translations",
     page_icon="🇯🇵"
 )
-st.title("日本語翻訳プロジェクト")
+st.title("Japanese Translation Projects")
 
 st.header("自己紹介")
 st.markdown(

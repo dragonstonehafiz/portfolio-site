@@ -121,7 +121,7 @@ ESRGAN_M = ProjectObject(
         "images/sit/aai3001_2_upscale.png",
         "images/sit/aai3001_3_lowres.png",
         "images/sit/aai3001_3_upscale.png"],
-    tags=["python", "machine-learning", "streamlit", "sit", "anime"])
+    tags=["python", "ai", "streamlit", "sit", "anime"])
 
 
 PortfolioSite = ProjectObject(

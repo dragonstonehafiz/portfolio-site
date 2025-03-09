@@ -43,7 +43,7 @@ YouTubeCommentAnalyzer = ProjectObject(
         "images/other/youtube4.png",
         "images/other/youtube5.png",
         "images/other/youtube6.png"],
-    tags=["python", "api", 'machine-learning'])
+    tags=["python", "api", 'ai'])
 
 DiamondCityRadio = ProjectObject(
     title="Diamond City Radio (Fallout-Inspired Music Player)",
@@ -63,18 +63,22 @@ TranslatorHelper = ProjectObject(
     title="Translator Helper",
     description="""
     A little hobby of mine is **transcribing and translating anime drama CDs**. 
-    While I am generally able to do so on my own with some difficulty, there are times where I am unable to figure out what a character is saying,
-    or how exactly I should translate a particular phrase.
+    While I am generally able to do so on my own with some difficulty, there are times where I am unable to figure out what a character is saying, or how exactly I should translate a particular phrase.
     
-    As such, I wrote two `Python` notebooks that make use of OpenAI's whisper and 4o model to help me out with both of those tasks.
+    As such, I quickly put together an app to help me with the process.
     """,
     github_link="https://github.com/dragonstonehafiz/translator-helper",
-    date_=date(year=2025, month=3, day=6),
+    date_=date(year=2025, month=3, day=9),
     what_i_did=[
-        "Built a Python tool using **OpenAI Whisper** to assist in transcribing difficult sections of anime drama CDs, improving accuracy in unclear dialogue.",
-        "Integrated OpenAI’s GPT-4o API to generate **AI-assisted sentence translations**, providing alternative phrasing while maintaining human oversight."],
+        "Developed an **interactive UI** using **Streamlit**, making the tool accessible for manual translation assistance.",
+        "Implemented **OpenAI Whisper-based transcription**, improving accuracy for difficult-to-hear dialogue.",
+        "Integrated **GPT-4o** to provide multiple translation suggestions for refining phrasing.",
+        "Added a **grading system** to assess translation quality based on fluency and accuracy."
+        ],
+    vid_link="https://youtu.be/8eeY0Wq4U7I",
     img_paths=[
         "images/other/TranslatorHelper1.png",
         "images/other/TranslatorHelper2.png",
+        "images/other/TranslatorHelper3.png",
         ],
-    tags=["python", "api", "machine-learning", "anime"])
+    tags=["python", "api", "ai", "anime"])

@@ -16,7 +16,8 @@ BudgetingSpreadsheet = ProjectObject(
         "images/other/spreadsheet2.png",
         "images/other/spreadsheet3.png",
         "images/other/spreadsheet4.png"],
-    tags=["python"])
+    tags=["python"],
+    project_type="Mini Project")
 
 YouTubeCommentAnalyzer = ProjectObject(
     title="YouTube Comment Keyword Search",
@@ -43,7 +44,8 @@ YouTubeCommentAnalyzer = ProjectObject(
         "images/other/youtube4.png",
         "images/other/youtube5.png",
         "images/other/youtube6.png"],
-    tags=["python", "api", 'ai'])
+    tags=["python", "api", 'ai'],
+    project_type="Mini Project")
 
 DiamondCityRadio = ProjectObject(
     title="Diamond City Radio (Fallout-Inspired Music Player)",
@@ -57,28 +59,5 @@ DiamondCityRadio = ProjectObject(
         "Implemented an **optimized file-loading system** for music and voice lines, reducing load times and ensuring seamless playback.",
         "Integrated Box2D for **accurate entity collision detection**, improving UI responsiveness.",
         "Developed logic for **dynamic voice line selection**, enhancing game immersion with contextual dialogue."],
-    tags=["java", "libgdx"])
-
-TranslatorHelper = ProjectObject(
-    title="Translator Helper",
-    description="""
-    A little hobby of mine is **transcribing and translating anime drama CDs**. 
-    While I am generally able to do so on my own with some difficulty, there are times where I am unable to figure out what a character is saying, or how exactly I should translate a particular phrase.
-    
-    As such, I quickly put together an app to help me with the process.
-    """,
-    github_link="https://github.com/dragonstonehafiz/translator-helper",
-    date_=date(year=2025, month=3, day=9),
-    what_i_did=[
-        "Developed an **interactive UI** using **Streamlit**, making the tool accessible for manual translation assistance.",
-        "Implemented **OpenAI Whisper-based transcription**, improving accuracy for difficult-to-hear dialogue.",
-        "Integrated **GPT-4o** to provide multiple translation suggestions for refining phrasing.",
-        "Added a **grading system** to assess translation quality based on fluency and accuracy."
-        ],
-    vid_link="https://youtu.be/8eeY0Wq4U7I",
-    img_paths=[
-        "images/other/TranslatorHelper1.png",
-        "images/other/TranslatorHelper2.png",
-        "images/other/TranslatorHelper3.png",
-        ],
-    tags=["python", "api", "ai", "anime"])
+    tags=["java", "libgdx"],
+    project_type="Mini Project")

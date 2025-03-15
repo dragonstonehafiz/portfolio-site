@@ -2,6 +2,28 @@ import streamlit as st
 from utils.ProjectObject import ProjectObject
 import re
 
+def create_page_elements(featured_projects: dict[str, ProjectObject], page_name):
+    # Get unique tags and project types
+    unique_tags = get_unique_tags(featured_projects.values())
+    unique_types = get_unique_project_types(featured_projects.values())
+
+    st.sidebar.header("Filters")
+    sort_order = st.sidebar.radio("Sort projects by date", ["Ascending", "Descending"], index=1, key=f"{page_name} radio")
+    selected_tags = st.sidebar.multiselect("Filter by Tags", unique_tags, key=f"{page_name} tags")
+    selected_type = st.sidebar.selectbox("Filter by Project Type", ["All"] + unique_types, key=f"{page_name} type")
+
+    # Process projects: filter and sort
+    filtered_projects = filter_projects(featured_projects.values(), selected_tags, selected_type)
+    sorted_projects = sort_projects(filtered_projects, sort_order)
+    reverse_sort = sort_order == "Descending"
+    filtered_projects = create_sorted_list(featured_projects, selected_tags, selected_type, reverse_sort)
+
+    # Links
+    render_and_nav(filtered_projects)
+
+    # Sidebar Filters
+    connect_with_me()
+
 def connect_with_me():
     st.sidebar.header("Links")
     st.sidebar.markdown("[![GitHub](https://img.shields.io/badge/GitHub-%2312100E.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/dragonstonehafiz)")

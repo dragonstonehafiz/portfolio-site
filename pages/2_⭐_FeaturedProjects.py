@@ -1,14 +1,12 @@
 import streamlit as st
 import utils.ProjData_Normal as ProjData_Normal
-import utils.ProjData_MiniProject as ProjData_MiniProject
 import utils.ProjData_Translate as ProjData_Translate
-from utils.ProjectFunctions import CreateTagList, CreateSidebar, CreateSortedList, RenderAndNavigation
+from utils.StreamlitFormat import *
 
 projects = {
-    "Translator Helper": ProjData_MiniProject.TranslatorHelper,
-    "Too Many Losing Heroines!!! Drama CD Vol. 1 Story 1": ProjData_Translate.makeine_vol1ep1,
+    "Translator Helper": ProjData_Normal.TranslatorHelper,
+    "Too Many Losing Heroines!!! Drama CD Vol. 1 Story 2": ProjData_Translate.makeine_vol1ep2,
     "Anime Image Upscaler": ProjData_Normal.ESRGAN_M,
-    "L.O.C.U.S.": ProjData_Normal.Locus,
     "Electronica": ProjData_Normal.Electronica
 }
 
@@ -18,8 +16,25 @@ st.set_page_config(
 )
 st.title("Featured Projects")
 
-all_tags = CreateTagList(projects)
-reverse_sort, selected_tags = CreateSidebar(all_tags)
-sorted_dict = CreateSortedList(projects, selected_tags, reverse_sort)
-RenderAndNavigation(sorted_dict)
+#st.title("Projects")
 
+# Get unique tags and project types
+unique_tags = get_unique_tags(projects.values())
+unique_types = get_unique_project_types(projects.values())
+
+st.sidebar.header("Filters")
+sort_order = st.sidebar.radio("Sort projects by date", ["Ascending", "Descending"], index=1)
+selected_tags = st.sidebar.multiselect("Filter by Tags", unique_tags)
+selected_type = st.sidebar.selectbox("Filter by Project Type", ["All"] + unique_types)
+
+# Process projects: filter and sort
+filtered_projects = filter_projects(projects.values(), selected_tags, selected_type)
+sorted_projects = sort_projects(filtered_projects, sort_order)
+reverse_sort = sort_order == "Descending"
+filtered_projects = create_sorted_list(projects, selected_tags, selected_type, reverse_sort)
+
+# Links
+render_and_nav(filtered_projects)
+
+# Sidebar Filters
+connect_with_me()

@@ -10,13 +10,15 @@ class ProjectObject:
     what_i_did: list[str]
     tags: list[str]
     github_link: str
+    project_type: str
     
     def __init__(self, title: str, description: str, date_: date,
                  what_i_did: list[str] = None,
                  vid_link: str = None,
                  github_link: str = None,
                  img_paths: list[str] = None,
-                 tags: list[str] = None):
+                 tags: list[str] = None,
+                 project_type: str = "Full Project"):
         self.title = title
         self.description = description
         self.date_ = date_
@@ -25,6 +27,7 @@ class ProjectObject:
         self.github_link = github_link
         self.img_paths = img_paths
         self.tags = tags
+        self.project_type = project_type
     
     def render(self):
         st.divider()

@@ -1,5 +1,5 @@
 import streamlit as st
-from utils.ProjectFunctions import CreateConnectWithMe
+from utils.StreamlitFormat import connect_with_me
 
 st.set_page_config(
     page_title="Muhd Hafiz's Portfolio Site",
@@ -7,7 +7,7 @@ st.set_page_config(
 )
 st.title("Muhd Hafiz's Portfolio Site")
 
-CreateConnectWithMe()
+connect_with_me()
 
 st.header("About")
 st.markdown(

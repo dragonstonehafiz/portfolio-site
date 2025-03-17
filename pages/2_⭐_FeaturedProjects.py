@@ -15,6 +15,17 @@ featured_projects = {
     "Anime Image Upscaler": ProjData_Normal.ESRGAN_M,
     "Electronica": ProjData_Normal.Electronica
 }
+
 st.title("Featured Projects")
+st.header("Introduction")
+
+st.markdown(
+    """
+    This section highlights a few projects that I found particularly interesting or meaningful.
+    Whether it's because they were technically challenging, fun to work on, or taught me something new, these projects stand out in some way.
+    """
+)
+
+st.header("Projects")
 
 create_page_elements(featured_projects, "Featured")

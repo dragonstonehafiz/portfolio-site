@@ -12,7 +12,8 @@ class ProjectObject:
     github_link: str
     project_type: str
     
-    def __init__(self, title: str, description: str, date_: date,
+    def __init__(self, title: str, date_: date,
+                 description: str = None,
                  what_i_did: list[str] = None,
                  vid_link: str = None,
                  github_link: str = None,
@@ -40,9 +41,12 @@ class ProjectObject:
             else:
                 tags_str = "No tags"
             st.markdown(f"<p style='font-size:15px; color:gray;'>{tags_str}</p>", unsafe_allow_html=True)
+            
             if self.github_link is not None:
                 st.markdown(f"[Github Link]({self.github_link})")
-            st.markdown(self.description)
+                
+            if self.description is not None:
+                st.markdown(self.description)
             
             if self.what_i_did is not None:
                 st.subheader("What I did")

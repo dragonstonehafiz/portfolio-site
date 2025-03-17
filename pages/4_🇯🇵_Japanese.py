@@ -8,16 +8,21 @@ st.set_page_config(
 )
 st.title("Japanese Translation Projects")
 
-st.header("自己紹介")
+st.header("Introduction")
 st.markdown(
     """
-    2022年から日本語を勉強始めました。理由は特になかったが強いて言えばきっとその時の自分は余計に暇だったからです。
-    
-    始まるきっかけはアニソンでした。僕はアニメには興味はなかったんです。でもある日はネットでいい評判されたアニメが耳に入ったんです。あのアニメは「ぼっち・ざ・ろっく！」。いい作品でした。特にアニメに出た曲です。一番好きな曲は「何が悪い」でした。あの時、理解出来なかったけど、本当に好きでした。
-    
-    数か月後、僕はこう思いました。「その曲は何の意味でしょうか」と。その一環で日本語の道を歩き始めました。そしてもっと上手くなるように、アニメをよく見ることになりました。正直、こんなに好きになるのは思わなかったんです。ちなみに僕の一番好きなアニメは「氷菓」です（いつか第2期がくるかな？）。
-    
-    えっと…どうやって終えようか分からないのでこれでおしまい。読んでくれてありがとうございました。
+    This section is where I share some **fan translation projects**, mainly focused on **Japanese drama CDs**. These are unofficial translations I’ve worked on as a way to practice and improve my skills, while also making the content more accessible to others who might be interested.
+
+    For each project, I’ve added:
+    - **Subtitles synced to the original audio** for better readability.
+    - **Dialogue translations** that try to keep the original tone and character personality.
+    - **Small cultural notes** where needed to help things make sense.
+
+    I also use tools like:
+    - **AI transcription (OpenAI Whisper)** to assist with difficult-to-hear lines.
+    - **A small translation helper app** I built to test different phrasing options.
+
+    These are just personal projects, so they’re not perfect, but I hope they’re helpful to anyone who enjoys this kind of content!
     """
     )
 
@@ -26,7 +31,7 @@ projects = {
     'Too Many Losing Heroines!!! Drama CD Vol. 1 Story 2': ProjectData.makeine_vol1ep2
 }
 
-st.title("Projects")
+st.header("Projects")
 
 create_page_elements(projects, "translations")
 

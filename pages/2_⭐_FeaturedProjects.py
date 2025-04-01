@@ -13,7 +13,8 @@ featured_projects = {
     "Translator Helper": ProjData_Normal.TranslatorHelper,
     "Too Many Losing Heroines!!! Drama CD Vol. 1 Story 2": ProjData_Translate.makeine_vol1ep2,
     "Anime Image Upscaler": ProjData_Normal.ESRGAN_M,
-    "Electronica": ProjData_Normal.Electronica
+    "Electronica": ProjData_Normal.Electronica,
+    "Edge Bird Targetter": ProjData_Normal.BirdLaserTargeter
 }
 
 st.title("Featured Projects")

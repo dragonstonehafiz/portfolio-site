@@ -168,3 +168,28 @@ TranslatorHelper = ProjectObject(
         ],
     vid_link="https://youtu.be/8eeY0Wq4U7I",
     tags=["python", "api", "ai", "anime"])
+
+
+BirdLaserTargeter = ProjectObject(
+    title="Bird Laser Targeter on the Edge",
+    description="""
+    A Raspberry Pi Zero 2W-powered system designed to **detect birds and deter them using a laser pointer**.  
+    The project integrates servo motors, a laser diode, a camera, and microphone-based audio triggers.  
+    It features a **state-machine-based control system** and supports **both local and remote detection** via MQTT.
+
+    While the model training and YOLOv5 implementation were handled by teammates,  
+    I was responsible for **system integration, hardware interfacing**, and **overall architecture**.
+    """,
+    date_=date(year=2025, month=3, day=29),
+    github_link="https://github.com/dragonstonehafiz/inf2009-project",
+    what_i_did=[
+        "Implemented **real-time MQTT communication** between the Pi Zero and a remote server, enabling offloaded bird detection and reducing device-side processing load by over 80%.",
+        "Coordinated and deployed the **full software-hardware stack**, integrating audio triggers, camera input, laser targeting, and servo motion to deliver an autonomous bird deterrence system."
+    ],
+    img_paths=[
+        "images/sit/inf2009_project1.png",
+        "images/sit/inf2009_project2.png"
+    ],
+    vid_link="https://www.youtube.com/watch?v=NGxBpvvaONQ",
+    tags=["python", "ai", "sit"]
+)

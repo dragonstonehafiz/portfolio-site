@@ -21,6 +21,7 @@ featured_projects = {
         "Diamond City Radio": ProjData_Mini.DiamondCityRadio,
         "Budgeting Spreadsheet": ProjData_Mini.BudgetingSpreadsheet,
         "YouTube Comment Keyword Search": ProjData_Mini.YouTubeCommentAnalyzer,
+        "Edge Bird Targetter": ProjData_Normal.BirdLaserTargeter
         }
     
 st.title("Project Archive")

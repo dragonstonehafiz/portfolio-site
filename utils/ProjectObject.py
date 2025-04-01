@@ -31,7 +31,6 @@ class ProjectObject:
         self.project_type = project_type
     
     def render(self):
-        st.divider()
         st.header(self.title)
         st.markdown(f"<p style='font-size:15px; color:gray;'>Date: {self.date_.strftime('%B %d, %Y')}</p>", unsafe_allow_html=True)
         
@@ -67,5 +66,7 @@ class ProjectObject:
                 )
                 # Display the selected image
                 st.image(self.img_paths[img_index], use_container_width=True, width=256)
+                        
+            st.divider()
         except Exception as e:
             st.error(e)

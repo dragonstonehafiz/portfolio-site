@@ -60,12 +60,12 @@ class ProjectObject:
                 img_index = st.slider(
                     "Slide through images",
                     key=self.title,
-                    min_value=0,
-                    max_value=len(self.img_paths) - 1, 
-                    value=0
+                    min_value=1,
+                    max_value=len(self.img_paths), 
+                    value=1
                 )
                 # Display the selected image
-                st.image(self.img_paths[img_index], use_container_width=True, width=256)
+                st.image(self.img_paths[img_index-1], use_container_width=True, width=256)
                         
             st.divider()
         except Exception as e:

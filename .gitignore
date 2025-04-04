@@ -1,5 +1,5 @@
 /venv/
 .idea/
 __pycache__/
-PERSONAL-GUIDE.md
+gcloud/
 test.py

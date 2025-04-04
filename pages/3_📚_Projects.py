@@ -9,8 +9,8 @@ st.set_page_config(
 )
 
 featured_projects = {
+        "Edge Bird Targetter": ProjData_Normal.BirdLaserTargeter,
         "Translator Helper": ProjData_Normal.TranslatorHelper,
-        "Personal Portfolio Website": ProjData_Normal.PortfolioSite,
         "Anime Image Upscaler": ProjData_Normal.ESRGAN_M,
         "Resource Management Game": ProjData_Normal.ResourceManagementGame,
         "Electronica": ProjData_Normal.Electronica,
@@ -20,8 +20,7 @@ featured_projects = {
         "Simple Physics Game": ProjData_Normal.Physics_Game,
         "Diamond City Radio": ProjData_Mini.DiamondCityRadio,
         "Budgeting Spreadsheet": ProjData_Mini.BudgetingSpreadsheet,
-        "YouTube Comment Keyword Search": ProjData_Mini.YouTubeCommentAnalyzer,
-        "Edge Bird Targetter": ProjData_Normal.BirdLaserTargeter
+        "YouTube Comment Keyword Search": ProjData_Mini.YouTubeCommentAnalyzer
         }
     
 st.title("Project Archive")

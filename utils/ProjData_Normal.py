@@ -166,6 +166,13 @@ TranslatorHelper = ProjectObject(
         "Integrated **GPT-4o** to provide multiple translation suggestions for refining phrasing.",
         "Added a **grading system** to assess translation quality based on fluency and accuracy."
         ],
+    img_paths=[
+        "images/other/translator_helper1.png",
+        "images/other/translator_helper2.png",
+        "images/other/translator_helper3.png",
+        "images/other/translator_helper4.png",
+        "images/other/translator_helper5.png"
+    ],
     vid_link="https://youtu.be/8eeY0Wq4U7I",
     tags=["python", "api", "ai", "anime"])
 

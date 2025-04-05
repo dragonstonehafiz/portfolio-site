@@ -19,7 +19,6 @@ featured_projects = {
         "AI Game": ProjData_Normal.AI_Game,
         "Simple Physics Game": ProjData_Normal.Physics_Game,
         "Diamond City Radio": ProjData_Mini.DiamondCityRadio,
-        "Budgeting Spreadsheet": ProjData_Mini.BudgetingSpreadsheet,
         "YouTube Comment Keyword Search": ProjData_Mini.YouTubeCommentAnalyzer
         }
     

@@ -5,6 +5,7 @@ class ProjectObject:
     title: str
     description: str
     date_: date
+    last_update: date
     vid_link: str
     img_paths: list[str]
     what_i_did: list[str]
@@ -12,7 +13,7 @@ class ProjectObject:
     github_link: str
     project_type: str
     
-    def __init__(self, title: str, date_: date,
+    def __init__(self, title: str, date_: date, last_update: date = None,
                  description: str = None,
                  what_i_did: list[str] = None,
                  vid_link: str = None,
@@ -23,6 +24,7 @@ class ProjectObject:
         self.title = title
         self.description = description
         self.date_ = date_
+        self.last_update = last_update
         self.what_i_did = what_i_did
         self.vid_link = vid_link
         self.github_link = github_link
@@ -32,7 +34,9 @@ class ProjectObject:
     
     def render(self):
         st.header(self.title)
-        st.markdown(f"<p style='font-size:15px; color:gray;'>Date: {self.date_.strftime('%B %d, %Y')}</p>", unsafe_allow_html=True)
+        if self.last_update is not None:
+            st.markdown(f"<p style='font-size:15px; color:gray;'>Last Updated: {self.last_update.strftime('%B %d, %Y')}</p>", unsafe_allow_html=True)
+        st.markdown(f"<p style='font-size:15px; color:gray;'>Created: {self.date_.strftime('%B %d, %Y')}</p>", unsafe_allow_html=True)
         
         try:
             if self.tags is not None:
@@ -70,3 +74,9 @@ class ProjectObject:
             st.divider()
         except Exception as e:
             st.error(e)
+
+    def get_date(self):
+        if self.last_update is not None:
+            return self.last_update
+        else:
+            return self.date_

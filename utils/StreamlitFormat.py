@@ -14,7 +14,6 @@ def create_page_elements(featured_projects: dict[str, ProjectObject], page_name)
 
     # Process projects: filter and sort
     filtered_projects = filter_projects(featured_projects.values(), selected_tags, selected_type)
-    sorted_projects = sort_projects(filtered_projects, sort_order)
     reverse_sort = sort_order == "Descending"
     filtered_projects = create_sorted_list(featured_projects, selected_tags, selected_type, reverse_sort)
 
@@ -49,7 +48,7 @@ def create_sorted_list(projects: dict[str, ProjectObject], selected_tags: set[st
         name: project
         for name, project in sorted(
             projects.items(),
-            key=lambda item: item[1].date_,  # Sort by date attribute
+            key=lambda item: item[1].get_date(),  # Sort by date attribute
             reverse=reverse_sort  # Descending if True, ascending if False
         )
     }

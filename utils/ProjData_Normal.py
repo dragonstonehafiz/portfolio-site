@@ -160,12 +160,13 @@ TranslatorHelper = ProjectObject(
     """,
     github_link="https://github.com/dragonstonehafiz/translator-helper",
     date_=date(year=2025, month=3, day=9),
+    last_update=date(year=2025, month=4, day=5),
     what_i_did=[
-        "Developed an **interactive UI** using **Streamlit**, making the tool accessible for manual translation assistance.",
-        "Implemented **OpenAI Whisper-based transcription**, improving accuracy for difficult-to-hear dialogue.",
-        "Integrated **GPT-4o** to provide multiple translation suggestions for refining phrasing.",
-        "Added a **grading system** to assess translation quality based on fluency and accuracy."
-        ],
+        "Used **OpenAI Whisper** to transcribe Japanese audio from drama CDs.",
+        "Integrated **GPT models** to assist with translation and grading.",
+        "Incorporated **contextual inputs** like character relationships and tone to improve translation quality.",
+        "Built a simple **Streamlit UI** to make the tool more accessible and easy to use."
+    ],
     img_paths=[
         "images/other/translator_helper1.png",
         "images/other/translator_helper2.png",

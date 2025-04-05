@@ -52,9 +52,10 @@ class ProjectObject:
                 st.markdown(self.description)
             
             if self.what_i_did is not None:
-                st.subheader("What I did")
-                for item in self.what_i_did:
-                    st.markdown(f"- {item}")
+                with st.expander("What I did"):
+                    # st.subheader("What I did")
+                    for item in self.what_i_did:
+                        st.markdown(f"- {item}")
             
             if self.vid_link is not None:
                 st.video(self.vid_link)

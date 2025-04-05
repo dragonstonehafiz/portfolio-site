@@ -112,7 +112,7 @@ ESRGAN_M = ProjectObject(
     github_link="https://github.com/dragonstonehafiz/aai3001-large-project",
     what_i_did=[
         "**Curated a dataset of over 15,000 images** to finetune ESRGAN for anime-style image upscaling, improving model accuracy and visual quality.",
-        "Implemented and **optimized ESRGAN finetuning for enhanced anime image upscaling**, adjusting hyperparameters and training pipelines."
+        "Implemented and **optimized ESRGAN finetuning for enhanced anime image upscaling**, adjusting hyperparameters and training pipelines.",
         "Developed an **interactive Streamlit-based UI** for real-time image upscaling, making the model accessible to users."],
     img_paths=[
         "images/sit/aai3001_1_lowres.png",

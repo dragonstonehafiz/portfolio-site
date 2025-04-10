@@ -56,21 +56,22 @@ class ProjectObject:
                     # st.subheader("What I did")
                     for item in self.what_i_did:
                         st.markdown(f"- {item}")
-            
-            if self.vid_link is not None:
-                st.video(self.vid_link)
 
             if self.img_paths is not None:
-                # Create a slider to select the image index
-                img_index = st.slider(
-                    "Slide through images",
-                    key=self.title,
-                    min_value=1,
-                    max_value=len(self.img_paths), 
-                    value=1
-                )
-                # Display the selected image
-                st.image(self.img_paths[img_index-1], use_container_width=True, width=256)
+                with st.expander("Gallery"):
+                    # Create a slider to select the image index
+                    img_index = st.slider(
+                        "Slide through images",
+                        key=self.title,
+                        min_value=1,
+                        max_value=len(self.img_paths), 
+                        value=1
+                    )
+                    # Display the selected image
+                    st.image(self.img_paths[img_index-1], use_container_width=True, width=256)
+                    
+            if self.vid_link is not None:
+                st.video(self.vid_link)
                         
             st.divider()
         except Exception as e:

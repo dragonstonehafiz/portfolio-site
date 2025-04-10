@@ -160,7 +160,7 @@ TranslatorHelper = ProjectObject(
     """,
     github_link="https://github.com/dragonstonehafiz/translator-helper",
     date_=date(year=2025, month=3, day=9),
-    last_update=date(year=2025, month=4, day=5),
+    last_update=date(year=2025, month=4, day=9),
     what_i_did=[
         "Used **OpenAI Whisper** to transcribe Japanese audio from drama CDs.",
         "Integrated **GPT models** to assist with translation and grading.",
@@ -168,14 +168,13 @@ TranslatorHelper = ProjectObject(
         "Built a simple **Streamlit UI** to make the tool more accessible and easy to use."
     ],
     img_paths=[
-        "images/other/translator_helper1.png",
-        "images/other/translator_helper2.png",
-        "images/other/translator_helper3.png",
-        "images/other/translator_helper4.png",
-        "images/other/translator_helper5.png"
+        "images/other/translator_helper_transcribe.png",
+        "images/other/translator_helper_translate.png",
+        "images/other/translator_helper_grader.png",
+        "images/other/translator_helper_context.png"
     ],
-    vid_link="https://youtu.be/8eeY0Wq4U7I",
-    tags=["python", "api", "ai", "anime"])
+    vid_link="https://youtu.be/kZH1jKPhkDg",
+    tags=["python", "api", "ai", "anime", "streamlit"])
 
 
 BirdLaserTargeter = ProjectObject(

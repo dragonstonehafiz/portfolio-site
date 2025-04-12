@@ -16,3 +16,11 @@ makeine_vol1ep2 = ProjectObject(
     tags=["anime"],
     project_type="Too Many Losing Heroines!!!"
 )
+
+nichijou_himekuri_vol1_4 = ProjectObject(
+    title='Nichijou Daily Calendar CD Vol. 1: "April"',
+    vid_link="https://youtu.be/Jjik_sl7e-E",
+    date_=date(year=2025, month=4, day=12),
+    tags=["anime"],
+    project_type="Nichijou"
+)

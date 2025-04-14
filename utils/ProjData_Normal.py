@@ -160,7 +160,7 @@ TranslatorHelper = ProjectObject(
     """,
     github_link="https://github.com/dragonstonehafiz/translator-helper",
     date_=date(year=2025, month=3, day=9),
-    last_update=date(year=2025, month=4, day=9),
+    last_update=date(year=2025, month=4, day=12),
     what_i_did=[
         "Used **OpenAI Whisper** to transcribe Japanese audio from drama CDs.",
         "Integrated **GPT models** to assist with translation and grading.",

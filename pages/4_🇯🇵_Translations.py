@@ -16,7 +16,6 @@ st.markdown(
     For each project, I’ve added:
     - **Subtitles synced to the original audio** for better readability.
     - **Dialogue translations** that try to keep the original tone and character personality.
-    - **Small cultural notes** where needed to help things make sense.
 
     I also use tools like:
     - **AI transcription (OpenAI Whisper)** to assist with difficult-to-hear lines.

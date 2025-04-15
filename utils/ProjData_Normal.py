@@ -160,21 +160,22 @@ TranslatorHelper = ProjectObject(
     """,
     github_link="https://github.com/dragonstonehafiz/translator-helper",
     date_=date(year=2025, month=3, day=9),
-    last_update=date(year=2025, month=4, day=12),
+    last_update=date(year=2025, month=4, day=14),
     what_i_did=[
-        "Used **OpenAI Whisper** to transcribe Japanese audio from drama CDs.",
-        "Integrated **GPT models** to assist with translation and grading.",
-        "Incorporated **contextual inputs** like character relationships and tone to improve translation quality.",
-        "Built a simple **Streamlit UI** to make the tool more accessible and easy to use."
+        "Added support for **audio transcription** via OpenAI Whisper using file upload or microphone input.",
+        "Enabled **subtitle file parsing** (`.srt`, `.ass`) to extract scene metadata like character names and tone.",
+        "Integrated **web context retrieval** with Tavily + LangChain to enrich translation inputs.",
+        "Implemented **context-aware translation** outputs: natural, literal, and annotated.",
+        "Created a **grading system** to evaluate translation quality across fluency, accuracy, and cultural fit."
     ],
     img_paths=[
-        "images/other/translator_helper_transcribe.png",
-        "images/other/translator_helper_translate.png",
-        "images/other/translator_helper_grader.png",
-        "images/other/translator_helper_context.png"
+        "images/other/translatorHelper_context2.png",
+        "images/other/translatorHelper_translate.png",
+        "images/other/translatorHelper_grade.png",
+        "images/other/translatorHelper_transcribe.png"
     ],
-    vid_link="https://youtu.be/kZH1jKPhkDg",
-    tags=["python", "api", "ai", "anime", "streamlit"])
+    vid_link="https://youtu.be/Zi3OjbpptQk",
+    tags=["python", "api", "ai", "anime", "streamlit", "langchain"])
 
 
 BirdLaserTargeter = ProjectObject(

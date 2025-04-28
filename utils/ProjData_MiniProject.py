@@ -6,6 +6,8 @@ BudgetingSpreadsheet = ProjectObject(
     description="""
     A Python-based tool that automates the setup of budgeting spreadsheets by inserting formulas and formatting new sheets each year. 
     The program ensures consistent calculations and improves readability with automated conditional formatting.
+    
+    I have since replaced this with my Spending Dashboard project, which is a more robust solution for tracking my spending.
     """,
     date_=date(year=2024, month=1, day=16),
     what_i_did=[

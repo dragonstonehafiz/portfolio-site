@@ -177,7 +177,6 @@ TranslatorHelper = ProjectObject(
     vid_link="https://youtu.be/Zi3OjbpptQk",
     tags=["python", "api", "ai", "anime", "streamlit", "langchain"])
 
-
 BirdLaserTargeter = ProjectObject(
     title="Bird Laser Targeter on the Edge",
     description="""
@@ -201,3 +200,30 @@ BirdLaserTargeter = ProjectObject(
     vid_link="https://www.youtube.com/watch?v=NGxBpvvaONQ",
     tags=["python", "ai", "sit"]
 )
+
+
+SpendingDashboard = ProjectObject(
+    title="Spending Dashboard",
+    description="""
+    A Streamlit-based dashboard designed to **track, visualize, and analyze personal spending data**.  
+    The project reads purchase records from a structured `.xlsx` file, supports **interactive filtering**, and generates **dynamic financial insights** through a clean UI.
+
+    It features **custom Plotly charts**, an **Excel auto-formatting pipeline** with conditional category styling, and robust search functionality with flexible cost, date, and category filters.
+    """,
+    date_=date(year=2025, month=4, day=28), 
+    github_link="https://github.com/dragonstonehafiz/budgeting-analysis",
+    what_i_did=[
+        "Built a full Streamlit application with multiple data exploration modes (full dataset, yearly focus, advanced search), improving usability.",
+        "Designed and implemented an Excel formatting pipeline that standardized data entry, reduced user errors, and accelerated spreadsheet preparation using openpyxl.",
+        "Developed a suite of interactive visualizations (line, bar, pie, scatter) with custom color schemes, enhancing trend discovery and financial insight generation.",
+    ],
+    img_paths=[
+        "images/other/budgeting1.png",
+        "images/other/budgeting2.png",
+        "images/other/budgeting3.png",
+        "images/other/budgeting4.png",
+        "images/other/budgeting5.png",
+    ],
+    tags=["python", "streamlit"]
+)
+

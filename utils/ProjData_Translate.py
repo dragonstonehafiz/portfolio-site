@@ -11,8 +11,16 @@ makeine_vol1ep1 = ProjectObject(
 
 makeine_vol1ep2 = ProjectObject(
     title='Too Many Losing Heroines!!! Drama CD Vol. 1 "Be careful with sneak photography."',
-    vid_link="https://youtu.be/mABaX-7lhk0",
+    vid_link="https://youtu.be/KPy_66wKk34",
     date_=date(year=2025, month=3, day=15),
+    tags=["anime"],
+    project_type="Too Many Losing Heroines!!!"
+)
+
+makeine_vol1ep3 = ProjectObject(
+    title='Too Many Losing Heroines!!! Drama CD Vol. 1 "Let\'s aim for the one chance!"',
+    vid_link="https://youtu.be/vn_1bNIXBTU",
+    date_=date(year=2025, month=5, day=1),
     tags=["anime"],
     project_type="Too Many Losing Heroines!!!"
 )

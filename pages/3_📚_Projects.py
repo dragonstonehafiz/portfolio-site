@@ -9,6 +9,7 @@ st.set_page_config(
 )
 
 featured_projects = {
+        "Personal Portfolio Website": ProjData_Mini.PortfolioSite,
         "Spending Dashboard": ProjData_Normal.SpendingDashboard,
         "Edge Bird Targetter": ProjData_Normal.BirdLaserTargeter,
         "Translator Helper": ProjData_Normal.TranslatorHelper,

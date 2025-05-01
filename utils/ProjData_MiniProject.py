@@ -63,3 +63,29 @@ DiamondCityRadio = ProjectObject(
         "Developed logic for **dynamic voice line selection**, enhancing game immersion with contextual dialogue."],
     tags=["java", "libgdx"],
     project_type="Mini Project")
+
+
+PortfolioSite = ProjectObject(
+    title="Personal Portfolio Website",
+    description="""
+    Built with **Streamlit** and **Docker**, this site dynamically displays my projects.
+
+    Instead of manually updating project entries, the site uses a **custom `ProjectObject` system**  
+    to automatically render content based on structured metadata.  
+    This keeps everything **organized, scalable, and easy to maintain**.
+    """,
+    date_=date(year=2025, month=3, day=7),
+    last_update=date(year=2025, month=4, day=10),
+    github_link="https://github.com/dragonstonehafiz/portfolio-site",
+    what_i_did=[
+        "**Designed and developed** a responsive portfolio site using **Streamlit**, ensuring a clean and accessible UI.",
+        "**Implemented a project filtering system** based on tags and categories, allowing users to easily browse different projects.",
+        "**Integrated Google Cloud and Docker for hosting**, enabling seamless updates and version control.",
+        "**Developed an automatic project rendering system**, using a custom `ProjectObject` class for consistency and maintainability."
+    ],
+    img_paths=[
+        "images/other/portfolio_homepage.png",
+        "images/other/portfolio_projects.png"
+    ],
+    tags=["python", "streamlit"]
+)

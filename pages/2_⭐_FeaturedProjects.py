@@ -13,7 +13,7 @@ featured_projects = {
     "Spending Dashboard": ProjData_Normal.SpendingDashboard,
     "Edge Bird Targetter": ProjData_Normal.BirdLaserTargeter,
     "Translator Helper": ProjData_Normal.TranslatorHelper,
-    "Too Many Losing Heroines!!! Drama CD Vol. 1 Story 2": ProjData_Translate.makeine_vol1ep2,
+    "Too Many Losing Heroines!!! Drama CD Vol. 1 Story 3": ProjData_Translate.makeine_vol1ep3,
     "Anime Image Upscaler": ProjData_Normal.ESRGAN_M,
     "Electronica": ProjData_Normal.Electronica,
 }

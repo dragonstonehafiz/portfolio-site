@@ -27,8 +27,8 @@ st.markdown(
 
 projects = {
     'Too Many Losing Heroines!!! Drama CD Vol. 1 Story 1': ProjectData.makeine_vol1ep1,
-    'Too Many Losing Heroines!!! Drama CD Vol. 1 Story 2': ProjectData.makeine_vol1ep2,
-    'Too Many Losing Heroines!!! Drama CD Vol. 1 Story 3': ProjectData.makeine_vol1ep3,
+    # 'Too Many Losing Heroines!!! Drama CD Vol. 1 Story 2': ProjectData.makeine_vol1ep2,
+    # 'Too Many Losing Heroines!!! Drama CD Vol. 1 Story 3': ProjectData.makeine_vol1ep3,
     'Nichijou Daily Calendar CD Vol. 1: "April"': ProjectData.nichijou_himekuri_vol1_4
 }
 

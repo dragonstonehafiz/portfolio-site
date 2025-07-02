@@ -13,7 +13,7 @@ featured_projects = {
     "Spending Dashboard": ProjData_Normal.SpendingDashboard,
     "Edge Bird Targetter": ProjData_Normal.BirdLaserTargeter,
     "Translator Helper": ProjData_Normal.TranslatorHelper,
-    "Too Many Losing Heroines!!! Drama CD Vol. 1 Story 3": ProjData_Translate.makeine_vol1ep1,
+    "Gakuen Idolmaster - Lilja Katsuragi STEP 1": ProjData_Translate.gakumas_lilja_step1,
     "Anime Image Upscaler": ProjData_Normal.ESRGAN_M,
     "Electronica": ProjData_Normal.Electronica,
 }

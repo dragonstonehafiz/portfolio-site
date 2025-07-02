@@ -6,6 +6,9 @@ def create_page_elements(featured_projects: dict[str, ProjectObject], page_name)
     # Get unique tags and project types
     unique_tags = get_unique_tags(featured_projects.values())
     unique_types = get_unique_project_types(featured_projects.values())
+    
+    # Sidebar Filters
+    connect_with_me()
 
     st.sidebar.header("Filters")
     sort_order = st.sidebar.radio("Sort projects by date", ["Ascending", "Descending"], index=1, key=f"{page_name} radio")
@@ -20,8 +23,6 @@ def create_page_elements(featured_projects: dict[str, ProjectObject], page_name)
     # Links
     render_and_nav(filtered_projects)
 
-    # Sidebar Filters
-    connect_with_me()
 
 def connect_with_me():
     st.sidebar.header("Links")

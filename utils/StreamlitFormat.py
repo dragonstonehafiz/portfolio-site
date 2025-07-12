@@ -26,9 +26,26 @@ def create_page_elements(featured_projects: dict[str, ProjectObject], page_name)
 
 def connect_with_me():
     st.sidebar.header("Links")
-    st.sidebar.markdown("[![GitHub](https://img.shields.io/badge/GitHub-%2312100E.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/dragonstonehafiz)")
-    st.sidebar.markdown("[![LinkedIn](https://img.shields.io/badge/LinkedIn-%230A66C2.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/muhdhafizabdulhalim/)")
-    st.sidebar.markdown("[![YouTube](https://img.shields.io/badge/YouTube-%23FF0000.svg?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/@hafiz8325)")
+    st.sidebar.page_link(
+        "https://github.com/dragonstonehafiz",
+        label="GitHub",
+        icon=":material/code:",
+        use_container_width=True
+    )
+    # LinkedIn
+    st.sidebar.page_link(
+        "https://www.linkedin.com/in/muhdhafizabdulhalim/",
+        label="LinkedIn",
+        icon=":material/business_center:",
+        use_container_width=True
+    )
+    # YouTube
+    st.sidebar.page_link(
+        "https://www.youtube.com/@hafiz8325",
+        label="YouTube",
+        icon=":material/play_circle:",
+        use_container_width=True
+    )
 
 # Function to create a sorted and filtered list of projects
 def create_sorted_list(projects: dict[str, ProjectObject], selected_tags: set[str], selected_type: str, reverse_sort: bool):

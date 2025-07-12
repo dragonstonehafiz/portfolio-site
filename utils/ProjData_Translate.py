@@ -6,7 +6,9 @@ makeine_vol1ep1 = ProjectObject(
     vid_link="https://youtu.be/gRx0sX_9PyA?si=EAmbJ3nRvHAEaBqd",
     date_=date(year=2025, month=2, day=23),
     tags=["anime"],
-    project_type="Too Many Losing Heroines!!!")
+    project_type="Too Many Losing Heroines!!!",
+    download_paths=["downloads/makeine_season1/makeine_vol1ep1.en.ass", "downloads/makeine_season1/makeine_vol1ep1.ja.ass"]
+)
 
 
 makeine_vol1ep2 = ProjectObject(
@@ -14,7 +16,8 @@ makeine_vol1ep2 = ProjectObject(
     vid_link="https://youtu.be/KPy_66wKk34",
     date_=date(year=2025, month=3, day=15),
     tags=["anime"],
-    project_type="Too Many Losing Heroines!!!"
+    project_type="Too Many Losing Heroines!!!",
+    download_paths=["downloads/makeine_season1/makeine_vol1ep2.en.ass", "downloads/makeine_season1/makeine_vol1ep2.ja.ass"]
 )
 
 makeine_vol1ep3 = ProjectObject(
@@ -22,7 +25,8 @@ makeine_vol1ep3 = ProjectObject(
     vid_link="https://youtu.be/vn_1bNIXBTU",
     date_=date(year=2025, month=5, day=1),
     tags=["anime"],
-    project_type="Too Many Losing Heroines!!!"
+    project_type="Too Many Losing Heroines!!!",
+    download_paths=["downloads/makeine_season1/makeine_vol1ep3.en.ass", "downloads/makeine_season1/makeine_vol1ep3.ja.ass"]
 )
 
 nichijou_himekuri_vol1_4 = ProjectObject(
@@ -30,7 +34,8 @@ nichijou_himekuri_vol1_4 = ProjectObject(
     vid_link="https://youtu.be/Jjik_sl7e-E",
     date_=date(year=2025, month=4, day=12),
     tags=["anime"],
-    project_type="Nichijou"
+    project_type="Nichijou",
+    download_paths=["downloads/nichijou/nichijou_month4.en.ass", "downloads/nichijou/nichijou_month4.ja.ass"]
 )
 
 gakumas_lilja_step1 = ProjectObject(
@@ -38,6 +43,7 @@ gakumas_lilja_step1 = ProjectObject(
     vid_link="https://youtu.be/8Ncm2_M6FSI?si=Boe_DpPYo4UjQgRm",
     date_=date(year=2025, month=6, day=15),
     tags=["game"],
-    project_type="Gakuen Idolmaster"
+    project_type="Gakuen Idolmaster",
+    download_paths=["downloads/gakumas/gakumas_liljaStep1.en.ass", "downloads/gakumas/gakumas_liljaStep1.ja.ass"]
 )
 

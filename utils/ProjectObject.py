@@ -1,5 +1,6 @@
 import streamlit as st
 from datetime import date
+from pathlib import Path 
 
 class ProjectObject:
     title: str
@@ -12,6 +13,7 @@ class ProjectObject:
     tags: list[str]
     github_link: str
     project_type: str
+    download_paths: list[str] 
     
     def __init__(self, title: str, date_: date, last_update: date = None,
                  description: str = None,
@@ -20,7 +22,8 @@ class ProjectObject:
                  github_link: str = None,
                  img_paths: list[str] = None,
                  tags: list[str] = None,
-                 project_type: str = "Full Project"):
+                 project_type: str = "Full Project",
+                 download_paths: list[str] = None ):
         self.title = title
         self.description = description
         self.date_ = date_
@@ -31,19 +34,22 @@ class ProjectObject:
         self.img_paths = img_paths
         self.tags = tags
         self.project_type = project_type
+        self.download_paths = download_paths
     
     def render(self):
         st.header(self.title)
+        left, _, right = st.columns(3)
+        
         if self.last_update is not None:
-            st.markdown(f"<p style='font-size:15px; color:gray;'>Last Updated: {self.last_update.strftime('%B %d, %Y')}</p>", unsafe_allow_html=True)
-        st.markdown(f"<p style='font-size:15px; color:gray;'>Created: {self.date_.strftime('%B %d, %Y')}</p>", unsafe_allow_html=True)
+            left.markdown(f"<p style='font-size:15px; color:gray;'>Last Updated: {self.last_update.strftime('%B %d, %Y')}</p>", unsafe_allow_html=True)
+        left.markdown(f"<p style='font-size:15px; color:gray;'>Created: {self.date_.strftime('%B %d, %Y')}</p>", unsafe_allow_html=True)
         
         try:
             if self.tags is not None:
                 tags_str = "Tags: " + ', '.join(self.tags)
             else:
                 tags_str = "No tags"
-            st.markdown(f"<p style='font-size:15px; color:gray;'>{tags_str}</p>", unsafe_allow_html=True)
+            right.markdown(f"<p style='font-size:15px; color:gray;'>{tags_str}</p>", unsafe_allow_html=True)
             
             if self.github_link is not None:
                 st.markdown(f"[Github Link]({self.github_link})")
@@ -73,6 +79,22 @@ class ProjectObject:
             if self.vid_link is not None:
                 st.video(self.vid_link)
                         
+            if self.download_paths:
+                with st.expander("Downloads"):
+                    for p_str in self.download_paths:
+                        p = Path(p_str)
+                        if p.exists():
+                            with p.open("rb") as buf:
+                                st.download_button(
+                                    f"{p.name}",
+                                    data=buf.read(),
+                                    file_name=p.name,
+                                    mime="text/plain",
+                                    use_container_width=True,
+                                    type="primary"
+                                )
+                        else:
+                            st.markdown(f"[⬇️  {p.name}]({p_str})")
             st.divider()
         except Exception as e:
             st.error(e)

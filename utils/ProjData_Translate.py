@@ -47,3 +47,11 @@ gakumas_lilja_step1 = ProjectObject(
     download_paths=["downloads/gakumas/gakumas_liljaStep1.en.ass", "downloads/gakumas/gakumas_liljaStep1.ja.ass"]
 )
 
+gakumas_lilja_step2 = ProjectObject(
+    title='Gakuen Idolmaster: Lilja Step 2',
+    vid_link="https://youtu.be/wigz91b--Xc",
+    date_=date(year=2025, month=7, day=13),
+    tags=["game"],
+    project_type="Gakuen Idolmaster",
+    download_paths=["downloads/gakumas/gakumas_liljaStep2.en.ass", "downloads/gakumas/gakumas_liljaStep2.ja.ass"]
+)

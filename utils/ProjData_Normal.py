@@ -127,20 +127,20 @@ ESRGAN_M = ProjectObject(
 TranslatorHelper = ProjectObject(
     title="Translator Helper",
     description="""
-    A little hobby of mine is **transcribing and translating anime drama CDs**. 
-    While I am generally able to do so on my own with some difficulty, there are times where I am unable to figure out what a character is saying, or how exactly I should translate a particular phrase.
-    
-    As such, I quickly put together an app to help me with the process.
+    Transcribing and translating anime drama CDs is a hobby of mine. Although I can usually manage on my own, there are times when I can’t determine exactly what a character is saying or how best to translate a particular phrase. To help with this, I built an application that uses OpenAI’s API and Whisper.
+
+    I later realized I could have AI generate a first draft of the transcription and translation for an entire file, then review the resulting subtitle files and make any necessary edits. This is exactly what I did for the Gakuen Idolmaster translations (see the translation page), which saved me a great deal of time.
     """,
     github_link="https://github.com/dragonstonehafiz/translator-helper",
     date_=date(year=2025, month=3, day=9),
-    last_update=date(year=2025, month=4, day=14),
+    last_update=date(year=2025, month=6, day=17),
     what_i_did=[
         "Added support for **audio transcription** via OpenAI Whisper using file upload or microphone input.",
-        "Enabled **subtitle file parsing** (`.srt`, `.ass`) to extract scene metadata like character names and tone.",
+        "Enabled **subtitle file parsing** (`.srt`, `.ass`) to extract character lists and write a synopsis.",
         "Integrated **web context retrieval** with Tavily + LangChain to enrich translation inputs.",
-        "Implemented **context-aware translation** outputs: natural, literal, and annotated.",
-        "Created a **grading system** to evaluate translation quality across fluency, accuracy, and cultural fit."
+        "Implemented full subtitle file translation to create a first draft for translation.",
+        "Provided quick-access tools for individual **audio-snippet transcription** and **single-line translation**.",
+        "Created a **translation grading tool** that scores accuracy, fluency, and cultural fit."
     ],
     img_paths=[
         "images/other/translatorHelper_context2.png",

@@ -52,7 +52,8 @@ Last_Survivor = ProjectObject(
         "images/games/thelastsurvivor2.png",
         "images/games/thelastsurvivor3.png",
         "images/games/thelastsurvivor4.png"],
-    tags=["c#", "games", "nyp", "unity"])
+    tags=["c#", "games", "nyp", "unity"],
+    download_paths=["downloads/games/TheLastSurvivor.zip"])
 
 Electronica = ProjectObject(
     title="Electronica",
@@ -69,7 +70,8 @@ Electronica = ProjectObject(
                "images/games/electronica4.png",
                "images/games/electronica5.png",
                "images/games/electronica6.png"],
-    tags=["c#", "games", "nyp", "unity"])
+    tags=["c#", "games", "nyp", "unity"],
+    download_paths=["downloads/games/Electronica.zip"])
 
 Locus = ProjectObject(
     title="L.O.C.U.S",
@@ -200,3 +202,22 @@ SpendingDashboard = ProjectObject(
     tags=["python", "streamlit"]
 )
 
+JapaneseLearningCardGame = ProjectObject(
+    title="Japanese Learning Card Game",
+    description="""
+    As part of a school assignment to design a **tabletop game**,  I opted to create a **digital card game** instead centered around **Japanese language learning**. The project was entirely self-developed, with all code written from scratch in Unity.
+    """,
+    date_=date(year=2025, month=7, day=17),
+    what_i_did=[
+        "Designed and implemented an **object-oriented card system** to manage card behaviors and properties.",
+        "Built core **gameplay systems** including turn logic, deck management, and win/loss conditions in Unity."
+    ],
+    img_paths=[
+        "images/sit/deckbuilder1.png",
+        "images/sit/deckbuilder2.png",
+        "images/sit/deckbuilder3.png"
+    ],
+    vid_link="https://youtu.be/lCBHCaszdQ4",
+    tags=["c#", "unity", "games", "sit"],
+    download_paths=["downloads/games/JPLearningCardGame.zip"]
+)

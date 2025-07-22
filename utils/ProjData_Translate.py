@@ -24,7 +24,7 @@ makeine_vol1ep3 = ProjectObject(
     title='Too Many Losing Heroines!!! Drama CD Vol. 1 "Let\'s aim for the one chance!"',
     vid_link="https://youtu.be/vn_1bNIXBTU",
     date_=date(year=2025, month=5, day=1),
-    tags=["anime"],
+    tags=["anime", "translation"],
     project_type="Too Many Losing Heroines!!!",
     download_paths=["downloads/makeine_season1/makeine_vol1ep3.en.ass", "downloads/makeine_season1/makeine_vol1ep3.ja.ass"]
 )
@@ -33,7 +33,7 @@ nichijou_himekuri_vol1_4 = ProjectObject(
     title='Nichijou Daily Calendar CD Vol. 1: "April"',
     vid_link="https://youtu.be/Jjik_sl7e-E",
     date_=date(year=2025, month=4, day=12),
-    tags=["anime"],
+    tags=["anime", "translation"],
     project_type="Nichijou",
     download_paths=["downloads/nichijou/nichijou_month4.en.ass", "downloads/nichijou/nichijou_month4.ja.ass"]
 )
@@ -42,7 +42,7 @@ gakumas_lilja_step1 = ProjectObject(
     title='Gakuen Idolmaster: Lilja Step 1',
     vid_link="https://youtu.be/8Ncm2_M6FSI?si=Boe_DpPYo4UjQgRm",
     date_=date(year=2025, month=6, day=15),
-    tags=["game"],
+    tags=["translation"],
     project_type="Gakuen Idolmaster",
     download_paths=["downloads/gakumas/gakumas_liljaStep1.en.ass", "downloads/gakumas/gakumas_liljaStep1.ja.ass"]
 )
@@ -51,7 +51,7 @@ gakumas_lilja_step2 = ProjectObject(
     title='Gakuen Idolmaster: Lilja Step 2',
     vid_link="https://youtu.be/wigz91b--Xc",
     date_=date(year=2025, month=7, day=13),
-    tags=["game"],
+    tags=["translation"],
     project_type="Gakuen Idolmaster",
     download_paths=["downloads/gakumas/gakumas_liljaStep2.en.ass", "downloads/gakumas/gakumas_liljaStep2.ja.ass"]
 )

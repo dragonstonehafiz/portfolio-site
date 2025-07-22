@@ -186,6 +186,7 @@ SpendingDashboard = ProjectObject(
     It features **custom Plotly charts**, an **Excel auto-formatting pipeline** with conditional category styling, and robust search functionality with flexible cost, date, and category filters.
     """,
     date_=date(year=2025, month=4, day=28), 
+    last_update=date(year=2025, month=7, day=8),
     github_link="https://github.com/dragonstonehafiz/budgeting-analysis",
     what_i_did=[
         "Built a full Streamlit application with multiple data exploration modes (full dataset, yearly focus, advanced search), improving usability.",

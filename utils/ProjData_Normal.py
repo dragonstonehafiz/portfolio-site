@@ -150,7 +150,7 @@ TranslatorHelper = ProjectObject(
         "images/other/translatorHelper_grade.png",
         "images/other/translatorHelper_transcribe.png"
     ],
-    vid_link="https://youtu.be/Zi3OjbpptQk",
+    vid_link="https://youtu.be/KwoEBu_Y4XA",
     tags=["python", "api", "ai", "anime", "streamlit", "langchain"])
 
 BirdLaserTargeter = ProjectObject(

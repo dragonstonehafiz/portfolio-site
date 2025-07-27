@@ -29,6 +29,15 @@ makeine_vol1ep3 = ProjectObject(
     download_paths=["downloads/makeine_season1/makeine_vol1ep3.en.ass", "downloads/makeine_season1/makeine_vol1ep3.ja.ass"]
 )
 
+makeine_vol2ep1 = ProjectObject(
+    title='Too Many Losing Heroines!!! Drama CD Vol. 2 "Don\'t Forget to Level Up"',
+    vid_link="https://youtu.be/qJOps4YbTQU",
+    date_=date(year=2025, month=7, day=27),
+    tags=["anime", "translation"],
+    project_type="Too Many Losing Heroines!!!",
+    download_paths=["downloads/makeine_season1/makeine_vol2ep1.en.ass", "downloads/makeine_season1/makeine_vol2ep1.ja.ass"]
+)
+
 nichijou_himekuri_vol1_4 = ProjectObject(
     title='Nichijou Daily Calendar CD Vol. 1: "April"',
     vid_link="https://youtu.be/Jjik_sl7e-E",

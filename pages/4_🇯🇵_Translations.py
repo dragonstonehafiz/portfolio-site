@@ -32,6 +32,7 @@ projects = {
     'Nichijou Daily Calendar CD Vol. 1: "April"': ProjectData.nichijou_himekuri_vol1_4,
     "Gakuen Idolmaster - Lilja Katsuragi STEP 1": ProjectData.gakumas_lilja_step1,
     "Gakuen Idolmaster - Lilja Katsuragi STEP 2": ProjectData.gakumas_lilja_step2,
+    'Too Many Losing Heroines!!! Drama CD Vol. 2 Story 1': ProjectData.makeine_vol2ep1,
 }
 
 st.header("Projects")

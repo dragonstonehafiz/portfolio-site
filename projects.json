@@ -1,0 +1,616 @@
+{
+  "AI_Game": {
+    "variable_name": "AI_Game",
+    "category": "normal",
+    "title": "AI Pathfinding Game",
+    "description": "A **turn-based** game I made for one of my AI modules. The game was written on a custom engine provided by the school, and the code was written in `C++`.",
+    "date": "2019-01-06",
+    "last_update": null,
+    "vid_link": "https://youtu.be/5544wAwSE1I",
+    "github_link": null,
+    "img_paths": [
+      "images/games/aigame1.png",
+      "images/games/aigame2.png",
+      "images/games/aigame3.png",
+      "images/games/aigame4.png"
+    ],
+    "what_i_did": [
+      "Implemented **A-Star and BFS pathfinding algorithms**, enabling AI-controlled units to navigate complex environments efficiently.",
+      "Designed a **Finite State Machine (FSM) for AI behavior**, allowing dynamic transitions between patrol, chase, and attack states.",
+      "Developed a **fog-of-war vision system**, restricting player visibility and enhancing tactical gameplay.",
+      "Created a **procedural maze generator**, ensuring randomized level layouts for increased replayability.",
+      "Integrated the **IrrKlang library** for dynamic sound handling, improving immersion with responsive audio effects."
+    ],
+    "tags": [
+      "c++",
+      "games",
+      "nyp"
+    ],
+    "project_type": "Full Project",
+    "download_paths": []
+  },
+  "BirdLaserTargeter": {
+    "variable_name": "BirdLaserTargeter",
+    "category": "normal",
+    "title": "Bird Laser Targeter on the Edge",
+    "description": "\n    A Raspberry Pi Zero 2W-powered system designed to **detect birds and deter them using a laser pointer**.  \n    The project integrates servo motors, a laser diode, a camera, and microphone-based audio triggers.  \n    It features a **state-machine-based control system** and supports **both local and remote detection** via MQTT.\n\n    While the model training and YOLOv5 implementation were handled by teammates,  \n    I was responsible for **system integration, hardware interfacing**, and **overall architecture**.\n    ",
+    "date": "2025-03-29",
+    "last_update": null,
+    "vid_link": "https://www.youtube.com/watch?v=NGxBpvvaONQ",
+    "github_link": "https://github.com/dragonstonehafiz/inf2009-project",
+    "img_paths": [
+      "images/sit/inf2009_project1.png",
+      "images/sit/inf2009_project2.png"
+    ],
+    "what_i_did": [
+      "Implemented **real-time MQTT communication** between the Pi Zero and a remote server, enabling offloaded bird detection and reducing device-side processing load by over 80%.",
+      "Coordinated and deployed the **full software-hardware stack**, integrating audio triggers, camera input, laser targeting, and servo motion to deliver an autonomous bird deterrence system."
+    ],
+    "tags": [
+      "python",
+      "ai",
+      "sit"
+    ],
+    "project_type": "Full Project",
+    "download_paths": []
+  },
+  "ESRGAN_M": {
+    "variable_name": "ESRGAN_M",
+    "category": "normal",
+    "title": "Anime Image Upscaler",
+    "description": "\n    An image upscaler built using ESRGAN, fine-tuned for anime-style images at 256x256 resolution. \n    The model was trained on a dataset of over 15,000 images to reduce artifacts and enhance detail, making it more effective for upscaling low-resolution anime artwork.\n    ",
+    "date": "2024-11-29",
+    "last_update": null,
+    "vid_link": "https://youtu.be/zZiL5X7dj4A?si=lbiVmPAo993uzuzh",
+    "github_link": "https://github.com/dragonstonehafiz/aai3001-large-project",
+    "img_paths": [
+      "images/sit/aai3001_1_lowres.png",
+      "images/sit/aai3001_1_upscale.png",
+      "images/sit/aai3001_2_lowres.png",
+      "images/sit/aai3001_2_upscale.png",
+      "images/sit/aai3001_3_lowres.png",
+      "images/sit/aai3001_3_upscale.png"
+    ],
+    "what_i_did": [
+      "**Curated a dataset of over 15,000 images** to finetune ESRGAN for anime-style image upscaling, improving model accuracy and visual quality.",
+      "Implemented and **optimized ESRGAN finetuning for enhanced anime image upscaling**, adjusting hyperparameters and training pipelines.",
+      "Developed an **interactive Streamlit-based UI** for real-time image upscaling, making the model accessible to users."
+    ],
+    "tags": [
+      "python",
+      "ai",
+      "streamlit",
+      "sit",
+      "anime"
+    ],
+    "project_type": "Full Project",
+    "download_paths": []
+  },
+  "Electronica": {
+    "variable_name": "Electronica",
+    "category": "normal",
+    "title": "Electronica",
+    "description": "A **top down shooter** inspired by Geometry Wars. Built on the `Unity Game Engine`, all the code for this game was written by me over the course of three months. This was a solo project, and the final thing I worked on before graduating from Nanyang Polytechnic.",
+    "date": "2020-02-10",
+    "last_update": null,
+    "vid_link": "https://youtu.be/MX7wlNfxtfw",
+    "github_link": null,
+    "img_paths": [
+      "images/games/electronica1.png",
+      "images/games/electronica2.png",
+      "images/games/electronica3.png",
+      "images/games/electronica4.png",
+      "images/games/electronica5.png",
+      "images/games/electronica6.png"
+    ],
+    "what_i_did": [
+      "Designed and implemented **five unique enemy AI behaviors** in Unity (C#), enhancing gameplay variety and difficulty scaling.",
+      "Developed **four dynamic boss encounters** with unique mechanics and multi-phase battles to challenge players.",
+      "Created **two distinct game modes**, Classic and Onslaught, increasing replayability and gameplay diversity.",
+      "Designed and **animated interactive UI elements**, including dynamic health bars for both players and bosses, improving visual clarity."
+    ],
+    "tags": [
+      "c#",
+      "games",
+      "nyp",
+      "unity"
+    ],
+    "project_type": "Full Project",
+    "download_paths": [
+      "downloads/games/Electronica.zip"
+    ]
+  },
+  "JapaneseLearningCardGame": {
+    "variable_name": "JapaneseLearningCardGame",
+    "category": "normal",
+    "title": "Japanese Learning Card Game",
+    "description": "\n    As part of a school assignment to design a **tabletop game**,  I opted to create a **digital card game** instead centered around **Japanese language learning**. The project was entirely self-developed, with all code written from scratch in Unity.\n    ",
+    "date": "2025-07-17",
+    "last_update": null,
+    "vid_link": "https://youtu.be/lCBHCaszdQ4",
+    "github_link": null,
+    "img_paths": [
+      "images/sit/deckbuilder1.png",
+      "images/sit/deckbuilder2.png",
+      "images/sit/deckbuilder3.png"
+    ],
+    "what_i_did": [
+      "Designed and implemented an **object-oriented card system** to manage card behaviors and properties.",
+      "Built core **gameplay systems** including turn logic, deck management, and win/loss conditions in Unity."
+    ],
+    "tags": [
+      "c#",
+      "unity",
+      "games",
+      "sit"
+    ],
+    "project_type": "Full Project",
+    "download_paths": [
+      "downloads/games/JPLearningCardGame.zip"
+    ]
+  },
+  "Last_Survivor": {
+    "variable_name": "Last_Survivor",
+    "category": "normal",
+    "title": "The Last Survivor",
+    "description": "\n    A wave-based top-down shooter developed in Unity. \n    The game features multiple enemy types with AI-driven movement and attack behaviors, requiring players to adapt their strategies as waves progress.\n    ",
+    "date": "2019-03-01",
+    "last_update": null,
+    "vid_link": "https://youtu.be/aMmrSXN9EI8",
+    "github_link": null,
+    "img_paths": [
+      "images/games/thelastsurvivor1.png",
+      "images/games/thelastsurvivor2.png",
+      "images/games/thelastsurvivor3.png",
+      "images/games/thelastsurvivor4.png"
+    ],
+    "what_i_did": [
+      "Developed **wave-based progression** and **enemy spawning mechanics** in Unity (C#), ensuring a scalable and balanced gameplay loop.",
+      "Implemented **AI pathfinding** and enemy behaviors without using Unity’s NavMesh, enhancing combat dynamics and player engagement.",
+      "Designed and **programmed four distinct NPC** types, including melee, ranged, boss, and turret units, creating diverse strategic encounters."
+    ],
+    "tags": [
+      "c#",
+      "games",
+      "nyp",
+      "unity"
+    ],
+    "project_type": "Full Project",
+    "download_paths": [
+      "downloads/games/TheLastSurvivor.zip"
+    ]
+  },
+  "Locus": {
+    "variable_name": "Locus",
+    "category": "normal",
+    "title": "L.O.C.U.S",
+    "description": "\n    A virtual reality horror puzzle game designed for the `HTC Vive`. \n    The game features motion-based interactions, environmental puzzles, and scripted horror events, creating an immersive first-person experience.\n    ",
+    "date": "2019-08-21",
+    "last_update": null,
+    "vid_link": "https://youtu.be/nvTEuyOUynI",
+    "github_link": null,
+    "img_paths": [
+      "images/games/locus1.png",
+      "images/games/locus2.png"
+    ],
+    "what_i_did": [
+      "Developed **VR controller input handling** for HTC Vive in Unity (C#), ensuring intuitive and immersive interactions for players.",
+      "**Implemented core gameplay mechanics**, including puzzles, scripted scares, and game progression, enhancing the horror-puzzle experience."
+    ],
+    "tags": [
+      "c#",
+      "games",
+      "nyp",
+      "unity",
+      "vr"
+    ],
+    "project_type": "Full Project",
+    "download_paths": []
+  },
+  "Physics_Game": {
+    "variable_name": "Physics_Game",
+    "category": "normal",
+    "title": "Simple Physics Game",
+    "description": "A **Peggle inspired game** made during my Physics for Game Programming module. The game was written in `C++` on a custom game engine provided by the school.",
+    "date": "2017-06-04",
+    "last_update": null,
+    "vid_link": "https://youtu.be/jAr9eGcGQJk",
+    "github_link": null,
+    "img_paths": [
+      "images/games/physicsgame1.png",
+      "images/games/physicsgame2.png",
+      "images/games/physicsgame3.png",
+      "images/games/physicsgame4.png"
+    ],
+    "what_i_did": [
+      "Developed **a physics simulation system** handling gravity and impulse forces, improving gameplay realism.",
+      "Implemented **custom vector-based collision detection**, enabling efficient and precise object interactions.",
+      "Integrated the **IrrKlang library for dynamic sound management**, enhancing game immersion with responsive audio effects."
+    ],
+    "tags": [
+      "c++",
+      "games",
+      "nyp"
+    ],
+    "project_type": "Full Project",
+    "download_paths": []
+  },
+  "ResourceManagementGame": {
+    "variable_name": "ResourceManagementGame",
+    "category": "normal",
+    "title": "Resource Management Game",
+    "description": "\n    A real-time resource management simulation developed in `Java` using `LibGDX`. \n    ",
+    "date": "2024-02-23",
+    "last_update": null,
+    "vid_link": "https://youtu.be/xTgrENeVFi4?si=33A5JgegELn4uFcM",
+    "github_link": null,
+    "img_paths": [
+      "images/sit/oop-game1.png",
+      "images/sit/oop-game2.png",
+      "images/sit/oop-game3.png",
+      "images/sit/oop-game4.png"
+    ],
+    "what_i_did": [
+      "Developed **object-oriented game object classes** in Java using LibGDX, providing a structured foundation for game mechanics.",
+      "Implemented **core game scenes**, handling scene transitions and UI rendering to improve game flow and user experience."
+    ],
+    "tags": [
+      "java",
+      "games",
+      "sit",
+      "libgdx"
+    ],
+    "project_type": "Full Project",
+    "download_paths": []
+  },
+  "SpendingDashboard": {
+    "variable_name": "SpendingDashboard",
+    "category": "normal",
+    "title": "Spending Dashboard",
+    "description": "\n    A Streamlit-based dashboard designed to **track, visualize, and analyze personal spending data**.  \n    The project reads purchase records from a structured `.xlsx` file, supports **interactive filtering**, and generates **dynamic financial insights** through a clean UI.\n\n    It features **custom Plotly charts**, an **Excel auto-formatting pipeline** with conditional category styling, and robust search functionality with flexible cost, date, and category filters.\n    ",
+    "date": "2025-04-28",
+    "last_update": "2025-07-08",
+    "vid_link": null,
+    "github_link": "https://github.com/dragonstonehafiz/budgeting-analysis",
+    "img_paths": [
+      "images/other/budgeting1.png",
+      "images/other/budgeting2.png",
+      "images/other/budgeting3.png",
+      "images/other/budgeting4.png",
+      "images/other/budgeting5.png"
+    ],
+    "what_i_did": [
+      "Built a full Streamlit application with multiple data exploration modes (full dataset, yearly focus, advanced search), improving usability.",
+      "Designed and implemented an Excel formatting pipeline that standardized data entry, reduced user errors, and accelerated spreadsheet preparation using openpyxl.",
+      "Developed a suite of interactive visualizations (line, bar, pie, scatter) with custom color schemes, enhancing trend discovery and financial insight generation."
+    ],
+    "tags": [
+      "python",
+      "streamlit"
+    ],
+    "project_type": "Full Project",
+    "download_paths": []
+  },
+  "TranslatorHelper": {
+    "variable_name": "TranslatorHelper",
+    "category": "normal",
+    "title": "Translator Helper",
+    "description": "\n    Transcribing and translating anime drama CDs is a hobby of mine. Although I can usually manage on my own, there are times when I can’t determine exactly what a character is saying or how best to translate a particular phrase. To help with this, I built an application that uses OpenAI’s API and Whisper.\n\n    I later realized I could have AI generate a first draft of the transcription and translation for an entire file, then review the resulting subtitle files and make any necessary edits. This is exactly what I did for the Gakuen Idolmaster translations (see the translation page), which saved me a great deal of time.\n    ",
+    "date": "2025-03-09",
+    "last_update": "2025-06-17",
+    "vid_link": "https://youtu.be/KwoEBu_Y4XA",
+    "github_link": "https://github.com/dragonstonehafiz/translator-helper",
+    "img_paths": [
+      "images/other/translatorHelper_context2.png",
+      "images/other/translatorHelper_translate.png",
+      "images/other/translatorHelper_grade.png",
+      "images/other/translatorHelper_transcribe.png"
+    ],
+    "what_i_did": [
+      "Added support for **audio transcription** via OpenAI Whisper using file upload or microphone input.",
+      "Enabled **subtitle file parsing** (`.srt`, `.ass`) to extract character lists and write a synopsis.",
+      "Integrated **web context retrieval** with Tavily + LangChain to enrich translation inputs.",
+      "Implemented full subtitle file translation to create a first draft for translation.",
+      "Provided quick-access tools for individual **audio-snippet transcription** and **single-line translation**.",
+      "Created a **translation grading tool** that scores accuracy, fluency, and cultural fit."
+    ],
+    "tags": [
+      "python",
+      "api",
+      "ai",
+      "anime",
+      "streamlit",
+      "langchain"
+    ],
+    "project_type": "Full Project",
+    "download_paths": []
+  },
+  "BudgetingSpreadsheet": {
+    "variable_name": "BudgetingSpreadsheet",
+    "category": "mini",
+    "title": "Budgeting Spreadsheet Automation",
+    "description": "\n    A Python-based tool that automates the setup of budgeting spreadsheets by inserting formulas and formatting new sheets each year. \n    The program ensures consistent calculations and improves readability with automated conditional formatting.\n    \n    I have since replaced this with my Spending Dashboard project, which is a more robust solution for tracking my spending.\n    ",
+    "date": "2024-01-16",
+    "last_update": null,
+    "vid_link": null,
+    "github_link": null,
+    "img_paths": [
+      "images/other/spreadsheet1.png",
+      "images/other/spreadsheet2.png",
+      "images/other/spreadsheet3.png",
+      "images/other/spreadsheet4.png"
+    ],
+    "what_i_did": [
+      "Developed a Python script to automate spreadsheet formula insertion, **reducing manual effort** and **improving consistency** in yearly budget tracking.",
+      "Built a simple **Tkinter-based GUI** to enhance usability, enabling efficient spreadsheet updates without manual coding."
+    ],
+    "tags": [
+      "python"
+    ],
+    "project_type": "Mini Project",
+    "download_paths": []
+  },
+  "DiamondCityRadio": {
+    "variable_name": "DiamondCityRadio",
+    "category": "mini",
+    "title": "Diamond City Radio (Fallout-Inspired Music Player)",
+    "description": "\n    A Java-based music player inspired by Fallout 4’s Diamond City Radio. \n    The app plays a mix of music tracks and voice clips, dynamically interweaving DJ commentary between songs to simulate an in-game radio experience.\n    ",
+    "date": "2024-04-27",
+    "last_update": null,
+    "vid_link": "https://youtu.be/E9zW9e6HOzU",
+    "github_link": null,
+    "img_paths": [],
+    "what_i_did": [
+      "Implemented an **optimized file-loading system** for music and voice lines, reducing load times and ensuring seamless playback.",
+      "Integrated Box2D for **accurate entity collision detection**, improving UI responsiveness.",
+      "Developed logic for **dynamic voice line selection**, enhancing game immersion with contextual dialogue."
+    ],
+    "tags": [
+      "java",
+      "libgdx"
+    ],
+    "project_type": "Mini Project",
+    "download_paths": []
+  },
+  "PortfolioSite": {
+    "variable_name": "PortfolioSite",
+    "category": "mini",
+    "title": "Personal Portfolio Website",
+    "description": "\n    Built with **Streamlit** and **Docker**, this site dynamically displays my projects.\n\n    Instead of manually updating project entries, the site uses a **custom `ProjectObject` system**  \n    to automatically render content based on structured metadata.  \n    This keeps everything **organized, scalable, and easy to maintain**.\n    ",
+    "date": "2025-03-07",
+    "last_update": "2025-04-10",
+    "vid_link": null,
+    "github_link": "https://github.com/dragonstonehafiz/portfolio-site",
+    "img_paths": [
+      "images/other/portfolio_homepage.png",
+      "images/other/portfolio_projects.png"
+    ],
+    "what_i_did": [
+      "**Designed and developed** a responsive portfolio site using **Streamlit**, ensuring a clean and accessible UI.",
+      "**Implemented a project filtering system** based on tags and categories, allowing users to easily browse different projects.",
+      "**Integrated Google Cloud and Docker for hosting**, enabling seamless updates and version control.",
+      "**Developed an automatic project rendering system**, using a custom `ProjectObject` class for consistency and maintainability."
+    ],
+    "tags": [
+      "python",
+      "streamlit"
+    ],
+    "project_type": "Full Project",
+    "download_paths": []
+  },
+  "YouTubeCommentAnalyzer": {
+    "variable_name": "YouTubeCommentAnalyzer",
+    "category": "mini",
+    "title": "YouTube Comment Keyword Search",
+    "description": "\n    I started this project because I have a small YouTube channel that I run as a hobby and wanted to find out what people were saying about my videos. \n    I also wanted to take a crack at doing **sentiment analysis** just to see how it worked. \n    Using [YouTube Data API](https://developers.google.com/youtube/v3), I extracted video and comment data from my channel which I then used to perform sentiment analysis. \n    Using the generated sentiment scores, I generated multiple Word Clouds to visualize the most frequently appearing words on negative and positive comments.\n    \n    In the end, I wasn't able to learn anything I didn't already know from the word clouds, but it was a fun project nevertheless.\n\n    Everything in this project was written in `Python`. \n    Libraries like `pandas`, `matplotlib`, `wordcloud`, `spacy`, and `sklearn` were used to help with data manipulation and visualization.\n    ",
+    "date": "2024-08-06",
+    "last_update": null,
+    "vid_link": null,
+    "github_link": null,
+    "img_paths": [
+      "images/other/youtube1.png",
+      "images/other/youtube2.png",
+      "images/other/youtube3.png",
+      "images/other/youtube4.png",
+      "images/other/youtube5.png",
+      "images/other/youtube6.png"
+    ],
+    "what_i_did": [
+      "Extracted and processed YouTube video and comment data **using the YouTube Data API** for sentiment analysis.",
+      "Implemented **sentiment classification using a pretrained RoBERTa model**, achieving high-accuracy results.",
+      "Developed word **cloud visualizations with matplotlib** and wordcloud, revealing key discussion trends."
+    ],
+    "tags": [
+      "python",
+      "api",
+      "ai"
+    ],
+    "project_type": "Mini Project",
+    "download_paths": []
+  },
+  "gakumas_lilja_step1": {
+    "variable_name": "gakumas_lilja_step1",
+    "category": "translation",
+    "title": "Gakuen Idolmaster: Lilja Step 1",
+    "description": null,
+    "date": "2025-06-15",
+    "last_update": null,
+    "vid_link": "https://youtu.be/8Ncm2_M6FSI?si=Boe_DpPYo4UjQgRm",
+    "github_link": null,
+    "img_paths": [],
+    "what_i_did": [],
+    "tags": [
+      "translation"
+    ],
+    "project_type": "Gakuen Idolmaster",
+    "download_paths": [
+      "downloads/gakumas/gakumas_liljaStep1.en.ass",
+      "downloads/gakumas/gakumas_liljaStep1.ja.ass"
+    ]
+  },
+  "gakumas_lilja_step2": {
+    "variable_name": "gakumas_lilja_step2",
+    "category": "translation",
+    "title": "Gakuen Idolmaster: Lilja Step 2",
+    "description": null,
+    "date": "2025-07-13",
+    "last_update": null,
+    "vid_link": "https://youtu.be/wigz91b--Xc",
+    "github_link": null,
+    "img_paths": [],
+    "what_i_did": [],
+    "tags": [
+      "translation"
+    ],
+    "project_type": "Gakuen Idolmaster",
+    "download_paths": [
+      "downloads/gakumas/gakumas_liljaStep2.en.ass",
+      "downloads/gakumas/gakumas_liljaStep2.ja.ass"
+    ]
+  },
+  "makeine_vol1ep1": {
+    "variable_name": "makeine_vol1ep1",
+    "category": "translation",
+    "title": "Too Many Losing Heroines!!! Drama CD Vol. 1 \"I'll teach you the secret to style\"",
+    "description": null,
+    "date": "2025-02-23",
+    "last_update": null,
+    "vid_link": "https://youtu.be/gRx0sX_9PyA?si=EAmbJ3nRvHAEaBqd",
+    "github_link": null,
+    "img_paths": [],
+    "what_i_did": [],
+    "tags": [
+      "anime"
+    ],
+    "project_type": "Too Many Losing Heroines!!!",
+    "download_paths": [
+      "downloads/makeine_season1/makeine_vol1ep1.en.ass",
+      "downloads/makeine_season1/makeine_vol1ep1.ja.ass"
+    ]
+  },
+  "makeine_vol1ep2": {
+    "variable_name": "makeine_vol1ep2",
+    "category": "translation",
+    "title": "Too Many Losing Heroines!!! Drama CD Vol. 1 \"Be careful with sneak photography.\"",
+    "description": null,
+    "date": "2025-03-15",
+    "last_update": null,
+    "vid_link": "https://youtu.be/KPy_66wKk34",
+    "github_link": null,
+    "img_paths": [],
+    "what_i_did": [],
+    "tags": [
+      "anime"
+    ],
+    "project_type": "Too Many Losing Heroines!!!",
+    "download_paths": [
+      "downloads/makeine_season1/makeine_vol1ep2.en.ass",
+      "downloads/makeine_season1/makeine_vol1ep2.ja.ass"
+    ]
+  },
+  "makeine_vol1ep3": {
+    "variable_name": "makeine_vol1ep3",
+    "category": "translation",
+    "title": "Too Many Losing Heroines!!! Drama CD Vol. 1 \"Let's aim for the one chance!\"",
+    "description": null,
+    "date": "2025-05-01",
+    "last_update": null,
+    "vid_link": "https://youtu.be/vn_1bNIXBTU",
+    "github_link": null,
+    "img_paths": [],
+    "what_i_did": [],
+    "tags": [
+      "anime",
+      "translation"
+    ],
+    "project_type": "Too Many Losing Heroines!!!",
+    "download_paths": [
+      "downloads/makeine_season1/makeine_vol1ep3.en.ass",
+      "downloads/makeine_season1/makeine_vol1ep3.ja.ass"
+    ]
+  },
+  "makeine_vol2ep1": {
+    "variable_name": "makeine_vol2ep1",
+    "category": "translation",
+    "title": "Too Many Losing Heroines!!! Drama CD Vol. 2 \"Don't Forget to Level Up\"",
+    "description": null,
+    "date": "2025-07-27",
+    "last_update": null,
+    "vid_link": "https://youtu.be/qJOps4YbTQU",
+    "github_link": null,
+    "img_paths": [],
+    "what_i_did": [],
+    "tags": [
+      "anime",
+      "translation"
+    ],
+    "project_type": "Too Many Losing Heroines!!!",
+    "download_paths": [
+      "downloads/makeine_season1/makeine_vol2ep1.en.ass",
+      "downloads/makeine_season1/makeine_vol2ep1.ja.ass"
+    ]
+  },
+  "makeine_vol2ep2": {
+    "variable_name": "makeine_vol2ep2",
+    "category": "translation",
+    "title": "Too Many Losing Heroines!!! Drama CD Vol. 2 \"Secret Photoshoot\"",
+    "description": null,
+    "date": "2025-07-27",
+    "last_update": null,
+    "vid_link": "https://youtu.be/7gY6SVu6fsw",
+    "github_link": null,
+    "img_paths": [],
+    "what_i_did": [],
+    "tags": [
+      "anime",
+      "translation"
+    ],
+    "project_type": "Too Many Losing Heroines!!!",
+    "download_paths": [
+      "downloads/makeine_season1/makeine_vol2ep2.en.ass",
+      "downloads/makeine_season1/makeine_vol2ep2.ja.ass"
+    ]
+  },
+  "makeine_vol2ep3": {
+    "variable_name": "makeine_vol2ep3",
+    "category": "translation",
+    "title": "Too Many Losing Heroines!!! Drama CD Vol. 2 \"Take Responsibility\"",
+    "description": null,
+    "date": "2025-08-11",
+    "last_update": null,
+    "vid_link": "https://youtu.be/xhvKAjgbikQ",
+    "github_link": null,
+    "img_paths": [],
+    "what_i_did": [],
+    "tags": [
+      "anime",
+      "translation"
+    ],
+    "project_type": "Too Many Losing Heroines!!!",
+    "download_paths": [
+      "downloads/makeine_season1/makeine_vol2ep3.en.ass",
+      "downloads/makeine_season1/makeine_vol2ep3.ja.ass"
+    ]
+  },
+  "nichijou_himekuri_vol1_4": {
+    "variable_name": "nichijou_himekuri_vol1_4",
+    "category": "translation",
+    "title": "Nichijou Daily Calendar CD Vol. 1: \"April\"",
+    "description": null,
+    "date": "2025-04-12",
+    "last_update": null,
+    "vid_link": "https://youtu.be/Jjik_sl7e-E",
+    "github_link": null,
+    "img_paths": [],
+    "what_i_did": [],
+    "tags": [
+      "anime",
+      "translation"
+    ],
+    "project_type": "Nichijou",
+    "download_paths": [
+      "downloads/nichijou/nichijou_month4.en.ass",
+      "downloads/nichijou/nichijou_month4.ja.ass"
+    ]
+  }
+}

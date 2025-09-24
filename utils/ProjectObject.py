@@ -63,7 +63,7 @@ class ProjectObject:
                     for item in self.what_i_did:
                         st.markdown(f"- {item}")
 
-            if self.img_paths is not None:
+            if self.img_paths is not None and len(self.img_paths) != 0:
                 with st.expander("Gallery"):
                     # Create a slider to select the image index
                     img_index = st.slider(

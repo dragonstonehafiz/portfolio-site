@@ -1,6 +1,5 @@
 import streamlit as st
-import utils.ProjData_Normal as ProjData_Normal
-import utils.ProjData_MiniProject as ProjData_Mini
+from utils.ProjectLoader import load_page_projects
 from utils.StreamlitFormat import create_page_elements
 
 st.set_page_config(
@@ -8,23 +7,9 @@ st.set_page_config(
     page_icon="📚"
 )
 
-featured_projects = {
-        # "Personal Portfolio Website": ProjData_Mini.PortfolioSite,
-        "Spending Dashboard": ProjData_Normal.SpendingDashboard,
-        "Edge Bird Targetter": ProjData_Normal.BirdLaserTargeter,
-        "Translator Helper": ProjData_Normal.TranslatorHelper,
-        "Anime Image Upscaler": ProjData_Normal.ESRGAN_M,
-        "Resource Management Game": ProjData_Normal.ResourceManagementGame,
-        "Electronica": ProjData_Normal.Electronica,
-        "L.O.C.U.S.": ProjData_Normal.Locus,
-        "The Last Survivor": ProjData_Normal.Last_Survivor,
-        # "AI Game": ProjData_Normal.AI_Game,
-        # "Simple Physics Game": ProjData_Normal.Physics_Game,
-        "Diamond City Radio": ProjData_Mini.DiamondCityRadio,
-        "YouTube Comment Keyword Search": ProjData_Mini.YouTubeCommentAnalyzer,
-        "Japanese Learning Card Game": ProjData_Normal.JapaneseLearningCardGame
-        }
-    
+# Load featured projects from page configuration
+featured_projects = load_page_projects("projects_archive")
+
 st.title("Project Archive")
 
 st.header("Introduction")

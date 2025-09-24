@@ -1,5 +1,5 @@
 import streamlit as st
-import utils.ProjData_Translate as ProjectData
+from utils.ProjectLoader import load_page_projects
 from utils.StreamlitFormat import create_page_elements
 
 st.set_page_config(
@@ -25,17 +25,10 @@ st.markdown(
     """
     )
 
-projects = {
-    'Too Many Losing Heroines!!! Drama CD Vol. 1 Story 1': ProjectData.makeine_vol1ep1,
-    # 'Too Many Losing Heroines!!! Drama CD Vol. 1 Story 2': ProjectData.makeine_vol1ep2,
-    # 'Too Many Losing Heroines!!! Drama CD Vol. 1 Story 3': ProjectData.makeine_vol1ep3,
-    'Nichijou Daily Calendar CD Vol. 1: "April"': ProjectData.nichijou_himekuri_vol1_4,
-    "Gakuen Idolmaster - Lilja Katsuragi STEP 1": ProjectData.gakumas_lilja_step1,
-    "Gakuen Idolmaster - Lilja Katsuragi STEP 2": ProjectData.gakumas_lilja_step2,
-    'Too Many Losing Heroines!!! Drama CD Vol. 2 Story 1': ProjectData.makeine_vol2ep1,
-}
+# Load featured projects from page configuration
+featured_projects = load_page_projects("translations")
 
 st.header("Projects")
 
-create_page_elements(projects, "translations")
+create_page_elements(featured_projects, "translations")
 

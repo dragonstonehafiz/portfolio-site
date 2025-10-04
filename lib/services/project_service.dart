@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import '../utils/projects.dart';
 
@@ -27,7 +28,7 @@ class ProjectService {
         _allProjects![entry.key] = Project.fromJson(entry.key, entry.value);
       }
     } catch (e) {
-      print('Error loading projects.json: $e');
+      debugPrint('Error loading projects.json: $e');
       _allProjects = {};
     }
   }
@@ -38,7 +39,7 @@ class ProjectService {
       final String configJson = await rootBundle.loadString('assets/page_config.json');
       _pageConfig = json.decode(configJson);
     } catch (e) {
-      print('Error loading page_config.json: $e');
+      debugPrint('Error loading page_config.json: $e');
       _pageConfig = {'page_configurations': {}};
     }
   }
@@ -54,7 +55,7 @@ class ProjectService {
     
     final pageConfig = pageConfigs[pageName] as Map<String, dynamic>?;
     if (pageConfig == null) {
-      print('Page configuration not found for: $pageName');
+      debugPrint('Page configuration not found for: $pageName');
       return [];
     }
     
@@ -66,7 +67,7 @@ class ProjectService {
       if (project != null) {
         projects.add(project);
       } else {
-        print('Project not found: $id');
+        debugPrint('Project not found: $id');
       }
     }
     

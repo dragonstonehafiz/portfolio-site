@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:youtube_player_iframe/youtube_player_iframe.dart';
+import '../widgets/youtube_embedded.dart';
 import '../utils/theme.dart';
 import '../routes/app_routes.dart';
 
@@ -137,15 +137,9 @@ class Project {
                       ? (imgPaths.length >= 2
                           ? _buildTwoImagePreview()
                           : _buildSingleImagePreview())
-                      : const Center(
-                          child: Text(
-                            'No Preview Available',
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
+                      : (vidLink != null
+                          ? _buildVideoWidget(context)
+                          : const SizedBox.shrink()),
                 ),
               ),
             ],
@@ -207,7 +201,7 @@ class Project {
           // Tags
           if (tags.isNotEmpty) ...[
             const SizedBox(height: 32),
-            _buildSection('Technologies & Tags', null),
+            _buildSection('Tags', null),
             const SizedBox(height: 12),
             _buildTagsWidget(maxToShow: tags.length),
           ],
@@ -257,7 +251,6 @@ class Project {
       ],
     );
   }
-
 
   String _formatDate(String dateStr) {
     try {
@@ -424,7 +417,29 @@ class Project {
             ),
           ),
         ),
+
         const SizedBox(width: 8),
+
+        // Video link (if available) shown before GitHub link
+        if (vidLink != null) ...[
+          isPreview
+              ? TextButton(
+                  onPressed: () => _openLink(vidLink!),
+                  child: const Text('Video', style: TextStyle(fontSize: 12)),
+                )
+              : Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: TextButton.icon(
+                    onPressed: () => _openLink(vidLink!),
+                    icon: const Icon(Icons.play_circle_fill, size: 16),
+                    label: const Text('Watch Video'),
+                    style: TextButton.styleFrom(
+                      foregroundColor: AppColors.skyDark,
+                    ),
+                  ),
+                ),
+        ],
+
         // Github link next to project type
         if (githubLink != null) ...[
           isPreview
@@ -442,11 +457,13 @@ class Project {
                       foregroundColor: AppColors.skyDark,
                     ),
                   ),
-    ),
-    ],
-  const SizedBox(width: 8),
+                ),
+        ],
+
+        const SizedBox(width: 8),
+
         Text(
-          isPreview ? (DateTime.tryParse(date)?.year.toString() ?? date) : 'Started: ${_formatDate(date)}',
+          isPreview ? (DateTime.tryParse(date)?.year.toString() ?? date) : 'Created: ${_formatDate(date)}',
           style: const TextStyle(fontSize: 12, color: Colors.grey),
         ),
         if (!isPreview && lastUpdate != null) ...[
@@ -623,105 +640,24 @@ class Project {
   Widget _buildVideoWidget(BuildContext context, {double width = 427, double height = 240}) {
     final link = vidLink;
     if (link == null) return const SizedBox.shrink();
-    final ytId = _extractYoutubeId(link);
-    if (ytId != null) {
-      // This prevents any sidebars since the player fills the fixed box.
-      final aspect = width / height;
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Center(
-            child: SizedBox(
-              width: width,
-              height: height,
-              child: YoutubeEmbed(ytId, aspectRatio: aspect),
-            ),
-          ),
-          const SizedBox(height: 12),
-        ],
-      );
-    }
 
-    return Row(
+    // Delegate ID extraction and fallback button to the YoutubeEmbed widget.
+    final aspect = width / height;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ElevatedButton.icon(
-          onPressed: () => _openLink(link),
-          icon: const Icon(Icons.play_arrow),
-          label: const Text('Watch Video'),
-          style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.skyDark,
-            foregroundColor: Colors.white,
+        Center(
+          child: SizedBox(
+            width: width,
+            height: height,
+            child: YoutubeEmbed(link, aspectRatio: aspect),
           ),
         ),
+        const SizedBox(height: 12),
       ],
     );
   }
 
-  // Try to extract the YouTube video id from common YouTube URL formats.
-  String? _extractYoutubeId(String url) {
-    try {
-      final uri = Uri.parse(url);
-      // Examples:
-      // - https://www.youtube.com/watch?v=VIDEOID
-      // - https://youtu.be/VIDEOID
-      // - https://www.youtube.com/embed/VIDEOID
-      if ((uri.host.contains('youtube.com') || uri.host.contains('youtu.be'))) {
-        if (uri.host.contains('youtu.be')) {
-          return uri.pathSegments.isNotEmpty ? uri.pathSegments.first : null;
-        }
-
-        if (uri.pathSegments.contains('embed')) {
-          final idx = uri.pathSegments.indexOf('embed');
-          if (uri.pathSegments.length > idx + 1) return uri.pathSegments[idx + 1];
-        }
-
-        return uri.queryParameters['v'];
-      }
-    } catch (e) {
-      // ignore: avoid_print
-      print('Error parsing YouTube url: $e');
-    }
-    return null;
-  }
 
 }
 
-// A lightweight embedded YouTube player widget using youtube_player_iframe.
-class YoutubeEmbed extends StatefulWidget {
-  final String videoId;
-  final double aspectRatio;
-  const YoutubeEmbed(this.videoId, {super.key, this.aspectRatio = 16 / 9});
-
-  @override
-  State<YoutubeEmbed> createState() => _YoutubeEmbedState();
-}
-
-class _YoutubeEmbedState extends State<YoutubeEmbed> {
-  late YoutubePlayerController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = YoutubePlayerController.fromVideoId(
-      videoId: widget.videoId,
-      params: const YoutubePlayerParams(
-        showControls: true,
-        showFullscreenButton: true,
-      ),
-    );
-  }
-
-  @override
-  void dispose() {
-    _controller.close();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return YoutubePlayer(
-      controller: _controller,
-      aspectRatio: widget.aspectRatio,
-    );
-  }
-}

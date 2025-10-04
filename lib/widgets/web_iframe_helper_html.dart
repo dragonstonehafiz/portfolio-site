@@ -1,7 +1,13 @@
 // Web implementation: registers an IFrameElement using modern web APIs
 import 'dart:ui_web' as ui_web;
 import 'package:web/web.dart';
-import 'dart:js' as js;
+import 'dart:js_interop';
+
+@JS('eval')
+external void jsEval(String code);
+
+@JS('enableIframeInteraction')
+external void enableIframeInteraction(String id);
 
 String createIframeView(String id, String src, {double width = 640, double height = 360}) {
   final viewId = 'youtube-iframe-$id-${DateTime.now().millisecondsSinceEpoch}';
@@ -33,15 +39,13 @@ String createIframeView(String id, String src, {double width = 640, double heigh
     (int viewId) => iframe,
   );
   // Expose a simple JS-callable function to enable pointer events on the iframe element
-  js.context.callMethod('eval', [
-    '''
+  jsEval('''
     window.enableIframeInteraction = function(id) {
       try {
         var el = document.getElementById(id);
         if (el) el.style.pointerEvents = 'auto';
       } catch(e) {}
     }
-    ''',
-  ]);
+  ''');
   return viewId;
 }

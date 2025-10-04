@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'web_iframe_helper_html.dart';
-import 'dart:js' as js;
 
 /// A lightweight embedded YouTube player that accepts either a full
 class YoutubeEmbed extends StatefulWidget {
@@ -37,7 +36,7 @@ class _YoutubeEmbedState extends State<YoutubeEmbed> {
             bool activated = false;
             void activate() {
               try {
-                js.context.callMethod('enableIframeInteraction', [viewId]);
+                enableIframeInteraction(viewId);
               } catch (_) {}
               setState(() => activated = true);
             }
@@ -52,13 +51,13 @@ class _YoutubeEmbedState extends State<YoutubeEmbed> {
                   // Overlay: show play button and intercept pointer events until activated
                   if (!activated)
                     Material(
-                      color: Colors.black.withOpacity(0.35),
+                      color: Colors.black.withValues(alpha: 0.35),
                       child: InkWell(
                         onTap: activate,
                         child: Center(
                           child: Container(
                             decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(0.9),
+                              color: Colors.white.withValues(alpha: 0.9),
                               shape: BoxShape.circle,
                             ),
                             padding: const EdgeInsets.all(12),

@@ -1,5 +1,7 @@
 # Portfolio Site
 
+> NOTE: This repository contains a Flutter web app located in the `lib/` folder. The Flutter app is intentionally configured and supported for web only. Non-web platforms (iOS, Android, macOS, Windows, Linux) are not supported in this workspace. See `WEB_ONLY.md` for details.
+
 This repository contains the source code for my **personal portfolio site**, built using **Streamlit**.  
 The site serves as a showcase of my projects, including **AI tools, game development work, and automation scripts**.  
 

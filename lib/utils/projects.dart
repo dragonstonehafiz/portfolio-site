@@ -461,79 +461,105 @@ class Project {
 
   // Meta row (project type and date) used both in preview and full view
   Widget _buildMetaRow(BuildContext context, {bool isPreview = false}) {
-    return Row(
+    // Split meta into three stacked rows to avoid horizontal overflow on narrow
+    // screens: (1) project type, (2) links (video & github), (3) dates
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: isPreview ? 8 : 12, vertical: isPreview ? 4 : 6),
-          decoration: BoxDecoration(
-            color: AppColors.skyAccent.withOpacity(0.2),
-            borderRadius: BorderRadius.circular(isPreview ? 12 : 16),
-          ),
-          child: Text(
-            projectType,
-            style: TextStyle(
-              fontSize: isPreview ? 12 : 14,
-              color: AppColors.skyDark,
-              fontWeight: FontWeight.w500,
+        // Row 1: Project type
+        Row(
+          children: [
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: isPreview ? 8 : 12, vertical: isPreview ? 4 : 6),
+              decoration: BoxDecoration(
+                color: AppColors.skyAccent.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(isPreview ? 12 : 16),
+              ),
+              child: Text(
+                projectType,
+                style: TextStyle(
+                  fontSize: isPreview ? 12 : 14,
+                  color: AppColors.skyDark,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
             ),
-          ),
+          ],
         ),
 
-        const SizedBox(width: 8),
+        const SizedBox(height: 8),
 
-        // Video link (if available) shown before GitHub link
-        if (vidLink != null) ...[
-          isPreview
-              ? TextButton(
-                  onPressed: () => _openLink(vidLink!),
-                  child: const Text('Video', style: TextStyle(fontSize: 12)),
-                )
-              : Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: TextButton.icon(
-                    onPressed: () => _openLink(vidLink!),
-                    icon: const Icon(Icons.play_circle_fill, size: 16),
-                    label: const Text('Watch Video'),
-                    style: TextButton.styleFrom(
-                      foregroundColor: AppColors.skyDark,
-                    ),
-                  ),
-                ),
-        ],
+        // Row 2: Links (video then github)
+        if (vidLink != null || githubLink != null)
+          Row(
+            children: [
+              if (vidLink != null) ...[
+                isPreview
+                    ? TextButton(
+                        onPressed: () => _openLink(vidLink!),
+                        child: const Text('Video Link', style: TextStyle(fontSize: 12)),
+                      )
+                    : Padding(
+                        padding: const EdgeInsets.only(left: 0.0),
+                        child: TextButton.icon(
+                          onPressed: () => _openLink(vidLink!),
+                          icon: const Icon(Icons.play_circle_fill, size: 16),
+                          label: const Text('Watch Video'),
+                          style: TextButton.styleFrom(
+                            foregroundColor: AppColors.skyDark,
+                          ),
+                        ),
+                      ),
+              ],
 
-        // Github link next to project type
-        if (githubLink != null) ...[
-          isPreview
-              ? TextButton(
-                  onPressed: () => _openLink(githubLink!),
-                  child: const Text('GitHub Link', style: TextStyle(fontSize: 12)),
-                )
-              : Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: TextButton.icon(
-                    onPressed: () => _openLink(githubLink!),
-                    icon: const Icon(Icons.code, size: 16),
-                    label: const Text('GitHub Link'),
-                    style: TextButton.styleFrom(
-                      foregroundColor: AppColors.skyDark,
-                    ),
-                  ),
-                ),
-        ],
+              // Only insert horizontal spacing if both links are present
+              if (vidLink != null && githubLink != null) const SizedBox(width: 8),
 
-        const SizedBox(width: 8),
-
-        Text(
-          isPreview ? (DateTime.tryParse(date)?.year.toString() ?? date) : 'Created: ${_formatDate(date)}',
-          style: const TextStyle(fontSize: 12, color: Colors.grey),
-        ),
-        if (!isPreview && lastUpdate != null) ...[
-          const SizedBox(width: 16),
-          Text(
-            'Updated: ${_formatDate(lastUpdate!)}',
-            style: const TextStyle(fontSize: 12, color: Colors.grey),
+              if (githubLink != null) ...[
+                isPreview
+                    ? TextButton(
+                        onPressed: () => _openLink(githubLink!),
+                        child: const Text('GitHub Link', style: TextStyle(fontSize: 12)),
+                      )
+                    : Padding(
+                        padding: const EdgeInsets.only(left: 0.0),
+                        child: TextButton.icon(
+                          onPressed: () => _openLink(githubLink!),
+                          icon: const Icon(Icons.code, size: 16),
+                          label: const Text('GitHub Link'),
+                          style: TextButton.styleFrom(
+                            foregroundColor: AppColors.skyDark,
+                          ),
+                        ),
+                      ),
+              ],
+            ],
           ),
-        ],
+
+        const SizedBox(height: 8),
+
+        // Row 3: Dates
+        Row(
+          children: [
+            Flexible(
+              child: Text(
+                isPreview ? (_formatDate(date)) : 'Created: ${_formatDate(date)}',
+                style: const TextStyle(fontSize: 12, color: Colors.grey),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            if (!isPreview && lastUpdate != null) ...[
+              const SizedBox(width: 16),
+              Flexible(
+                child: Text(
+                  'Updated: ${_formatDate(lastUpdate!)}',
+                  style: const TextStyle(fontSize: 12, color: Colors.grey),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
+          ],
+        ),
       ],
     );
   }
@@ -714,20 +740,45 @@ class Project {
   }
 
   // Video widget: shows an embedded YouTube player when possible, otherwise a fallback button
-  Widget _buildVideoWidget(BuildContext context, {double width = 427, double height = 240}) {
+  Widget _buildVideoWidget(BuildContext context) {
     final link = vidLink;
     if (link == null) return const SizedBox.shrink();
 
-    // Delegate ID extraction and fallback button to the YoutubeEmbed widget.
-    final aspect = width / height;
+    final screenSize = MediaQuery.of(context).size;
+    final isMobile = screenSize.width < 768;
+
+    // On mobile, constrain width to a large proportion of the screen and compute
+    // height using a 16:9 aspect ratio (or fallback to a square if very narrow).
+    if (isMobile) {
+      final width = screenSize.width * 0.92; // account for page padding
+      final height = (width * 9) / 16;
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Center(
+            child: SizedBox(
+              width: width,
+              height: height,
+              child: _buildResponsiveVideoPreview(context, width, height),
+            ),
+          ),
+          const SizedBox(height: 12),
+        ],
+      );
+    }
+
+    // On desktop/tablet use the desktop preview which adapts to available space.
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Center(
-          child: SizedBox(
-            width: width,
-            height: height,
-            child: YoutubeEmbed(link, aspectRatio: aspect),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: screenSize.width * 0.8,
+              maxHeight: screenSize.height * 0.6,
+              minHeight: 200,
+            ),
+            child: _buildDesktopVideoPreview(context),
           ),
         ),
         const SizedBox(height: 12),

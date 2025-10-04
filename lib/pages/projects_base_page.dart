@@ -190,8 +190,7 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
           Expanded(
             child: Builder(
               builder: (context) {
-        final Future<List<Project>> projectsFuture = 
-          ProjectService.getProjectsForPage(widget.configKey, descending: _descending);
+                final Future<List<Project>> projectsFuture = ProjectService.getProjectsForPage(widget.configKey, descending: _descending);
                 return FutureBuilder<List<Project>>(
                   future: projectsFuture,
                   builder: (context, snapshot) {

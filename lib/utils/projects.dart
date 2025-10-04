@@ -472,7 +472,7 @@ class Project {
             Container(
               padding: EdgeInsets.symmetric(horizontal: isPreview ? 8 : 12, vertical: isPreview ? 4 : 6),
               decoration: BoxDecoration(
-                color: AppColors.skyAccent.withOpacity(0.2),
+                color: AppColors.skyAccent.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(isPreview ? 12 : 16),
               ),
               child: Text(
@@ -581,8 +581,8 @@ class Project {
       runSpacing: 4,
       children: tags.take(maxToShow).map((tag) => Chip(
         label: Text(tag, style: const TextStyle(fontSize: 12)),
-        backgroundColor: AppColors.sky.withOpacity(0.1),
-        side: BorderSide(color: AppColors.sky.withOpacity(0.3)),
+        backgroundColor: AppColors.sky.withValues(alpha: 0.1),
+        side: BorderSide(color: AppColors.sky.withValues(alpha: 0.3)),
       )).toList(),
     );
   }

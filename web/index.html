@@ -34,5 +34,33 @@
 </head>
 <body>
   <script src="flutter_bootstrap.js" async></script>
+  <!-- Small helper to create iframe elements and toggle interaction from Dart via JS interop -->
+  <script>
+    window.createYoutubeIframe = function(id, src, width, height) {
+      try {
+        var iframe = document.createElement('iframe');
+        iframe.src = src;
+        iframe.id = id;
+        iframe.style.border = '0';
+        iframe.style.pointerEvents = 'none';
+        try { iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'; } catch(e) {}
+        iframe.setAttribute('allowfullscreen', 'true');
+        // Set explicit CSS width/height when provided as finite numbers
+        if (typeof width === 'number' && isFinite(width) && width > 0) iframe.style.width = width + 'px'; else iframe.style.width = '100%';
+        if (typeof height === 'number' && isFinite(height) && height > 0) iframe.style.height = height + 'px'; else iframe.style.height = '100%';
+        iframe.style.display = 'block';
+        return iframe;
+      } catch (e) {
+        return null;
+      }
+    };
+
+    window.enableIframeInteraction = function(id) {
+      try {
+        var el = document.getElementById(id);
+        if (el) el.style.pointerEvents = 'auto';
+      } catch (e) {}
+    };
+  </script>
 </body>
 </html>

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import 'dart:convert';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/custom_footer.dart';
 import '../services/project_service.dart';
@@ -7,14 +9,12 @@ import '../utils/projects.dart';
 class ProjectsBasePage extends StatefulWidget {
   final String configKey;
   final String title;
-  final String descriptionTemplate;
   final IconData emptyStateIcon;
 
   const ProjectsBasePage({
     super.key,
     required this.configKey,
     required this.title,
-    required this.descriptionTemplate,
     this.emptyStateIcon = Icons.folder_outlined,
   });
 
@@ -38,6 +38,29 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
         _availableTags = tags.toList()..sort();
       });
     });
+    // Load description template from assets page_config.json (if available)
+    _loadDescriptionTemplate();
+  }
+
+  String? _loadedDescriptionTemplate;
+
+  Future<void> _loadDescriptionTemplate() async {
+    try {
+      final raw = await rootBundle.loadString('assets/page_config.json');
+      final Map<String, dynamic> jsonMap = json.decode(raw) as Map<String, dynamic>;
+      final configs = jsonMap['page_configurations'] as Map<String, dynamic>?;
+      if (configs != null && configs.containsKey(widget.configKey)) {
+        final cfg = configs[widget.configKey] as Map<String, dynamic>;
+        final desc = cfg['description'] as String?;
+        if (desc != null && desc.isNotEmpty) {
+          setState(() {
+            _loadedDescriptionTemplate = desc;
+          });
+        }
+      }
+    } catch (e) {
+      // If anything fails, silently fall back to the provided descriptionTemplate
+    }
   }
 
   // Helper method to determine if we're on a mobile device
@@ -143,7 +166,7 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
 
             // Description
             Text(
-              widget.descriptionTemplate.replaceFirst('{count}', '${projects.length}'),
+              ((_loadedDescriptionTemplate ?? '')).replaceFirst('{count}', '${projects.length}'),
               style: TextStyle(
                 fontSize: isMobile ? 16 : 18,
                 color: Colors.grey,
@@ -151,8 +174,29 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
             ),
             const SizedBox(height: 32),
 
-            // Projects grid
-            if (crossAxisCount == 1)
+            // Projects grid or empty state
+            if (projects.isEmpty)
+              Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      widget.emptyStateIcon,
+                      size: 64,
+                      color: Colors.grey,
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      'No ${widget.title.toLowerCase()} found',
+                      style: const TextStyle(
+                        fontSize: 18,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            else if (crossAxisCount == 1)
               // Mobile: Use Column for single column layout
               Column(
                 children: projects
@@ -230,29 +274,9 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
                       projects = projects.where((p) => p.tags.contains(_selectedTag)).toList();
                     }
 
-                    if (projects.isEmpty) {
-                      return Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              widget.emptyStateIcon,
-                              size: 64,
-                              color: Colors.grey,
-                            ),
-                            const SizedBox(height: 16),
-                            Text(
-                              'No ${widget.title.toLowerCase()} found',
-                              style: const TextStyle(
-                                fontSize: 18,
-                                color: Colors.grey,
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    }
-
+                    // Always render the responsive layout (header + description + content).
+                    // The layout will show an empty state where the projects grid would be
+                    // if `projects` is empty, so the filters and sorter remain visible.
                     return _buildResponsiveLayout(context, projects);
                   },
                 );

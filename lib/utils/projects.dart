@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import '../widgets/youtube_embedded.dart';
 import '../utils/theme.dart';
 import '../routes/app_routes.dart';
@@ -111,7 +112,7 @@ class Project {
               // Description preview
               if (description != null && description!.isNotEmpty) ...[
                 const SizedBox(height: 8),
-                _buildDescriptionWidget(maxLines: 2),
+                _buildDescriptionWidget(context, maxLines: 2),
               ],
 
               // Tags
@@ -168,7 +169,7 @@ class Project {
             const SizedBox(height: 32),
             _buildSection('About This Project', null),
             const SizedBox(height: 12),
-            _buildDescriptionWidget(),
+            _buildDescriptionWidget(context),
           ],
 
           // What I did
@@ -176,7 +177,7 @@ class Project {
             const SizedBox(height: 32),
             _buildSection('What I Did', null),
             const SizedBox(height: 12),
-            _buildWhatIDidList(),
+            _buildWhatIDidList(context),
           ],
 
           // Tags
@@ -565,13 +566,77 @@ class Project {
   }
 
   // Description widget (can be used in preview with maxLines)
-  Widget _buildDescriptionWidget({int? maxLines}) {
-    return Text(
-      description ?? '',
-      style: const TextStyle(fontSize: 16, color: Colors.grey, height: 1.4),
-      maxLines: maxLines,
-      overflow: maxLines != null ? TextOverflow.ellipsis : TextOverflow.visible,
+  Widget _buildDescriptionWidget(BuildContext context, {int? maxLines}) {
+    // Keep the preview behavior using plain Text so we can reliably show a
+    // truncated, single-line/2-line preview with ellipsis. For the full view
+    // (when maxLines is null) render Markdown so project descriptions can
+    // include formatting, links, lists, etc.
+    final content = description ?? '';
+
+    final theme = Theme.of(context);
+    final textStyle = theme.textTheme.bodyMedium?.copyWith(height: 1.4) ??
+        const TextStyle(fontSize: 16, color: Colors.grey, height: 1.4);
+
+    if (maxLines != null) {
+      return Text(
+        content,
+        style: textStyle,
+        maxLines: maxLines,
+        overflow: TextOverflow.ellipsis,
+      );
+    }
+
+    // Full view: normalize indentation to avoid accidental code-block
+    // rendering (many JSON files embed multiline strings with leading
+    // spaces). Then use Markdown body with a simple style mapping and
+    // wire link taps to the existing _openLink handler.
+    final normalized = _normalizeMultilineIndentation(content);
+
+    return MarkdownBody(
+      data: normalized,
+      selectable: false,
+      onTapLink: (text, href, title) async {
+        if (href != null && href.isNotEmpty) {
+          await _openLink(href);
+        }
+      },
+      styleSheet: MarkdownStyleSheet(
+        p: textStyle.copyWith(height: 1.6),
+        a: TextStyle(color: AppColors.skyDark),
+        listBullet: textStyle,
+      ),
     );
+  }
+
+  // Remove common leading indentation from multiline text so Markdown
+  // parsers don't treat the content as a code block when the source
+  // string was indented (for readability in JSON/YAML files).
+  String _normalizeMultilineIndentation(String input) {
+    if (input.isEmpty) return input;
+
+    final lines = input.replaceAll('\r\n', '\n').split('\n');
+    // Find minimum leading spaces among non-empty lines
+    int? minIndent;
+    for (final line in lines) {
+      if (line.trim().isEmpty) continue;
+      final match = RegExp(r'^(\s*)').firstMatch(line);
+      if (match != null) {
+        final indent = match.group(0)!.length;
+        if (minIndent == null || indent < minIndent) minIndent = indent;
+      }
+    }
+
+    if (minIndent == null || minIndent == 0) {
+      return input.trim();
+    }
+
+    final minIndentVal = minIndent;
+    final stripped = lines.map((line) {
+      if (line.trim().isEmpty) return '';
+      return line.length >= minIndentVal ? line.substring(minIndentVal) : line.trimLeft();
+    }).join('\n');
+
+    return stripped.trim();
   }
 
   // Tags widget
@@ -587,8 +652,13 @@ class Project {
     );
   }
 
-  // What I did list
-  Widget _buildWhatIDidList() {
+  // What I did list (render each item as Markdown so inline formatting and
+  // links work). Accepts BuildContext to use theme colors.
+  Widget _buildWhatIDidList(BuildContext context) {
+    final theme = Theme.of(context);
+    final itemStyle = theme.textTheme.bodyMedium?.copyWith(height: 1.5) ??
+        const TextStyle(fontSize: 16, height: 1.5);
+
     return Column(
       children: whatIDid.map((item) => Padding(
         padding: const EdgeInsets.only(bottom: 8.0),
@@ -606,9 +676,15 @@ class Project {
             ),
             const SizedBox(width: 12),
             Expanded(
-              child: Text(
-                item,
-                style: const TextStyle(fontSize: 16, height: 1.5),
+              child: MarkdownBody(
+                data: _normalizeMultilineIndentation(item),
+                styleSheet: MarkdownStyleSheet(
+                  p: itemStyle,
+                  listBullet: itemStyle,
+                ),
+                onTapLink: (text, href, title) async {
+                  if (href != null && href.isNotEmpty) await _openLink(href);
+                },
               ),
             ),
           ],

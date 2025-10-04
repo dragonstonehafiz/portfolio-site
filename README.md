@@ -1,21 +1,18 @@
 # Portfolio Site
 
-> NOTE: This repository contains a Flutter web app located in the `lib/` folder. The Flutter app is intentionally configured and supported for web only. Non-web platforms (iOS, Android, macOS, Windows, Linux) are not supported in this workspace. See `WEB_ONLY.md` for details.
+This repository contains the source code for my **personal portfolio site**, built using **Flutter for Web**.  
+The site serves as a showcase of my projects, including **AI tools, game development work, and automation scripts**.
 
-This repository contains the source code for my **personal portfolio site**, built using **Streamlit**.  
-The site serves as a showcase of my projects, including **AI tools, game development work, and automation scripts**.  
-
-**This portfolio site is hosted on [Google Cloud Run](https://cloud.google.com/run)**, allowing for **scalable, containerized deployment**.
-
+**This portfolio site is configured for web deployment only.** Native mobile and desktop platforms (iOS, Android, macOS, Windows, Linux) have been removed to keep the project focused and lightweight.
 
 ## Features
-- **Project Listings** – Organized into categories (Featured, Projects, Mini Projects, Translations).
-- **Dynamic Filtering** – Sidebar allows filtering projects by tags.
-- **Interactive Design** – Uses Streamlit for a simple, clean UI.
-- **Deployment with Docker & Google Cloud Run** – Containerized for cloud hosting.
+- **Project Listings** – Organized into categories (Featured, Projects, Translations).
+- **Dynamic Project Pages** – Each project has its own URL at `/projects/<project-name>`.
+- **Markdown Support** – Project descriptions and details support full Markdown formatting.
+- **Responsive Design** – Optimized for both desktop and mobile web browsers.
+- **Static Web Deployment** – Builds to static files for easy hosting.
 
-
-## Running the Portfolio Locally
+## Development Setup
 
 ### **Clone the Repository**
 ```bash
@@ -24,43 +21,97 @@ cd portfolio-site
 ```
 
 ### **Install Dependencies**
-This project uses **Streamlit**. Install the required packages:
+This project requires **Flutter**. Install the required packages:
 ```bash
-pip install -r requirements.txt
+flutter pub get
 ```
 
-### **Run the Site**
+### **Run the Development Server**
 ```bash
-streamlit run 1_🏠︎_HomePage.py
+flutter run -d chrome
 ```
-The portfolio should now be accessible at **`http://localhost:8501`**.
+The portfolio will open in Chrome and be accessible at `http://localhost:<port>`.
 
-
-## Building a Docker Image
-
-To run the site inside a Docker container:
-
+### **Build for Production**
 ```bash
-docker build -t portfolio .
-docker run -p 8080:8080 portfolio
+flutter build web --release
 ```
+The built files will be in the `build/web/` directory.
 
-## Deploying to Google Cloud Run
+## Deployment
 
-This site is **hosted on Google Cloud Run**, which allows for easy **serverless deployment**.
+The built web files can be hosted on any static hosting service:
 
-### **Deployment Steps**
-1. Build and tag the Docker image:
+- **GitHub Pages** – Upload `build/web/` contents to your GitHub Pages repository.
+- **Netlify/Vercel** – Connect your repository and set build command to `flutter build web --release`.
+- **Firebase Hosting** – Use `firebase deploy` after building.
+- **Any Web Server** – Serve the `build/web/` directory as static files.
+
+### **Docker Container**
+
+You can also create a Docker container using the built web files:
+
+1. **Build the Flutter web app:**
+   ```bash
+   flutter build web --release
+   ```
+
+2. **Create a Dockerfile**:
+   ```dockerfile
+   FROM python:3.9-slim
+   EXPOSE 8080
+   WORKDIR /app
+   COPY build/web/ ./
+   ENTRYPOINT ["python", "-m", "http.server", "8080"]
+   ```
+
+   **Alternative with nginx (more production-ready):**
+   ```dockerfile
+   FROM nginx:alpine
+   COPY build/web/ /usr/share/nginx/html/
+   EXPOSE 80
+   CMD ["nginx", "-g", "daemon off;"]
+   ```
+
+3. **Build and run the Docker container:**
+   ```bash
+   docker build -t portfolio-site .
+   docker run -p 8080:8080 portfolio-site
+   ```
+   
+   The site will be available at `http://localhost:8080`.
+
+### **Google Cloud Deployment**
+
+To deploy the Docker container to Google Cloud Run:
+
+1. **Build and tag the Docker image:**
    ```bash
    docker tag <image-id> <your-registry-url>/portfolio-image
    ```
-2. Push the image to **Google Cloud Artifact Registry**:
+
+2. **Push the image to Google Cloud Artifact Registry:**
    ```bash
    docker push <your-registry-url>/portfolio-image
    ```
-3. Deploy to **Google Cloud Run**:
+
+3. **Deploy to Google Cloud Run:**
    - Navigate to [Google Cloud Run Console](https://console.cloud.google.com/run).
    - Select your project and deploy the new image.
 
 *Replace `<your-registry-url>` with the actual Google Cloud Artifact Registry URL.*  
 For detailed setup, refer to [Google Cloud's documentation](https://cloud.google.com/run/docs/deploying).
+
+## Project Structure
+
+- `lib/` – Flutter source code
+- `web/` – Web-specific configuration and assets
+- `assets/` – Project data (JSON) and images
+- `build/web/` – Generated web build output
+
+## Web-Only Configuration
+
+This repository is intentionally configured for web deployment only. The following platform directories have been removed:
+- `android/`, `ios/`, `macos/`, `windows/`, `linux/`
+
+To restore support for other platforms, run `flutter create .` in the project root, though this will require additional platform-specific configuration.

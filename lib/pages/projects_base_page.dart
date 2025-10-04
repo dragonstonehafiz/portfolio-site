@@ -4,7 +4,7 @@ import '../widgets/custom_footer.dart';
 import '../services/project_service.dart';
 import '../utils/projects.dart';
 
-class ProjectsBasePage extends StatelessWidget {
+class ProjectsBasePage extends StatefulWidget {
   final String configKey;
   final String title;
   final String descriptionTemplate;
@@ -17,6 +17,28 @@ class ProjectsBasePage extends StatelessWidget {
     required this.descriptionTemplate,
     this.emptyStateIcon = Icons.folder_outlined,
   });
+
+  @override
+  State<ProjectsBasePage> createState() => _ProjectsBasePageState();
+}
+
+class _ProjectsBasePageState extends State<ProjectsBasePage> {
+  // Sort order: default to descending (newest first)
+  bool _descending = true;
+  // Tag filter
+  String? _selectedTag;
+  List<String> _availableTags = [];
+
+  @override
+  void initState() {
+    super.initState();
+    // Load available tags for the dropdown
+    ProjectService.getAllTags().then((tags) {
+      setState(() {
+        _availableTags = tags.toList()..sort();
+      });
+    });
+  }
 
   // Helper method to determine if we're on a mobile device
   bool _isMobile(BuildContext context) {
@@ -58,20 +80,70 @@ class ProjectsBasePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Title
-            Text(
-              title,
-              style: TextStyle(
-                fontSize: isMobile ? 36 : 48,
-                fontWeight: FontWeight.bold,
-                color: Colors.blueGrey,
-              ),
+            // Title row with tag filter and sort toggle
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Text(
+                    widget.title,
+                    style: TextStyle(
+                      fontSize: isMobile ? 36 : 48,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blueGrey,
+                    ),
+                  ),
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // Tag filter dropdown
+                    DropdownButtonHideUnderline(
+                      child: DropdownButton<String?>(
+                        value: _selectedTag,
+                        hint: const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                          child: Text('All tags'),
+                        ),
+                        items: [
+                          const DropdownMenuItem<String?>(
+                            value: null,
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                              child: Text('All'),
+                            ),
+                          ),
+                          ..._availableTags.map((t) => DropdownMenuItem<String?>(
+                                value: t,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                                  child: Text(t),
+                                ),
+                              ))
+                              .toList(),
+                        ],
+                        onChanged: (v) => setState(() => _selectedTag = v),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    IconButton(
+                  tooltip: _descending ? 'Sort: Newest first' : 'Sort: Oldest first',
+                  onPressed: () {
+                    setState(() {
+                      _descending = !_descending;
+                    });
+                  },
+                  icon: Icon(_descending ? Icons.arrow_downward : Icons.arrow_upward),
+                    ),
+                  ],
+                ),
+              ],
             ),
             const SizedBox(height: 16),
-            
+
             // Description
             Text(
-              descriptionTemplate.replaceFirst('{count}', '${projects.length}'),
+              widget.descriptionTemplate.replaceFirst('{count}', '${projects.length}'),
               style: TextStyle(
                 fontSize: isMobile ? 16 : 18,
                 color: Colors.grey,
@@ -118,8 +190,8 @@ class ProjectsBasePage extends StatelessWidget {
           Expanded(
             child: Builder(
               builder: (context) {
-                final Future<List<Project>> projectsFuture = 
-                    ProjectService.getProjectsForPage(configKey);
+        final Future<List<Project>> projectsFuture = 
+          ProjectService.getProjectsForPage(widget.configKey, descending: _descending);
                 return FutureBuilder<List<Project>>(
                   future: projectsFuture,
                   builder: (context, snapshot) {
@@ -141,7 +213,7 @@ class ProjectsBasePage extends StatelessWidget {
                             ),
                             const SizedBox(height: 16),
                             Text(
-                              'Error loading ${title.toLowerCase()}: ${snapshot.error}',
+                              'Error loading ${widget.title.toLowerCase()}: ${snapshot.error}',
                               style: const TextStyle(
                                 fontSize: 16,
                                 color: Colors.red,
@@ -153,7 +225,11 @@ class ProjectsBasePage extends StatelessWidget {
                       );
                     }
 
-                    final projects = snapshot.data ?? [];
+                    var projects = snapshot.data ?? [];
+                    // Apply tag filter if selected
+                    if (_selectedTag != null && _selectedTag!.isNotEmpty) {
+                      projects = projects.where((p) => p.tags.contains(_selectedTag)).toList();
+                    }
 
                     if (projects.isEmpty) {
                       return Center(
@@ -161,13 +237,13 @@ class ProjectsBasePage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(
-                              emptyStateIcon,
+                              widget.emptyStateIcon,
                               size: 64,
                               color: Colors.grey,
                             ),
                             const SizedBox(height: 16),
                             Text(
-                              'No ${title.toLowerCase()} found',
+                              'No ${widget.title.toLowerCase()} found',
                               style: const TextStyle(
                                 fontSize: 18,
                                 color: Colors.grey,

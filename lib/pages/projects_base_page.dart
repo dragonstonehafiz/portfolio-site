@@ -18,6 +18,97 @@ class ProjectsBasePage extends StatelessWidget {
     this.emptyStateIcon = Icons.folder_outlined,
   });
 
+  // Helper method to determine if we're on a mobile device
+  bool _isMobile(BuildContext context) {
+    return MediaQuery.of(context).size.width < 768;
+  }
+
+  // Helper method to get appropriate cross axis count based on screen size
+  int _getCrossAxisCount(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    if (screenWidth < 768) {
+      return 1; // Mobile: single column
+    } else {
+      return 2; // Desktop/Tablet: 2 columns
+    }
+  }
+
+  // Helper method to get horizontal padding based on screen size
+  EdgeInsets _getResponsivePadding(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    if (screenWidth < 768) {
+      // Mobile: minimal horizontal padding
+      return const EdgeInsets.all(16.0);
+    } else {
+      // Desktop: add significant horizontal padding to prevent content from being too wide
+      final horizontalPadding = (screenWidth * 0.1).clamp(32.0, 120.0);
+      return EdgeInsets.fromLTRB(horizontalPadding, 32.0, horizontalPadding, 32.0);
+    }
+  }
+
+  // Build responsive layout for projects
+  Widget _buildResponsiveLayout(BuildContext context, List<Project> projects) {
+    final padding = _getResponsivePadding(context);
+    final crossAxisCount = _getCrossAxisCount(context);
+    final isMobile = _isMobile(context);
+
+    return SingleChildScrollView(
+      child: Padding(
+        padding: padding,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Title
+            Text(
+              title,
+              style: TextStyle(
+                fontSize: isMobile ? 36 : 48,
+                fontWeight: FontWeight.bold,
+                color: Colors.blueGrey,
+              ),
+            ),
+            const SizedBox(height: 16),
+            
+            // Description
+            Text(
+              descriptionTemplate.replaceFirst('{count}', '${projects.length}'),
+              style: TextStyle(
+                fontSize: isMobile ? 16 : 18,
+                color: Colors.grey,
+              ),
+            ),
+            const SizedBox(height: 32),
+
+            // Projects grid
+            if (crossAxisCount == 1)
+              // Mobile: Use Column for single column layout
+              Column(
+                children: projects
+                    .map((project) => Padding(
+                          padding: const EdgeInsets.only(bottom: 16),
+                          child: project.buildPreviewWidget(context),
+                        ))
+                    .toList(),
+              )
+            else
+              // Desktop/Tablet: Use GridView for multi-column layout
+              GridView.count(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                crossAxisCount: crossAxisCount,
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16,
+                childAspectRatio: isMobile ? 0.8 : 0.9, // Adjusted for responsive media containers
+                children: projects
+                    .map((project) => project.buildPreviewWidget(context))
+                    .toList(),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,34 +178,7 @@ class ProjectsBasePage extends StatelessWidget {
                       );
                     }
 
-                    return SingleChildScrollView(
-                      padding: const EdgeInsets.all(32.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            title,
-                            style: const TextStyle(
-                              fontSize: 48,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blueGrey,
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-                          Text(
-                            descriptionTemplate.replaceFirst('{count}', '${projects.length}'),
-                            style: const TextStyle(
-                              fontSize: 18,
-                              color: Colors.grey,
-                            ),
-                          ),
-                          const SizedBox(height: 32),
-
-                          // Project cards
-                          ...projects.map((project) => project.buildPreviewWidget(context)).toList(),
-                        ],
-                      ),
-                    );
+                    return _buildResponsiveLayout(context, projects);
                   },
                 );
               },

@@ -112,36 +112,19 @@ class Project {
 
               // Description preview
               if (description != null && description!.isNotEmpty) ...[
-                const SizedBox(height: 12),
-                _buildDescriptionWidget(maxLines: 3),
+                const SizedBox(height: 8),
+                _buildDescriptionWidget(maxLines: 2),
               ],
 
               // Tags
               if (tags.isNotEmpty) ...[
-                const SizedBox(height: 12),
-                _buildTagsWidget(maxToShow: 5),
+                const SizedBox(height: 8),
+                _buildTagsWidget(maxToShow: 3),
               ],
 
-              // Media placeholder or image(s) preview
-              const SizedBox(height: 12),
-              Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.grey[300],
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                // Use padding inside so rounded corners remain visible
-                child: Padding(
-                  padding: const EdgeInsets.all(6.0),
-                  child: imgPaths.isNotEmpty
-                      ? (imgPaths.length >= 2
-                          ? _buildTwoImagePreview()
-                          : _buildSingleImagePreview())
-                      : (vidLink != null
-                          ? _buildVideoWidget(context)
-                          : const SizedBox.shrink()),
-                ),
-              ),
+              // Media preview with proportional sizing based on screen size
+              const SizedBox(height: 8),
+              _buildResponsiveMediaContainer(context),
             ],
           ),
         ),
@@ -264,95 +247,155 @@ class Project {
       return dateStr;
     }
   }
-
-  // Private helper: two-image preview used on project cards
-  Widget _buildTwoImagePreview() {
-    return Row(
-      children: [
-        Expanded(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(6),
-            child: AspectRatio(
-              aspectRatio: 4 / 3,
-              child: Image.asset(
-                'assets/${imgPaths[0]}',
-                fit: BoxFit.contain,
-                errorBuilder: (context, error, stackTrace) {
-                  return Container(
-                    color: Colors.grey[300],
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(Icons.image_not_supported, color: Colors.grey),
-                          const SizedBox(height: 4),
-                          Text(
-                            imgPaths[0],
-                            style: const TextStyle(
-                              color: Colors.grey,
-                              fontSize: 10,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
+  
+  // Placeholder widget when no media is available
+  Widget _buildPlaceholderWidget() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.image_outlined,
+            size: 32,
+            color: Colors.grey[600],
+          ),
+          const SizedBox(height: 4),
+          Text(
+            'No Preview',
+            style: TextStyle(
+              color: Colors.grey[600],
+              fontSize: 12,
             ),
           ),
-        ),
-        const SizedBox(width: 8),
-        Expanded(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(6),
-            child: AspectRatio(
-              aspectRatio: 4 / 3,
-              child: Image.asset(
-                'assets/${imgPaths[1]}',
-                fit: BoxFit.contain,
-                errorBuilder: (context, error, stackTrace) {
-                  return Container(
-                    color: Colors.grey[300],
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(Icons.image_not_supported, color: Colors.grey),
-                          const SizedBox(height: 4),
-                          Text(
-                            imgPaths[1],
-                            style: const TextStyle(
-                              color: Colors.grey,
-                              fontSize: 10,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
-  // Private helper: single-image preview used on project cards
-  Widget _buildSingleImagePreview() {
+  // Responsive media container that scales with screen size
+  Widget _buildResponsiveMediaContainer(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+    final isMobile = screenSize.width < 768;
+    
+    // Calculate proportional dimensions with better scaling for larger screens
+    final containerHeight = isMobile 
+        ? screenSize.height * 0.15  // 15% of screen height on mobile
+        : (screenSize.height * 0.25).clamp(150.0, 250.0); // 25% of screen height, clamped between 150-250px
+    
+    final containerWidth = isMobile
+        ? screenSize.width * 0.85   // 85% of screen width on mobile (accounting for padding)
+        : double.infinity;          // Use full available width on desktop (GridView handles the column width)
+
+    if (isMobile) {
+      // Mobile: Use fixed dimensions
+      return Container(
+        width: containerWidth,
+        height: containerHeight,
+        decoration: BoxDecoration(
+          color: Colors.grey[300],
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(6.0),
+          child: imgPaths.isNotEmpty
+              ? _buildResponsiveImagePreview(containerWidth - 12, containerHeight - 12)
+              : (vidLink != null
+                  ? _buildResponsiveVideoPreview(context, containerWidth - 12, containerHeight - 12)
+                  : _buildPlaceholderWidget()),
+        ),
+      );
+    } else {
+      // Desktop: Use Expanded to fill available space with minimum height
+      return Expanded(
+        child: Container(
+          width: double.infinity,
+          constraints: BoxConstraints(
+            minHeight: containerHeight,
+          ),
+          decoration: BoxDecoration(
+            color: Colors.grey[300],
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: imgPaths.isNotEmpty
+                ? _buildDesktopImagePreview()
+                : (vidLink != null
+                    ? _buildDesktopVideoPreview(context)
+                    : _buildPlaceholderWidget()),
+          ),
+        ),
+      );
+    }
+  }
+
+  // Responsive image preview that fits within container dimensions
+  Widget _buildResponsiveImagePreview(double width, double height) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(6),
-      child: AspectRatio(
-        aspectRatio: 16 / 9,
+      child: SizedBox(
+        width: width,
+        height: height,
         child: Image.asset(
           'assets/${imgPaths.first}',
-          fit: BoxFit.contain,
+          fit: BoxFit.cover, // Use cover to fill the container nicely
           errorBuilder: (context, error, stackTrace) {
-            return Center(
+            return Container(
+              color: Colors.grey[300],
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.image_not_supported, color: Colors.grey),
+                    const SizedBox(height: 4),
+                    Text(
+                      imgPaths.first,
+                      style: const TextStyle(
+                        color: Colors.grey,
+                        fontSize: 10,
+                      ),
+                      textAlign: TextAlign.center,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  // Responsive video preview that fits within container dimensions
+  Widget _buildResponsiveVideoPreview(BuildContext context, double width, double height) {
+    final link = vidLink;
+    if (link == null) return _buildPlaceholderWidget();
+
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(6),
+      child: SizedBox(
+        width: width,
+        height: height,
+        child: YoutubeEmbed(link, aspectRatio: width / height),
+      ),
+    );
+  }
+
+  // Desktop image preview that expands to fill available space
+  Widget _buildDesktopImagePreview() {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(6),
+      child: Image.asset(
+        'assets/${imgPaths.first}',
+        fit: BoxFit.cover,
+        width: double.infinity,
+        height: double.infinity,
+        errorBuilder: (context, error, stackTrace) {
+          return Container(
+            color: Colors.grey[300],
+            child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -365,12 +408,32 @@ class Project {
                       fontSize: 10,
                     ),
                     textAlign: TextAlign.center,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ],
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  // Desktop video preview that expands to fill available space
+  Widget _buildDesktopVideoPreview(BuildContext context) {
+    final link = vidLink;
+    if (link == null) return _buildPlaceholderWidget();
+
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(6),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return YoutubeEmbed(
+            link,
+            aspectRatio: constraints.maxWidth / constraints.maxHeight,
+          );
+        },
       ),
     );
   }

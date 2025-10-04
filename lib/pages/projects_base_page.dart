@@ -4,8 +4,19 @@ import '../widgets/custom_footer.dart';
 import '../services/project_service.dart';
 import '../utils/projects.dart';
 
-class ProjectsPage extends StatelessWidget {
-  const ProjectsPage({super.key});
+class ProjectsBasePage extends StatelessWidget {
+  final String configKey;
+  final String title;
+  final String descriptionTemplate;
+  final IconData emptyStateIcon;
+
+  const ProjectsBasePage({
+    super.key,
+    required this.configKey,
+    required this.title,
+    required this.descriptionTemplate,
+    this.emptyStateIcon = Icons.folder_outlined,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +27,8 @@ class ProjectsPage extends StatelessWidget {
           Expanded(
             child: Builder(
               builder: (context) {
-                final Future<List<Project>> projectsFuture = ProjectService.getProjectsForPage('projects_archive');
+                final Future<List<Project>> projectsFuture = 
+                    ProjectService.getProjectsForPage(configKey);
                 return FutureBuilder<List<Project>>(
                   future: projectsFuture,
                   builder: (context, snapshot) {
@@ -38,7 +50,7 @@ class ProjectsPage extends StatelessWidget {
                             ),
                             const SizedBox(height: 16),
                             Text(
-                              'Error loading projects: ${snapshot.error}',
+                              'Error loading ${title.toLowerCase()}: ${snapshot.error}',
                               style: const TextStyle(
                                 fontSize: 16,
                                 color: Colors.red,
@@ -53,19 +65,19 @@ class ProjectsPage extends StatelessWidget {
                     final projects = snapshot.data ?? [];
 
                     if (projects.isEmpty) {
-                      return const Center(
+                      return Center(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(
-                              Icons.folder_outlined,
+                              emptyStateIcon,
                               size: 64,
                               color: Colors.grey,
                             ),
-                            SizedBox(height: 16),
+                            const SizedBox(height: 16),
                             Text(
-                              'No projects found',
-                              style: TextStyle(
+                              'No ${title.toLowerCase()} found',
+                              style: const TextStyle(
                                 fontSize: 18,
                                 color: Colors.grey,
                               ),
@@ -80,9 +92,9 @@ class ProjectsPage extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            'Projects',
-                            style: TextStyle(
+                          Text(
+                            title,
+                            style: const TextStyle(
                               fontSize: 48,
                               fontWeight: FontWeight.bold,
                               color: Colors.blueGrey,
@@ -90,7 +102,7 @@ class ProjectsPage extends StatelessWidget {
                           ),
                           const SizedBox(height: 16),
                           Text(
-                            'Explore ${projects.length} projects showcasing my work across different technologies and domains.',
+                            descriptionTemplate.replaceFirst('{count}', '${projects.length}'),
                             style: const TextStyle(
                               fontSize: 18,
                               color: Colors.grey,

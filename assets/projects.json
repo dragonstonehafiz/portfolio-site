@@ -117,7 +117,10 @@
     ],
     "project_type": "Full Project",
     "download_paths": [
-      "downloads/games/Electronica.zip"
+      {
+        "key": "Game Download Link",
+        "url": "https://drive.google.com/file/d/10MbbouKJsSvqp5h-CGrCHKvFrKoR4hvP/view?usp=sharing"
+      }
     ]
   },
   "JapaneseLearningCardGame": {
@@ -146,7 +149,10 @@
     ],
     "project_type": "Full Project",
     "download_paths": [
-      "downloads/games/JPLearningCardGame.zip"
+      {
+        "key": "Game Download Link",
+        "url": "https://drive.google.com/file/d/1hCUeFBrA7uex8XOCWWU3Z5Z4S3IP2YQ9/view?usp=sharing"
+      }
     ]
   },
   "Last_Survivor": {
@@ -177,7 +183,10 @@
     ],
     "project_type": "Full Project",
     "download_paths": [
-      "downloads/games/TheLastSurvivor.zip"
+      {
+        "key": "Game Download Link",
+        "url": "https://drive.google.com/file/d/1lX0HsbAOqpZBcLhfOvB0912PlUwueISH/view?usp=sharing"
+      }
     ]
   },
   "Locus": {
@@ -444,8 +453,14 @@
     ],
     "project_type": "Gakuen Idolmaster",
     "download_paths": [
-      "downloads/gakumas/gakumas_liljaStep1.en.ass",
-      "downloads/gakumas/gakumas_liljaStep1.ja.ass"
+      {
+        "key": "English Subs",
+        "url": "https://drive.google.com/drive/folders/1R9dE90S6wdstnKVv8fyik21Ellj1HLb6?usp=sharing"
+      },
+      {
+        "key": "Japanese Subs",
+        "url": "https://drive.google.com/file/d/1G11AGhtz4hywHGwEzd8AoQggVDVyoBWT/view?usp=sharing"
+      }
     ]
   },
   "gakumas_lilja_step2": {
@@ -464,8 +479,14 @@
     ],
     "project_type": "Gakuen Idolmaster",
     "download_paths": [
-      "downloads/gakumas/gakumas_liljaStep2.en.ass",
-      "downloads/gakumas/gakumas_liljaStep2.ja.ass"
+      {
+        "key": "English Subs",
+        "url": "https://drive.google.com/file/d/1KkpEdYN9XV_DZwQrhG6S0Zj2JUzAWPOS/view?usp=sharing"
+      },
+      {
+        "key": "Japanese Subs",
+        "url": "https://drive.google.com/file/d/1VxsZOwXn8Sq9tK8hNTm7H7_ybhs_5rho/view?usp=sharing"
+      }
     ]
   },
   "makeine_vol1ep1": {
@@ -484,8 +505,14 @@
     ],
     "project_type": "Too Many Losing Heroines!!!",
     "download_paths": [
-      "downloads/makeine_season1/makeine_vol1ep1.en.ass",
-      "downloads/makeine_season1/makeine_vol1ep1.ja.ass"
+      {
+        "key": "English Subs",
+        "url": "https://drive.google.com/file/d/1zbo4K6AgdqbiR-dOGyl5uItmUDBrkFKE/view?usp=sharing"
+      },
+      {
+        "key": "Japanese Subs",
+        "url": "https://drive.google.com/file/d/1Y6nBqVw2RYx0RwI6lTUddSo0tLbfVQ5h/view?usp=sharing"
+      }
     ]
   },
   "makeine_vol1ep2": {
@@ -504,8 +531,14 @@
     ],
     "project_type": "Too Many Losing Heroines!!!",
     "download_paths": [
-      "downloads/makeine_season1/makeine_vol1ep2.en.ass",
-      "downloads/makeine_season1/makeine_vol1ep2.ja.ass"
+      {
+        "key": "English Subs",
+        "url": "https://drive.google.com/file/d/13dQoyXy0pLzUij2HGqpZFgnkgyZ0VXkP/view?usp=sharing"
+      },
+      {
+        "key": "Japanese Subs",
+        "url": "https://drive.google.com/file/d/1mmFF-kUvl_Tmlog3-7QV9pUC8zsGgUth/view?usp=sharing"
+      }
     ]
   },
   "makeine_vol1ep3": {
@@ -525,8 +558,14 @@
     ],
     "project_type": "Too Many Losing Heroines!!!",
     "download_paths": [
-      "downloads/makeine_season1/makeine_vol1ep3.en.ass",
-      "downloads/makeine_season1/makeine_vol1ep3.ja.ass"
+      {
+        "key": "English Subs",
+        "url": "https://drive.google.com/file/d/1xqfFBsN5gv3ZfHzeWzpTH9Ty-lYc5Ulx/view?usp=sharing"
+      },
+      {
+        "key": "Japanese Subs",
+        "url": "https://drive.google.com/file/d/18fKawmTU3TADcEeJBD10f-G5YXxf0Ngf/view?usp=sharing"
+      }
     ]
   },
   "makeine_vol2ep1": {
@@ -546,8 +585,14 @@
     ],
     "project_type": "Too Many Losing Heroines!!!",
     "download_paths": [
-      "downloads/makeine_season1/makeine_vol2ep1.en.ass",
-      "downloads/makeine_season1/makeine_vol2ep1.ja.ass"
+      {
+        "key": "English Subs",
+        "url": "https://drive.google.com/file/d/18gEvRojjPvfRrwD761B7W3ydvjdLRzMV/view?usp=sharing"
+      },
+      {
+        "key": "Japanese Subs",
+        "url": "https://drive.google.com/file/d/1U5DqfRlovKga8PuULshzCJ7kt2DCPJlf/view?usp=sharing"
+      }
     ]
   },
   "makeine_vol2ep2": {
@@ -567,8 +612,14 @@
     ],
     "project_type": "Too Many Losing Heroines!!!",
     "download_paths": [
-      "downloads/makeine_season1/makeine_vol2ep2.en.ass",
-      "downloads/makeine_season1/makeine_vol2ep2.ja.ass"
+      {
+        "key": "English Subs",
+        "url": "https://drive.google.com/file/d/13mj5lEMe706O5FmpurtoUJSpaV5u6zLE/view?usp=sharing"
+      },
+      {
+        "key": "Japanese Subs",
+        "url": "https://drive.google.com/file/d/15TGZrKMN7Md8EaaXf5m-Qj9agxwu1t-F/view?usp=sharing"
+      }
     ]
   },
   "makeine_vol2ep3": {
@@ -588,8 +639,14 @@
     ],
     "project_type": "Too Many Losing Heroines!!!",
     "download_paths": [
-      "downloads/makeine_season1/makeine_vol2ep3.en.ass",
-      "downloads/makeine_season1/makeine_vol2ep3.ja.ass"
+      {
+        "key": "English Subs",
+        "url": "https://drive.google.com/file/d/1UG0m2f0NPHF9OZg1h-S9v9nCnCDvIxKj/view?usp=sharing"
+      },
+      {
+        "key": "Japanese Subs",
+        "url": "https://drive.google.com/file/d/1-gtoE0CmyUtvz0wtnbHEVt_iiHNdLke3/view?usp=sharing"
+      }
     ]
   },
   "nichijou_himekuri_vol1_4": {
@@ -609,8 +666,14 @@
     ],
     "project_type": "Nichijou",
     "download_paths": [
-      "downloads/nichijou/nichijou_month4.en.ass",
-      "downloads/nichijou/nichijou_month4.ja.ass"
+      {
+        "key": "English Subs",
+        "url": "https://drive.google.com/file/d/1XyBpJKoZvWOWXqXywZ3vrX4eDrNmcIzF/view?usp=sharing"
+      },
+      {
+        "key": "Japanese Subs",
+        "url": "https://drive.google.com/file/d/16YQI5JksUD3MFUyg5HTilK5ROmfvNmfw/view?usp=sharing"
+      }
     ]
   }
 }

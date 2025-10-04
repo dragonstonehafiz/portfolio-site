@@ -3,7 +3,6 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import '../widgets/youtube_embedded.dart';
 import '../utils/theme.dart';
-import '../routes/app_routes.dart';
 
 class Project {
   final String variableName;
@@ -56,6 +55,16 @@ class Project {
     );
   }
 
+  /// Return a URL-friendly slug for this project.
+  String get slug {
+    // Use variableName as the canonical identifier for slugs. This ensures
+    // slugs are stable and unique (assuming variableName is unique in
+    // projects.json).
+    final base = variableName.trim().isNotEmpty ? variableName : title;
+    final s = base.toLowerCase().replaceAll(RegExp(r"[^a-z0-9]+"), '-');
+    return s.replaceAll(RegExp(r'-+'), '-').trim().replaceAll(RegExp(r'^-+|-+\$'), '');
+  }
+
   Future<void> _openLink(String url) async {
     try {
       final uri = Uri.parse(url);
@@ -93,11 +102,7 @@ class Project {
       margin: const EdgeInsets.only(bottom: 16),
       child: InkWell(
         onTap: () {
-          Navigator.pushNamed(
-            context,
-            AppRoutes.projectDetail,
-            arguments: {'project': this},
-          );
+          Navigator.pushNamed(context, '/projects/${this.slug}');
         },
         child: Padding(
           padding: const EdgeInsets.all(16.0),

@@ -128,6 +128,17 @@ class ProjectService {
     return _allProjects?[projectId];
   }
 
+  // Get a specific project by slug (title-based). This iterates the loaded
+  // projects and returns the first match for the slug.
+  static Future<Project?> getProjectBySlug(String slug) async {
+    await initialize();
+    if (_allProjects == null) return null;
+    for (final project in _allProjects!.values) {
+      if (project.slug == slug) return project;
+    }
+    return null;
+  }
+
   // Get all projects
   static Future<List<Project>> getAllProjects() async {
     await initialize();

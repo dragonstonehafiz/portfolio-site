@@ -17,7 +17,9 @@ class Project {
   final List<String> whatIDid;
   final List<String> tags;
   final String projectType;
-  final List<String> downloadPaths;
+  // Each download entry is expected to be a map with keys 'key' and 'url'.
+  // For backward compatibility we still accept a list of string URLs.
+  final List<dynamic> downloadPaths;
 
   Project({
     required this.variableName,
@@ -49,7 +51,7 @@ class Project {
       whatIDid: List<String>.from(json['what_i_did'] ?? []),
       tags: List<String>.from(json['tags'] ?? []),
       projectType: json['project_type'] ?? '',
-      downloadPaths: List<String>.from(json['download_paths'] ?? []),
+      downloadPaths: (json['download_paths'] as List<dynamic>?)?.toList() ?? [],
     );
   }
 
@@ -69,21 +71,17 @@ class Project {
 
   Future<void> _downloadFile(String path) async {
     try {
-      // If the path is a URL, open it. If it's a local asset path, try to open the file URL.
+      // Only allow HTTP(S) links for downloads. Local file handling removed.
       if (path.startsWith('http://') || path.startsWith('https://')) {
         await _openLink(path);
         return;
       }
 
-      // For local assets, attempt to open the containing folder via a file URI —
-      // on web/mobile this will normally just open the asset in the browser.
-      final uri = Uri.parse(path);
-      if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
-        await launchUrl(uri);
-      }
+      // If we get here the path is not a supported remote URL. Log and ignore.
+      debugPrint('Unsupported download path (only http/https allowed): $path');
     } catch (e) {
       // ignore: avoid_print
-      print('Error downloading/opening $path: $e');
+      debugPrint('Error downloading/opening $path: $e');
     }
   }
 
@@ -247,7 +245,7 @@ class Project {
       return dateStr;
     }
   }
-  
+
   // Placeholder widget when no media is available
   Widget _buildPlaceholderWidget() {
     return Center(
@@ -596,18 +594,34 @@ class Project {
   // Downloads list
   Widget _buildDownloads() {
     return Column(
-      children: downloadPaths.map((path) => Padding(
-        padding: const EdgeInsets.only(bottom: 8.0),
-        child: ElevatedButton.icon(
-          onPressed: () => _downloadFile(path),
-          icon: const Icon(Icons.download),
-          label: Text(path.split('/').last),
-          style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.sky,
-            foregroundColor: Colors.white,
+      children: downloadPaths.map((entry) {
+        String url;
+        String label;
+
+        if (entry is Map<String, dynamic>) {
+          url = entry['url'] ?? '';
+          label = entry['key'] ?? url.split('/').last;
+        } else if (entry is String) {
+          url = entry;
+          label = entry.split('/').last;
+        } else {
+          url = entry.toString();
+          label = url.split('/').last;
+        }
+
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 8.0),
+          child: ElevatedButton.icon(
+            onPressed: url.startsWith('http') ? () => _downloadFile(url) : null,
+            icon: const Icon(Icons.download),
+            label: Text(label),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.sky,
+              foregroundColor: Colors.white,
+            ),
           ),
-        ),
-      )).toList(),
+        );
+      }).toList(),
     );
   }
 

@@ -45,7 +45,7 @@ class ProjectService {
   }
 
   // Get projects for a specific page
-  static Future<List<Project>> getProjectsForPage(String pageName) async {
+  static Future<List<Project>> getProjectsForPage(String pageName, {bool descending = true}) async {
     await initialize();
     
     final pageConfigs = _pageConfig?['page_configurations'] as Map<String, dynamic>?;
@@ -71,7 +71,55 @@ class ProjectService {
       }
     }
     
+    // Sort projects by lastUpdate (or created date) with the requested order.
+    projects.sort((a, b) {
+      final da = _parseProjectDate(a.lastUpdate ?? a.date);
+      final db = _parseProjectDate(b.lastUpdate ?? b.date);
+      final cmp = db.compareTo(da); // cmp > 0 when b is newer than a
+      return descending ? cmp : -cmp;
+    });
+
     return projects;
+  }
+
+  // Helper: parse project date string robustly. Accepts ISO-like strings or
+  // year-only values. If parsing fails, returns epoch (1970) to push unknown
+  // dates to the end when sorting descending.
+  static DateTime _parseProjectDate(String? dateStr) {
+    if (dateStr == null || dateStr.trim().isEmpty) {
+      return DateTime.fromMillisecondsSinceEpoch(0);
+    }
+
+    final trimmed = dateStr.trim();
+
+    // Try standard ISO parse first
+    final parsed = DateTime.tryParse(trimmed);
+    if (parsed != null) return parsed;
+
+  // Try year-only (e.g., "2024")
+  final yearOnly = RegExp(r'^\d{4}\$');
+    if (yearOnly.hasMatch(trimmed)) {
+      try {
+        final y = int.parse(trimmed);
+        return DateTime(y);
+      } catch (_) {
+        // fall through
+      }
+    }
+
+    // Try common "YYYY-MM" or other loose formats by adding day if missing
+    final yearMonth = RegExp(r'^(\d{4})-(\d{1,2})\b');
+    final m = yearMonth.firstMatch(trimmed);
+    if (m != null) {
+      try {
+        final y = int.parse(m.group(1)!);
+        final mo = int.parse(m.group(2)!);
+        return DateTime(y, mo);
+      } catch (_) {}
+    }
+
+    // As a last resort, return epoch so unknown dates sort last
+    return DateTime.fromMillisecondsSinceEpoch(0);
   }
 
   // Get a specific project by ID

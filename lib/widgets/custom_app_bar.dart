@@ -33,35 +33,50 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         TextButton(
           onPressed: () => Navigator.pushNamedAndRemoveUntil(
             context,
-            AppRoutes.projects,
-            (route) => false,
-          ),
-          child: const Text(
-            'All Projects',
-            style: TextStyle(color: Colors.white, fontSize: 16),
-          ),
-        ),
-        TextButton(
-          onPressed: () => Navigator.pushNamedAndRemoveUntil(
-            context,
             AppRoutes.featured,
             (route) => false,
           ),
           child: const Text(
-            'Featured',
+            'Featured Projects',
             style: TextStyle(color: Colors.white, fontSize: 16),
           ),
         ),
-        TextButton(
-          onPressed: () => Navigator.pushNamedAndRemoveUntil(
-            context,
-            AppRoutes.japaneseTranslations,
-            (route) => false,
-          ),
-          child: const Text(
-            'Japanese Translations',
-            style: TextStyle(color: Colors.white, fontSize: 16),
-          ),
+
+        // Projects dropdown: Programming Projects (all) and Translations Projects
+        PopupMenuButton<String>(
+          onSelected: (value) {
+            if (value == 'programming') {
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                AppRoutes.projects,
+                (route) => false,
+              );
+            } else if (value == 'translations') {
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                AppRoutes.japaneseTranslations,
+                (route) => false,
+              );
+            }
+          },
+          color: AppColors.skyDark,
+          offset: const Offset(0, kToolbarHeight),
+          itemBuilder: (context) => [
+            const PopupMenuItem(
+              value: 'programming',
+              child: Text('Programming Projects', style: TextStyle(color: Colors.white)),
+            ),
+            const PopupMenuItem(
+              value: 'translations',
+              child: Text('Translations Projects', style: TextStyle(color: Colors.white)),
+            ),
+          ],
+          child: Center(
+            child: Text(
+              'Projects',
+              style: TextStyle(color: Colors.white, fontSize: 16),
+            ),
+          )
         ),
         const SizedBox(width: 16),
       ],

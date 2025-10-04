@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'web_iframe_helper_html.dart';
+import 'dart:js' as js;
 
 /// A lightweight embedded YouTube player that accepts either a full
 class YoutubeEmbed extends StatefulWidget {
@@ -32,11 +33,44 @@ class _YoutubeEmbedState extends State<YoutubeEmbed> {
           if (viewId.isEmpty) {
             return _externalButton(url);
           }
-          return SizedBox(
-            width: width,
-            height: height,
-            child: HtmlElementView(viewType: viewId),
-          );
+          return StatefulBuilder(builder: (context, setState) {
+            bool activated = false;
+            void activate() {
+              try {
+                js.context.callMethod('enableIframeInteraction', [viewId]);
+              } catch (_) {}
+              setState(() => activated = true);
+            }
+
+            return SizedBox(
+              width: width,
+              height: height,
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  HtmlElementView(viewType: viewId),
+                  // Overlay: show play button and intercept pointer events until activated
+                  if (!activated)
+                    Material(
+                      color: Colors.black.withOpacity(0.35),
+                      child: InkWell(
+                        onTap: activate,
+                        child: Center(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.9),
+                              shape: BoxShape.circle,
+                            ),
+                            padding: const EdgeInsets.all(12),
+                            child: const Icon(Icons.play_arrow, size: 32, color: Colors.black),
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            );
+          });
         });
       }
     }

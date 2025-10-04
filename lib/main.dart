@@ -15,30 +15,24 @@ class PortfolioApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Portfolio Site',
+      title: 'Muhd Hafiz\'s Portfolio Site',
       theme: buildAppTheme(),
       initialRoute: AppRoutes.landing,
       routes: {
         AppRoutes.landing: (context) => const LandingPage(),
         AppRoutes.projects: (context) => const ProjectsBasePage(
               configKey: 'projects_archive',
-              title: 'Projects',
-              descriptionTemplate:
-                  'Explore {count} projects showcasing my work across different technologies and domains.',
+              title: 'Programming Projects',
             ),
         AppRoutes.projectDetail: (context) => const ProjectDetailPage(),
         AppRoutes.featured: (context) => const ProjectsBasePage(
               configKey: 'featured_projects',
               title: 'Featured Projects',
-              descriptionTemplate:
-                  'A curated selection of {count} standout projects that showcase my best work.',
               emptyStateIcon: Icons.star_outline,
             ),
         AppRoutes.japaneseTranslations: (context) => const ProjectsBasePage(
               configKey: 'translations',
               title: 'Japanese Translations',
-              descriptionTemplate:
-                  'Discover {count} projects focused on Japanese language translations and localization.',
               emptyStateIcon: Icons.translate,
             ),
       },

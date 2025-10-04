@@ -22,9 +22,8 @@
       "Integrated the **IrrKlang library** for dynamic sound handling, improving immersion with responsive audio effects."
     ],
     "tags": [
-      "c++",
       "games",
-      "nyp"
+      "c++"
     ],
     "project_type": "Full Project",
     "download_paths": []
@@ -49,7 +48,7 @@
     "tags": [
       "python",
       "ai",
-      "sit"
+      "computer vision"
     ],
     "project_type": "Full Project",
     "download_paths": []
@@ -78,10 +77,7 @@
     ],
     "tags": [
       "python",
-      "ai",
-      "streamlit",
-      "sit",
-      "anime"
+      "ai"
     ],
     "project_type": "Full Project",
     "download_paths": []
@@ -112,7 +108,6 @@
     "tags": [
       "c#",
       "games",
-      "nyp",
       "unity"
     ],
     "project_type": "Full Project",
@@ -144,8 +139,7 @@
     "tags": [
       "c#",
       "unity",
-      "games",
-      "sit"
+      "games"
     ],
     "project_type": "Full Project",
     "download_paths": [
@@ -178,7 +172,6 @@
     "tags": [
       "c#",
       "games",
-      "nyp",
       "unity"
     ],
     "project_type": "Full Project",
@@ -209,7 +202,6 @@
     "tags": [
       "c#",
       "games",
-      "nyp",
       "unity",
       "vr"
     ],
@@ -238,8 +230,7 @@
     ],
     "tags": [
       "c++",
-      "games",
-      "nyp"
+      "games"
     ],
     "project_type": "Full Project",
     "download_paths": []
@@ -266,7 +257,6 @@
     "tags": [
       "java",
       "games",
-      "sit",
       "libgdx"
     ],
     "project_type": "Full Project",
@@ -295,7 +285,7 @@
     ],
     "tags": [
       "python",
-      "streamlit"
+      "visualizations"
     ],
     "project_type": "Full Project",
     "download_paths": []
@@ -325,11 +315,8 @@
     ],
     "tags": [
       "python",
-      "api",
       "ai",
-      "anime",
-      "streamlit",
-      "langchain"
+      "llm"
     ],
     "project_type": "Full Project",
     "download_paths": []
@@ -387,7 +374,7 @@
     "title": "Personal Portfolio Website",
     "description": "\n    Built with **Streamlit** and **Docker**, this site dynamically displays my projects.\n\n    Instead of manually updating project entries, the site uses a **custom `ProjectObject` system**  \n    to automatically render content based on structured metadata.  \n    This keeps everything **organized, scalable, and easy to maintain**.\n    ",
     "date": "2025-03-07",
-    "last_update": "2025-04-10",
+    "last_update": "2025-10-04",
     "vid_link": null,
     "github_link": "https://github.com/dragonstonehafiz/portfolio-site",
     "img_paths": [
@@ -402,7 +389,8 @@
     ],
     "tags": [
       "python",
-      "streamlit"
+      "streamlit",
+      "flutter"
     ],
     "project_type": "Full Project",
     "download_paths": []
@@ -431,15 +419,15 @@
     ],
     "tags": [
       "python",
-      "api",
-      "ai"
+      "ai",
+      "visualizations"
     ],
     "project_type": "Mini Project",
     "download_paths": []
   },
   "gakumas_lilja_step1": {
     "variable_name": "gakumas_lilja_step1",
-    "category": "translation",
+    "category": "translations",
     "title": "Gakuen Idolmaster: Lilja Step 1",
     "description": null,
     "date": "2025-06-15",
@@ -449,9 +437,8 @@
     "img_paths": [],
     "what_i_did": [],
     "tags": [
-      "translation"
     ],
-    "project_type": "Gakuen Idolmaster",
+    "project_type": "Translations",
     "download_paths": [
       {
         "key": "English Subs",
@@ -465,7 +452,7 @@
   },
   "gakumas_lilja_step2": {
     "variable_name": "gakumas_lilja_step2",
-    "category": "translation",
+    "category": "translations",
     "title": "Gakuen Idolmaster: Lilja Step 2",
     "description": null,
     "date": "2025-07-13",
@@ -475,9 +462,8 @@
     "img_paths": [],
     "what_i_did": [],
     "tags": [
-      "translation"
     ],
-    "project_type": "Gakuen Idolmaster",
+    "project_type": "Translations",
     "download_paths": [
       {
         "key": "English Subs",
@@ -491,7 +477,7 @@
   },
   "makeine_vol1ep1": {
     "variable_name": "makeine_vol1ep1",
-    "category": "translation",
+    "category": "translations",
     "title": "Too Many Losing Heroines!!! Drama CD Vol. 1 \"I'll teach you the secret to style\"",
     "description": null,
     "date": "2025-02-23",
@@ -501,9 +487,8 @@
     "img_paths": [],
     "what_i_did": [],
     "tags": [
-      "anime"
     ],
-    "project_type": "Too Many Losing Heroines!!!",
+    "project_type": "Translations",
     "download_paths": [
       {
         "key": "English Subs",
@@ -517,7 +502,7 @@
   },
   "makeine_vol1ep2": {
     "variable_name": "makeine_vol1ep2",
-    "category": "translation",
+    "category": "translations",
     "title": "Too Many Losing Heroines!!! Drama CD Vol. 1 \"Be careful with sneak photography.\"",
     "description": null,
     "date": "2025-03-15",
@@ -527,9 +512,8 @@
     "img_paths": [],
     "what_i_did": [],
     "tags": [
-      "anime"
     ],
-    "project_type": "Too Many Losing Heroines!!!",
+    "project_type": "Translations",
     "download_paths": [
       {
         "key": "English Subs",
@@ -543,7 +527,7 @@
   },
   "makeine_vol1ep3": {
     "variable_name": "makeine_vol1ep3",
-    "category": "translation",
+    "category": "translations",
     "title": "Too Many Losing Heroines!!! Drama CD Vol. 1 \"Let's aim for the one chance!\"",
     "description": null,
     "date": "2025-05-01",
@@ -553,10 +537,8 @@
     "img_paths": [],
     "what_i_did": [],
     "tags": [
-      "anime",
-      "translation"
     ],
-    "project_type": "Too Many Losing Heroines!!!",
+    "project_type": "Translations",
     "download_paths": [
       {
         "key": "English Subs",
@@ -570,7 +552,7 @@
   },
   "makeine_vol2ep1": {
     "variable_name": "makeine_vol2ep1",
-    "category": "translation",
+    "category": "translations",
     "title": "Too Many Losing Heroines!!! Drama CD Vol. 2 \"Don't Forget to Level Up\"",
     "description": null,
     "date": "2025-07-27",
@@ -580,10 +562,8 @@
     "img_paths": [],
     "what_i_did": [],
     "tags": [
-      "anime",
-      "translation"
     ],
-    "project_type": "Too Many Losing Heroines!!!",
+    "project_type": "Translations",
     "download_paths": [
       {
         "key": "English Subs",
@@ -597,7 +577,7 @@
   },
   "makeine_vol2ep2": {
     "variable_name": "makeine_vol2ep2",
-    "category": "translation",
+    "category": "translations",
     "title": "Too Many Losing Heroines!!! Drama CD Vol. 2 \"Secret Photoshoot\"",
     "description": null,
     "date": "2025-07-27",
@@ -607,10 +587,9 @@
     "img_paths": [],
     "what_i_did": [],
     "tags": [
-      "anime",
-      "translation"
+      "anime"
     ],
-    "project_type": "Too Many Losing Heroines!!!",
+    "project_type": "Translations",
     "download_paths": [
       {
         "key": "English Subs",
@@ -624,7 +603,7 @@
   },
   "makeine_vol2ep3": {
     "variable_name": "makeine_vol2ep3",
-    "category": "translation",
+    "category": "translations",
     "title": "Too Many Losing Heroines!!! Drama CD Vol. 2 \"Take Responsibility\"",
     "description": null,
     "date": "2025-08-11",
@@ -634,10 +613,8 @@
     "img_paths": [],
     "what_i_did": [],
     "tags": [
-      "anime",
-      "translation"
     ],
-    "project_type": "Too Many Losing Heroines!!!",
+    "project_type": "Translations",
     "download_paths": [
       {
         "key": "English Subs",
@@ -651,7 +628,7 @@
   },
   "nichijou_himekuri_vol1_4": {
     "variable_name": "nichijou_himekuri_vol1_4",
-    "category": "translation",
+    "category": "translations",
     "title": "Nichijou Daily Calendar CD Vol. 1: \"April\"",
     "description": null,
     "date": "2025-04-12",
@@ -661,10 +638,8 @@
     "img_paths": [],
     "what_i_did": [],
     "tags": [
-      "anime",
-      "translation"
     ],
-    "project_type": "Nichijou",
+    "project_type": "Translations",
     "download_paths": [
       {
         "key": "English Subs",

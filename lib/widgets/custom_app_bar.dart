@@ -37,7 +37,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             (route) => false,
           ),
           child: const Text(
-            'Projects',
+            'All Projects',
             style: TextStyle(color: Colors.white, fontSize: 16),
           ),
         ),
@@ -49,6 +49,17 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
           child: const Text(
             'Featured',
+            style: TextStyle(color: Colors.white, fontSize: 16),
+          ),
+        ),
+        TextButton(
+          onPressed: () => Navigator.pushNamedAndRemoveUntil(
+            context,
+            AppRoutes.japaneseTranslations,
+            (route) => false,
+          ),
+          child: const Text(
+            'Japanese Translations',
             style: TextStyle(color: Colors.white, fontSize: 16),
           ),
         ),

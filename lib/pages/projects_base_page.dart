@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
-import 'dart:convert';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/custom_footer.dart';
 import '../services/project_service.dart';
-import '../utils/projects.dart';
+import '../utils/project_data.dart';
 
 class ProjectsBasePage extends StatefulWidget {
   final String configKey;
   final String title;
+  final String? description;
   final IconData emptyStateIcon;
 
   const ProjectsBasePage({
     super.key,
     required this.configKey,
     required this.title,
+    this.description,
     this.emptyStateIcon = Icons.folder_outlined,
   });
 
@@ -33,34 +33,10 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
   void initState() {
     super.initState();
     // Load available tags for the dropdown
-    ProjectService.getAllTags().then((tags) {
-      setState(() {
-        _availableTags = tags.toList()..sort();
-      });
+    final tags = ProjectService.getAllTags();
+    setState(() {
+      _availableTags = tags.toList()..sort();
     });
-    // Load description template from assets page_config.json (if available)
-    _loadDescriptionTemplate();
-  }
-
-  String? _loadedDescriptionTemplate;
-
-  Future<void> _loadDescriptionTemplate() async {
-    try {
-      final raw = await rootBundle.loadString('assets/page_config.json');
-      final Map<String, dynamic> jsonMap = json.decode(raw) as Map<String, dynamic>;
-      final configs = jsonMap['page_configurations'] as Map<String, dynamic>?;
-      if (configs != null && configs.containsKey(widget.configKey)) {
-        final cfg = configs[widget.configKey] as Map<String, dynamic>;
-        final desc = cfg['description'] as String?;
-        if (desc != null && desc.isNotEmpty) {
-          setState(() {
-            _loadedDescriptionTemplate = desc;
-          });
-        }
-      }
-    } catch (e) {
-      // If anything fails, silently fall back to the provided descriptionTemplate
-    }
   }
 
   // Helper method to determine if we're on a mobile device
@@ -92,7 +68,7 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
   }
 
   // Build responsive layout for projects
-  Widget _buildResponsiveLayout(BuildContext context, List<Project> projects) {
+  Widget _buildResponsiveLayout(BuildContext context, List<ProjectData> projects) {
     final padding = _getResponsivePadding(context);
     final crossAxisCount = _getCrossAxisCount(context);
     final isMobile = _isMobile(context);
@@ -166,7 +142,7 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
 
             // Description
             Text(
-              ((_loadedDescriptionTemplate ?? '')).replaceFirst('{count}', '${projects.length}'),
+              ((widget.description ?? '')).replaceFirst('{count}', '${projects.length}'),
               style: TextStyle(
                 fontSize: isMobile ? 16 : 18,
                 color: Colors.grey,
@@ -234,52 +210,17 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
           Expanded(
             child: Builder(
               builder: (context) {
-                final Future<List<Project>> projectsFuture = ProjectService.getProjectsForPage(widget.configKey, descending: _descending);
-                return FutureBuilder<List<Project>>(
-                  future: projectsFuture,
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
+                var projects = ProjectService.getProjectsForPage(widget.configKey, descending: _descending);
+                
+                // Apply tag filter if selected
+                if (_selectedTag != null && _selectedTag!.isNotEmpty) {
+                  projects = projects.where((p) => p.tags.contains(_selectedTag)).toList();
+                }
 
-                    if (snapshot.hasError) {
-                      return Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(
-                              Icons.error_outline,
-                              size: 64,
-                              color: Colors.red,
-                            ),
-                            const SizedBox(height: 16),
-                            Text(
-                              'Error loading ${widget.title.toLowerCase()}: ${snapshot.error}',
-                              style: const TextStyle(
-                                fontSize: 16,
-                                color: Colors.red,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        ),
-                      );
-                    }
-
-                    var projects = snapshot.data ?? [];
-                    // Apply tag filter if selected
-                    if (_selectedTag != null && _selectedTag!.isNotEmpty) {
-                      projects = projects.where((p) => p.tags.contains(_selectedTag)).toList();
-                    }
-
-                    // Always render the responsive layout (header + description + content).
-                    // The layout will show an empty state where the projects grid would be
-                    // if `projects` is empty, so the filters and sorter remain visible.
-                    return _buildResponsiveLayout(context, projects);
-                  },
-                );
+                // Always render the responsive layout (header + description + content).
+                // The layout will show an empty state where the projects grid would be
+                // if `projects` is empty, so the filters and sorter remain visible.
+                return _buildResponsiveLayout(context, projects);
               },
             ),
           ),

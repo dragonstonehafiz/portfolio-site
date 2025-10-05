@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import '../routes/app_routes.dart';
 import '../utils/theme.dart';
 
@@ -42,41 +43,48 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ),
 
-        // Projects dropdown: Programming Projects (all) and Translations Projects
+        // Projects dropdown: populated from page_config.json generic pages.
         PopupMenuButton<String>(
           onSelected: (value) {
-            if (value == 'programming') {
+            // Expect value to be the page_name string (human readable). Map
+            // it to a slug path via AppRoutes.pagePath(slug) if needed.
+            // First, try to find a slug key for the selected page name.
+            final slugEntry = AppRoutes.genericPageSlugs.entries
+                .firstWhere((e) => e.value == value, orElse: () => const MapEntry('', ''));
+            if (slugEntry.key.isNotEmpty) {
+              final targetPath = AppRoutes.pagePath(slugEntry.key);
               Navigator.pushNamedAndRemoveUntil(
                 context,
-                AppRoutes.projects,
+                targetPath,
                 (route) => false,
               );
-            } else if (value == 'translations') {
-              Navigator.pushNamedAndRemoveUntil(
-                context,
-                AppRoutes.japaneseTranslations,
-                (route) => false,
-              );
+              return;
             }
+
+            debugPrint('No slug mapping found for: $value');
           },
           color: AppColors.skyDark,
           offset: const Offset(0, kToolbarHeight),
-          itemBuilder: (context) => [
-            const PopupMenuItem(
-              value: 'programming',
-              child: Text('Programming Projects', style: TextStyle(color: Colors.white)),
-            ),
-            const PopupMenuItem(
-              value: 'translations',
-              child: Text('Translations Projects', style: TextStyle(color: Colors.white)),
-            ),
-          ],
+          itemBuilder: (context) {
+            final items = <PopupMenuEntry<String>>[];
+            if (AppRoutes.genericPageSlugs.isNotEmpty) {
+              for (final entry in AppRoutes.genericPageSlugs.entries) {
+                items.add(PopupMenuItem(
+                  value: entry.value,
+                  child: Text(entry.value, style: const TextStyle(color: Colors.white)),
+                ));
+              }
+            } else {
+              items.add(const PopupMenuItem(value: 'cooked', child: Text('cooked custom_app_bar.dart', style: TextStyle(color: Colors.white))));
+            }
+            return items;
+          },
           child: Center(
             child: Text(
               'Projects',
               style: TextStyle(color: Colors.white, fontSize: 16),
             ),
-          )
+          ),
         ),
         const SizedBox(width: 16),
       ],

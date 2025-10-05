@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/custom_footer.dart';
-import '../utils/projects.dart';
+import '../utils/project_data.dart';
 
 class ProjectDetailPage extends StatelessWidget {
   const ProjectDetailPage({super.key});
@@ -12,7 +12,7 @@ class ProjectDetailPage extends StatelessWidget {
     final Map<String, dynamic>? arguments = 
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
     
-    final Project? project = arguments?['project'] as Project?;
+    final ProjectData? project = arguments?['project'] as ProjectData?;
     
     if (project == null) {
       return Scaffold(

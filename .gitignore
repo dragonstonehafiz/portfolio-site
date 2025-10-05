@@ -2,6 +2,7 @@
 .idea/
 __pycache__/
 gcloud/
+.vscode/
 test.py
 
 ### https://raw.github.com/github/gitignore/80a8803b004013d17291196825a327b9e871f009/Android.gitignore
@@ -256,3 +257,5 @@ GoogleService-Info.plist
 google-services.json
 # Plugins (already resolved through pubspec.yaml)
 .flutter-plugins
+
+.flutter-plugins-dependencies

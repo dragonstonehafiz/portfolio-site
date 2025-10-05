@@ -72,60 +72,129 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
     final padding = _getResponsivePadding(context);
     final crossAxisCount = _getCrossAxisCount(context);
     final isMobile = _isMobile(context);
-
     return SingleChildScrollView(
       child: Padding(
         padding: padding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Title row with tag filter and sort toggle
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Text(
-                    widget.title,
-                    style: TextStyle(
-                      fontSize: isMobile ? 36 : 48,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blueGrey,
-                    ),
-                  ),
+            _buildHeader(context, isMobile),
+            const SizedBox(height: 12),
+            _buildDescription(context, projects.length, isMobile),
+            const SizedBox(height: 20),
+            _buildProjectsPreview(context, projects, crossAxisCount, isMobile),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Header (title + filter + sort). On mobile the filter and sort stack below the title
+  Widget _buildHeader(BuildContext context, bool isMobile) {
+    final titleWidget = Text(
+      widget.title,
+      style: TextStyle(
+        fontSize: isMobile ? 28 : 48,
+        fontWeight: FontWeight.bold,
+        color: Colors.blueGrey,
+      ),
+    );
+
+    final controls = Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        DropdownButtonHideUnderline(
+          child: DropdownButton<String?>(
+            value: _selectedTag,
+            hint: const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+              child: Text('All tags'),
+            ),
+            items: [
+              const DropdownMenuItem<String?>(
+                value: null,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                  child: Text('All'),
                 ),
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    // Tag filter dropdown
-                    DropdownButtonHideUnderline(
-                      child: DropdownButton<String?>(
-                        value: _selectedTag,
-                        hint: const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                          child: Text('All tags'),
+              ),
+              ..._availableTags
+                  .map((t) => DropdownMenuItem<String?>(
+                        value: t,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                          child: Text(t),
                         ),
-                        items: [
-                          const DropdownMenuItem<String?>(
-                            value: null,
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                              child: Text('All'),
-                            ),
-                          ),
-                          ..._availableTags.map((t) => DropdownMenuItem<String?>(
+                      ))
+                  .toList(),
+            ],
+            onChanged: (v) => setState(() => _selectedTag = v),
+          ),
+        ),
+        const SizedBox(width: 8),
+        IconButton(
+          tooltip: _descending ? 'Sort: Newest first' : 'Sort: Oldest first',
+          onPressed: () {
+            setState(() {
+              _descending = !_descending;
+            });
+          },
+          icon: Icon(_descending ? Icons.arrow_downward : Icons.arrow_upward),
+        ),
+      ],
+    );
+
+    if (isMobile) {
+      // On mobile: title on its own row, then a single controls row with
+      // an expanded dropdown and a compact sort button to its right.
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Title row
+          titleWidget,
+          const SizedBox(height: 8),
+
+          // Controls row: expanded dropdown + sort button
+          Row(
+            children: [
+              Expanded(
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<String?>(
+                    isExpanded: true,
+                    value: _selectedTag,
+                    hint: const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                      child: Text('All tags'),
+                    ),
+                    items: [
+                      const DropdownMenuItem<String?>(
+                        value: null,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                          child: Text('All'),
+                        ),
+                      ),
+                      ..._availableTags
+                          .map((t) => DropdownMenuItem<String?>(
                                 value: t,
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                                   child: Text(t),
                                 ),
                               ))
-                              .toList(),
-                        ],
-                        onChanged: (v) => setState(() => _selectedTag = v),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    IconButton(
+                          .toList(),
+                    ],
+                    onChanged: (v) => setState(() => _selectedTag = v),
+                  ),
+                ),
+              ),
+
+              const SizedBox(width: 8),
+
+              // Compact sort button
+              Material(
+                color: Colors.transparent,
+                child: IconButton(
                   tooltip: _descending ? 'Sort: Newest first' : 'Sort: Oldest first',
                   onPressed: () {
                     setState(() {
@@ -133,71 +202,75 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
                     });
                   },
                   icon: Icon(_descending ? Icons.arrow_downward : Icons.arrow_upward),
-                    ),
-                  ],
                 ),
-              ],
+              ),
+            ],
+          ),
+        ],
+      );
+    }
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [Expanded(child: titleWidget), controls],
+    );
+  }
+
+  // Description row
+  Widget _buildDescription(BuildContext context, int count, bool isMobile) {
+    return Text(
+      ((widget.description ?? '')).replaceFirst('{count}', '$count'),
+      style: TextStyle(
+        fontSize: isMobile ? 14 : 18,
+        color: Colors.grey,
+      ),
+    );
+  }
+
+  // Projects preview section
+  Widget _buildProjectsPreview(BuildContext context, List<ProjectData> projects, int crossAxisCount, bool isMobile) {
+    if (projects.isEmpty) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              widget.emptyStateIcon,
+              size: 64,
+              color: Colors.grey,
             ),
             const SizedBox(height: 16),
-
-            // Description
             Text(
-              ((widget.description ?? '')).replaceFirst('{count}', '${projects.length}'),
-              style: TextStyle(
-                fontSize: isMobile ? 16 : 18,
+              'No ${widget.title.toLowerCase()} found',
+              style: const TextStyle(
+                fontSize: 18,
                 color: Colors.grey,
               ),
             ),
-            const SizedBox(height: 32),
-
-            // Projects grid or empty state
-            if (projects.isEmpty)
-              Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      widget.emptyStateIcon,
-                      size: 64,
-                      color: Colors.grey,
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      'No ${widget.title.toLowerCase()} found',
-                      style: const TextStyle(
-                        fontSize: 18,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            else if (crossAxisCount == 1)
-              // Mobile: Use Column for single column layout
-              Column(
-                children: projects
-                    .map((project) => Padding(
-                          padding: const EdgeInsets.only(bottom: 16),
-                          child: project.buildPreviewWidget(context),
-                        ))
-                    .toList(),
-              )
-            else
-              // Desktop/Tablet: Use GridView for multi-column layout
-              GridView.count(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                crossAxisCount: crossAxisCount,
-                crossAxisSpacing: 16,
-                mainAxisSpacing: 16,
-                childAspectRatio: isMobile ? 0.8 : 0.9, // Adjusted for responsive media containers
-                children: projects
-                    .map((project) => project.buildPreviewWidget(context))
-                    .toList(),
-              ),
           ],
         ),
-      ),
+      );
+    }
+
+    if (crossAxisCount == 1) {
+      return Column(
+        children: projects
+            .map((project) => Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: project.buildPreviewWidget(context),
+                ))
+            .toList(),
+      );
+    }
+
+    return GridView.count(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      crossAxisCount: crossAxisCount,
+      crossAxisSpacing: 16,
+      mainAxisSpacing: 16,
+      childAspectRatio: isMobile ? 0.8 : 0.9,
+      children: projects.map((project) => project.buildPreviewWidget(context)).toList(),
     );
   }
 

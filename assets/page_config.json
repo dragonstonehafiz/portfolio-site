@@ -2,6 +2,7 @@
     "featured_projects": {
         "description": "These are some of the projects I've found the most meaningful. Some were especially useful in my day-to-day life, while others were just fun to build or helped me learn something new. I wouldn't say they're perfect, but they're the ones I've been most proud of or ended up using the most myself. I hope a few of them might be interesting or helpful to someone else too.",
         "projects": [
+            "PortfolioSite",
             "SpendingDashboard",
             "BirdLaserTargeter",
             "TranslatorHelper",
@@ -14,6 +15,7 @@
             "page_name": "Programming Projects",
             "description": "This is a collection of small tools, dashboards, and games I've built over the years—mostly to solve problems I personally ran into. Some were made to help with budgeting or translating things I enjoy, others were school projects that I tried to push a bit further on my own. I'm still learning, and many of these are works in progress, but each one taught me something new. I keep this page updated as I build or revisit things.",
             "projects": [
+                "PortfolioSite",
                 "SpendingDashboard",
                 "BirdLaserTargeter",
                 "TranslatorHelper",

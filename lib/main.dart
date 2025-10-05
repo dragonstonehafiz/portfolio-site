@@ -4,8 +4,21 @@ import 'pages/projects_base_page.dart';
 import 'pages/project_detail_loader.dart';
 import 'routes/app_routes.dart';
 import 'utils/theme.dart';
+import 'utils/page_collection.dart';
+import 'utils/project_collection.dart';
 
-void main() {
+void main() async {
+  // Ensure Flutter bindings are initialized before using rootBundle or other
+  // services. This prevents the 'Binding has not yet been initialized' error
+  // when loading assets during startup.
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize singletons from assets and dynamic routes
+  await Future.wait([
+    ProjectsCollection.initializeFromAssets(),
+    AppRoutes.initialize(), 
+  ]);
+
   runApp(const PortfolioApp());
 }
 
@@ -25,45 +38,41 @@ class PortfolioApp extends StatelessWidget {
         if (uri.path == AppRoutes.landing) {
           return MaterialPageRoute(builder: (_) => const LandingPage(), settings: settings);
         }
-        if (uri.path == AppRoutes.projects) {
-          return MaterialPageRoute(
-              builder: (_) => const ProjectsBasePage(
-                    configKey: 'projects_archive',
-                    title: 'Programming Projects',
-                  ),
-              settings: settings);
-        }
 
         if (uri.path == AppRoutes.featured) {
           return MaterialPageRoute(
-              builder: (_) => const ProjectsBasePage(
+              builder: (_) => ProjectsBasePage(
                     configKey: 'featured_projects',
                     title: 'Featured Projects',
+                    description: PageCollection.instance.featuredPage.description,
                     emptyStateIcon: Icons.star_outline,
                   ),
               settings: settings);
         }
 
-        if (uri.path == AppRoutes.japaneseTranslations) {
-          return MaterialPageRoute(
-              builder: (_) => const ProjectsBasePage(
-                    configKey: 'translations',
-                    title: 'Japanese Translations',
-                    emptyStateIcon: Icons.translate,
-                  ),
-              settings: settings);
-        }
-
-        // Pattern: /projects/<slug>
+        // Pattern: /pages/<slug> -> map slug to a configured generic page
+        // Pattern: /projects/<slug> -> open project detail
         final segments = uri.pathSegments;
-        if (segments.length == 2 && segments[0] == 'projects') {
-          final slug = segments[1];
-          return MaterialPageRoute(builder: (_) => ProjectDetailLoader(slug: slug), settings: settings);
+        if (segments.length == 2) {
+          if (segments[0] == 'pages') {
+            final slug = segments[1];
+            final pageName = AppRoutes.genericPageSlugs[slug];
+            if (pageName != null) {
+              final pageData = PageCollection.instance.findGenericPageByName(pageName);
+              return MaterialPageRoute(
+                  builder: (_) => ProjectsBasePage(
+                        configKey: pageName,
+                        title: pageName,
+                        description: pageData?.description ?? '',
+                      ),
+                  settings: settings);
+            }
+          } else if (segments[0] == 'projects') {
+            final slug = segments[1];
+            return MaterialPageRoute(builder: (_) => ProjectDetailLoader(slug: slug), settings: settings);
+          }
         }
-
-        // No fallback old detail page; unknown routes will return null.
-
-        // Unknown route
+        debugPrint("No route match for: ${uri.path}");
         return null;
       },
     );

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../services/project_service.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/custom_footer.dart';
-import '../utils/projects.dart';
 
 class ProjectDetailLoader extends StatelessWidget {
   final String slug;
@@ -10,52 +9,41 @@ class ProjectDetailLoader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<Project?>(
-      future: ProjectService.getProjectBySlug(slug),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState != ConnectionState.done) {
-          return const Scaffold(
-            appBar: CustomAppBar(),
-            body: Center(child: CircularProgressIndicator()),
-          );
-        }
-
-        final project = snapshot.data;
-        if (project == null) {
-          return Scaffold(
-            appBar: const CustomAppBar(),
-            body: Column(
-              children: [
-                Expanded(
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Icon(Icons.error_outline, size: 64, color: Colors.red),
-                        SizedBox(height: 16),
-                        Text('Project not found', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-                        SizedBox(height: 8),
-                        Text('The requested project could not be found.'),
-                      ],
-                    ),
-                  ),
+    final project = ProjectService.getProjectBySlug(slug);
+    
+    if (project == null) {
+      return Scaffold(
+        appBar: const CustomAppBar(),
+        body: Column(
+          children: [
+            Expanded(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Icon(Icons.error_outline, size: 64, color: Colors.red),
+                    SizedBox(height: 16),
+                    Text('Project not found', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+                    SizedBox(height: 8),
+                    Text('The requested project could not be found.'),
+                  ],
                 ),
-                const CustomFooter(),
-              ],
+              ),
             ),
-          );
-        }
+            const CustomFooter(),
+          ],
+        ),
+      );
+    }
 
-        return Scaffold(
-          appBar: const CustomAppBar(),
-          body: Column(
-            children: [
-              Expanded(child: project.buildFullWidget(context)),
-              const CustomFooter(),
-            ],
-          ),
-        );
-      },
+    return Scaffold(
+      appBar: const CustomAppBar(),
+      body: Column(
+        children: [
+          Expanded(child: project.buildFullWidget(context)),
+          const CustomFooter(),
+        ],
+      ),
     );
   }
 }

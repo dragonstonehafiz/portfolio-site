@@ -4,7 +4,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import '../widgets/youtube_embedded.dart';
 import '../utils/theme.dart';
 
-class Project {
+class ProjectData {
   final String variableName;
   final String category;
   final String title;
@@ -21,7 +21,7 @@ class Project {
   // For backward compatibility we still accept a list of string URLs.
   final List<dynamic> downloadPaths;
 
-  Project({
+  ProjectData({
     required this.variableName,
     required this.category,
     required this.title,
@@ -37,8 +37,8 @@ class Project {
     required this.downloadPaths,
   });
 
-  factory Project.fromJson(String key, Map<String, dynamic> json) {
-    return Project(
+  factory ProjectData.fromJson(String key, Map<String, dynamic> json) {
+    return ProjectData(
       variableName: json['variable_name'] ?? key,
       category: json['category'] ?? '',
       title: json['title'] ?? '',

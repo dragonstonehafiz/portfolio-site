@@ -1,16 +1,17 @@
 {
-    "page_configurations": {
-        "featured_projects": {
-            "description": "These are some of the projects I've found the most meaningful. Some were especially useful in my day-to-day life, while others were just fun to build or helped me learn something new. I wouldn't say they're perfect, but they're the ones I've been most proud of or ended up using the most myself. I hope a few of them might be interesting or helpful to someone else too.",
-            "projects": [
-                "SpendingDashboard",
-                "BirdLaserTargeter",
-                "TranslatorHelper",
-                "ESRGAN_M",
-                "Electronica"
-            ]
-        },
-        "projects_archive": {
+    "featured_projects": {
+        "description": "These are some of the projects I've found the most meaningful. Some were especially useful in my day-to-day life, while others were just fun to build or helped me learn something new. I wouldn't say they're perfect, but they're the ones I've been most proud of or ended up using the most myself. I hope a few of them might be interesting or helpful to someone else too.",
+        "projects": [
+            "SpendingDashboard",
+            "BirdLaserTargeter",
+            "TranslatorHelper",
+            "ESRGAN_M",
+            "Electronica"
+        ]
+    },
+    "project_pages": [
+        {
+            "page_name": "Programming Projects",
             "description": "This is a collection of small tools, dashboards, and games I've built over the years—mostly to solve problems I personally ran into. Some were made to help with budgeting or translating things I enjoy, others were school projects that I tried to push a bit further on my own. I'm still learning, and many of these are works in progress, but each one taught me something new. I keep this page updated as I build or revisit things.",
             "projects": [
                 "SpendingDashboard",
@@ -28,17 +29,20 @@
                 "Physics_Game"
             ]
         },
-        "translations": {
+        {
+            "page_name": "Translation Projects",
             "description": "This page includes translations I've done for Japanese drama CDs and game stories. I started doing this to improve my Japanese, and over time it became a way to better understand the characters and stories I enjoy. Some of the translations were done completely by hand, while others used tools I built to help with transcription and editing. They're not perfect, but I try to keep them accurate and readable. I'm still learning, and doing these translations has helped a lot.",
             "projects": [
                 "makeine_vol1ep1",
                 "makeine_vol1ep2",
+                "makeine_vol1ep3",
                 "makeine_vol2ep1",
+                "makeine_vol2ep2",
                 "makeine_vol2ep3",
                 "nichijou_himekuri_vol1_4",
                 "gakumas_lilja_step1",
                 "gakumas_lilja_step2"
             ]
         }
-    }
+    ]
 }

@@ -1,69 +1,27 @@
-import 'dart:convert';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart' show rootBundle;
-import '../utils/projects.dart';
+import '../utils/project_data.dart';
+import '../utils/page_collection.dart';
+import '../utils/project_collection.dart';
 
 class ProjectService {
-  static Map<String, Project>? _allProjects;
-  static Map<String, dynamic>? _pageConfig;
+  static List<ProjectData> getProjectsForPage(String pageName, {bool descending = true}) {
 
-  // Initialize the service by loading JSON files
-  static Future<void> initialize() async {
-    if (_allProjects == null || _pageConfig == null) {
-      await Future.wait([
-        _loadProjects(),
-        _loadPageConfig(),
-      ]);
-    }
-  }
+    final projectsList = <String>[];
+    final pageCollection = PageCollection.instance;
 
-  // Load all projects from projects.json
-  static Future<void> _loadProjects() async {
-    try {
-      final String projectsJson = await rootBundle.loadString('assets/projects.json');
-      final Map<String, dynamic> projectsData = json.decode(projectsJson);
-      
-      _allProjects = {};
-      for (final entry in projectsData.entries) {
-        _allProjects![entry.key] = Project.fromJson(entry.key, entry.value);
-      }
-    } catch (e) {
-      debugPrint('Error loading projects.json: $e');
-      _allProjects = {};
+    if (pageName == 'featured_projects') {
+      projectsList.addAll(pageCollection.featuredPage.projects);
+    } else {
+      final page = pageCollection.findGenericPageByName(pageName);
+      if (page != null) projectsList.addAll(page.projects);
     }
-  }
 
-  // Load page configuration from page_config.json
-  static Future<void> _loadPageConfig() async {
-    try {
-      final String configJson = await rootBundle.loadString('assets/page_config.json');
-      _pageConfig = json.decode(configJson);
-    } catch (e) {
-      debugPrint('Error loading page_config.json: $e');
-      _pageConfig = {'page_configurations': {}};
-    }
-  }
+    final projectIds = projectsList;
+    final projects = <ProjectData>[];
+    final projectsCollection = ProjectsCollection.instance;
 
-  // Get projects for a specific page
-  static Future<List<Project>> getProjectsForPage(String pageName, {bool descending = true}) async {
-    await initialize();
-    
-    final pageConfigs = _pageConfig?['page_configurations'] as Map<String, dynamic>?;
-    if (pageConfigs == null) {
-      return [];
-    }
-    
-    final pageConfig = pageConfigs[pageName] as Map<String, dynamic>?;
-    if (pageConfig == null) {
-      debugPrint('Page configuration not found for: $pageName');
-      return [];
-    }
-    
-    final projectIds = List<String>.from(pageConfig['projects'] ?? []);
-    final projects = <Project>[];
-    
     for (final id in projectIds) {
-      final project = _allProjects?[id];
+      final project = projectsCollection.projects[id];
       if (project != null) {
         projects.add(project);
       } else {
@@ -122,50 +80,42 @@ class ProjectService {
     return DateTime.fromMillisecondsSinceEpoch(0);
   }
 
-  // Get a specific project by ID
-  static Future<Project?> getProjectById(String projectId) async {
-    await initialize();
-    return _allProjects?[projectId];
+  static ProjectData? getProjectById(String projectId) {
+    return ProjectsCollection.instance.projects[projectId];
   }
 
   // Get a specific project by slug (title-based). This iterates the loaded
   // projects and returns the first match for the slug.
-  static Future<Project?> getProjectBySlug(String slug) async {
-    await initialize();
-    if (_allProjects == null) return null;
-    for (final project in _allProjects!.values) {
+  static ProjectData? getProjectBySlug(String slug) {
+    final projectsCollection = ProjectsCollection.instance;
+    for (final project in projectsCollection.projects.values) {
       if (project.slug == slug) return project;
     }
     return null;
   }
 
-  // Get all projects
-  static Future<List<Project>> getAllProjects() async {
-    await initialize();
-    return _allProjects?.values.toList() ?? [];
+  static List<ProjectData> getAllProjects() {
+    return ProjectsCollection.instance.projects.values.toList();
   }
 
   // Get projects by category
-  static Future<List<Project>> getProjectsByCategory(String category) async {
-    await initialize();
-    return _allProjects?.values
-        .where((project) => project.category == category)
-        .toList() ?? [];
+  static List<ProjectData> getProjectsByCategory(String category) {
+    return ProjectsCollection.instance.projects.values
+      .where((project) => project.category == category)
+      .toList();
   }
 
   // Get projects by tag
-  static Future<List<Project>> getProjectsByTag(String tag) async {
-    await initialize();
-    return _allProjects?.values
-        .where((project) => project.tags.contains(tag))
-        .toList() ?? [];
+  static List<ProjectData> getProjectsByTag(String tag) {
+    return ProjectsCollection.instance.projects.values
+      .where((project) => project.tags.contains(tag))
+      .toList();
   }
 
   // Get all available tags
-  static Future<Set<String>> getAllTags() async {
-    await initialize();
+  static Set<String> getAllTags() {
     final allTags = <String>{};
-    final projects = _allProjects?.values ?? <Project>[];
+    final projects = ProjectsCollection.instance.projects.values;
     for (final project in projects) {
       allTags.addAll(project.tags);
     }
@@ -173,10 +123,9 @@ class ProjectService {
   }
 
   // Get all available categories
-  static Future<Set<String>> getAllCategories() async {
-    await initialize();
+  static Set<String> getAllCategories() {
     final categories = <String>{};
-    final projects = _allProjects?.values ?? <Project>[];
+    final projects = ProjectsCollection.instance.projects.values;
     for (final project in projects) {
       categories.add(project.category);
     }
@@ -184,36 +133,29 @@ class ProjectService {
   }
 
   // Search projects by title or description
-  static Future<List<Project>> searchProjects(String query) async {
-    await initialize();
+  static List<ProjectData> searchProjects(String query) {
     if (query.isEmpty) {
       return getAllProjects();
     }
     
     final lowercaseQuery = query.toLowerCase();
-    return _allProjects?.values
-        .where((project) => 
-            project.title.toLowerCase().contains(lowercaseQuery) ||
-            (project.description?.toLowerCase().contains(lowercaseQuery) ?? false)
-        )
-        .toList() ?? [];
+    return ProjectsCollection.instance.projects.values
+      .where((project) =>
+        project.title.toLowerCase().contains(lowercaseQuery) ||
+        (project.description?.toLowerCase().contains(lowercaseQuery) ?? false))
+      .toList();
   }
 
   // Get available page configurations
-  static Future<Map<String, String>> getAvailablePages() async {
-    await initialize();
-    
-    final pageConfigs = _pageConfig?['page_configurations'] as Map<String, dynamic>?;
-    if (pageConfigs == null) {
-      return {};
-    }
-    
+  static Map<String, String> getAvailablePages() {
+    final pageCollection = PageCollection.instance;
+
     final pages = <String, String>{};
-    for (final entry in pageConfigs.entries) {
-      final config = entry.value as Map<String, dynamic>;
-      pages[entry.key] = config['description'] ?? entry.key;
+    // Featured block is a special key
+    pages['featured_projects'] = pageCollection.featuredPage.description;
+    for (final p in pageCollection.genericPages) {
+      pages[p.pageName] = p.description;
     }
-    
     return pages;
   }
 }

@@ -47,8 +47,7 @@
     ],
     "tags": [
       "python",
-      "ai",
-      "computer vision"
+      "ai"
     ],
     "project_type": "Full Project",
     "download_paths": []
@@ -315,8 +314,7 @@
     ],
     "tags": [
       "python",
-      "ai",
-      "llm"
+      "ai"
     ],
     "project_type": "Full Project",
     "download_paths": []
@@ -372,27 +370,25 @@
     "variable_name": "PortfolioSite",
     "category": "mini",
     "title": "Personal Portfolio Website",
-    "description": "\n    Built with **Streamlit** and **Docker**, this site dynamically displays my projects.\n\n    Instead of manually updating project entries, the site uses a **custom `ProjectObject` system**  \n    to automatically render content based on structured metadata.  \n    This keeps everything **organized, scalable, and easy to maintain**.\n    ",
+  "description": "\n    Built with **Flutter (web)** and **Docker**, this portfolio was created so I wouldn't have to touch raw HTML/CSS/frontend tooling I don't enjoy.\n\n    Project and page data are stored as structured **JSON** files and automatically rendered at runtime, so adding or updating projects only requires editing the JSON metadata.\n\n    The site is hosted on **Google Cloud** (managed with Docker), and uses a custom `ProjectObject` system to ensure consistent rendering from the JSON data.\n    ",
     "date": "2025-03-07",
-    "last_update": "2025-10-04",
+    "last_update": "2025-10-05",
     "vid_link": null,
     "github_link": "https://github.com/dragonstonehafiz/portfolio-site",
     "img_paths": [
-      "images/other/portfolio_homepage.png",
-      "images/other/portfolio_projects.png"
+      "images/other/portfolio1.png",
+      "images/other/portfolio2.png",
+      "images/other/portfolio3.png"
     ],
     "what_i_did": [
-      "**Designed and developed** a responsive portfolio site using **Streamlit**, ensuring a clean and accessible UI.",
-      "**Implemented a project filtering system** based on tags and categories, allowing users to easily browse different projects.",
-      "**Integrated Google Cloud and Docker for hosting**, enabling seamless updates and version control.",
-      "**Developed an automatic project rendering system**, using a custom `ProjectObject` class for consistency and maintainability."
+      "**Implemented the entire frontend in Flutter (Web)** so I wouldn't have to work directly with HTML/CSS — I could build UI once and deploy to the web.",
+      "**Stored all project and page data as JSON** and built a runtime renderer that converts metadata into Flutter widgets automatically.",
+      "**Built responsive web layouts** that adapt to desktop and mobile browsers, prioritizing readability and touch-friendly navigation."
     ],
     "tags": [
-      "python",
-      "streamlit",
-      "flutter"
+      "web-dev"
     ],
-    "project_type": "Full Project",
+    "project_type": "Mini Project",
     "download_paths": []
   },
   "YouTubeCommentAnalyzer": {
@@ -587,7 +583,6 @@
     "img_paths": [],
     "what_i_did": [],
     "tags": [
-      "anime"
     ],
     "project_type": "Translations",
     "download_paths": [

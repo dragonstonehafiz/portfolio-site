@@ -138,77 +138,98 @@ class ProjectData {
 
   // Returns a full detailed widget for the project detail page
   Widget buildFullWidget(BuildContext context) {
+    // Ensure consistent horizontal padding on all screens and center the
+    // content column. The inner Column remains left aligned for sections,
+    // but the title will be centered in its own row.
+    final screenWidth = MediaQuery.of(context).size.width;
+    final maxWidth = screenWidth > 1000 ? 1000.0 : screenWidth * 0.9;
+
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(24.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Back button
-          Row(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
+      child: Center(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: maxWidth),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              IconButton(
-                onPressed: () => Navigator.pop(context),
-                icon: const Icon(Icons.arrow_back),
+              // Back button
+              Row(
+                children: [
+                  IconButton(
+                    onPressed: () => Navigator.pop(context),
+                    icon: const Icon(Icons.arrow_back),
+                  ),
+                  const Text(
+                    'Back to Projects',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ],
               ),
-              const Text(
-                'Back to Projects',
-                style: TextStyle(fontSize: 16),
+              const SizedBox(height: 24),
+
+              // Project title (centered, reduced size)
+              Center(
+                child: Text(
+                  title,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 36,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blueGrey,
+                  ),
+                ),
               ),
+              const SizedBox(height: 16),
+
+              // Meta row
+              _buildMetaRow(context, isPreview: false),
+
+              // Description (show before video)
+              if (description != null && description!.isNotEmpty) ...[
+                const SizedBox(height: 24),
+                _buildSection('About This Project', null),
+                const SizedBox(height: 12),
+                _buildDescriptionWidget(context),
+              ],
+
+              // Video (embedded) or links row
+              const SizedBox(height: 24),
+              if (vidLink != null) _buildVideoWidget(context),
+
+              // What I did
+              if (whatIDid.isNotEmpty) ...[
+                const SizedBox(height: 32),
+                _buildSection('What I Did', null),
+                const SizedBox(height: 12),
+                _buildWhatIDidList(context),
+              ],
+
+              // Tags
+              if (tags.isNotEmpty) ...[
+                const SizedBox(height: 32),
+                _buildSection('Tags', null),
+                const SizedBox(height: 12),
+                _buildTagsWidget(maxToShow: tags.length),
+              ],
+
+              // Images gallery
+              if (imgPaths.isNotEmpty) ...[
+                const SizedBox(height: 32),
+                _buildSection('Project Gallery', null),
+                const SizedBox(height: 16),
+                _buildFullImage(context),
+              ],
+
+              // Downloads
+              if (downloadPaths.isNotEmpty) ...[
+                const SizedBox(height: 32),
+                _buildSection('Downloads', null),
+                const SizedBox(height: 12),
+                _buildDownloads(),
+              ],
             ],
           ),
-          const SizedBox(height: 24),
-
-          // Project title and metadata (use helpers)
-          _buildTitleWidget(context, isPreview: false),
-          const SizedBox(height: 16),
-          _buildMetaRow(context, isPreview: false),
-
-          // Video (embedded) or links row
-          const SizedBox(height: 24),
-          if (vidLink != null) ...[
-            _buildVideoWidget(context),
-          ],
-
-          // Description
-          if (description != null && description!.isNotEmpty) ...[
-            const SizedBox(height: 32),
-            _buildSection('About This Project', null),
-            const SizedBox(height: 12),
-            _buildDescriptionWidget(context),
-          ],
-
-          // What I did
-          if (whatIDid.isNotEmpty) ...[
-            const SizedBox(height: 32),
-            _buildSection('What I Did', null),
-            const SizedBox(height: 12),
-            _buildWhatIDidList(context),
-          ],
-
-          // Tags
-          if (tags.isNotEmpty) ...[
-            const SizedBox(height: 32),
-            _buildSection('Tags', null),
-            const SizedBox(height: 12),
-            _buildTagsWidget(maxToShow: tags.length),
-          ],
-
-          // Images gallery
-          if (imgPaths.isNotEmpty) ...[
-            const SizedBox(height: 32),
-            _buildSection('Project Gallery', null),
-            const SizedBox(height: 16),
-            _buildFullImage(context),
-          ],
-
-          // Downloads
-          if (downloadPaths.isNotEmpty) ...[
-            const SizedBox(height: 32),
-            _buildSection('Downloads', null),
-            const SizedBox(height: 12),
-            _buildDownloads(),
-          ],
-        ],
+        ),
       ),
     );
   }

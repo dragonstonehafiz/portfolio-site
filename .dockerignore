@@ -1,4 +1,3 @@
-build/
 .git
 .gitignore
 .DS_Store
@@ -8,3 +7,8 @@ build/
 **/build
 **/target
 **/*.log
+
+# Allow the top-level Flutter build output so it can be copied into Docker images
+!build/
+!build/web/
+!build/web/**

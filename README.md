@@ -38,6 +38,22 @@ flutter build web --release
 ```
 The built files will be in the `build/web/` directory.
 
+### **Host the built site locally (Python)**
+
+From the project root (where `build/web/` is), you can serve the production build with a tiny Python HTTP server. Choose one of the following depending on your Python version:
+
+- Python 3 (recommended):
+```powershell
+python -m http.server 8080 --directory build/web
+```
+
+- Python 2 (if available):
+```powershell
+python -m SimpleHTTPServer 8080
+```
+
+Then open http://localhost:8080 in your browser.
+
 ## Deployment
 
 The built web files can be hosted on any static hosting service:
@@ -75,8 +91,8 @@ You can also create a Docker container using the built web files:
 
 3. **Build and run the Docker container:**
    ```bash
-   docker build -t portfolio-site .
-   docker run -p 8080:8080 portfolio-site
+   docker build -t portfolio .
+   docker run -p 8080:8080 portfolio
    ```
    
    The site will be available at `http://localhost:8080`.

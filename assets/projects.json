@@ -39,7 +39,8 @@
     "github_link": "https://github.com/dragonstonehafiz/inf2009-project",
     "img_paths": [
       "images/sit/inf2009_project1.png",
-      "images/sit/inf2009_project2.png"
+      "images/sit/inf2009_project2.png",
+      "images/sit/inf2009_project3.png"
     ],
     "what_i_did": [
       "Implemented **real-time MQTT communication** between the Pi Zero and a remote server, enabling offloaded bird detection and reducing device-side processing load by over 80%.",
@@ -265,26 +266,24 @@
     "variable_name": "SpendingDashboard",
     "category": "normal",
     "title": "Spending Dashboard",
-    "description": "\n    A Streamlit-based dashboard designed to **track, visualize, and analyze personal spending data**.  \n    The project reads purchase records from a structured `.xlsx` file, supports **interactive filtering**, and generates **dynamic financial insights** through a clean UI.\n\n    It features **custom Plotly charts**, an **Excel auto-formatting pipeline** with conditional category styling, and robust search functionality with flexible cost, date, and category filters.\n    ",
+    "description": "A PySide6 (Qt) desktop application for **tracking, analyzing, and visualizing personal spending data**.  \nThe app loads purchase records from a structured `.xlsx` file, provides **interactive filtering and plotting**, and includes **tools for data maintenance and backup**. \n\nIt features a **dashboard view with KPIs and monthly trends**, a **sortable data table**, and **Excel file automation** powered by openpyxl — all packaged in a clean, offline desktop experience.",
     "date": "2025-04-28",
-    "last_update": "2025-07-08",
+    "last_update": "2025-10-10",
     "vid_link": null,
     "github_link": "https://github.com/dragonstonehafiz/budgeting-analysis",
     "img_paths": [
       "images/other/budgeting1.png",
       "images/other/budgeting2.png",
       "images/other/budgeting3.png",
-      "images/other/budgeting4.png",
-      "images/other/budgeting5.png"
+      "images/other/budgeting4.png"
     ],
     "what_i_did": [
-      "Built a full Streamlit application with multiple data exploration modes (full dataset, yearly focus, advanced search), improving usability.",
-      "Designed and implemented an Excel formatting pipeline that standardized data entry, reduced user errors, and accelerated spreadsheet preparation using openpyxl.",
-      "Developed a suite of interactive visualizations (line, bar, pie, scatter) with custom color schemes, enhancing trend discovery and financial insight generation."
+      "Developed a full-featured PySide6 desktop application with multiple pages (Dashboard and Table View) using Qt widgets and layouts.",
+      "Implemented Excel automation using openpyxl to remake and validate `.xlsx` files, applying conditional formatting and creating automatic backups.",
+      "Created interactive matplotlib-based visualizations including rolling averages, category distributions, and top-item breakdowns."
     ],
     "tags": [
-      "python",
-      "visualizations"
+      "python"
     ],
     "project_type": "Full Project",
     "download_paths": []

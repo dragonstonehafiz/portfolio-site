@@ -469,6 +469,30 @@
         "url": "https://drive.google.com/file/d/1VxsZOwXn8Sq9tK8hNTm7H7_ybhs_5rho/view?usp=sharing"
       }
     ]
+  },"gakumas_lilja_hakusen": {
+    "variable_name": "gakumas_lilja_hakusen",
+    "category": "translations",
+    "title": "Gakuen Idolmaster: Lilja Hakusen Commyu",
+    "description": null,
+    "date": "2025-10-20",
+    "last_update": null,
+    "vid_link": "https://youtu.be/FGMHf9UwcUo",
+    "github_link": null,
+    "img_paths": [],
+    "what_i_did": [],
+    "tags": [
+    ],
+    "project_type": "Translations",
+    "download_paths": [
+      {
+        "key": "English Subs",
+        "url": "https://drive.google.com/file/d/1yPGH5bge-MFPNe_EO17A9YnGznzkVSnH/view?usp=drive_link"
+      },
+      {
+        "key": "Japanese Subs",
+        "url": "https://drive.google.com/file/d/1uBBsbcymA64BPd3OMtJ9hRswAGSBV3oq/view?usp=drive_link"
+      }
+    ]
   },
   "makeine_vol1ep1": {
     "variable_name": "makeine_vol1ep1",

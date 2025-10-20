@@ -565,18 +565,19 @@ class ProjectData {
 
         const SizedBox(height: 8),
 
-        // Row 3: Dates
+        // Row 3: Dates - always show Created and Updated (if present), even in preview.
         Row(
           children: [
             Flexible(
               child: Text(
-                isPreview ? (_formatDate(date)) : 'Created: ${_formatDate(date)}',
+                'Created: ${_formatDate(date)}',
                 style: const TextStyle(fontSize: 12, color: Colors.grey),
                 overflow: TextOverflow.ellipsis,
               ),
             ),
-            if (!isPreview && lastUpdate != null) ...[
-              const SizedBox(width: 16),
+            // Keep a small gap and show Updated date if available
+            if (lastUpdate != null) ...[
+              const SizedBox(width: 12),
               Flexible(
                 child: Text(
                   'Updated: ${_formatDate(lastUpdate!)}',

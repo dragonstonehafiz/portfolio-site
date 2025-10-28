@@ -32,6 +32,8 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
   // Project type filter
   String? _selectedProjectType;
   List<String> _availableProjectTypes = [];
+  // Search query
+  String _searchQuery = '';
 
   @override
   void initState() {
@@ -152,6 +154,8 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
           children: [
             _buildHeader(context, isMobile),
             const SizedBox(height: 12),
+            _buildSearchBar(context, isMobile),
+            const SizedBox(height: 16),
             _buildDescription(context, projects.length, isMobile),
             const SizedBox(height: 20),
             _buildProjectsPreview(context, projects, crossAxisCount, isMobile),
@@ -254,6 +258,29 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
     );
   }
 
+  Widget _buildSearchBar(BuildContext context, bool isMobile) {
+    final input = TextField(
+      decoration: InputDecoration(
+        prefixIcon: const Icon(Icons.search),
+        hintText: 'Search projects...',
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        isDense: true,
+      ),
+      onChanged: (value) {
+        setState(() {
+          _searchQuery = value.trim();
+        });
+      },
+    );
+
+    return SizedBox(
+      width: double.infinity,
+      child: input,
+    );
+  }
+
   // Projects preview section
   Widget _buildProjectsPreview(BuildContext context, List<ProjectData> projects, int crossAxisCount, bool isMobile) {
     if (projects.isEmpty) {
@@ -319,6 +346,19 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
                 // Apply project type filter if selected
                 if (_selectedProjectType != null && _selectedProjectType!.isNotEmpty) {
                   projects = projects.where((p) => p.projectType == _selectedProjectType).toList();
+                }
+                // Apply search filter if query entered
+                if (_searchQuery.isNotEmpty) {
+                  final query = _searchQuery.toLowerCase();
+                  projects = projects.where((project) {
+                    final titleMatch = project.title.toLowerCase().contains(query);
+                    final descriptionMatch =
+                        project.description?.toLowerCase().contains(query) ?? false;
+                    final tagMatch = project.tags.any(
+                      (tag) => tag.toLowerCase().contains(query),
+                    );
+                    return titleMatch || descriptionMatch || tagMatch;
+                  }).toList();
                 }
 
                 // Always render the responsive layout (header + description + content).

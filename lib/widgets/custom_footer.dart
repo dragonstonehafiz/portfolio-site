@@ -96,7 +96,7 @@ class CustomFooter extends StatelessWidget {
       ),
       label: Text(label),
       style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.skyDark,
+        backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       ),

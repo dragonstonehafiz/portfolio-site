@@ -478,7 +478,7 @@ class ProjectData {
         if (isPreview)
           Icon(
             Icons.arrow_forward_ios,
-            color: AppColors.skyDark,
+            color: AppColors.primary,
           ),
       ],
     );
@@ -497,14 +497,14 @@ class ProjectData {
             Container(
               padding: EdgeInsets.symmetric(horizontal: isPreview ? 8 : 12, vertical: isPreview ? 4 : 6),
               decoration: BoxDecoration(
-                color: AppColors.skyAccent.withValues(alpha: 0.2),
+                color: AppColors.accent.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(isPreview ? 12 : 16),
               ),
               child: Text(
                 projectType,
                 style: TextStyle(
                   fontSize: isPreview ? 12 : 14,
-                  color: AppColors.skyDark,
+                  color: AppColors.primary,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -531,7 +531,7 @@ class ProjectData {
                           icon: const Icon(Icons.play_circle_fill, size: 16),
                           label: const Text('Watch Video'),
                           style: TextButton.styleFrom(
-                            foregroundColor: AppColors.skyDark,
+                            foregroundColor: AppColors.primary,
                           ),
                         ),
                       ),
@@ -553,7 +553,7 @@ class ProjectData {
                           icon: const Icon(Icons.code, size: 16),
                           label: const Text('GitHub Link'),
                           style: TextButton.styleFrom(
-                            foregroundColor: AppColors.skyDark,
+                            foregroundColor: AppColors.primary,
                           ),
                         ),
                       ),
@@ -627,7 +627,7 @@ class ProjectData {
       },
       styleSheet: MarkdownStyleSheet(
         p: textStyle.copyWith(height: 1.6),
-        a: TextStyle(color: AppColors.skyDark),
+        a: TextStyle(color: AppColors.primary),
         listBullet: textStyle,
       ),
     );
@@ -671,8 +671,8 @@ class ProjectData {
       runSpacing: 4,
       children: tags.take(maxToShow).map((tag) => Chip(
         label: Text(tag, style: const TextStyle(fontSize: 12)),
-        backgroundColor: AppColors.sky.withValues(alpha: 0.1),
-        side: BorderSide(color: AppColors.sky.withValues(alpha: 0.3)),
+        backgroundColor: AppColors.secondary.withValues(alpha: 0.1),
+        side: BorderSide(color: AppColors.secondary.withValues(alpha: 0.3)),
       )).toList(),
     );
   }
@@ -695,7 +695,7 @@ class ProjectData {
               width: 6,
               height: 6,
               decoration: BoxDecoration(
-                color: AppColors.skyDark,
+                color: AppColors.primary,
                 shape: BoxShape.circle,
               ),
             ),
@@ -743,7 +743,7 @@ class ProjectData {
             icon: const Icon(Icons.download),
             label: Text(label),
             style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.sky,
+              backgroundColor: AppColors.secondary,
               foregroundColor: Colors.white,
             ),
           ),
@@ -889,3 +889,4 @@ class ProjectData {
 
 
 }
+

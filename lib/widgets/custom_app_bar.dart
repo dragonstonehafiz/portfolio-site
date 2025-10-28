@@ -18,7 +18,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           color: Colors.white,
         ),
       ),
-      backgroundColor: AppColors.skyDark,
+      backgroundColor: AppColors.primary,
       elevation: 4,
       centerTitle: false,
       actions: isMobile ? _buildMobileActions(context) : _buildDesktopActions(context),
@@ -46,7 +46,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       PopupMenuButton<String>(
         onSelected: (route) => _navigateTo(context, route),
-        color: AppColors.skyDark,
+        color: AppColors.primary,
         offset: const Offset(0, kToolbarHeight),
         itemBuilder: (context) {
           final genericEntries = _buildGenericPageEntries();
@@ -79,7 +79,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           if (route.isEmpty) return;
           _navigateTo(context, route);
         },
-        color: AppColors.skyDark,
+        color: AppColors.primary,
         offset: const Offset(0, kToolbarHeight),
         itemBuilder: (context) {
           final items = <PopupMenuEntry<String>>[

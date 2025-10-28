@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 class AppColors {
   AppColors._();
 
-  // Primary sky blue
-  static const Color sky = Color(0xFF4FC3F7); // light sky blue
-  static const Color skyDark = Color(0xFF0288D1); // darker variant for appbar
-  static const Color skyAccent = Color(0xFF00B0FF);
+  // Core palette
+  static const Color primary = Color(0xFF0288D1); // deep accent blue
+  static const Color secondary = Color(0xFF4FC3F7); // lighter companion tone
+  static const Color accent = Color(0xFF00B0FF); // vivid highlight
 
   // Neutral backgrounds and text
   static const Color background = Color(0xFFF6FBFF);
@@ -21,9 +21,10 @@ class AppColors {
 ThemeData buildAppTheme() {
   return ThemeData(
     colorScheme: ColorScheme.fromSeed(
-      seedColor: AppColors.skyDark,
-      primary: AppColors.skyDark,
-      secondary: AppColors.skyAccent,
+      seedColor: AppColors.primary,
+      primary: AppColors.primary,
+      secondary: AppColors.secondary,
+      tertiary: AppColors.accent,
       background: AppColors.background,
       surface: AppColors.surface,
       onPrimary: Colors.white,
@@ -36,13 +37,13 @@ ThemeData buildAppTheme() {
       bodyMedium: TextStyle(color: AppColors.textSecondary),
     ),
     appBarTheme: const AppBarTheme(
-      backgroundColor: AppColors.skyDark,
+      backgroundColor: AppColors.primary,
       foregroundColor: Colors.white,
       elevation: 4,
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.skyDark,
+        backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
       ),
     ),

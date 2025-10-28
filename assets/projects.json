@@ -1,7 +1,6 @@
 {
   "AI_Game": {
     "variable_name": "AI_Game",
-    "category": "normal",
     "title": "AI Pathfinding Game",
     "description": "A **turn-based** game I made for one of my AI modules. The game was written on a custom engine provided by the school, and the code was written in `C++`.",
     "date": "2019-01-06",
@@ -30,7 +29,6 @@
   },
   "BirdLaserTargeter": {
     "variable_name": "BirdLaserTargeter",
-    "category": "normal",
     "title": "Bird Laser Targeter on the Edge",
     "description": "\n    A Raspberry Pi Zero 2W-powered system designed to **detect birds and deter them using a laser pointer**.  \n    The project integrates servo motors, a laser diode, a camera, and microphone-based audio triggers.  \n    It features a **state-machine-based control system** and supports **both local and remote detection** via MQTT.\n\n    While the model training and YOLOv5 implementation were handled by teammates,  \n    I was responsible for **system integration, hardware interfacing**, and **overall architecture**.\n    ",
     "date": "2025-03-29",
@@ -55,7 +53,6 @@
   },
   "ESRGAN_M": {
     "variable_name": "ESRGAN_M",
-    "category": "normal",
     "title": "Anime Image Upscaler",
     "description": "\n    An image upscaler built using ESRGAN, fine-tuned for anime-style images at 256x256 resolution. \n    The model was trained on a dataset of over 15,000 images to reduce artifacts and enhance detail, making it more effective for upscaling low-resolution anime artwork.\n    ",
     "date": "2024-11-29",
@@ -84,7 +81,6 @@
   },
   "Electronica": {
     "variable_name": "Electronica",
-    "category": "normal",
     "title": "Electronica",
     "description": "A **top down shooter** inspired by Geometry Wars. Built on the `Unity Game Engine`, all the code for this game was written by me over the course of three months. This was a solo project, and the final thing I worked on before graduating from Nanyang Polytechnic.",
     "date": "2020-02-10",
@@ -120,7 +116,6 @@
   },
   "JapaneseLearningCardGame": {
     "variable_name": "JapaneseLearningCardGame",
-    "category": "normal",
     "title": "Japanese Learning Card Game",
     "description": "\n    As part of a school assignment to design a **tabletop game**,  I opted to create a **digital card game** instead centered around **Japanese language learning**. The project was entirely self-developed, with all code written from scratch in Unity.\n    ",
     "date": "2025-07-17",
@@ -151,7 +146,6 @@
   },
   "Last_Survivor": {
     "variable_name": "Last_Survivor",
-    "category": "normal",
     "title": "The Last Survivor",
     "description": "\n    A wave-based top-down shooter developed in Unity. \n    The game features multiple enemy types with AI-driven movement and attack behaviors, requiring players to adapt their strategies as waves progress.\n    ",
     "date": "2019-03-01",
@@ -184,7 +178,6 @@
   },
   "Locus": {
     "variable_name": "Locus",
-    "category": "normal",
     "title": "L.O.C.U.S",
     "description": "\n    A virtual reality horror puzzle game designed for the `HTC Vive`. \n    The game features motion-based interactions, environmental puzzles, and scripted horror events, creating an immersive first-person experience.\n    ",
     "date": "2019-08-21",
@@ -210,7 +203,6 @@
   },
   "Physics_Game": {
     "variable_name": "Physics_Game",
-    "category": "normal",
     "title": "Simple Physics Game",
     "description": "A **Peggle inspired game** made during my Physics for Game Programming module. The game was written in `C++` on a custom game engine provided by the school.",
     "date": "2017-06-04",
@@ -237,7 +229,6 @@
   },
   "ResourceManagementGame": {
     "variable_name": "ResourceManagementGame",
-    "category": "normal",
     "title": "Resource Management Game",
     "description": "\n    A real-time resource management simulation developed in `Java` using `LibGDX`. \n    ",
     "date": "2024-02-23",
@@ -264,7 +255,6 @@
   },
   "SpendingDashboard": {
     "variable_name": "SpendingDashboard",
-    "category": "normal",
     "title": "Spending Dashboard",
     "description": "A PySide6 (Qt) desktop application for **tracking, analyzing, and visualizing personal spending data**.  \nThe app loads purchase records from a structured `.xlsx` file, provides **interactive filtering and plotting**, and includes **tools for data maintenance and backup**. \n\nIt features a **dashboard view with KPIs and monthly trends**, a **sortable data table**, and **Excel file automation** powered by openpyxl — all packaged in a clean, offline desktop experience.",
     "date": "2025-04-28",
@@ -290,7 +280,6 @@
   },
   "TranslatorHelper": {
     "variable_name": "TranslatorHelper",
-    "category": "normal",
     "title": "Translator Helper",
     "description": "\n    Transcribing and translating anime drama CDs is a hobby of mine. Although I can usually manage on my own, there are times when I can’t determine exactly what a character is saying or how best to translate a particular phrase. To help with this, I built an application that uses OpenAI’s API and Whisper.\n\n    I later realized I could have AI generate a first draft of the transcription and translation for an entire file, then review the resulting subtitle files and make any necessary edits. This is exactly what I did for the Gakuen Idolmaster translations (see the translation page), which saved me a great deal of time.\n    ",
     "date": "2025-03-09",
@@ -320,7 +309,6 @@
   },
   "BudgetingSpreadsheet": {
     "variable_name": "BudgetingSpreadsheet",
-    "category": "mini",
     "title": "Budgeting Spreadsheet Automation",
     "description": "\n    A Python-based tool that automates the setup of budgeting spreadsheets by inserting formulas and formatting new sheets each year. \n    The program ensures consistent calculations and improves readability with automated conditional formatting.\n    \n    I have since replaced this with my Spending Dashboard project, which is a more robust solution for tracking my spending.\n    ",
     "date": "2024-01-16",
@@ -345,7 +333,6 @@
   },
   "DiamondCityRadio": {
     "variable_name": "DiamondCityRadio",
-    "category": "mini",
     "title": "Diamond City Radio (Fallout-Inspired Music Player)",
     "description": "\n    A Java-based music player inspired by Fallout 4’s Diamond City Radio. \n    The app plays a mix of music tracks and voice clips, dynamically interweaving DJ commentary between songs to simulate an in-game radio experience.\n    ",
     "date": "2024-04-27",
@@ -367,7 +354,6 @@
   },
   "PortfolioSite": {
     "variable_name": "PortfolioSite",
-    "category": "mini",
     "title": "Personal Portfolio Website",
   "description": "\n    Built with **Flutter (web)** and **Docker**, this portfolio was created so I wouldn't have to touch raw HTML/CSS/frontend tooling I don't enjoy.\n\n    Project and page data are stored as structured **JSON** files and automatically rendered at runtime, so adding or updating projects only requires editing the JSON metadata.\n\n    The site is hosted on **Google Cloud** (managed with Docker), and uses a custom `ProjectObject` system to ensure consistent rendering from the JSON data.\n    ",
     "date": "2025-03-07",
@@ -392,7 +378,6 @@
   },
   "YouTubeCommentAnalyzer": {
     "variable_name": "YouTubeCommentAnalyzer",
-    "category": "mini",
     "title": "YouTube Comment Keyword Search",
     "description": "\n    I started this project because I have a small YouTube channel that I run as a hobby and wanted to find out what people were saying about my videos. \n    I also wanted to take a crack at doing **sentiment analysis** just to see how it worked. \n    Using [YouTube Data API](https://developers.google.com/youtube/v3), I extracted video and comment data from my channel which I then used to perform sentiment analysis. \n    Using the generated sentiment scores, I generated multiple Word Clouds to visualize the most frequently appearing words on negative and positive comments.\n    \n    In the end, I wasn't able to learn anything I didn't already know from the word clouds, but it was a fun project nevertheless.\n\n    Everything in this project was written in `Python`. \n    Libraries like `pandas`, `matplotlib`, `wordcloud`, `spacy`, and `sklearn` were used to help with data manipulation and visualization.\n    ",
     "date": "2024-08-06",
@@ -422,7 +407,6 @@
   },
   "gakumas_lilja_step1": {
     "variable_name": "gakumas_lilja_step1",
-    "category": "translations",
     "title": "Gakuen Idolmaster: Lilja Step 1",
     "description": null,
     "date": "2025-06-15",
@@ -447,7 +431,6 @@
   },
   "gakumas_lilja_step2": {
     "variable_name": "gakumas_lilja_step2",
-    "category": "translations",
     "title": "Gakuen Idolmaster: Lilja Step 2",
     "description": null,
     "date": "2025-07-13",
@@ -472,7 +455,6 @@
   },
   "gakumas_lilja_hakusen": {
     "variable_name": "gakumas_lilja_hakusen",
-    "category": "translations",
     "title": "Gakuen Idolmaster: Lilja Hakusen Commyu",
     "description": null,
     "date": "2025-10-20",
@@ -497,7 +479,6 @@
   },
   "gakumas_lilja_kamurogiku": {
     "variable_name": "gakumas_lilja_kamurogiku",
-    "category": "translations",
     "title": "Gakuen Idolmaster: Lilja Kamurogiku Commyu",
     "description": null,
     "date": "2025-10-22",
@@ -522,7 +503,6 @@
   },
   "gakumas_lilja_sakura_photograph": {
     "variable_name": "gakumas_lilja_sakura_photograph",
-    "category": "translations",
     "title": "Gakuen Idolmaster: Lilja Sakura Photograph Commyu",
     "description": null,
     "date": "2025-10-27",
@@ -547,7 +527,6 @@
   },
   "makeine_vol1ep1": {
     "variable_name": "makeine_vol1ep1",
-    "category": "translations",
     "title": "Too Many Losing Heroines!!! Drama CD Vol. 1 \"I'll teach you the secret to style\"",
     "description": null,
     "date": "2025-02-23",
@@ -572,7 +551,6 @@
   },
   "makeine_vol1ep2": {
     "variable_name": "makeine_vol1ep2",
-    "category": "translations",
     "title": "Too Many Losing Heroines!!! Drama CD Vol. 1 \"Be careful with sneak photography.\"",
     "description": null,
     "date": "2025-03-15",
@@ -597,7 +575,6 @@
   },
   "makeine_vol1ep3": {
     "variable_name": "makeine_vol1ep3",
-    "category": "translations",
     "title": "Too Many Losing Heroines!!! Drama CD Vol. 1 \"Let's aim for the one chance!\"",
     "description": null,
     "date": "2025-05-01",
@@ -622,7 +599,6 @@
   },
   "makeine_vol2ep1": {
     "variable_name": "makeine_vol2ep1",
-    "category": "translations",
     "title": "Too Many Losing Heroines!!! Drama CD Vol. 2 \"Don't Forget to Level Up\"",
     "description": null,
     "date": "2025-07-27",
@@ -647,7 +623,6 @@
   },
   "makeine_vol2ep2": {
     "variable_name": "makeine_vol2ep2",
-    "category": "translations",
     "title": "Too Many Losing Heroines!!! Drama CD Vol. 2 \"Secret Photoshoot\"",
     "description": null,
     "date": "2025-07-27",
@@ -672,7 +647,6 @@
   },
   "makeine_vol2ep3": {
     "variable_name": "makeine_vol2ep3",
-    "category": "translations",
     "title": "Too Many Losing Heroines!!! Drama CD Vol. 2 \"Take Responsibility\"",
     "description": null,
     "date": "2025-08-11",
@@ -697,7 +671,6 @@
   },
   "nichijou_himekuri_vol1_4": {
     "variable_name": "nichijou_himekuri_vol1_4",
-    "category": "translations",
     "title": "Nichijou Daily Calendar CD Vol. 1: \"April\"",
     "description": null,
     "date": "2025-04-12",

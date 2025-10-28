@@ -29,14 +29,26 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
   // Tag filter
   String? _selectedTag;
   List<String> _availableTags = [];
+  // Project type filter
+  String? _selectedProjectType;
+  List<String> _availableProjectTypes = [];
 
   @override
   void initState() {
     super.initState();
-    // Load available tags for the dropdown
-    final tags = ProjectService.getAllTags();
+    // Load available tags for the dropdown, scoped to this page's projects
+    final projectsForPage = ProjectService.getProjectsForPage(widget.configKey);
+    final tags = <String>{};
+    final projectTypes = <String>{};
+    for (final project in projectsForPage) {
+      tags.addAll(project.tags);
+      if (project.projectType.isNotEmpty) {
+        projectTypes.add(project.projectType);
+      }
+    }
     setState(() {
       _availableTags = tags.toList()..sort();
+      _availableProjectTypes = projectTypes.toList()..sort();
     });
   }
 
@@ -61,6 +73,70 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
       final horizontalPadding = (screenWidth * 0.1).clamp(32.0, 120.0);
       return EdgeInsets.fromLTRB(horizontalPadding, 32.0, horizontalPadding, 32.0);
     }
+  }
+
+  Widget _buildTagDropdown({bool isExpanded = false}) {
+    return DropdownButtonHideUnderline(
+      child: DropdownButton<String?>(
+        isExpanded: isExpanded,
+        value: _selectedTag,
+        hint: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+          child: Text('All tags'),
+        ),
+        items: [
+          const DropdownMenuItem<String?>(
+            value: null,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+              child: Text('All tags'),
+            ),
+          ),
+          ..._availableTags.map(
+            (t) => DropdownMenuItem<String?>(
+              value: t,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                child: Text(t),
+              ),
+            ),
+          ),
+        ],
+        onChanged: (value) => setState(() => _selectedTag = value),
+      ),
+    );
+  }
+
+  Widget _buildProjectTypeDropdown({bool isExpanded = false}) {
+    return DropdownButtonHideUnderline(
+      child: DropdownButton<String?>(
+        isExpanded: isExpanded,
+        value: _selectedProjectType,
+        hint: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+          child: Text('All project types'),
+        ),
+        items: [
+          const DropdownMenuItem<String?>(
+            value: null,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+              child: Text('All project types'),
+            ),
+          ),
+          ..._availableProjectTypes.map(
+            (type) => DropdownMenuItem<String?>(
+              value: type,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                child: Text(type),
+              ),
+            ),
+          ),
+        ],
+        onChanged: (value) => setState(() => _selectedProjectType = value),
+      ),
+    );
   }
 
   // Build responsive layout for projects
@@ -90,7 +166,7 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
     final titleWidget = Text(
       widget.title,
       style: TextStyle(
-        fontSize: isMobile ? 28 : 48,
+        fontSize: isMobile ? 26 : 32,
         fontWeight: FontWeight.bold,
         color: Colors.blueGrey,
       ),
@@ -99,33 +175,14 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
     final controls = Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        DropdownButtonHideUnderline(
-          child: DropdownButton<String?>(
-            value: _selectedTag,
-            hint: const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-              child: Text('All tags'),
-            ),
-            items: [
-              const DropdownMenuItem<String?>(
-                value: null,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                  child: Text('All'),
-                ),
-              ),
-              ..._availableTags
-                  .map((t) => DropdownMenuItem<String?>(
-                        value: t,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                          child: Text(t),
-                        ),
-                      ))
-                  .toList(),
-            ],
-            onChanged: (v) => setState(() => _selectedTag = v),
-          ),
+        SizedBox(
+          width: 180,
+          child: _buildProjectTypeDropdown(),
+        ),
+        const SizedBox(width: 8),
+        SizedBox(
+          width: 180,
+          child: _buildTagDropdown(),
         ),
         const SizedBox(width: 8),
         IconButton(
@@ -154,39 +211,13 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
           Row(
             children: [
               Expanded(
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton<String?>(
-                    isExpanded: true,
-                    value: _selectedTag,
-                    hint: const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                      child: Text('All tags'),
-                    ),
-                    items: [
-                      const DropdownMenuItem<String?>(
-                        value: null,
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                          child: Text('All'),
-                        ),
-                      ),
-                      ..._availableTags
-                          .map((t) => DropdownMenuItem<String?>(
-                                value: t,
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                                  child: Text(t),
-                                ),
-                              ))
-                          .toList(),
-                    ],
-                    onChanged: (v) => setState(() => _selectedTag = v),
-                  ),
-                ),
+                child: _buildProjectTypeDropdown(isExpanded: true),
               ),
-
               const SizedBox(width: 8),
-
+              Expanded(
+                child: _buildTagDropdown(isExpanded: true),
+              ),
+              const SizedBox(width: 8),
               // Compact sort button
               Material(
                 color: Colors.transparent,
@@ -284,6 +315,10 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
                 // Apply tag filter if selected
                 if (_selectedTag != null && _selectedTag!.isNotEmpty) {
                   projects = projects.where((p) => p.tags.contains(_selectedTag)).toList();
+                }
+                // Apply project type filter if selected
+                if (_selectedProjectType != null && _selectedProjectType!.isNotEmpty) {
+                  projects = projects.where((p) => p.projectType == _selectedProjectType).toList();
                 }
 
                 // Always render the responsive layout (header + description + content).

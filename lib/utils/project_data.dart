@@ -7,7 +7,6 @@ import '../utils/responsive_web_utils.dart';
 
 class ProjectData {
   final String variableName;
-  final String category;
   final String title;
   final String? description;
   final String date;
@@ -24,7 +23,6 @@ class ProjectData {
 
   ProjectData({
     required this.variableName,
-    required this.category,
     required this.title,
     this.description,
     required this.date,
@@ -41,7 +39,6 @@ class ProjectData {
   factory ProjectData.fromJson(String key, Map<String, dynamic> json) {
     return ProjectData(
       variableName: json['variable_name'] ?? key,
-      category: json['category'] ?? '',
       title: json['title'] ?? '',
       description: json['description'],
       date: json['date'] ?? '',

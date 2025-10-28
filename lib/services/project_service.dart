@@ -98,13 +98,6 @@ class ProjectService {
     return ProjectsCollection.instance.projects.values.toList();
   }
 
-  // Get projects by category
-  static List<ProjectData> getProjectsByCategory(String category) {
-    return ProjectsCollection.instance.projects.values
-      .where((project) => project.category == category)
-      .toList();
-  }
-
   // Get projects by tag
   static List<ProjectData> getProjectsByTag(String tag) {
     return ProjectsCollection.instance.projects.values
@@ -120,16 +113,6 @@ class ProjectService {
       allTags.addAll(project.tags);
     }
     return allTags;
-  }
-
-  // Get all available categories
-  static Set<String> getAllCategories() {
-    final categories = <String>{};
-    final projects = ProjectsCollection.instance.projects.values;
-    for (final project in projects) {
-      categories.add(project.category);
-    }
-    return categories;
   }
 
   // Search projects by title or description

@@ -34,6 +34,8 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
   List<String> _availableProjectTypes = [];
   // Search query
   String _searchQuery = '';
+  // Layout toggle
+  bool _showListView = false;
 
   @override
   void initState() {
@@ -141,6 +143,42 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
     );
   }
 
+  Widget _buildListViewToggle({required bool isMobile}) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Checkbox(
+          value: _showListView,
+          onChanged: (value) {
+            if (value != null) {
+              setState(() {
+                _showListView = value;
+              });
+            }
+          },
+          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          visualDensity: isMobile ? VisualDensity.compact : VisualDensity.standard,
+        ),
+        GestureDetector(
+          onTap: () {
+            setState(() {
+              _showListView = !_showListView;
+            });
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4.0),
+            child: Text(
+              'List view',
+              style: TextStyle(
+                fontSize: isMobile ? 14 : 16,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
   // Build responsive layout for projects
   Widget _buildResponsiveLayout(BuildContext context, List<ProjectData> projects) {
     final padding = _getResponsivePadding(context);
@@ -176,19 +214,20 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
       ),
     );
 
-    final controls = Row(
-      mainAxisSize: MainAxisSize.min,
+    final controls = Wrap(
+      spacing: 8,
+      runSpacing: 8,
+      crossAxisAlignment: WrapCrossAlignment.center,
+      alignment: WrapAlignment.end,
       children: [
         SizedBox(
           width: 180,
           child: _buildProjectTypeDropdown(),
         ),
-        const SizedBox(width: 8),
         SizedBox(
           width: 180,
           child: _buildTagDropdown(),
         ),
-        const SizedBox(width: 8),
         IconButton(
           tooltip: _descending ? 'Sort: Newest first' : 'Sort: Oldest first',
           onPressed: () {
@@ -198,6 +237,7 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
           },
           icon: Icon(_descending ? Icons.arrow_downward : Icons.arrow_upward),
         ),
+        _buildListViewToggle(isMobile: false),
       ],
     );
 
@@ -236,6 +276,11 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
                 ),
               ),
             ],
+          ),
+          const SizedBox(height: 8),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: _buildListViewToggle(isMobile: true),
           ),
         ],
       );
@@ -303,6 +348,19 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
             ),
           ],
         ),
+      );
+    }
+
+    if (_showListView) {
+      return Column(
+        children: projects
+            .map(
+              (project) => Padding(
+                padding: const EdgeInsets.only(bottom: 12),
+                child: project.buildListItemWidget(context),
+              ),
+            )
+            .toList(),
       );
     }
 

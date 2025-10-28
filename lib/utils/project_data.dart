@@ -134,6 +134,141 @@ class ProjectData {
     );
   }
 
+  // Returns a compact row-styled preview for list mode
+  Widget buildListItemWidget(BuildContext context) {
+    final isMobile = ResponsiveWebUtils.isMobile(context);
+    final horizontalGap = isMobile ? 8.0 : 12.0;
+    final titleStyle = Theme.of(context).textTheme.titleMedium?.copyWith(
+          fontWeight: FontWeight.w600,
+        ) ??
+        TextStyle(
+          fontSize: isMobile ? 16 : 18,
+          fontWeight: FontWeight.w600,
+        );
+
+    Widget? projectTypeBadge;
+    if (projectType.isNotEmpty) {
+      projectTypeBadge = Container(
+        padding: EdgeInsets.symmetric(
+          horizontal: isMobile ? 8 : 10,
+          vertical: isMobile ? 4 : 5,
+        ),
+        decoration: BoxDecoration(
+          color: AppColors.accent.withValues(alpha: 0.1),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: AppColors.accent.withValues(alpha: 0.3),
+          ),
+        ),
+        child: Text(
+          projectType,
+          style: TextStyle(
+            fontSize: isMobile ? 12 : 13,
+            fontWeight: FontWeight.w600,
+            color: AppColors.accent,
+          ),
+        ),
+      );
+    }
+
+    Widget buildLinkButton({
+      required IconData icon,
+      required String tooltip,
+      required String url,
+    }) {
+      return Tooltip(
+        message: tooltip,
+        child: IconButton(
+          icon: Icon(icon, size: 20),
+          padding: EdgeInsets.zero,
+          constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
+          splashRadius: 18,
+          onPressed: () => _openLink(url),
+        ),
+      );
+    }
+
+    final linkButtons = <Widget>[];
+    if (githubLink != null && githubLink!.isNotEmpty) {
+      linkButtons.add(buildLinkButton(
+        icon: Icons.code,
+        tooltip: 'Open GitHub',
+        url: githubLink!,
+      ));
+    }
+    if (vidLink != null && vidLink!.isNotEmpty) {
+      linkButtons.add(buildLinkButton(
+        icon: Icons.play_circle_outline,
+        tooltip: 'Watch video',
+        url: vidLink!,
+      ));
+    }
+
+    return Card(
+      elevation: 1,
+      margin: EdgeInsets.zero,
+      child: InkWell(
+        onTap: () {
+          Navigator.pushNamed(context, '/projects/${this.slug}');
+        },
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: isMobile ? 12 : 16,
+            vertical: isMobile ? 10 : 12,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Flexible(
+                    child: Text(
+                      title,
+                      style: titleStyle,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  if (projectTypeBadge != null) ...[
+                    SizedBox(width: horizontalGap),
+                    projectTypeBadge,
+                  ],
+                ],
+              ),
+              if (tags.isNotEmpty || linkButtons.isNotEmpty) ...[
+                const SizedBox(height: 8),
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 4,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    for (final tag in tags)
+                      Chip(
+                        label: Text(tag, style: const TextStyle(fontSize: 12)),
+                        backgroundColor: AppColors.secondary.withValues(alpha: 0.1),
+                        side: BorderSide(color: AppColors.secondary.withValues(alpha: 0.3)),
+                      ),
+                    if (linkButtons.isNotEmpty)
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          for (var i = 0; i < linkButtons.length; i++) ...[
+                            linkButtons[i],
+                            if (i != linkButtons.length - 1) SizedBox(width: horizontalGap / 2),
+                          ],
+                        ],
+                      ),
+                  ],
+                ),
+              ],
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   // Returns a full detailed widget for the project detail page
   Widget buildFullWidget(BuildContext context) {
     // Ensure consistent horizontal padding on all screens and center the

@@ -3,6 +3,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import '../widgets/youtube_embedded.dart';
 import '../utils/theme.dart';
+import '../utils/responsive_web_utils.dart';
 
 class ProjectData {
   final String variableName;
@@ -300,7 +301,7 @@ class ProjectData {
   // Responsive media container that scales with screen size
   Widget _buildResponsiveMediaContainer(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
-    final isMobile = screenSize.width < 768;
+    final isMobile = ResponsiveWebUtils.isMobile(context);
     
     // Calculate proportional dimensions with better scaling for larger screens
     final containerHeight = isMobile 
@@ -848,7 +849,7 @@ class ProjectData {
     if (link == null) return const SizedBox.shrink();
 
     final screenSize = MediaQuery.of(context).size;
-    final isMobile = screenSize.width < 768;
+    final isMobile = ResponsiveWebUtils.isMobile(context);
 
     // On mobile, constrain width to a large proportion of the screen and compute
     // height using a 16:9 aspect ratio (or fallback to a square if very narrow).
@@ -891,4 +892,3 @@ class ProjectData {
 
 
 }
-

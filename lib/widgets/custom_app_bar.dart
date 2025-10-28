@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import '../routes/app_routes.dart';
 import '../utils/theme.dart';
+import '../utils/responsive_web_utils.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final isMobile = ResponsiveWebUtils.isMobile(context);
+
     return AppBar(
       title: const Text(
         'Muhd Hafiz\'s Portfolio',
@@ -19,78 +21,126 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: AppColors.skyDark,
       elevation: 4,
       centerTitle: false,
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.pushNamedAndRemoveUntil(
-            context,
-            AppRoutes.landing,
-            (route) => false,
-          ),
-          child: const Text(
-            'Home',
-            style: TextStyle(color: Colors.white, fontSize: 16),
-          ),
-        ),
-        TextButton(
-          onPressed: () => Navigator.pushNamedAndRemoveUntil(
-            context,
-            AppRoutes.featured,
-            (route) => false,
-          ),
-          child: const Text(
-            'Featured Projects',
-            style: TextStyle(color: Colors.white, fontSize: 16),
-          ),
-        ),
-
-        // Projects dropdown: populated from page_config.json generic pages.
-        PopupMenuButton<String>(
-          onSelected: (value) {
-            // Expect value to be the page_name string (human readable). Map
-            // it to a slug path via AppRoutes.pagePath(slug) if needed.
-            // First, try to find a slug key for the selected page name.
-            final slugEntry = AppRoutes.genericPageSlugs.entries
-                .firstWhere((e) => e.value == value, orElse: () => const MapEntry('', ''));
-            if (slugEntry.key.isNotEmpty) {
-              final targetPath = AppRoutes.pagePath(slugEntry.key);
-              Navigator.pushNamedAndRemoveUntil(
-                context,
-                targetPath,
-                (route) => false,
-              );
-              return;
-            }
-
-            debugPrint('No slug mapping found for: $value');
-          },
-          color: AppColors.skyDark,
-          offset: const Offset(0, kToolbarHeight),
-          itemBuilder: (context) {
-            final items = <PopupMenuEntry<String>>[];
-            if (AppRoutes.genericPageSlugs.isNotEmpty) {
-              for (final entry in AppRoutes.genericPageSlugs.entries) {
-                items.add(PopupMenuItem(
-                  value: entry.value,
-                  child: Text(entry.value, style: const TextStyle(color: Colors.white)),
-                ));
-              }
-            } else {
-              items.add(const PopupMenuItem(value: 'cooked', child: Text('cooked custom_app_bar.dart', style: TextStyle(color: Colors.white))));
-            }
-            return items;
-          },
-          child: Center(
-            child: Text(
-              'Projects',
-              style: TextStyle(color: Colors.white, fontSize: 16),
-            ),
-          ),
-        ),
-        const SizedBox(width: 16),
-      ],
+      actions: isMobile ? _buildMobileActions(context) : _buildDesktopActions(context),
     );
   }
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+
+  List<Widget> _buildDesktopActions(BuildContext context) {
+    return [
+      TextButton(
+        onPressed: () => _navigateTo(context, AppRoutes.landing),
+        child: const Text(
+          'Home',
+          style: TextStyle(color: Colors.white, fontSize: 16),
+        ),
+      ),
+      TextButton(
+        onPressed: () => _navigateTo(context, AppRoutes.featured),
+        child: const Text(
+          'Featured Projects',
+          style: TextStyle(color: Colors.white, fontSize: 16),
+        ),
+      ),
+      PopupMenuButton<String>(
+        onSelected: (route) => _navigateTo(context, route),
+        color: AppColors.skyDark,
+        offset: const Offset(0, kToolbarHeight),
+        itemBuilder: (context) {
+          final genericEntries = _buildGenericPageEntries();
+          if (genericEntries.isEmpty) {
+            return [
+              PopupMenuItem<String>(
+                value: '',
+                enabled: false,
+                child: _menuItemText('No pages available'),
+              ),
+            ];
+          }
+          return genericEntries;
+        },
+        child: const Center(
+          child: Text(
+            'Projects',
+            style: TextStyle(color: Colors.white, fontSize: 16),
+          ),
+        ),
+      ),
+      const SizedBox(width: 16),
+    ];
+  }
+
+  List<Widget> _buildMobileActions(BuildContext context) {
+    return [
+      PopupMenuButton<String>(
+        onSelected: (route) {
+          if (route.isEmpty) return;
+          _navigateTo(context, route);
+        },
+        color: AppColors.skyDark,
+        offset: const Offset(0, kToolbarHeight),
+        itemBuilder: (context) {
+          final items = <PopupMenuEntry<String>>[
+            PopupMenuItem<String>(
+              value: AppRoutes.landing,
+              child: _menuItemText('Home'),
+            ),
+            PopupMenuItem<String>(
+              value: AppRoutes.featured,
+              child: _menuItemText('Featured Projects'),
+            ),
+          ];
+
+          final genericEntries = _buildGenericPageEntries();
+          if (genericEntries.isNotEmpty) {
+            items.add(const PopupMenuDivider());
+            items.addAll(genericEntries);
+          }
+
+          return items;
+        },
+        child: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 12.0),
+          child: Text(
+            'Pages',
+            style: TextStyle(color: Colors.white, fontSize: 16),
+          ),
+        ),
+      ),
+      const SizedBox(width: 8),
+    ];
+  }
+
+  List<PopupMenuEntry<String>> _buildGenericPageEntries() {
+    if (AppRoutes.genericPageSlugs.isEmpty) {
+      return <PopupMenuEntry<String>>[];
+    }
+
+    return AppRoutes.genericPageSlugs.entries
+        .map(
+          (entry) => PopupMenuItem<String>(
+            value: AppRoutes.pagePath(entry.key),
+            child: _menuItemText(entry.value),
+          ),
+        )
+        .toList();
+  }
+
+  Text _menuItemText(String label) {
+    return Text(
+      label,
+      style: const TextStyle(color: Colors.white),
+    );
+  }
+
+  void _navigateTo(BuildContext context, String route) {
+    if (route.isEmpty) return;
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      route,
+      (r) => false,
+    );
+  }
 }

@@ -3,6 +3,7 @@ import '../widgets/custom_app_bar.dart';
 import '../widgets/custom_footer.dart';
 import '../services/project_service.dart';
 import '../utils/project_data.dart';
+import '../utils/responsive_web_utils.dart';
 
 class ProjectsBasePage extends StatefulWidget {
   final String configKey;
@@ -39,15 +40,10 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
     });
   }
 
-  // Helper method to determine if we're on a mobile device
-  bool _isMobile(BuildContext context) {
-    return MediaQuery.of(context).size.width < 768;
-  }
-
   // Helper method to get appropriate cross axis count based on screen size
   int _getCrossAxisCount(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    if (screenWidth < 768) {
+    if (screenWidth < ResponsiveWebUtils.mobileBreakpoint) {
       return 1; // Mobile: single column
     } else {
       return 2; // Desktop/Tablet: 2 columns
@@ -57,7 +53,7 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
   // Helper method to get horizontal padding based on screen size
   EdgeInsets _getResponsivePadding(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    if (screenWidth < 768) {
+    if (screenWidth < ResponsiveWebUtils.mobileBreakpoint) {
       // Mobile: minimal horizontal padding
       return const EdgeInsets.all(16.0);
     } else {
@@ -71,7 +67,7 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
   Widget _buildResponsiveLayout(BuildContext context, List<ProjectData> projects) {
     final padding = _getResponsivePadding(context);
     final crossAxisCount = _getCrossAxisCount(context);
-    final isMobile = _isMobile(context);
+    final isMobile = ResponsiveWebUtils.isMobile(context);
     return SingleChildScrollView(
       child: Padding(
         padding: padding,

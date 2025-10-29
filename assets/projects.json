@@ -24,7 +24,7 @@
       "games",
       "c++"
     ],
-    "project_type": "Full Project",
+    "project_type": "Mini Project",
     "download_paths": []
   },
   "BirdLaserTargeter": {
@@ -76,7 +76,7 @@
       "python",
       "ai"
     ],
-    "project_type": "Full Project",
+    "project_type": "Mini Project",
     "download_paths": []
   },
   "Electronica": {
@@ -224,7 +224,7 @@
       "c++",
       "games"
     ],
-    "project_type": "Full Project",
+    "project_type": "Mini Project",
     "download_paths": []
   },
   "ResourceManagementGame": {
@@ -275,7 +275,7 @@
     "tags": [
       "python"
     ],
-    "project_type": "Full Project",
+    "project_type": "Mini Project",
     "download_paths": []
   },
   "TranslatorHelper": {
@@ -283,14 +283,14 @@
     "title": "Translator Helper",
     "description": "\n    Transcribing and translating anime drama CDs is a hobby of mine. Although I can usually manage on my own, there are times when I can’t determine exactly what a character is saying or how best to translate a particular phrase. To help with this, I built an application that uses OpenAI’s API and Whisper.\n\n    I later realized I could have AI generate a first draft of the transcription and translation for an entire file, then review the resulting subtitle files and make any necessary edits. This is exactly what I did for the Gakuen Idolmaster translations (see the translation page), which saved me a great deal of time.\n    ",
     "date": "2025-03-09",
-    "last_update": "2025-06-17",
-    "vid_link": "https://youtu.be/KwoEBu_Y4XA",
+    "last_update": "2025-10-27",
+    "vid_link": null,
     "github_link": "https://github.com/dragonstonehafiz/translator-helper",
     "img_paths": [
-      "images/other/translatorHelper_context2.png",
-      "images/other/translatorHelper_translate.png",
-      "images/other/translatorHelper_grade.png",
-      "images/other/translatorHelper_transcribe.png"
+      "images/other/translator_helper_1.png",
+      "images/other/translator_helper_2.png",
+      "images/other/translator_helper_3.png",
+      "images/other/translator_helper_4.png"
     ],
     "what_i_did": [
       "Added support for **audio transcription** via OpenAI Whisper using file upload or microphone input.",
@@ -357,7 +357,7 @@
     "title": "Personal Portfolio Website",
   "description": "\n    Built with **Flutter (web)** and **Docker**, this portfolio was created so I wouldn't have to touch raw HTML/CSS/frontend tooling I don't enjoy.\n\n    Project and page data are stored as structured **JSON** files and automatically rendered at runtime, so adding or updating projects only requires editing the JSON metadata.\n\n    The site is hosted on **Google Cloud** (managed with Docker), and uses a custom `ProjectObject` system to ensure consistent rendering from the JSON data.\n    ",
     "date": "2025-03-07",
-    "last_update": "2025-10-05",
+    "last_update": "2025-10-29",
     "vid_link": null,
     "github_link": "https://github.com/dragonstonehafiz/portfolio-site",
     "img_paths": [

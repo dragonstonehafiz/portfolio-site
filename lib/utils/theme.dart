@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AppColors {
   AppColors._();
@@ -19,7 +20,9 @@ class AppColors {
 }
 
 ThemeData buildAppTheme() {
-  return ThemeData(
+  final base = ThemeData.light();
+
+  return base.copyWith(
     colorScheme: ColorScheme.fromSeed(
       seedColor: AppColors.primary,
       primary: AppColors.primary,
@@ -32,9 +35,14 @@ ThemeData buildAppTheme() {
     ),
     useMaterial3: true,
     scaffoldBackgroundColor: AppColors.background,
-    textTheme: const TextTheme(
-      bodyLarge: TextStyle(color: AppColors.textPrimary),
-      bodyMedium: TextStyle(color: AppColors.textSecondary),
+    // Use Google Fonts for a cleaner modern UI
+    textTheme: TextTheme(
+      displayLarge: GoogleFonts.inter(fontSize: 42, fontWeight: FontWeight.w700, color: AppColors.textPrimary),
+      displayMedium: GoogleFonts.inter(fontSize: 32, fontWeight: FontWeight.w600, color: AppColors.textPrimary),
+      headlineSmall: GoogleFonts.inter(fontSize: 22, fontWeight: FontWeight.w600, color: AppColors.textPrimary),
+      bodyLarge: GoogleFonts.inter(fontSize: 16, height: 1.45, color: AppColors.textPrimary),
+      bodyMedium: GoogleFonts.inter(fontSize: 14, height: 1.4, color: AppColors.textSecondary),
+      labelLarge: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.primary),
     ),
     appBarTheme: const AppBarTheme(
       backgroundColor: AppColors.primary,
@@ -45,6 +53,8 @@ ThemeData buildAppTheme() {
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
       ),
     ),
   );

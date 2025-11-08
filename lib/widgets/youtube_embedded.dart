@@ -48,22 +48,14 @@ class _YoutubeEmbedState extends State<YoutubeEmbed> {
                 fit: StackFit.expand,
                 children: [
                   HtmlElementView(viewType: viewId),
-                  // Overlay: show play button and intercept pointer events until activated
+                  // Overlay: transparent barrier to intercept pointer events until activated
+                  // This prevents dropdown menus from being blocked by the iframe while maintaining clickability
                   if (!activated)
                     Material(
-                      color: Colors.black.withValues(alpha: 0.35),
+                      color: Colors.transparent,
                       child: InkWell(
                         onTap: activate,
-                        child: Center(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white.withValues(alpha: 0.9),
-                              shape: BoxShape.circle,
-                            ),
-                            padding: const EdgeInsets.all(12),
-                            child: const Icon(Icons.play_arrow, size: 32, color: Colors.black),
-                          ),
-                        ),
+                        child: const SizedBox.expand(),
                       ),
                     ),
                 ],

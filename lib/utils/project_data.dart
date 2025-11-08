@@ -4,6 +4,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import '../widgets/youtube_embedded.dart';
 import '../utils/theme.dart';
 import '../utils/responsive_web_utils.dart';
+import '../widgets/hover_card_widget.dart';
 
 class ProjectData {
   final String variableName;
@@ -98,7 +99,7 @@ class ProjectData {
     return Card(
       elevation: 4,
       margin: const EdgeInsets.only(bottom: 16),
-      child: InkWell(
+      child: HoverCardWidget(
         onTap: () {
           Navigator.pushNamed(context, '/projects/${this.slug}');
         },
@@ -207,7 +208,7 @@ class ProjectData {
     return Card(
       elevation: 1,
       margin: EdgeInsets.zero,
-      child: InkWell(
+      child: HoverCardWidget(
         onTap: () {
           Navigator.pushNamed(context, '/projects/${this.slug}');
         },
@@ -216,52 +217,62 @@ class ProjectData {
             horizontal: isMobile ? 12 : 16,
             vertical: isMobile ? 10 : 12,
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Row(
             children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Flexible(
-                    child: Text(
-                      title,
-                      style: titleStyle,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  if (projectTypeBadge != null) ...[
-                    SizedBox(width: horizontalGap),
-                    projectTypeBadge,
-                  ],
-                ],
-              ),
-              if (tags.isNotEmpty || linkButtons.isNotEmpty) ...[
-                const SizedBox(height: 8),
-                Wrap(
-                  spacing: 8,
-                  runSpacing: 4,
-                  crossAxisAlignment: WrapCrossAlignment.center,
+              // Small thumbnail preview on the left
+              _buildListThumbnail(isMobile),
+              SizedBox(width: isMobile ? 8 : 12),
+              // Main content (title, tags, links)
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    for (final tag in tags)
-                      Chip(
-                        label: Text(tag, style: const TextStyle(fontSize: 12)),
-                        backgroundColor: AppColors.secondary.withValues(alpha: 0.1),
-                        side: BorderSide(color: AppColors.secondary.withValues(alpha: 0.3)),
-                      ),
-                    if (linkButtons.isNotEmpty)
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Flexible(
+                          child: Text(
+                            title,
+                            style: titleStyle,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        if (projectTypeBadge != null) ...[
+                          SizedBox(width: horizontalGap),
+                          projectTypeBadge,
+                        ],
+                      ],
+                    ),
+                    if (tags.isNotEmpty || linkButtons.isNotEmpty) ...[
+                      const SizedBox(height: 8),
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 4,
+                        crossAxisAlignment: WrapCrossAlignment.center,
                         children: [
-                          for (var i = 0; i < linkButtons.length; i++) ...[
-                            linkButtons[i],
-                            if (i != linkButtons.length - 1) SizedBox(width: horizontalGap / 2),
-                          ],
+                          for (final tag in tags)
+                            Chip(
+                              label: Text(tag, style: const TextStyle(fontSize: 12)),
+                              backgroundColor: AppColors.secondary.withValues(alpha: 0.1),
+                              side: BorderSide(color: AppColors.secondary.withValues(alpha: 0.3)),
+                            ),
+                          if (linkButtons.isNotEmpty)
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                for (var i = 0; i < linkButtons.length; i++) ...[
+                                  linkButtons[i],
+                                  if (i != linkButtons.length - 1) SizedBox(width: horizontalGap / 2),
+                                ],
+                              ],
+                            ),
                         ],
                       ),
+                    ],
                   ],
                 ),
-              ],
+              ),
             ],
           ),
         ),
@@ -428,6 +439,133 @@ class ProjectData {
         ],
       ),
     );
+  }
+
+  // Compact thumbnail for list items - small and fixed size.
+  Widget _buildListThumbnail(bool isMobile) {
+    final size = isMobile ? 48.0 : 56.0; // Small square thumbnail
+
+    // Prefer local image first
+    if (imgPaths.isNotEmpty) {
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(6),
+        child: SizedBox(
+          width: size,
+          height: size,
+          child: Image.asset(
+            'assets/${imgPaths.first}',
+            fit: BoxFit.cover,
+            errorBuilder: (context, error, stackTrace) {
+              return Container(
+                color: Colors.grey[300],
+                child: Icon(
+                  Icons.image_not_supported,
+                  color: Colors.grey[600],
+                  size: size * 0.4,
+                ),
+              );
+            },
+          ),
+        ),
+      );
+    } else if (vidLink != null && vidLink!.isNotEmpty) {
+      final ytId = _extractYoutubeId(vidLink!);
+      if (ytId != null) {
+        final thumbUrl = 'https://img.youtube.com/vi/$ytId/hqdefault.jpg';
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(6),
+          child: SizedBox(
+            width: size,
+            height: size,
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                // Network thumbnail with graceful error fallback
+                Image.network(
+                  thumbUrl,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      color: Colors.grey[300],
+                      child: Center(
+                        child: Icon(
+                          Icons.play_circle_fill,
+                          color: AppColors.accent,
+                          size: size * 0.5,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                // Small translucent play overlay to indicate video
+                Container(
+                  alignment: Alignment.center,
+                  color: Colors.black26,
+                  child: Icon(
+                    Icons.play_circle_fill,
+                    color: Colors.white70,
+                    size: size * 0.32,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      }
+      // If we couldn't parse a YouTube ID, fall back to the simple play icon
+      return Container(
+        width: size,
+        height: size,
+        decoration: BoxDecoration(
+          color: AppColors.accent.withValues(alpha: 0.1),
+          borderRadius: BorderRadius.circular(6),
+          border: Border.all(
+            color: AppColors.accent.withValues(alpha: 0.3),
+          ),
+        ),
+        child: Icon(
+          Icons.play_circle_fill,
+          color: AppColors.accent,
+          size: size * 0.5,
+        ),
+      );
+    } else {    
+      return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        color: Colors.grey[200],
+        borderRadius: BorderRadius.circular(6),
+      ),
+      child: Icon(
+        Icons.code,
+        color: Colors.grey[600],
+        size: size * 0.4,
+      ),
+    );
+    }
+  }
+
+  // Extract a YouTube video id from common URL formats. Returns null if not found.
+  String? _extractYoutubeId(String url) {
+    try {
+      // Common YouTube URL patterns: youtu.be/ID, v=ID, /embed/ID
+      final patterns = [
+        RegExp(r'youtu\.be\/([\w-]{11})'),
+        RegExp(r'v=([\w-]{11})'),
+        RegExp(r'embed\/([\w-]{11})'),
+      ];
+      for (final p in patterns) {
+        final m = p.firstMatch(url);
+        if (m != null && m.groupCount >= 1) return m.group(1);
+      }
+
+      // As a last resort, try to find any 11-char token that looks like an ID
+      final any = RegExp(r'([\w-]{11})');
+      final m = any.firstMatch(url);
+      if (m != null) return m.group(1);
+    } catch (_) {}
+    return null;
   }
 
   // Responsive media container that scales with screen size

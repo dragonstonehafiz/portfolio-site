@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/custom_footer.dart';
+import '../widgets/search_bar_widget.dart';
 import '../services/project_service.dart';
 import '../utils/project_data.dart';
 import '../utils/responsive_web_utils.dart';
@@ -304,25 +305,13 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
   }
 
   Widget _buildSearchBar(BuildContext context, bool isMobile) {
-    final input = TextField(
-      decoration: InputDecoration(
-        prefixIcon: const Icon(Icons.search),
-        hintText: 'Search projects...',
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
-        isDense: true,
-      ),
-      onChanged: (value) {
-        setState(() {
-          _searchQuery = value.trim();
-        });
-      },
-    );
-
+    // Use the frosted glass search bar widget for a nicer look on web
     return SizedBox(
       width: double.infinity,
-      child: input,
+      child: SearchBarWidget(
+        hintText: 'Search projects...',
+        onChanged: (value) => setState(() => _searchQuery = value.trim()),
+      ),
     );
   }
 

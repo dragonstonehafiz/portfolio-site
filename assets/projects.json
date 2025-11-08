@@ -455,7 +455,7 @@
   },
   "gakumas_lilja_hakusen": {
     "variable_name": "gakumas_lilja_hakusen",
-    "title": "Gakuen Idolmaster: Lilja Hakusen Commyu",
+    "title": "Gakuen Idolmaster: Lilja \"Hakusen\" Commyu",
     "description": null,
     "date": "2025-10-20",
     "last_update": null,
@@ -479,7 +479,7 @@
   },
   "gakumas_lilja_kamurogiku": {
     "variable_name": "gakumas_lilja_kamurogiku",
-    "title": "Gakuen Idolmaster: Lilja Kamurogiku Commyu",
+    "title": "Gakuen Idolmaster: Lilja \"Kamurogiku\" Commyu",
     "description": null,
     "date": "2025-10-22",
     "last_update": null,
@@ -503,7 +503,7 @@
   },
   "gakumas_lilja_sakura_photograph": {
     "variable_name": "gakumas_lilja_sakura_photograph",
-    "title": "Gakuen Idolmaster: Lilja Sakura Photograph Commyu",
+    "title": "Gakuen Idolmaster: Lilja \"Sakura Photograph\" Commyu",
     "description": null,
     "date": "2025-10-27",
     "last_update": null,
@@ -522,6 +522,30 @@
       {
         "key": "Japanese Subs",
         "url": "https://drive.google.com/file/d/12Niu_5oFKX547xIzVU-tFa1q37zjZa30/view?usp=drive_link"
+      }
+    ]
+  },
+  "gakumas_lilja_hotw": {
+    "variable_name": "gakumas_lilja_hotw",
+    "title": "Gakuen Idolmaster: Lilja \"Howling over the World\" Commyu",
+    "description": null,
+    "date": "2025-11-05",
+    "last_update": null,
+    "vid_link": "https://youtu.be/lqMFhK0F6mA",
+    "github_link": null,
+    "img_paths": [],
+    "what_i_did": [],
+    "tags": [
+    ],
+    "project_type": "Translations",
+    "download_paths": [
+      {
+        "key": "English Subs",
+        "url": "https://drive.google.com/file/d/1CouYpbwipb9wzqKKuyN_me3jFVdJaZxU/view?usp=drive_link"
+      },
+      {
+        "key": "Japanese Subs",
+        "url": "https://drive.google.com/file/d/1Q3mfd4UrPfn6irNCTrpsoJsfhjc_0lVA/view?usp=drive_link"
       }
     ]
   },

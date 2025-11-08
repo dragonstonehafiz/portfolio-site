@@ -145,38 +145,39 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
   }
 
   Widget _buildListViewToggle({required bool isMobile}) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Checkbox(
-          value: _showListView,
-          onChanged: (value) {
-            if (value != null) {
-              setState(() {
-                _showListView = value;
-              });
-            }
-          },
-          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          visualDensity: isMobile ? VisualDensity.compact : VisualDensity.standard,
+    return Tooltip(
+      message: _showListView ? 'Switch to grid view' : 'Switch to list view',
+      child: IconButton(
+        padding: EdgeInsets.zero,
+        constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
+        visualDensity: isMobile ? VisualDensity.compact : VisualDensity.standard,
+        iconSize: isMobile ? 18 : 20,
+        onPressed: () {
+          setState(() {
+            _showListView = !_showListView;
+          });
+        },
+        icon: Icon(
+          _showListView ? Icons.view_list : Icons.view_list_outlined,
+          // Slightly emphasize active state
+          color: _showListView ? Theme.of(context).colorScheme.primary : null,
         ),
-        GestureDetector(
-          onTap: () {
-            setState(() {
-              _showListView = !_showListView;
-            });
-          },
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4.0),
-            child: Text(
-              'List view',
-              style: TextStyle(
-                fontSize: isMobile ? 14 : 16,
-              ),
-            ),
-          ),
-        ),
-      ],
+      ),
+    );
+  }
+
+  Widget _buildSortButton({required bool isMobile}) {
+    return IconButton(
+      padding: EdgeInsets.zero,
+      constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
+      iconSize: isMobile ? 20 : 22,
+      tooltip: _descending ? 'Sort: Newest first' : 'Sort: Oldest first',
+      onPressed: () {
+        setState(() {
+          _descending = !_descending;
+        });
+      },
+      icon: Icon(_descending ? Icons.arrow_downward : Icons.arrow_upward),
     );
   }
 
@@ -215,81 +216,43 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
       ),
     );
 
-    final controls = Wrap(
-      spacing: 8,
-      runSpacing: 8,
-      crossAxisAlignment: WrapCrossAlignment.center,
-      alignment: WrapAlignment.end,
-      children: [
-        SizedBox(
-          width: 180,
-          child: _buildProjectTypeDropdown(),
-        ),
-        SizedBox(
-          width: 180,
-          child: _buildTagDropdown(),
-        ),
-        IconButton(
-          tooltip: _descending ? 'Sort: Newest first' : 'Sort: Oldest first',
-          onPressed: () {
-            setState(() {
-              _descending = !_descending;
-            });
-          },
-          icon: Icon(_descending ? Icons.arrow_downward : Icons.arrow_upward),
-        ),
-        _buildListViewToggle(isMobile: false),
-      ],
-    );
-
+    // Controls row: will be shown below the title for all sizes. On mobile
+    // we force the two dropdowns to expand so the four controls fit on one line.
+    Widget controlsRow;
     if (isMobile) {
-      // On mobile: title on its own row, then a single controls row with
-      // an expanded dropdown and a compact sort button to its right.
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      controlsRow = Row(
         children: [
-          // Title row
-          titleWidget,
-          const SizedBox(height: 8),
-
-          // Controls row: expanded dropdown + sort button
-          Row(
-            children: [
-              Expanded(
-                child: _buildProjectTypeDropdown(isExpanded: true),
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: _buildTagDropdown(isExpanded: true),
-              ),
-              const SizedBox(width: 8),
-              // Compact sort button
-              Material(
-                color: Colors.transparent,
-                child: IconButton(
-                  tooltip: _descending ? 'Sort: Newest first' : 'Sort: Oldest first',
-                  onPressed: () {
-                    setState(() {
-                      _descending = !_descending;
-                    });
-                  },
-                  icon: Icon(_descending ? Icons.arrow_downward : Icons.arrow_upward),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: _buildListViewToggle(isMobile: true),
-          ),
+          Expanded(child: _buildProjectTypeDropdown(isExpanded: true)),
+          const SizedBox(width: 8),
+          Expanded(child: _buildTagDropdown(isExpanded: true)),
+          const SizedBox(width: 8),
+          _buildSortButton(isMobile: true),
+          const SizedBox(width: 4),
+          _buildListViewToggle(isMobile: true),
+        ],
+      );
+    } else {
+      // On desktop/tablet spread the four controls across the entire row.
+      // Make them part of the same flex so spacing between them is balanced.
+      controlsRow = Row(
+        children: [
+          Expanded(child: _buildProjectTypeDropdown()),
+          const SizedBox(width: 8),
+          Expanded(child: _buildTagDropdown()),
+          const SizedBox(width: 8),
+          _buildSortButton(isMobile: false),
+          _buildListViewToggle(isMobile: false),
         ],
       );
     }
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [Expanded(child: titleWidget), controls],
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        titleWidget,
+        const SizedBox(height: 8),
+        controlsRow,
+      ],
     );
   }
 

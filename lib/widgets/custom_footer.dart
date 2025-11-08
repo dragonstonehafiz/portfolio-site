@@ -6,26 +6,26 @@ import '../utils/theme.dart';
 class CustomFooter extends StatelessWidget {
   const CustomFooter({super.key});
 
-  // Centralized list of social links. Each entry is a map with keys:
-  // - label: String shown on the button
-  // - url: destination URL
-  // - asset: path to an SVG asset inside assets/svg/
-  static const List<Map<String, String>> _links = [
-    {
-      'label': 'LinkedIn',
-      'url': 'https://www.linkedin.com/in/muhdhafizabdulhalim/',
-      'asset': 'assets/svg/linkedin.svg',
-    },
-    {
-      'label': 'YouTube',
-      'url': 'https://www.youtube.com/@hafiz8325',
-      'asset': 'assets/svg/youtube.svg',
-    },
-    {
-      'label': 'GitHub',
-      'url': 'https://github.com/dragonstonehafiz',
-      'asset': 'assets/svg/github.svg',
-    },
+  // Centralized list of social links with custom button colors for each entry.
+  static const List<_SocialLink> _links = [
+    _SocialLink(
+      label: 'LinkedIn',
+      url: 'https://www.linkedin.com/in/muhdhafizabdulhalim/',
+      asset: 'assets/svg/linkedin.svg',
+      backgroundColor: Color(0xFF0A66C2),
+    ),
+    _SocialLink(
+      label: 'YouTube',
+      url: 'https://www.youtube.com/@hafiz8325',
+      asset: 'assets/svg/youtube.svg',
+      backgroundColor: Color(0xFFFF0000),
+    ),
+    _SocialLink(
+      label: 'GitHub',
+      url: 'https://github.com/dragonstonehafiz',
+      asset: 'assets/svg/github.svg',
+      backgroundColor: Color(0xFF333333),
+    ),
   ];
 
   Future<void> _openLink(String url) async {
@@ -44,7 +44,9 @@ class CustomFooter extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(24.0),
-      color: AppColors.footerBg,
+      decoration: BoxDecoration(
+        gradient: Theme.of(context).primaryGradient,
+      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -64,9 +66,7 @@ class CustomFooter extends StatelessWidget {
               for (var i = 0; i < _links.length; i++) ...[
                 _buildSocialButton(
                   context,
-                  _links[i]['label']!,
-                  _links[i]['asset']!,
-                  _links[i]['url']!,
+                  _links[i],
                 ),
                 if (i != _links.length - 1) const SizedBox(width: 16),
               ],
@@ -85,21 +85,35 @@ class CustomFooter extends StatelessWidget {
     );
   }
 
-  Widget _buildSocialButton(BuildContext context, String label, String assetPath, String url) {
+  Widget _buildSocialButton(BuildContext context, _SocialLink link) {
     return ElevatedButton.icon(
-      onPressed: () => _openLink(url),
+      onPressed: () => _openLink(link.url),
       icon: SvgPicture.asset(
-        assetPath,
+        link.asset,
         width: 20,
         height: 20,
         color: Colors.white,
       ),
-      label: Text(label),
+      label: Text(link.label),
       style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.primary,
+        backgroundColor: link.backgroundColor,
         foregroundColor: Colors.white,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       ),
     );
   }
+}
+
+class _SocialLink {
+  final String label;
+  final String url;
+  final String asset;
+  final Color backgroundColor;
+
+  const _SocialLink({
+    required this.label,
+    required this.url,
+    required this.asset,
+    required this.backgroundColor,
+  });
 }

@@ -5,6 +5,7 @@ import '../widgets/youtube_embedded.dart';
 import '../utils/theme.dart';
 import '../utils/responsive_web_utils.dart';
 import '../widgets/hover_card_widget.dart';
+import '../widgets/animated_gradient.dart';
 
 class ProjectData {
   final String variableName;
@@ -96,39 +97,50 @@ class ProjectData {
 
   // Returns a preview widget for projects/featured pages
   Widget buildPreviewWidget(BuildContext context) {
-    return Card(
-      elevation: 4,
+    // Use the theme's primary gradient for preview cards. Remove the outer
+    // Card so HoverCardWidget controls elevation on hover and we avoid
+    // doubled shadows. Text inside previews should contrast with the
+    // gradient, so apply a white default text color for readability.
+    return Container(
       margin: const EdgeInsets.only(bottom: 16),
       child: HoverCardWidget(
         onTap: () {
           Navigator.pushNamed(context, '/projects/${this.slug}');
         },
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Title and metadata
-              _buildTitleWidget(context, isPreview: true),
-              const SizedBox(height: 8),
-              _buildMetaRow(context, isPreview: true),
+          child: AnimatedGradient(
+            gradient: Theme.of(context).previewGradient,
+            borderRadius: BorderRadius.circular(12),
+            duration: const Duration(seconds: 8),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: DefaultTextStyle(
+                style: const TextStyle(color: Color(0xFF0F1724)),
+                child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Title and metadata
+                  _buildTitleWidget(context, isPreview: true),
+                  const SizedBox(height: 8),
+                  _buildMetaRow(context, isPreview: true),
 
-              // Description preview
-              if (description != null && description!.isNotEmpty) ...[
-                const SizedBox(height: 8),
-                _buildDescriptionWidget(context, maxLines: 2),
-              ],
+                  // Description preview
+                  if (description != null && description!.isNotEmpty) ...[
+                    const SizedBox(height: 8),
+                    _buildDescriptionWidget(context, maxLines: 2),
+                  ],
 
-              // Tags
-              if (tags.isNotEmpty) ...[
-                const SizedBox(height: 8),
-                _buildTagsWidget(maxToShow: 3),
-              ],
+                  // Tags
+                  if (tags.isNotEmpty) ...[
+                    const SizedBox(height: 8),
+                    _buildTagsWidget(maxToShow: 3),
+                  ],
 
-              // Media preview with proportional sizing based on screen size
-              const SizedBox(height: 8),
-              _buildResponsiveMediaContainer(context),
-            ],
+                  // Media preview with proportional sizing based on screen size
+                  const SizedBox(height: 8),
+                  _buildResponsiveMediaContainer(context),
+                ],
+              ),
+            ),
           ),
         ),
       ),
@@ -205,13 +217,18 @@ class ProjectData {
       ));
     }
 
-    return Card(
-      elevation: 1,
-      margin: EdgeInsets.zero,
-      child: HoverCardWidget(
-        onTap: () {
-          Navigator.pushNamed(context, '/projects/${this.slug}');
-        },
+    // Use the same subtle animated preview gradient for list items so the
+    // UI reads consistently between grid previews and list previews. Keep
+    // the HoverCardWidget for the hover interaction and wrap the inner row
+    // with `AnimatedGradient` to provide the animated background.
+    return HoverCardWidget(
+      onTap: () {
+        Navigator.pushNamed(context, '/projects/${this.slug}');
+      },
+      child: AnimatedGradient(
+        gradient: Theme.of(context).previewGradient,
+        borderRadius: BorderRadius.circular(10),
+        duration: const Duration(seconds: 6),
         child: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: isMobile ? 12 : 16,

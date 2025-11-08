@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/custom_footer.dart';
+import '../utils/theme.dart';
 
 class LandingPage extends StatelessWidget {
   const LandingPage({super.key});
@@ -8,7 +9,7 @@ class LandingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return GradientScaffold(
       appBar: const CustomAppBar(),
       body: Column(
         children: [

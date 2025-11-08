@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../services/project_service.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/custom_footer.dart';
+import '../utils/theme.dart';
 
 class ProjectDetailLoader extends StatelessWidget {
   final String slug;
@@ -12,7 +13,7 @@ class ProjectDetailLoader extends StatelessWidget {
     final project = ProjectService.getProjectBySlug(slug);
     
     if (project == null) {
-      return Scaffold(
+      return GradientScaffold(
         appBar: const CustomAppBar(),
         body: Column(
           children: [
@@ -36,7 +37,7 @@ class ProjectDetailLoader extends StatelessWidget {
       );
     }
 
-    return Scaffold(
+    return GradientScaffold(
       appBar: const CustomAppBar(),
       body: Column(
         children: [

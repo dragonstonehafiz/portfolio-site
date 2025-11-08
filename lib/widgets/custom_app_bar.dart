@@ -10,18 +10,23 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final isMobile = ResponsiveWebUtils.isMobile(context);
 
-    return AppBar(
-      title: const Text(
-        'Muhd Hafiz\'s Portfolio',
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
-        ),
+    return Container(
+      decoration: BoxDecoration(
+        gradient: Theme.of(context).primaryGradient,
       ),
-      backgroundColor: AppColors.primary,
-      elevation: 4,
-      centerTitle: false,
-      actions: isMobile ? _buildMobileActions(context) : _buildDesktopActions(context),
+      child: AppBar(
+        title: const Text(
+          'Muhd Hafiz\'s Portfolio',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        centerTitle: false,
+        actions: isMobile ? _buildMobileActions(context) : _buildDesktopActions(context),
+      ),
     );
   }
 

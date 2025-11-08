@@ -5,6 +5,7 @@ import '../widgets/search_bar_widget.dart';
 import '../services/project_service.dart';
 import '../utils/project_data.dart';
 import '../utils/responsive_web_utils.dart';
+import '../utils/theme.dart';
 
 class ProjectsBasePage extends StatefulWidget {
   final String configKey;
@@ -340,7 +341,7 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return GradientScaffold(
       appBar: const CustomAppBar(),
       body: Column(
         children: [

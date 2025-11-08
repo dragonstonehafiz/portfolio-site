@@ -9,14 +9,57 @@ class AppColors {
   static const Color secondary = Color(0xFF4FC3F7); // lighter companion tone
   static const Color accent = Color(0xFF00B0FF); // vivid highlight
 
+  // Ocean waves theme colors
+  static const Color oceanBlue = Color(0xFF1565C0);    // Deep ocean blue
+  static const Color oceanTeal = Color(0xFF00ACC1);    // Vibrant teal
+  static const Color oceanGreen = Color(0xFF26A69A);   // Sea green
+
   // Neutral backgrounds and text
   static const Color background = Color(0xFFF6FBFF);
   static const Color surface = Colors.white;
   static const Color textPrimary = Color(0xFF0F1724);
   static const Color textSecondary = Color(0xFF6B7280);
 
-  // Footer / muted
-  static const Color footerBg = Color(0xFF263238);
+  static const LinearGradient scaffoldGradient = LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [Color(0xFFFFFFFF), Color(0xFFF7FBFF)],
+    stops: [0.0, 1.0],
+  );
+
+  static const LinearGradient headerFooterGradient = LinearGradient(
+    begin: Alignment.centerLeft,
+    end: Alignment.centerRight,
+    colors: [oceanTeal, oceanBlue, oceanGreen],
+    stops: [0.0, 0.55, 1.0],
+  );
+
+  static const LinearGradient accentGradient = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [oceanTeal, oceanGreen],
+  );
+
+  static const LinearGradient surfaceGradient = LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [Colors.white, Color(0xFFF0F9FF)],
+    stops: [0.0, 1.0],
+  );
+
+  static const LinearGradient cardGradient = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [Colors.white, Color(0xFFF0FBFD)],
+    stops: [0.0, 1.0],
+  );
+
+  static const LinearGradient previewGradient = const LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [Color(0xFFEAF4FF), Color(0xFFDAEEFF), Color(0xFFCAE8FF)],
+    stops: [0.0, 0.5, 1.0],
+  );
 }
 
 ThemeData buildAppTheme() {
@@ -34,7 +77,7 @@ ThemeData buildAppTheme() {
       onSecondary: Colors.white,
     ),
     useMaterial3: true,
-    scaffoldBackgroundColor: AppColors.background,
+    scaffoldBackgroundColor: Colors.transparent, // Changed to transparent for gradient
     // Use Google Fonts for a cleaner modern UI
     textTheme: TextTheme(
       displayLarge: GoogleFonts.inter(fontSize: 42, fontWeight: FontWeight.w700, color: AppColors.textPrimary),
@@ -45,9 +88,9 @@ ThemeData buildAppTheme() {
       labelLarge: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.primary),
     ),
     appBarTheme: const AppBarTheme(
-      backgroundColor: AppColors.primary,
+      backgroundColor: Colors.transparent, // Changed for gradient support
       foregroundColor: Colors.white,
-      elevation: 4,
+      elevation: 4, // Remove shadow for cleaner gradient look
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
@@ -58,4 +101,50 @@ ThemeData buildAppTheme() {
       ),
     ),
   );
+}
+
+// Extension to add semantic gradient access to ThemeData
+extension ThemeGradients on ThemeData {
+  LinearGradient get scaffoldGradient => AppColors.scaffoldGradient;
+  LinearGradient get primaryGradient => AppColors.headerFooterGradient;
+  LinearGradient get accentGradient => AppColors.accentGradient;
+  LinearGradient get surfaceGradient => AppColors.surfaceGradient;
+  LinearGradient get cardGradient => AppColors.cardGradient;
+  LinearGradient get previewGradient => AppColors.previewGradient;
+  LinearGradient get headerFooterGradient => AppColors.headerFooterGradient;
+}
+
+// Helper widget to wrap Scaffold content with gradient background
+class GradientScaffold extends StatelessWidget {
+  final PreferredSizeWidget? appBar;
+  final Widget? body;
+  final Widget? floatingActionButton;
+  final Widget? drawer;
+  final Widget? bottomNavigationBar;
+
+  const GradientScaffold({
+    super.key,
+    this.appBar,
+    this.body,
+    this.floatingActionButton,
+    this.drawer,
+    this.bottomNavigationBar,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        gradient: Theme.of(context).scaffoldGradient,
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: appBar,
+        body: body,
+        floatingActionButton: floatingActionButton,
+        drawer: drawer,
+        bottomNavigationBar: bottomNavigationBar,
+      ),
+    );
+  }
 }

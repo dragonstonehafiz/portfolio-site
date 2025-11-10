@@ -16,7 +16,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       child: AppBar(
         title: const Text(
-          'Muhd Hafiz\'s Portfolio',
+          'Muhd Hafiz',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.white,
@@ -34,6 +34,38 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 
   List<Widget> _buildDesktopActions(BuildContext context) {
+    final genericPages = AppRoutes.genericPageSlugs.entries.toList();
+    
+    // If there are 3 or fewer pages, show them all directly instead of dropdown
+    if (genericPages.length <= 3) {
+      return [
+        TextButton(
+          onPressed: () => _navigateTo(context, AppRoutes.landing),
+          child: const Text(
+            'Home',
+            style: TextStyle(color: Colors.white, fontSize: 16),
+          ),
+        ),
+        TextButton(
+          onPressed: () => _navigateTo(context, AppRoutes.featured),
+          child: const Text(
+            'Featured',
+            style: TextStyle(color: Colors.white, fontSize: 16),
+          ),
+        ),
+        // Add each generic page as individual button
+        ...genericPages.map((entry) => TextButton(
+          onPressed: () => _navigateTo(context, AppRoutes.pagePath(entry.key)),
+          child: Text(
+            entry.value,
+            style: const TextStyle(color: Colors.white, fontSize: 16),
+          ),
+        )),
+        const SizedBox(width: 16),
+      ];
+    }
+    
+    // For more than 3 pages, use the original dropdown behavior
     return [
       TextButton(
         onPressed: () => _navigateTo(context, AppRoutes.landing),
@@ -94,7 +126,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
             PopupMenuItem<String>(
               value: AppRoutes.featured,
-              child: _menuItemText('Featured Projects'),
+              child: _menuItemText('Featured'),
             ),
           ];
 

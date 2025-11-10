@@ -23,14 +23,21 @@ class ProjectPageData {
   final String pageName;
   final String description;
   final List<String> projects;
+  final bool defaultListView;
 
-  ProjectPageData({required this.pageName, required this.description, required this.projects});
+  ProjectPageData({
+    required this.pageName,
+    required this.description,
+    required this.projects,
+    this.defaultListView = false,
+  });
 
   factory ProjectPageData.fromJson(Map<String, dynamic> json) {
     return ProjectPageData(
       pageName: json['page_name'] ?? '',
       description: json['description'] ?? '',
       projects: List<String>.from(json['projects'] ?? []),
+      defaultListView: json['default_list_view'] ?? false,
     );
   }
 
@@ -38,5 +45,6 @@ class ProjectPageData {
         'page_name': pageName,
         'description': description,
         'projects': projects,
+        'default_list_view': defaultListView,
       };
 }

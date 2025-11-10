@@ -6,6 +6,7 @@ import '../services/project_service.dart';
 import '../utils/project_data.dart';
 import '../utils/responsive_web_utils.dart';
 import '../utils/theme.dart';
+import '../utils/page_collection.dart';
 
 class ProjectsBasePage extends StatefulWidget {
   final String configKey;
@@ -42,6 +43,12 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
   @override
   void initState() {
     super.initState();
+    
+    // Check if this page should default to list view based on page config
+    final pageCollection = PageCollection.instance;
+    final pageData = pageCollection.findGenericPageByName(widget.configKey);
+    bool defaultListView = pageData?.defaultListView ?? false;
+    
     // Load available tags for the dropdown, scoped to this page's projects
     final projectsForPage = ProjectService.getProjectsForPage(widget.configKey);
     final tags = <String>{};
@@ -55,6 +62,7 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
     setState(() {
       _availableTags = tags.toList()..sort();
       _availableProjectTypes = projectTypes.toList()..sort();
+      _showListView = defaultListView;
     });
   }
 

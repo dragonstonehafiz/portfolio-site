@@ -30,7 +30,7 @@ class PortfolioApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Muhd Hafiz\'s Portfolio Site',
+      title: 'Muhd Hafiz',
       theme: buildAppTheme(),
       initialRoute: AppRoutes.landing,
       onGenerateRoute: (settings) {
@@ -45,7 +45,7 @@ class PortfolioApp extends StatelessWidget {
           return MaterialPageRoute(
               builder: (_) => ProjectsBasePage(
                     configKey: 'featured_projects',
-                    title: 'Featured Projects',
+                    title: 'Featured',
                     description: PageCollection.instance.featuredPage.description,
                     emptyStateIcon: Icons.star_outline,
                   ),

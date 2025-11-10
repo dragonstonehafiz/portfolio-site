@@ -16,9 +16,7 @@
       "bullets": [
         "Developed interactive VR/AR experiences in Unity, implementing interaction logic, animations, and user interactions.",
         "Integrated and tested immersive hardware (HTC Vive, Microsoft HoloLens) for production workflows.",
-        "Implemented object tracking and spatial interaction using Vuforia SDK and VRTK.",
-        "Debugged and optimized real-time interactions for performance across target platforms.",
-        "Applied spatial computing and AI-driven tracking techniques to improve UX and interaction fidelity."
+        "Implemented object tracking and spatial interaction using Vuforia SDK and VRTK."
       ]
     },
     {

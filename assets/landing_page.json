@@ -1,0 +1,111 @@
+{
+  "introduction": {
+    "name": "Muhd Hafiz",
+    "headline": "Developer — tools, apps, and games. Interested in UI, automation and localization.",
+    "summary": "I build practical tools and side projects to solve problems and learn new technologies. This site collects my projects, translations, and experiments.",
+    "downloads": [
+      { "label": "View Resume", "url": "https://docs.google.com/document/d/1dhX48ga314RAh9zlC7fuVqM76eqttrY7/edit?usp=drive_link&ouid=110728528551183127993&rtpof=true&sd=true" }
+    ]
+  },
+  "experience": [
+    {
+      "start": "2019-03",
+      "end": "2019-06",
+      "title": "VR Development Intern",
+      "company": "EON Reality",
+      "bullets": [
+        "Developed interactive VR/AR experiences in Unity, implementing interaction logic, animations, and user interactions.",
+        "Integrated and tested immersive hardware (HTC Vive, Microsoft HoloLens) for production workflows.",
+        "Implemented object tracking and spatial interaction using Vuforia SDK and VRTK.",
+        "Debugged and optimized real-time interactions for performance across target platforms.",
+        "Applied spatial computing and AI-driven tracking techniques to improve UX and interaction fidelity."
+      ]
+    },
+    {
+      "start": "2025-09",
+      "end": "2026-04",
+      "title": "Full Stack Developer Intern",
+      "company": "Synapxe",
+      "bullets": []
+    }
+  ],
+  "education": [
+    {
+      "school": "Singapore Institute of Technology",
+      "course": "BSc (Hons) Applied Artificial Intelligence",
+      "start": "2023-08",
+      "end": "2026-04",
+      "current_cumulative_gpa": "4.10 / 5.00",
+      "modules": [
+        {
+          "name": "Artificial Intelligence & Machine Learning",
+          "items": [
+            "Machine Learning",
+            "Large Language Models",
+            "Computer Vision and Deep Learning",
+            "Artificial Intelligence in Business and Society"
+          ]
+        },
+        {
+          "name": "Software Engineering & Systems Development",
+          "items": [
+            "Programming Fundamentals",
+            "Object Oriented Programming",
+            "Introduction to Software Engineering",
+            "Web Systems and Technologies",
+            "Embedded Systems Programming",
+            "Database Systems",
+            "Edge Computing and Analytics",
+            "Cloud Computing and Big Data"
+          ]
+        }
+      ]
+    },
+    {
+      "school": "Nanyang Polytechnic",
+      "course": "Diploma in Game Development & Technology",
+      "start": "2017-02",
+      "end": "2020-02",
+      "final_gpa": "3.56 / 4.00",
+      "modules": [
+        {
+          "name": "Core Game Programming & Software Development",
+          "items": [
+            "C++ Programming",
+            "Programming Physics",
+            "Mobile Game Programming",
+            "Multiplayer Game Programming",
+            "Artificial Intelligence in Games",
+            "Advanced Data Structures and Algorithms",
+            "Advanced Game Development Techniques",
+            "Advanced Computer Graphics"
+          ]
+        },
+        {
+          "name": "Game Design & Creative Development",
+          "items": [
+            "Principles of Game Design",
+            "Game Level Design",
+            "Visual Art Techniques",
+            "Interface Design & Programming",
+            "Game Story Creation",
+            "Audio Creation"
+          ]
+        }
+      ]
+    }
+  ],
+  "skills": {
+    "Professional Skills": [
+      "Software Engineering", "Artificial Intelligence", "Large Language Models",
+      "Dockerization", "Version Control"
+    ],
+    "Programming Languages": ["C", "C++", "C#", "Java", "Python", "Flutter", "React JS", "R"],
+    "Software": [
+      "Visual Studio", "Vistual Studio Code", "Unity", 
+      "Adobe Premiere Pro", "Adobe Photoshop", "Davinci Resolve", "Affinity Photo",
+      "Docker", "Google Cloud", "Aegisub"
+    ],
+    "Language Skills": ["Fluent in Spoken and Written English", "Intermediate Proficiency in Japanese"]
+  }
+}

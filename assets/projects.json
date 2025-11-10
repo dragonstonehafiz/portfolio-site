@@ -24,7 +24,7 @@
       "games",
       "c++"
     ],
-    "project_type": "Mini Project",
+    "project_type": "Games",
     "download_paths": []
   },
   "BirdLaserTargeter": {
@@ -48,7 +48,7 @@
       "python",
       "ai"
     ],
-    "project_type": "Full Project",
+    "project_type": "AI",
     "download_paths": []
   },
   "ESRGAN_M": {
@@ -76,7 +76,7 @@
       "python",
       "ai"
     ],
-    "project_type": "Mini Project",
+    "project_type": "AI",
     "download_paths": []
   },
   "Electronica": {
@@ -106,7 +106,7 @@
       "games",
       "unity"
     ],
-    "project_type": "Full Project",
+    "project_type": "Games",
     "download_paths": [
       {
         "key": "Game Download Link",
@@ -136,7 +136,7 @@
       "unity",
       "games"
     ],
-    "project_type": "Full Project",
+    "project_type": "Games",
     "download_paths": [
       {
         "key": "Game Download Link",
@@ -168,7 +168,7 @@
       "games",
       "unity"
     ],
-    "project_type": "Full Project",
+    "project_type": "Games",
     "download_paths": [
       {
         "key": "Game Download Link",
@@ -198,7 +198,7 @@
       "unity",
       "vr"
     ],
-    "project_type": "Full Project",
+    "project_type": "Games",
     "download_paths": []
   },
   "Physics_Game": {
@@ -224,7 +224,7 @@
       "c++",
       "games"
     ],
-    "project_type": "Mini Project",
+    "project_type": "Games",
     "download_paths": []
   },
   "ResourceManagementGame": {
@@ -250,7 +250,7 @@
       "games",
       "libgdx"
     ],
-    "project_type": "Full Project",
+    "project_type": "Games",
     "download_paths": []
   },
   "SpendingDashboard": {
@@ -275,7 +275,7 @@
     "tags": [
       "python"
     ],
-    "project_type": "Mini Project",
+    "project_type": "Productivity",
     "download_paths": []
   },
   "TranslatorHelper": {
@@ -304,7 +304,7 @@
       "python",
       "ai"
     ],
-    "project_type": "Full Project",
+    "project_type": "AI",
     "download_paths": []
   },
   "BudgetingSpreadsheet": {
@@ -328,7 +328,7 @@
     "tags": [
       "python"
     ],
-    "project_type": "Mini Project",
+    "project_type": "Productivity",
     "download_paths": []
   },
   "DiamondCityRadio": {
@@ -349,7 +349,7 @@
       "java",
       "libgdx"
     ],
-    "project_type": "Mini Project",
+    "project_type": "Productivity",
     "download_paths": []
   },
   "PortfolioSite": {
@@ -357,7 +357,7 @@
     "title": "Personal Portfolio Website",
   "description": "\n    Built with **Flutter (web)** and **Docker**, this portfolio was created so I wouldn't have to touch raw HTML/CSS/frontend tooling I don't enjoy.\n\n    Project and page data are stored as structured **JSON** files and automatically rendered at runtime, so adding or updating projects only requires editing the JSON metadata.\n\n    The site is hosted on **Google Cloud** (managed with Docker), and uses a custom `ProjectObject` system to ensure consistent rendering from the JSON data.\n    ",
     "date": "2025-03-07",
-    "last_update": "2025-10-29",
+    "last_update": "2025-11-10",
     "vid_link": null,
     "github_link": "https://github.com/dragonstonehafiz/portfolio-site",
     "img_paths": [
@@ -373,7 +373,7 @@
     "tags": [
       "web-dev"
     ],
-    "project_type": "Mini Project",
+    "project_type": "Productivity",
     "download_paths": []
   },
   "YouTubeCommentAnalyzer": {
@@ -402,7 +402,7 @@
       "ai",
       "visualizations"
     ],
-    "project_type": "Mini Project",
+    "project_type": "Productivity",
     "download_paths": []
   },
   "gakumas_lilja_step1": {
@@ -415,8 +415,7 @@
     "github_link": null,
     "img_paths": [],
     "what_i_did": [],
-    "tags": [
-    ],
+    "tags": ["games"],
     "project_type": "Translations",
     "download_paths": [
       {
@@ -439,8 +438,7 @@
     "github_link": null,
     "img_paths": [],
     "what_i_did": [],
-    "tags": [
-    ],
+    "tags": ["games"],
     "project_type": "Translations",
     "download_paths": [
       {
@@ -463,8 +461,7 @@
     "github_link": null,
     "img_paths": [],
     "what_i_did": [],
-    "tags": [
-    ],
+    "tags": ["games"],
     "project_type": "Translations",
     "download_paths": [
       {
@@ -487,8 +484,7 @@
     "github_link": null,
     "img_paths": [],
     "what_i_did": [],
-    "tags": [
-    ],
+    "tags": ["games"],
     "project_type": "Translations",
     "download_paths": [
       {
@@ -511,8 +507,7 @@
     "github_link": null,
     "img_paths": [],
     "what_i_did": [],
-    "tags": [
-    ],
+    "tags": ["games"],
     "project_type": "Translations",
     "download_paths": [
       {
@@ -535,8 +530,7 @@
     "github_link": null,
     "img_paths": [],
     "what_i_did": [],
-    "tags": [
-    ],
+    "tags": ["games"],
     "project_type": "Translations",
     "download_paths": [
       {
@@ -559,8 +553,7 @@
     "github_link": null,
     "img_paths": [],
     "what_i_did": [],
-    "tags": [
-    ],
+    "tags": ["audio-drama"],
     "project_type": "Translations",
     "download_paths": [
       {
@@ -583,8 +576,7 @@
     "github_link": null,
     "img_paths": [],
     "what_i_did": [],
-    "tags": [
-    ],
+    "tags": ["audio-drama"],
     "project_type": "Translations",
     "download_paths": [
       {
@@ -607,8 +599,7 @@
     "github_link": null,
     "img_paths": [],
     "what_i_did": [],
-    "tags": [
-    ],
+    "tags": ["audio-drama"],
     "project_type": "Translations",
     "download_paths": [
       {
@@ -631,8 +622,7 @@
     "github_link": null,
     "img_paths": [],
     "what_i_did": [],
-    "tags": [
-    ],
+    "tags": ["audio-drama"],
     "project_type": "Translations",
     "download_paths": [
       {
@@ -655,8 +645,7 @@
     "github_link": null,
     "img_paths": [],
     "what_i_did": [],
-    "tags": [
-    ],
+    "tags": ["audio-drama"],
     "project_type": "Translations",
     "download_paths": [
       {
@@ -679,8 +668,7 @@
     "github_link": null,
     "img_paths": [],
     "what_i_did": [],
-    "tags": [
-    ],
+    "tags": ["audio-drama"],
     "project_type": "Translations",
     "download_paths": [
       {
@@ -703,8 +691,7 @@
     "github_link": null,
     "img_paths": [],
     "what_i_did": [],
-    "tags": [
-    ],
+    "tags": ["audio-drama"],
     "project_type": "Translations",
     "download_paths": [
       {

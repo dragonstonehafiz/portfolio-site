@@ -12,8 +12,9 @@
     },
     "project_pages": [
         {
-            "page_name": "Programming Projects",
+            "page_name": "Programming",
             "description": "This is a collection of small tools, dashboards, and games I've built over the years—mostly to solve problems I personally ran into. Some were made to help with budgeting or translating things I enjoy, others were school projects that I tried to push a bit further on my own. I'm still learning, and many of these are works in progress, but each one taught me something new. I keep this page updated as I build or revisit things.",
+            "default_list_view": false,
             "projects": [
                 "PortfolioSite",
                 "SpendingDashboard",
@@ -32,8 +33,9 @@
             ]
         },
         {
-            "page_name": "Translation Projects",
+            "page_name": "Translations",
             "description": "This page includes translations I've done for Japanese drama CDs and game stories. I started doing this to improve my Japanese, and over time it became a way to better understand the characters and stories I enjoy. Some of the translations were done completely by hand, while others used tools I built to help with transcription and editing. They're not perfect, but I try to keep them accurate and readable. I'm still learning, and doing these translations has helped a lot.",
+            "default_list_view": true,
             "projects": [
                 "makeine_vol1ep1",
                 "makeine_vol1ep2",

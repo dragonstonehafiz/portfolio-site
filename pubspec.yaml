@@ -31,3 +31,4 @@ flutter:
     - assets/images/sit/
     - assets/projects.json
     - assets/page_config.json
+    - assets/landing_page.json

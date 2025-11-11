@@ -4,6 +4,7 @@ import '../widgets/custom_footer.dart';
 import '../widgets/animated_gradient.dart';
 import '../utils/theme.dart';
 import '../utils/landing_page_data.dart';
+import '../utils/responsive_web_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class LandingPage extends StatefulWidget {
@@ -61,7 +62,7 @@ class _LandingPageState extends State<LandingPage> {
             child: SingleChildScrollView(
               child: Center(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
+                  padding: ResponsiveWebUtils.getResponsivePadding(context),
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 980),
                     child: _loading

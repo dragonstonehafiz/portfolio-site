@@ -76,19 +76,6 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
     }
   }
 
-  // Helper method to get horizontal padding based on screen size
-  EdgeInsets _getResponsivePadding(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    if (screenWidth < ResponsiveWebUtils.mobileBreakpoint) {
-      // Mobile: minimal horizontal padding
-      return const EdgeInsets.all(16.0);
-    } else {
-      // Desktop: add significant horizontal padding to prevent content from being too wide
-      final horizontalPadding = (screenWidth * 0.1).clamp(32.0, 120.0);
-      return EdgeInsets.fromLTRB(horizontalPadding, 32.0, horizontalPadding, 32.0);
-    }
-  }
-
   Widget _buildTagDropdown({bool isExpanded = false}) {
     return DropdownButtonHideUnderline(
       child: DropdownButton<String?>(
@@ -192,7 +179,7 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
 
   // Build responsive layout for projects
   Widget _buildResponsiveLayout(BuildContext context, List<ProjectData> projects) {
-    final padding = _getResponsivePadding(context);
+    final padding = ResponsiveWebUtils.getResponsivePadding(context);
     final crossAxisCount = _getCrossAxisCount(context);
     final isMobile = ResponsiveWebUtils.isMobile(context);
     return SingleChildScrollView(

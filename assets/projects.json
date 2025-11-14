@@ -363,7 +363,9 @@
     "img_paths": [
       "images/other/portfolio1.png",
       "images/other/portfolio2.png",
-      "images/other/portfolio3.png"
+      "images/other/portfolio3.png",
+      "images/other/portfolio4.png",
+      "images/other/portfolio5.png"
     ],
     "what_i_did": [
       "**Implemented the entire frontend in Flutter (Web)** so I wouldn't have to work directly with HTML/CSS — I could build UI once and deploy to the web.",
@@ -540,6 +542,29 @@
       {
         "key": "Japanese Subs",
         "url": "https://drive.google.com/file/d/1Q3mfd4UrPfn6irNCTrpsoJsfhjc_0lVA/view?usp=drive_link"
+      }
+    ]
+  },
+  "gakumas_lilja_kyokkou": {
+    "variable_name": "gakumas_lilja_kyokkou",
+    "title": "Gakuen Idolmaster: Lilja \"Kyokkou\" Commyu",
+    "description": null,
+    "date": "2025-11-15",
+    "last_update": null,
+    "vid_link": "https://youtu.be/C_ijOCcU5XU",
+    "github_link": null,
+    "img_paths": [],
+    "what_i_did": [],
+    "tags": ["games"],
+    "project_type": "Translations",
+    "download_paths": [
+      {
+        "key": "English Subs",
+        "url": "https://drive.google.com/file/d/1ULAF5T6Mnki-rgDj2RyaTjGJxZ0S1KJr/view?usp=drive_link"
+      },
+      {
+        "key": "Japanese Subs",
+        "url": "https://drive.google.com/file/d/17m6WvxO5beA8misB3sOT4CeqZ116sySS/view?usp=drive_link"
       }
     ]
   },

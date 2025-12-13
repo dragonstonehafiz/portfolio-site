@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../utils/theme.dart';
+import '../utils/responsive_web_utils.dart';
 
 class CustomFooter extends StatelessWidget {
   const CustomFooter({super.key});
@@ -86,21 +87,44 @@ class CustomFooter extends StatelessWidget {
   }
 
   Widget _buildSocialButton(BuildContext context, _SocialLink link) {
-    return ElevatedButton.icon(
-      onPressed: () => _openLink(link.url),
-      icon: SvgPicture.asset(
-        link.asset,
-        width: 20,
-        height: 20,
-        color: Colors.white,
-      ),
-      label: Text(link.label),
-      style: ElevatedButton.styleFrom(
-        backgroundColor: link.backgroundColor,
-        foregroundColor: Colors.white,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      ),
-    );
+    final isMobile = ResponsiveWebUtils.isMobile(context);
+    
+    if (isMobile) {
+      // Mobile: Show only icon button
+      return ElevatedButton(
+        onPressed: () => _openLink(link.url),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: link.backgroundColor,
+          foregroundColor: Colors.white,
+          padding: const EdgeInsets.all(8),
+          shape: const CircleBorder(),
+          minimumSize: const Size(40, 40),
+        ),
+        child: SvgPicture.asset(
+          link.asset,
+          width: 18,
+          height: 18,
+          color: Colors.white,
+        ),
+      );
+    } else {
+      // Desktop: Show icon + label button
+      return ElevatedButton.icon(
+        onPressed: () => _openLink(link.url),
+        icon: SvgPicture.asset(
+          link.asset,
+          width: 20,
+          height: 20,
+          color: Colors.white,
+        ),
+        label: Text(link.label),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: link.backgroundColor,
+          foregroundColor: Colors.white,
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        ),
+      );
+    }
   }
 }
 

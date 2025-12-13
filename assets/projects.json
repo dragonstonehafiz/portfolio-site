@@ -568,6 +568,29 @@
       }
     ]
   },
+  "gakumas_lilja_atmosphere": {
+    "variable_name": "gakumas_lilja_atmosphere",
+    "title": "Gakuen Idolmaster: Lilja \"Atmosphere\" Commyu",
+    "description": null,
+    "date": "2025-12-13",
+    "last_update": null,
+    "vid_link": "https://youtu.be/21Zbr9QxaiI",
+    "github_link": null,
+    "img_paths": [],
+    "what_i_did": [],
+    "tags": ["games"],
+    "project_type": "Translations",
+    "download_paths": [
+      {
+        "key": "English Subs",
+        "url": "https://drive.google.com/file/d/12kdO4bNWKxiwj_t6Cpwfr-dQNWkI5PHS/view?usp=drive_link"
+      },
+      {
+        "key": "Japanese Subs",
+        "url": "https://drive.google.com/file/d/1dOnCKPbizrO557zMUHwtHiuqWsFg7m2q/view?usp=drive_link"
+      }
+    ]
+  },
   "makeine_vol1ep1": {
     "variable_name": "makeine_vol1ep1",
     "title": "Too Many Losing Heroines!!! Drama CD Vol. 1 \"I'll teach you the secret to style\"",

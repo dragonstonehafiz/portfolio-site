@@ -357,7 +357,7 @@
     "title": "Personal Portfolio Website",
   "description": "\n    Built with **Flutter (web)** and **Docker**, this portfolio was created so I wouldn't have to touch raw HTML/CSS/frontend tooling I don't enjoy.\n\n    Project and page data are stored as structured **JSON** files and automatically rendered at runtime, so adding or updating projects only requires editing the JSON metadata.\n\n    The site is hosted on **Google Cloud** (managed with Docker), and uses a custom `ProjectObject` system to ensure consistent rendering from the JSON data.\n    ",
     "date": "2025-03-07",
-    "last_update": "2025-11-10",
+    "last_update": "2025-12-13",
     "vid_link": null,
     "github_link": "https://github.com/dragonstonehafiz/portfolio-site",
     "img_paths": [

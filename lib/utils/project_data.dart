@@ -19,6 +19,7 @@ class ProjectData {
   final List<String> whatIDid;
   final List<String> tags;
   final String projectType;
+  final String version;
   // Each download entry is expected to be a map with keys 'key' and 'url'.
   // For backward compatibility we still accept a list of string URLs.
   final List<dynamic> downloadPaths;
@@ -35,10 +36,15 @@ class ProjectData {
     required this.whatIDid,
     required this.tags,
     required this.projectType,
+    required this.version,
     required this.downloadPaths,
   });
 
-  factory ProjectData.fromJson(String key, Map<String, dynamic> json) {
+  factory ProjectData.fromJson(
+    String key,
+    Map<String, dynamic> json, {
+    String? versionOverride,
+  }) {
     return ProjectData(
       variableName: json['variable_name'] ?? key,
       title: json['title'] ?? '',
@@ -51,6 +57,7 @@ class ProjectData {
       whatIDid: List<String>.from(json['what_i_did'] ?? []),
       tags: List<String>.from(json['tags'] ?? []),
       projectType: json['project_type'] ?? '',
+      version: versionOverride ?? json['version']?.toString() ?? 'default',
       downloadPaths: (json['download_paths'] as List<dynamic>?)?.toList() ?? [],
     );
   }
@@ -78,6 +85,7 @@ class ProjectData {
       print('Error launching $url: $e');
     }
   }
+
 
   Future<void> _downloadFile(String path) async {
     try {
@@ -298,10 +306,10 @@ class ProjectData {
   }
 
   // Returns a full detailed widget for the project detail page
-  Widget buildFullWidget(BuildContext context) {
-    // Ensure consistent horizontal padding on all screens and center the
-    // content column. The inner Column remains left aligned for sections,
-    // but the title will be centered in its own row.
+  Widget buildFullWidget(
+    BuildContext context, {
+    Widget Function(BuildContext context)? versionTabsBuilder,
+  }) {
     final screenWidth = MediaQuery.of(context).size.width;
     final maxWidth = screenWidth > 1000 ? 1000.0 : screenWidth * 0.9;
 
@@ -310,88 +318,102 @@ class ProjectData {
       child: Center(
         child: ConstrainedBox(
           constraints: BoxConstraints(maxWidth: maxWidth),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Back button
-              Row(
-                children: [
-                  IconButton(
-                    onPressed: () => Navigator.pop(context),
-                    icon: const Icon(Icons.arrow_back),
-                  ),
-                  const Text(
-                    'Back to Projects',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 24),
-
-              // Project title (centered, reduced size)
-              Center(
-                child: Text(
-                  title,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 36,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.blueGrey,
-                  ),
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              gradient: Theme.of(context).previewGradient,
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: 12,
+                  offset: const Offset(0, 6),
+                ),
+              ],
+            ),
+            child: SelectionArea(
+              child: Padding(
+                padding: const EdgeInsets.all(24),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        IconButton(
+                          onPressed: () => Navigator.pop(context),
+                          icon: const Icon(Icons.arrow_back, color: Colors.blueGrey),
+                        ),
+                        const Text(
+                          'Back to Projects',
+                          style: TextStyle(fontSize: 16, color: Colors.blueGrey),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 24),
+                    Center(
+                      child: Text(
+                        title,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 36,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blueGrey,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    if (versionTabsBuilder != null) ...[
+                      versionTabsBuilder(context),
+                      const SizedBox(height: 16),
+                    ],
+                    buildDetailBody(context),
+                  ],
                 ),
               ),
-              const SizedBox(height: 16),
-
-              // Meta row
-              _buildMetaRow(context, isPreview: false),
-
-              // Description (show before video)
-              if (description != null && description!.isNotEmpty) ...[
-                const SizedBox(height: 24),
-                _buildSection('About This Project', null),
-                const SizedBox(height: 12),
-                _buildDescriptionWidget(context),
-              ],
-
-              // Video (embedded) or links row
-              const SizedBox(height: 24),
-              if (vidLink != null) _buildVideoWidget(context),
-
-              // What I did
-              if (whatIDid.isNotEmpty) ...[
-                const SizedBox(height: 32),
-                _buildSection('What I Did', null),
-                const SizedBox(height: 12),
-                _buildWhatIDidList(context),
-              ],
-
-              // Tags
-              if (tags.isNotEmpty) ...[
-                const SizedBox(height: 32),
-                _buildSection('Tags', null),
-                const SizedBox(height: 12),
-                _buildTagsWidget(maxToShow: tags.length),
-              ],
-
-              // Images gallery
-              if (imgPaths.isNotEmpty) ...[
-                const SizedBox(height: 32),
-                _buildSection('Project Gallery', null),
-                const SizedBox(height: 16),
-                _buildFullImage(context),
-              ],
-
-              // Downloads
-              if (downloadPaths.isNotEmpty) ...[
-                const SizedBox(height: 32),
-                _buildSection('Downloads', null),
-                const SizedBox(height: 12),
-                _buildDownloads(),
-              ],
-            ],
+            ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget buildDetailBody(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildMetaRow(context, isPreview: false),
+        if (description != null && description!.isNotEmpty) ...[
+          const SizedBox(height: 24),
+          _buildSection('About This Project', null),
+          const SizedBox(height: 12),
+          _buildDescriptionWidget(context),
+        ],
+        const SizedBox(height: 24),
+        if (vidLink != null) _buildVideoWidget(context),
+        if (whatIDid.isNotEmpty) ...[
+          const SizedBox(height: 32),
+          _buildSection('What I Did', null),
+          const SizedBox(height: 12),
+          _buildWhatIDidList(context),
+        ],
+        if (tags.isNotEmpty) ...[
+          const SizedBox(height: 32),
+          _buildSection('Tags', null),
+          const SizedBox(height: 12),
+          _buildTagsWidget(maxToShow: tags.length),
+        ],
+        if (imgPaths.isNotEmpty) ...[
+          const SizedBox(height: 32),
+          _buildSection('Project Gallery', null),
+          const SizedBox(height: 16),
+          _buildFullImage(context),
+        ],
+        if (downloadPaths.isNotEmpty) ...[
+          const SizedBox(height: 32),
+          _buildSection('Downloads', null),
+          const SizedBox(height: 12),
+          _buildDownloads(),
+        ],
+      ],
     );
   }
 
@@ -1180,3 +1202,64 @@ class ProjectData {
 
 }
 
+class ProjectEntry {
+  final String id;
+  final String defaultVersionId;
+  final List<ProjectData> _versions;
+
+  ProjectEntry({
+    required this.id,
+    required this.defaultVersionId,
+    required List<ProjectData> versions,
+  }) : _versions = List.unmodifiable(versions);
+
+  factory ProjectEntry.fromJson(String id, Map<String, dynamic> json) {
+    if (json.containsKey('versions')) {
+      final versionsRaw = (json['versions'] as List<dynamic>? ?? [])
+          .map((e) => Map<String, dynamic>.from(e as Map))
+          .toList();
+      final versions = <ProjectData>[];
+      for (final versionJson in versionsRaw) {
+        final versionId = versionJson['version']?.toString() ?? 'default';
+        versions.add(
+          ProjectData.fromJson(id, versionJson, versionOverride: versionId),
+        );
+      }
+      final fallback = versions.isNotEmpty ? versions.first.version : 'default';
+      final defaultVersion = json['default_version']?.toString();
+      final resolvedDefault = defaultVersion != null &&
+              versions.any((v) => v.version == defaultVersion)
+          ? defaultVersion
+          : fallback;
+      return ProjectEntry(
+        id: id,
+        defaultVersionId: resolvedDefault,
+        versions: versions,
+      );
+    }
+
+    final singleVersion =
+        ProjectData.fromJson(id, json, versionOverride: 'default');
+    return ProjectEntry(
+      id: id,
+      defaultVersionId: singleVersion.version,
+      versions: [singleVersion],
+    );
+  }
+
+  List<ProjectData> get versions => _versions;
+
+  int get defaultVersionIndex {
+    final idx = _versions.indexWhere((v) => v.version == defaultVersionId);
+    return idx == -1 ? 0 : idx;
+  }
+
+  ProjectData get defaultVersion => _versions[defaultVersionIndex];
+
+  ProjectData? versionById(String versionId) {
+    for (final version in _versions) {
+      if (version.version == versionId) return version;
+    }
+    return null;
+  }
+}

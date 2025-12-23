@@ -42,46 +42,49 @@ class CustomFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isMobile = ResponsiveWebUtils.isMobile(context);
+    final double spacing = isMobile ? 12.0 : 16.0;
+
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(24.0),
+      padding: EdgeInsets.symmetric(
+        horizontal: isMobile ? 16.0 : 24.0,
+        vertical: isMobile ? 12.0 : 24.0,
+      ),
       decoration: BoxDecoration(
         gradient: Theme.of(context).primaryGradient,
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Text(
-            'Connect with me',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          maxHeight: isMobile ? 160.0 : double.infinity,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'Connect with me',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: isMobile ? 16 : 18,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-          const SizedBox(height: 16),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Render buttons from the centralized list
-              for (var i = 0; i < _links.length; i++) ...[
-                _buildSocialButton(
-                  context,
-                  _links[i],
-                ),
-                if (i != _links.length - 1) const SizedBox(width: 16),
+            SizedBox(height: spacing),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // Render buttons from the centralized list
+                for (var i = 0; i < _links.length; i++) ...[
+                  _buildSocialButton(
+                    context,
+                    _links[i],
+                  ),
+                  if (i != _links.length - 1) SizedBox(width: spacing),
+                ],
               ],
-            ],
-          ),
-          const SizedBox(height: 16),
-          Text(
-            '© 2025 Muhd Hafiz bin Abdul Halim. All rights reserved.',
-            style: TextStyle(
-              color: Colors.grey[400],
-              fontSize: 14,
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

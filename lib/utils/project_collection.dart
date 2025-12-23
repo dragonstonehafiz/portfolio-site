@@ -1,19 +1,19 @@
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
-import 'project_data.dart' show ProjectData;
+import 'project_data.dart' show ProjectEntry;
 
 class ProjectsCollection {
-  final Map<String, ProjectData> projects;
+  final Map<String, ProjectEntry> projects;
   static ProjectsCollection? _instance;
 
   ProjectsCollection._({required this.projects});
 
   factory ProjectsCollection._fromJson(Map<String, dynamic> json) {
-    final map = <String, ProjectData>{};
+    final map = <String, ProjectEntry>{};
     for (final entry in json.entries) {
       final key = entry.key;
       final raw = Map<String, dynamic>.from(entry.value as Map);
-      map[key] = ProjectData.fromJson(key, raw);
+      map[key] = ProjectEntry.fromJson(key, raw);
     }
     return ProjectsCollection._(projects: map);
   }

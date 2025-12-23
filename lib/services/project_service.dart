@@ -21,9 +21,9 @@ class ProjectService {
     final projectsCollection = ProjectsCollection.instance;
 
     for (final id in projectIds) {
-      final project = projectsCollection.projects[id];
-      if (project != null) {
-        projects.add(project);
+      final entry = projectsCollection.projects[id];
+      if (entry != null) {
+        projects.add(entry.defaultVersion);
       } else {
         debugPrint('Project not found: $id');
       }
@@ -81,26 +81,39 @@ class ProjectService {
   }
 
   static ProjectData? getProjectById(String projectId) {
-    return ProjectsCollection.instance.projects[projectId];
+    return ProjectsCollection.instance.projects[projectId]?.defaultVersion;
   }
 
   // Get a specific project by slug (title-based). This iterates the loaded
   // projects and returns the first match for the slug.
   static ProjectData? getProjectBySlug(String slug) {
+    return getProjectEntryBySlug(slug)?.defaultVersion;
+  }
+
+  static ProjectEntry? getProjectEntryById(String projectId) {
+    return ProjectsCollection.instance.projects[projectId];
+  }
+
+  static ProjectEntry? getProjectEntryBySlug(String slug) {
     final projectsCollection = ProjectsCollection.instance;
     for (final project in projectsCollection.projects.values) {
-      if (project.slug == slug) return project;
+      for (final version in project.versions) {
+        if (version.slug == slug) return project;
+      }
     }
     return null;
   }
 
   static List<ProjectData> getAllProjects() {
-    return ProjectsCollection.instance.projects.values.toList();
+    return ProjectsCollection.instance.projects.values
+        .map((entry) => entry.defaultVersion)
+        .toList();
   }
 
   // Get projects by tag
   static List<ProjectData> getProjectsByTag(String tag) {
     return ProjectsCollection.instance.projects.values
+      .map((entry) => entry.defaultVersion)
       .where((project) => project.tags.contains(tag))
       .toList();
   }
@@ -108,7 +121,8 @@ class ProjectService {
   // Get all available tags
   static Set<String> getAllTags() {
     final allTags = <String>{};
-    final projects = ProjectsCollection.instance.projects.values;
+    final projects = ProjectsCollection.instance.projects.values
+        .map((entry) => entry.defaultVersion);
     for (final project in projects) {
       allTags.addAll(project.tags);
     }
@@ -123,6 +137,7 @@ class ProjectService {
     
     final lowercaseQuery = query.toLowerCase();
     return ProjectsCollection.instance.projects.values
+      .map((entry) => entry.defaultVersion)
       .where((project) =>
         project.title.toLowerCase().contains(lowercaseQuery) ||
         (project.description?.toLowerCase().contains(lowercaseQuery) ?? false))

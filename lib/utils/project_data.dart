@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -20,6 +22,7 @@ class ProjectData {
   final List<String> tags;
   final String projectType;
   final String version;
+  final String vignette;
   // Each download entry is expected to be a map with keys 'key' and 'url'.
   // For backward compatibility we still accept a list of string URLs.
   final List<dynamic> downloadPaths;
@@ -37,6 +40,7 @@ class ProjectData {
     required this.tags,
     required this.projectType,
     required this.version,
+    required this.vignette,
     required this.downloadPaths,
   });
 
@@ -58,6 +62,7 @@ class ProjectData {
       tags: List<String>.from(json['tags'] ?? []),
       projectType: json['project_type'] ?? '',
       version: versionOverride ?? json['version']?.toString() ?? 'default',
+      vignette: json['vignette']?.toString() ?? '',
       downloadPaths: (json['download_paths'] as List<dynamic>?)?.toList() ?? [],
     );
   }
@@ -131,10 +136,10 @@ class ProjectData {
                   const SizedBox(height: 8),
                   _buildMetaRow(context, isPreview: true),
 
-                  // Description preview
-                  if (description != null && description!.isNotEmpty) ...[
+                  // Vignette preview
+                  if (vignette.isNotEmpty) ...[
                     const SizedBox(height: 8),
-                    _buildDescriptionWidget(context, maxLines: 2),
+                    _buildVignetteSection(context, maxLines: 2),
                   ],
 
                   // Tags
@@ -381,35 +386,29 @@ class ProjectData {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildMetaRow(context, isPreview: false),
-        if (description != null && description!.isNotEmpty) ...[
-          const SizedBox(height: 24),
-          _buildSection('About This Project', null),
+        if (vignette.isNotEmpty) ...[
           const SizedBox(height: 12),
-          _buildDescriptionWidget(context),
+          _buildSectionHeader('What is this Project?'),
+          const SizedBox(height: 12),
+          _buildVignetteSection(context),
         ],
-        const SizedBox(height: 24),
-        if (vidLink != null) _buildVideoWidget(context),
-        if (whatIDid.isNotEmpty) ...[
-          const SizedBox(height: 32),
-          _buildSection('What I Did', null),
+        if (vidLink != null || imgPaths.isNotEmpty) ...[
           const SizedBox(height: 12),
-          _buildWhatIDidList(context),
+          _buildProjectGallerySection(context),
+        ],
+        if ((description?.isNotEmpty ?? false) || whatIDid.isNotEmpty) ...[
+          const SizedBox(height: 12),
+          _buildProjectDetailsSection(context),
         ],
         if (tags.isNotEmpty) ...[
-          const SizedBox(height: 32),
-          _buildSection('Tags', null),
+          const SizedBox(height: 12),
+          _buildSectionHeader('Tags'),
           const SizedBox(height: 12),
           _buildTagsWidget(maxToShow: tags.length),
         ],
-        if (imgPaths.isNotEmpty) ...[
-          const SizedBox(height: 32),
-          _buildSection('Project Gallery', null),
-          const SizedBox(height: 16),
-          _buildFullImage(context),
-        ],
         if (downloadPaths.isNotEmpty) ...[
-          const SizedBox(height: 32),
-          _buildSection('Downloads', null),
+          const SizedBox(height: 12),
+          _buildSectionHeader('Downloads'),
           const SizedBox(height: 12),
           _buildDownloads(),
         ],
@@ -417,29 +416,51 @@ class ProjectData {
     );
   }
 
-  Widget _buildSection(String title, String? content) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: const TextStyle(
-            fontSize: 28,
-            fontWeight: FontWeight.bold,
-            color: Colors.blueGrey,
-          ),
-        ),
-        if (content != null) ...[
-          const SizedBox(height: 12),
-          Text(
-            content,
-            style: const TextStyle(
-              fontSize: 16,
-              height: 1.6,
-            ),
-          ),
-        ],
-      ],
+  Widget _buildProjectGallerySection(BuildContext context) {
+    final videoWidget = vidLink != null ? _buildVideoWidget(context) : null;
+    final imagesWidget = imgPaths.isNotEmpty ? _ProjectImageGallery(imagePaths: imgPaths) : null;
+    return _ProjectGallerySwitcher(
+      videoContent: videoWidget,
+      imagesContent: imagesWidget,
+    );
+  }
+
+  Widget _buildProjectDetailsSection(BuildContext context) {
+    final descriptionWidget =
+        (description != null && description!.isNotEmpty) ? _buildDescriptionWidget(context) : null;
+    final deliverablesWidget =
+        whatIDid.isNotEmpty ? _buildWhatIDidWidget(context) : null;
+    if (descriptionWidget == null && deliverablesWidget == null) {
+      return const SizedBox.shrink();
+    }
+    return _ProjectDetailsSwitcher(
+      descriptionContent: descriptionWidget,
+      deliverablesContent: deliverablesWidget,
+    );
+  }
+
+  Widget _buildVignetteSection(BuildContext context, {int? maxLines}) {
+    if (vignette.isEmpty) return const SizedBox.shrink();
+    return Text(
+      vignette,
+      maxLines: maxLines,
+      overflow: maxLines != null ? TextOverflow.ellipsis : TextOverflow.visible,
+      style: const TextStyle(
+        fontSize: 16,
+        height: 1.6,
+        color: AppColors.textSecondary,
+      ),
+    );
+  }
+
+  Widget _buildSectionHeader(String title) {
+    return Text(
+      title,
+      style: const TextStyle(
+        fontSize: 28,
+        fontWeight: FontWeight.bold,
+        color: Colors.blueGrey,
+      ),
     );
   }
 
@@ -904,76 +925,23 @@ class ProjectData {
 
   // Description widget (can be used in preview with maxLines)
   Widget _buildDescriptionWidget(BuildContext context, {int? maxLines}) {
-    // Keep the preview behavior using plain Text so we can reliably show a
-    // truncated, single-line/2-line preview with ellipsis. For the full view
-    // (when maxLines is null) render Markdown so project descriptions can
-    // include formatting, links, lists, etc.
     final content = description ?? '';
 
     final theme = Theme.of(context);
-    final textStyle = theme.textTheme.bodyMedium?.copyWith(height: 1.4) ??
-        const TextStyle(fontSize: 16, color: Colors.grey, height: 1.4);
+    final textStyle = theme.textTheme.bodyMedium?.copyWith(
+          height: 1.6,
+          fontSize: 16,
+          color: AppColors.textSecondary,
+        ) ??
+        const TextStyle(fontSize: 16, height: 1.6, color: AppColors.textSecondary);
 
-    if (maxLines != null) {
-      return Text(
-        content,
-        style: textStyle,
-        maxLines: maxLines,
-        overflow: TextOverflow.ellipsis,
-      );
-    }
-
-    // Full view: normalize indentation to avoid accidental code-block
-    // rendering (many JSON files embed multiline strings with leading
-    // spaces). Then use Markdown body with a simple style mapping and
-    // wire link taps to the existing _openLink handler.
-    final normalized = _normalizeMultilineIndentation(content);
-
-    return MarkdownBody(
-      data: normalized,
-      selectable: false,
-      onTapLink: (text, href, title) async {
-        if (href != null && href.isNotEmpty) {
-          await _openLink(href);
-        }
-      },
-      styleSheet: MarkdownStyleSheet(
-        p: textStyle.copyWith(height: 1.6),
-        a: TextStyle(color: AppColors.primary),
-        listBullet: textStyle,
-      ),
+    return Text(
+      content,
+      style: textStyle,
+      maxLines: maxLines,
+      overflow: maxLines != null ? TextOverflow.ellipsis : TextOverflow.visible,
+      textAlign: TextAlign.justify,
     );
-  }
-
-  // Remove common leading indentation from multiline text so Markdown
-  // parsers don't treat the content as a code block when the source
-  // string was indented (for readability in JSON/YAML files).
-  String _normalizeMultilineIndentation(String input) {
-    if (input.isEmpty) return input;
-
-    final lines = input.replaceAll('\r\n', '\n').split('\n');
-    // Find minimum leading spaces among non-empty lines
-    int? minIndent;
-    for (final line in lines) {
-      if (line.trim().isEmpty) continue;
-      final match = RegExp(r'^(\s*)').firstMatch(line);
-      if (match != null) {
-        final indent = match.group(0)!.length;
-        if (minIndent == null || indent < minIndent) minIndent = indent;
-      }
-    }
-
-    if (minIndent == null || minIndent == 0) {
-      return input.trim();
-    }
-
-    final minIndentVal = minIndent;
-    final stripped = lines.map((line) {
-      if (line.trim().isEmpty) return '';
-      return line.length >= minIndentVal ? line.substring(minIndentVal) : line.trimLeft();
-    }).join('\n');
-
-    return stripped.trim();
   }
 
   // Tags widget
@@ -991,14 +959,17 @@ class ProjectData {
 
   // What I did list (render each item as Markdown so inline formatting and
   // links work). Accepts BuildContext to use theme colors.
-  Widget _buildWhatIDidList(BuildContext context) {
+  Widget _buildWhatIDidWidget(BuildContext context) {
     final theme = Theme.of(context);
-    final itemStyle = theme.textTheme.bodyMedium?.copyWith(height: 1.5) ??
-        const TextStyle(fontSize: 16, height: 1.5);
+    final itemStyle = theme.textTheme.bodyLarge?.copyWith(
+          height: 1.6,
+          color: AppColors.textSecondary,
+        ) ??
+        const TextStyle(fontSize: 16, height: 1.6, color: AppColors.textSecondary);
 
     return Column(
       children: whatIDid.map((item) => Padding(
-        padding: const EdgeInsets.only(bottom: 8.0),
+        padding: const EdgeInsets.only(bottom: 3.0),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -1013,21 +984,42 @@ class ProjectData {
             ),
             const SizedBox(width: 12),
             Expanded(
-              child: MarkdownBody(
-                data: _normalizeMultilineIndentation(item),
-                styleSheet: MarkdownStyleSheet(
-                  p: itemStyle,
-                  listBullet: itemStyle,
-                ),
-                onTapLink: (text, href, title) async {
-                  if (href != null && href.isNotEmpty) await _openLink(href);
-                },
+              child: Text(
+                _normalizeIndentation(item),
+                style: itemStyle,
+                textAlign: TextAlign.justify,
               ),
             ),
           ],
         ),
       )).toList(),
     );
+  }
+
+  String _normalizeIndentation(String input) {
+    if (input.isEmpty) return input;
+
+    final lines = input.replaceAll('\r\n', '\n').split('\n');
+    int? minIndent;
+    for (final line in lines) {
+      if (line.trim().isEmpty) continue;
+      final match = RegExp(r'^\s*').firstMatch(line);
+      if (match != null) {
+        final indent = match.group(0)!.length;
+        if (minIndent == null || indent < minIndent) minIndent = indent;
+      }
+    }
+
+    if (minIndent == null || minIndent == 0) {
+      return input.trim();
+    }
+
+    final stripped = lines.map((line) {
+      if (line.trim().isEmpty) return '';
+      return line.length >= minIndent! ? line.substring(minIndent) : line.trimLeft();
+    }).join('\n');
+
+    return stripped.trim();
   }
 
   // Downloads list
@@ -1061,94 +1053,6 @@ class ProjectData {
           ),
         );
       }).toList(),
-    );
-  }
-
-  // Full image widget used on the full project page (uses gallery behavior)
-  Widget _buildFullImage(BuildContext context) {
-    if (imgPaths.isEmpty) return const SizedBox.shrink();
-    return GridView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 16,
-        mainAxisSpacing: 16,
-        childAspectRatio: 1.5,
-      ),
-      itemCount: imgPaths.length,
-      itemBuilder: (context, index) {
-        final fullImagePath = 'assets/${imgPaths[index]}';
-        return GestureDetector(
-          onTap: () {
-            showDialog(
-              context: context,
-              builder: (context) => Dialog(
-                insetPadding: const EdgeInsets.all(16),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: InteractiveViewer(
-                    panEnabled: true,
-                    boundaryMargin: const EdgeInsets.all(20),
-                    minScale: 0.5,
-                    maxScale: 4.0,
-                    child: Image.asset(
-                      fullImagePath,
-                      fit: BoxFit.contain,
-                      errorBuilder: (context, error, stackTrace) {
-                        return Container(
-                          color: Colors.grey[300],
-                          padding: const EdgeInsets.all(24),
-                          child: Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(Icons.image_not_supported),
-                                const SizedBox(height: 8),
-                                Text(
-                                  'Missing:\n${imgPaths[index]}',
-                                  style: const TextStyle(fontSize: 12),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ),
-              ),
-            );
-          },
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(12),
-            child: Image.asset(
-              fullImagePath,
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) {
-                return Container(
-                  color: Colors.grey[300],
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(Icons.image_not_supported),
-                        const SizedBox(height: 4),
-                        Text(
-                          'Missing:\n${imgPaths[index]}',
-                          style: const TextStyle(fontSize: 10),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-        );
-      },
     );
   }
 
@@ -1261,5 +1165,367 @@ class ProjectEntry {
       if (version.version == versionId) return version;
     }
     return null;
+  }
+}
+
+class _ProjectImageGallery extends StatefulWidget {
+  final List<String> imagePaths;
+
+  const _ProjectImageGallery({required this.imagePaths});
+
+  @override
+  State<_ProjectImageGallery> createState() => _ProjectImageGalleryState();
+}
+
+class _ProjectImageGalleryState extends State<_ProjectImageGallery> {
+  late int _currentIndex;
+  Timer? _timer;
+  final ScrollController _thumbController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _currentIndex = 0;
+    _startTimer();
+  }
+
+  @override
+  void didUpdateWidget(covariant _ProjectImageGallery oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (!listEquals(oldWidget.imagePaths, widget.imagePaths)) {
+      _currentIndex = 0;
+      _startTimer();
+      _scrollThumbnailIntoView();
+    }
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    _thumbController.dispose();
+    super.dispose();
+  }
+
+  void _startTimer() {
+    _timer?.cancel();
+    if (widget.imagePaths.length > 1) {
+      _timer = Timer.periodic(const Duration(seconds: 5), (_) {
+        setState(() {
+          _currentIndex = (_currentIndex + 1) % widget.imagePaths.length;
+        });
+        _scrollThumbnailIntoView();
+      });
+    }
+  }
+
+  void _scrollThumbnailIntoView() {
+    if (!_thumbController.hasClients) return;
+    const double thumbWidth = 96.0;
+    final target = (_currentIndex * (thumbWidth + 12)).toDouble();
+    _thumbController.animateTo(
+      target.clamp(0, _thumbController.position.maxScrollExtent),
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeOut,
+    );
+  }
+
+  void _showFullImage(BuildContext context, String assetPath) {
+    showDialog(
+      context: context,
+      builder: (context) => Dialog(
+        insetPadding: const EdgeInsets.all(16),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: InteractiveViewer(
+            panEnabled: true,
+            boundaryMargin: const EdgeInsets.all(20),
+            minScale: 0.5,
+            maxScale: 4.0,
+            child: Image.asset(
+              assetPath,
+              fit: BoxFit.contain,
+              errorBuilder: (context, error, stackTrace) {
+                return Container(
+                  color: Colors.grey[300],
+                  padding: const EdgeInsets.all(24),
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(Icons.image_not_supported),
+                        const SizedBox(height: 8),
+                        Text(
+                          'Missing:\n$assetPath',
+                          style: const TextStyle(fontSize: 12),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final selectedPath = 'assets/${widget.imagePaths[_currentIndex]}';
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        GestureDetector(
+          onTap: () => _showFullImage(context, selectedPath),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(16),
+            child: AspectRatio(
+              aspectRatio: 16 / 9,
+              child: Image.asset(
+                selectedPath,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    color: Colors.grey[300],
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.image_not_supported),
+                          const SizedBox(height: 8),
+                          Text(
+                            'Missing:\n${widget.imagePaths[_currentIndex]}',
+                            style: const TextStyle(fontSize: 12),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 16),
+        SizedBox(
+          height: 90,
+          child: ListView.separated(
+            controller: _thumbController,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) {
+              final assetPath = 'assets/${widget.imagePaths[index]}';
+              final isActive = index == _currentIndex;
+              return GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _currentIndex = index;
+                  });
+                  _startTimer();
+                  _scrollThumbnailIntoView();
+                },
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 200),
+                  width: 96,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: isActive ? AppColors.accent : Colors.transparent,
+                      width: 2,
+                    ),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(6),
+                    child: Image.asset(
+                      assetPath,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Container(
+                          color: Colors.grey[300],
+                          child: Center(
+                            child: Text(
+                              'Missing\n${widget.imagePaths[index]}',
+                              style: const TextStyle(fontSize: 10),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              );
+            },
+            separatorBuilder: (_, __) => const SizedBox(width: 12),
+            itemCount: widget.imagePaths.length,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _ProjectGallerySwitcher extends StatefulWidget {
+  final Widget? videoContent;
+  final Widget? imagesContent;
+
+  const _ProjectGallerySwitcher({
+    this.videoContent,
+    this.imagesContent,
+  });
+
+  @override
+  State<_ProjectGallerySwitcher> createState() => _ProjectGallerySwitcherState();
+}
+
+class _ProjectDetailsSwitcher extends StatefulWidget {
+  final Widget? descriptionContent;
+  final Widget? deliverablesContent;
+
+  const _ProjectDetailsSwitcher({
+    this.descriptionContent,
+    this.deliverablesContent,
+  });
+
+  @override
+  State<_ProjectDetailsSwitcher> createState() => _ProjectDetailsSwitcherState();
+}
+
+class _ProjectDetailsSwitcherState extends State<_ProjectDetailsSwitcher> {
+  late String _selectedKey;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedKey = widget.deliverablesContent != null
+        ? 'deliverables'
+        : 'description';
+  }
+
+  @override
+  void didUpdateWidget(covariant _ProjectDetailsSwitcher oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (_selectedKey == 'deliverables' &&
+        widget.deliverablesContent == null &&
+        widget.descriptionContent != null) {
+      _selectedKey = 'description';
+    } else if (_selectedKey == 'description' &&
+        widget.descriptionContent == null &&
+        widget.deliverablesContent != null) {
+      _selectedKey = 'deliverables';
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final tabs = <String, Widget>{
+      if (widget.descriptionContent != null)
+        'description': widget.descriptionContent!,
+      if (widget.deliverablesContent != null)
+        'deliverables': widget.deliverablesContent!,
+    };
+
+    if (tabs.isEmpty) return const SizedBox.shrink();
+
+    final current = tabs[_selectedKey] ?? tabs.values.first;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Project Details',
+          style: TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
+            color: Colors.blueGrey,
+          ),
+        ),
+        if (tabs.length > 1) ...[
+          const SizedBox(height: 12),
+          Wrap(
+            spacing: 12,
+            children: [
+              for (final entry in tabs.entries)
+                ChoiceChip(
+                  label: Text(
+                    entry.key == 'description' ? 'Description' : 'Deliverables',
+                  ),
+                  selected: _selectedKey == entry.key,
+                  onSelected: (_) => setState(() {
+                    _selectedKey = entry.key;
+                  }),
+                ),
+            ],
+          ),
+        ],
+        const SizedBox(height: 16),
+        current,
+      ],
+    );
+  }
+}
+
+class _ProjectGallerySwitcherState extends State<_ProjectGallerySwitcher> {
+  late String _selected;
+
+  @override
+  void initState() {
+    super.initState();
+    _selected = widget.videoContent != null ? 'video' : 'images';
+  }
+
+  @override
+  void didUpdateWidget(covariant _ProjectGallerySwitcher oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (_selected == 'video' && widget.videoContent == null && widget.imagesContent != null) {
+      _selected = 'images';
+    } else if (_selected == 'images' && widget.imagesContent == null && widget.videoContent != null) {
+      _selected = 'video';
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final tabs = <String, Widget>{
+      if (widget.videoContent != null) 'video': widget.videoContent!,
+      if (widget.imagesContent != null) 'images': widget.imagesContent!,
+    };
+
+    if (tabs.isEmpty) return const SizedBox.shrink();
+
+    final current = tabs[_selected] ?? tabs.values.first;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Project Gallery',
+          style: TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
+            color: Colors.blueGrey,
+          ),
+        ),
+        if (tabs.length > 1) ...[
+          const SizedBox(height: 12),
+          Wrap(
+            spacing: 12,
+            children: [
+              for (final entry in tabs.entries)
+                ChoiceChip(
+                  label: Text(entry.key == 'video' ? 'Video' : 'Images'),
+                  selected: _selected == entry.key,
+                  onSelected: (_) => setState(() => _selected = entry.key),
+                ),
+            ],
+          ),
+        ],
+        const SizedBox(height: 16),
+        current,
+      ],
+    );
   }
 }

@@ -6,7 +6,8 @@
         "version": "Submission",
         "variable_name": "AI_Game",
         "title": "AI Pathfinding Game",
-        "description": "A **turn-based** game I made for one of my AI modules. The game was written on a custom engine provided by the school, and the code was written in `C++`.",
+        "vignette": "A turn-based game demonstrating AI pathfinding algorithms.",
+        "description": "A turn-based strategy game made during my Artificial Intelligence in Games module at NYP (Game Development & Technology). The project was mainly for learning pathfinding and finite state machines, and was built in C++ using a custom engine provided by the school.",
         "date": "2019-01-06",
         "last_update": null,
         "vid_link": "https://youtu.be/5544wAwSE1I",
@@ -18,11 +19,11 @@
           "images/games/aigame4.png"
         ],
         "what_i_did": [
-          "Implemented **A-Star and BFS pathfinding algorithms**, enabling AI-controlled units to navigate complex environments efficiently.",
-          "Designed a **Finite State Machine (FSM) for AI behavior**, allowing dynamic transitions between patrol, chase, and attack states.",
-          "Developed a **fog-of-war vision system**, restricting player visibility and enhancing tactical gameplay.",
-          "Created a **procedural maze generator**, ensuring randomized level layouts for increased replayability.",
-          "Integrated the **IrrKlang library** for dynamic sound handling, improving immersion with responsive audio effects."
+          "Implemented A* and BFS pathfinding for AI unit navigation.",
+          "Built a finite state machine to manage AI behavior states.",
+          "Added a fog-of-war vision system to limit player visibility.",
+          "Created a procedural maze generator for randomized maps.",
+          "Integrated IrrKlang for sound effects and audio feedback."
         ],
         "tags": [
           "games",
@@ -40,7 +41,8 @@
         "version": "Submission",
         "variable_name": "BirdLaserTargeter",
         "title": "Bird Laser Targeter on the Edge",
-        "description": "\n    A Raspberry Pi Zero 2W-powered system designed to **detect birds and deter them using a laser pointer**.  \n    The project integrates servo motors, a laser diode, a camera, and microphone-based audio triggers.  \n    It features a **state-machine-based control system** and supports **both local and remote detection** via MQTT.\n\n    While the model training and YOLOv5 implementation were handled by teammates,  \n    I was responsible for **system integration, hardware interfacing**, and **overall architecture**.\n    ",
+        "vignette": "A Raspberry Pi Zero 2W-based bird detection and deterrence system.",
+        "description": "A Raspberry Pi Zero 2W project that detects birds and deters them using a laser pointer, combining camera input, audio triggers, servos, and a simple control state machine. It supports both on-device and remote detection by sending data over MQTT. My role focused on system integration, hardware interfacing, and overall architecture, while teammates handled model training and the YOLO implementation",
         "date": "2025-03-29",
         "last_update": null,
         "vid_link": "https://www.youtube.com/watch?v=NGxBpvvaONQ",
@@ -50,9 +52,11 @@
           "images/sit/inf2009_project2.png",
           "images/sit/inf2009_project3.png"
         ],
-        "what_i_did": [
-          "Implemented **real-time MQTT communication** between the Pi Zero and a remote server, enabling offloaded bird detection and reducing device-side processing load by over 80%.",
-          "Coordinated and deployed the **full software-hardware stack**, integrating audio triggers, camera input, laser targeting, and servo motion to deliver an autonomous bird deterrence system."
+        "what_i_did": [     
+          "Integrated the Raspberry Pi hardware stack (camera, servos, laser diode, and audio trigger input).",
+          "Built the control flow as a state machine to coordinate detection and targeting behavior.",
+          "Implemented MQTT messaging to support remote/offloaded detection and device-server communication.",
+          "Assembled the end-to-end system so detection, targeting, and actuation worked together reliably."
         ],
         "tags": [
           "python",
@@ -68,9 +72,10 @@
     "versions": [
       {
         "version": "Submission",
-        "variable_name": "ESRGAN_M",
+        "variable_name": "ESRGAN M",
         "title": "Anime Image Upscaler",
-        "description": "\n    An image upscaler built using ESRGAN, fine-tuned for anime-style images at 256x256 resolution. \n    The model was trained on a dataset of over 15,000 images to reduce artifacts and enhance detail, making it more effective for upscaling low-resolution anime artwork.\n    ",
+        "vignette": "An ESRGAN-based image upscaler fine-tuned for anime-style images.",
+        "description": "An anime image upscaler built using ESRGAN and fine-tuned for anime-style images at 256x256 resolution. The model was trained on a dataset of 15,000+ images to reduce common upscaling artifacts and improve detail when enlarging low-resolution anime artwork. The project also includes a simple Streamlit interface for running upscales interactively.",
         "date": "2024-11-29",
         "last_update": null,
         "vid_link": "https://youtu.be/zZiL5X7dj4A?si=lbiVmPAo993uzuzh",
@@ -84,9 +89,9 @@
           "images/sit/aai3001_3_upscale.png"
         ],
         "what_i_did": [
-          "**Curated a dataset of over 15,000 images** to finetune ESRGAN for anime-style image upscaling, improving model accuracy and visual quality.",
-          "Implemented and **optimized ESRGAN finetuning for enhanced anime image upscaling**, adjusting hyperparameters and training pipelines.",
-          "Developed an **interactive Streamlit-based UI** for real-time image upscaling, making the model accessible to users."
+          "Prepared and curated a 15,000+ image dataset for anime-style ESRGAN fine-tuning.",
+          "Ran ESRGAN fine-tuning experiments and adjusted training settings to improve output quality.",
+          "Built a Streamlit UI to upload images and preview upscaled results."
         ],
         "tags": [
           "python",
@@ -104,7 +109,8 @@
         "version": "Submission",
         "variable_name": "Electronica",
         "title": "Electronica",
-        "description": "A **top down shooter** inspired by Geometry Wars. Built on the `Unity Game Engine`, all the code for this game was written by me over the course of three months. This was a solo project, and the final thing I worked on before graduating from Nanyang Polytechnic.",
+        "vignette": "A Geometry Wars-inspired top-down shooter built in Unity.",
+        "description": "A top-down shooter inspired by Geometry Wars, built in Unity. This was a solo project and the final game I worked on at NYP before graduating, so I treated it as a capstone piece and put serious effort into making something I'd be proud of. All gameplay code was written by me over roughly three months.",
         "date": "2020-02-10",
         "last_update": null,
         "vid_link": "https://youtu.be/MX7wlNfxtfw",
@@ -118,10 +124,11 @@
           "images/games/electronica6.png"
         ],
         "what_i_did": [
-          "Designed and implemented **five unique enemy AI behaviors** in Unity (C#), enhancing gameplay variety and difficulty scaling.",
-          "Developed **four dynamic boss encounters** with unique mechanics and multi-phase battles to challenge players.",
-          "Created **two distinct game modes**, Classic and Onslaught, increasing replayability and gameplay diversity.",
-          "Designed and **animated interactive UI elements**, including dynamic health bars for both players and bosses, improving visual clarity."
+          "Built the full game in Unity (C#) as a solo project over three months.",
+          "Implemented five enemy behavior types to vary combat patterns and difficulty.",
+          "Designed and programmed four boss fights with distinct mechanics and phases.",
+          "Created two playable modes (Classic and Onslaught).",
+          "Designed and animated the in-game UI, including player and boss health bars."
         ],
         "tags": [
           "c#",
@@ -139,13 +146,14 @@
     ]
   },
   "JapaneseLearningCardGame": {
-    "default_version": "Submission2",
+    "default_version": "Submission",
     "versions": [
       {
         "version": "Submission",
         "variable_name": "JapaneseLearningCardGame",
         "title": "Japanese Learning Card Game",
-        "description": "\n    As part of a school assignment to design a **tabletop game**,  I opted to create a **digital card game** instead centered around **Japanese language learning**. The project was entirely self-developed, with all code written from scratch in Unity.\n    ",
+        "vignette": "A digital card game built in Unity around Japanese language learning.",
+        "description": "A digital card game built in Unity around Japanese language learning. This started as a university design thinking assignment where we were supposed to create a physical board game, but I convinced my group to build a digital game instead since it was faster and cheaper to prototype. I implemented the game from scratch in Unity and handled the programming work.",
         "date": "2025-07-17",
         "last_update": null,
         "vid_link": "https://youtu.be/lCBHCaszdQ4",
@@ -156,8 +164,9 @@
           "images/sit/deckbuilder3.png"
         ],
         "what_i_did": [
-          "Designed and implemented an **object-oriented card system** to manage card behaviors and properties.",
-          "Built core **gameplay systems** including turn logic, deck management, and win/loss conditions in Unity."
+          "Implemented the full game in Unity (C#) completely on my own.",
+          "Built an object-oriented card system to define card data, effects, and behaviors.",
+          "Implemented turn flow, deck/hand management, and win/loss conditions."
         ],
         "tags": [
           "c#",
@@ -181,7 +190,8 @@
         "version": "Submission",
         "variable_name": "Last_Survivor",
         "title": "The Last Survivor",
-        "description": "\n    A wave-based top-down shooter developed in Unity. \n    The game features multiple enemy types with AI-driven movement and attack behaviors, requiring players to adapt their strategies as waves progress.\n    ",
+        "vignette": "A wave-based top-down shooter built in Unity.",
+        "description": "A wave-based top-down shooter built in Unity as a Year 2 studio project at NYP. The game was developed by a team of four students and focuses on surviving progressively harder waves with different enemy types and attack patterns.",
         "date": "2019-03-01",
         "last_update": null,
         "vid_link": "https://youtu.be/aMmrSXN9EI8",
@@ -193,9 +203,9 @@
           "images/games/thelastsurvivor4.png"
         ],
         "what_i_did": [
-          "Developed **wave-based progression** and **enemy spawning mechanics** in Unity (C#), ensuring a scalable and balanced gameplay loop.",
-          "Implemented **AI pathfinding** and enemy behaviors without using Unity\u2019s NavMesh, enhancing combat dynamics and player engagement.",
-          "Designed and **programmed four distinct NPC** types, including melee, ranged, boss, and turret units, creating diverse strategic encounters."
+          "Implemented the wave progression and enemy spawning system in Unity (C#).",
+          "Built enemy movement and pathfinding logic without relying on Unity's NavMesh.",
+          "Programmed multiple enemy/NPC types with different behaviors (melee, ranged, turret, and boss)."
         ],
         "tags": [
           "c#",
@@ -219,7 +229,8 @@
         "version": "Submission",
         "variable_name": "Locus",
         "title": "L.O.C.U.S",
-        "description": "\n    A virtual reality horror puzzle game designed for the `HTC Vive`. \n    The game features motion-based interactions, environmental puzzles, and scripted horror events, creating an immersive first-person experience.\n    ",
+        "vignette": "A virtual reality horror puzzle game for the HTC Vive.",
+        "description": "A VR horror puzzle game built for the HTC Vive in Unity. This was a final-year project where I worked with art students, continuing from a prototype started by another student group in the previous semester. The game focuses on motion-based interactions, environmental puzzles, and scripted horror events in a first-person VR setting.",
         "date": "2019-08-21",
         "last_update": null,
         "vid_link": "https://youtu.be/nvTEuyOUynI",
@@ -228,9 +239,11 @@
           "images/games/locus1.png",
           "images/games/locus2.png"
         ],
-        "what_i_did": [
-          "Developed **VR controller input handling** for HTC Vive in Unity (C#), ensuring intuitive and immersive interactions for players.",
-          "**Implemented core gameplay mechanics**, including puzzles, scripted scares, and game progression, enhancing the horror-puzzle experience."
+        "what_i_did": [       
+          "Took over an existing project codebase and continued development from a previous trimester team.",
+          "Implemented HTC Vive controller input and interaction logic in Unity (C#).",
+          "Built and refined core gameplay systems including puzzles, scripted events, and progression flow.",
+          "Integrated gameplay with art assets and level content produced by the art team."
         ],
         "tags": [
           "c#",
@@ -250,7 +263,8 @@
         "version": "Submission",
         "variable_name": "Physics_Game",
         "title": "Simple Physics Game",
-        "description": "A **Peggle inspired game** made during my Physics for Game Programming module. The game was written in `C++` on a custom game engine provided by the school.",
+        "vignette": "A Peggle-inspired physics game built in C++.",
+        "description": "A Peggle-inspired physics game made during my Physics for Game Programing module. The project was built in C++ using a custom school-provided engine, mwith a focus on applying basic physics concepts to gameplay.",
         "date": "2017-06-04",
         "last_update": null,
         "vid_link": "https://youtu.be/jAr9eGcGQJk",
@@ -262,9 +276,9 @@
           "images/games/physicsgame4.png"
         ],
         "what_i_did": [
-          "Developed **a physics simulation system** handling gravity and impulse forces, improving gameplay realism.",
-          "Implemented **custom vector-based collision detection**, enabling efficient and precise object interactions.",
-          "Integrated the **IrrKlang library for dynamic sound management**, enhancing game immersion with responsive audio effects."
+          "Implemented basic physics simulation (gravity and impulse forces) for moving objects.",
+          "Built custom collision detection and response using vector math.",
+          "Integrated IrrKlang for sound effects and audio playback."
         ],
         "tags": [
           "c++",
@@ -282,7 +296,8 @@
         "version": "Submission",
         "variable_name": "ResourceManagementGame",
         "title": "Resource Management Game",
-        "description": "\n    A real-time resource management simulation developed in `Java` using `LibGDX`. \n    ",
+        "vignette": "A real-time resource management simulation built in Java using LibGDX.",
+        "description": "A real-time resource management simulation built in Java using LibGDX. This project focused on implementing a small game loop with structured game objects, basic UI, and scene management for switching between gameplay and menu screens.",
         "date": "2024-02-23",
         "last_update": null,
         "vid_link": "https://youtu.be/xTgrENeVFi4?si=33A5JgegELn4uFcM",
@@ -294,8 +309,8 @@
           "images/sit/oop-game4.png"
         ],
         "what_i_did": [
-          "Developed **object-oriented game object classes** in Java using LibGDX, providing a structured foundation for game mechanics.",
-          "Implemented **core game scenes**, handling scene transitions and UI rendering to improve game flow and user experience."
+          "Designed object-oriented game object classes in Java to support core game mechanics.",
+          "Implemented scene flow (menus and gameplay) including transitions and UI rendering in LibGDX." 
         ],
         "tags": [
           "java",
@@ -308,27 +323,56 @@
     ]
   },
   "SpendingDashboard": {
-    "default_version": "PySide6 App",
+    "default_version": "PySide6",
     "versions": [
       {
-        "version": "PySide6 App",
+        "version": "PySide6",
         "variable_name": "SpendingDashboard",
         "title": "Spending Dashboard",
-        "description": "A PySide6 (Qt) desktop application for **tracking, analyzing, and visualizing personal spending data**.  \nThe app loads purchase records from a structured `.xlsx` file, provides **interactive filtering and plotting**, and includes **tools for data maintenance and backup**. \n\nIt features a **dashboard view with KPIs and monthly trends**, a **sortable data table**, and **Excel file automation** powered by openpyxl \u2014 all packaged in a clean, offline desktop experience.",
+        "vignette": "A PySide6 desktop application for tracking and analyzing personal spending data.",
+        "description": "A PySide6 (Qt) desktop application for tracking, analyzing, and visualizing personal spending data. I moved from a Streamlit dashboard to PySide6 because I wanted to build the same kind of tool without a web-based frontend. The app loads purchase records from a structured .xlsx file, supports filtering and plotting, and includes utilities for maintaining and backing up the data. It includes a dashboard view, a sortable table view, and Excel file automation powered by openpyxl in an offline desktop workflow.",
         "date": "2025-04-28",
         "last_update": "2025-10-10",
         "vid_link": null,
         "github_link": "https://github.com/dragonstonehafiz/budgeting-analysis",
         "img_paths": [
-          "images/other/budgeting1.png",
-          "images/other/budgeting2.png",
-          "images/other/budgeting3.png",
-          "images/other/budgeting4.png"
+          "images/other/budgetingVer2_1.png",
+          "images/other/budgetingVer2_2.png",
+          "images/other/budgetingVer2_3.png",
+          "images/other/budgetingVer2_4.png"
         ],
         "what_i_did": [
-          "Developed a full-featured PySide6 desktop application with multiple pages (Dashboard and Table View) using Qt widgets and layouts.",
-          "Implemented Excel automation using openpyxl to remake and validate `.xlsx` files, applying conditional formatting and creating automatic backups.",
-          "Created interactive matplotlib-based visualizations including rolling averages, category distributions, and top-item breakdowns."
+          "Built a multi-page PySide6 desktop app (dashboard + table view).",
+          "Automated Excel validation, formatting, and backups with openpyxl.",
+          "Added interactive charts for trends and category breakdowns."
+        ],
+        "tags": [
+          "python"
+        ],
+        "project_type": "Productivity",
+        "download_paths": []
+      },
+      {
+        "version": "Streamlit",
+        "variable_name": "SpendingDashboard",
+        "title": "Spending Dashboard",
+        "vignette": "A Streamlit app for tracking and analyzing personal spending data.",
+        "description": "A Streamlit dashboard for tracking, visualizing, and analyzing personal spending data. It reads purchase records from a structured Excel (.xlsx) file, supports interactive filtering and search, and presents trends through charts and summary views. The project also includes an Excel auto-formatting pipeline to keep data entry consistent and easier to maintain over time.",
+        "date": "2025-04-28",
+        "last_update": "2025-04-28",
+        "vid_link": null,
+        "github_link": "https://github.com/dragonstonehafiz/budgeting-analysis",
+        "img_paths": [
+          "images/other/budgetingVer1_1.png",
+          "images/other/budgetingVer1_2.png",
+          "images/other/budgetingVer1_3.png",
+          "images/other/budgetingVer1_4.png"
+        ],
+        "what_i_did": [
+          "Built a Streamlit dashboard for browsing and searching spending records.",
+          "Added interactive filters for date, cost, and category.",
+          "Created Plotly charts for trends and breakdowns.",
+          "Automated Excel formatting and conditional styling with openpyxl."
         ],
         "tags": [
           "python"
@@ -339,30 +383,59 @@
     ]
   },
   "TranslatorHelper": {
-    "default_version": "1.0.3",
+    "default_version": "Streamlit Ver 1.3",
     "versions": [
       {
-        "version": "1.0.3",
+        "version": "Streamlit Ver 1.3",
         "variable_name": "TranslatorHelper",
         "title": "Translator Helper",
-        "description": "\n    Transcribing and translating anime drama CDs is a hobby of mine. Although I can usually manage on my own, there are times when I can\u2019t determine exactly what a character is saying or how best to translate a particular phrase. To help with this, I built an application that uses OpenAI\u2019s API and Whisper.\n\n    I later realized I could have AI generate a first draft of the transcription and translation for an entire file, then review the resulting subtitle files and make any necessary edits. This is exactly what I did for the Gakuen Idolmaster translations (see the translation page), which saved me a great deal of time.\n    ",
+        "vignette": "An AI-powered tool to assist with transcribing and translating anime drama CDs using LLMs and Whisper.",
+        "description": "Translator Helper is an application that speeds up the process of transcribing and translating anime drama CDs using OpenAI’s API and Whisper. It can generate a first-draft transcription and translation for an entire audio file, export the results into subtitle formats for review, and provide smaller tools for handling individual lines or short audio snippets when needed.",
         "date": "2025-03-09",
         "last_update": "2025-10-27",
         "vid_link": null,
         "github_link": "https://github.com/dragonstonehafiz/translator-helper",
         "img_paths": [
-          "images/other/translator_helper_1.png",
-          "images/other/translator_helper_2.png",
-          "images/other/translator_helper_3.png",
-          "images/other/translator_helper_4.png"
+          "images/other/translatorHelperVer3_1.png",
+          "images/other/translatorHelperVer3_2.png",
+          "images/other/translatorHelperVer3_3.png",
+          "images/other/translatorHelperVer3_4.png"
         ],
         "what_i_did": [
-          "Added support for **audio transcription** via OpenAI Whisper using file upload or microphone input.",
-          "Enabled **subtitle file parsing** (`.srt`, `.ass`) to extract character lists and write a synopsis.",
-          "Integrated **web context retrieval** with Tavily + LangChain to enrich translation inputs.",
-          "Implemented full subtitle file translation to create a first draft for translation.",
-          "Provided quick-access tools for individual **audio-snippet transcription** and **single-line translation**.",
-          "Created a **translation grading tool** that scores accuracy, fluency, and cultural fit."
+          "Generated first-draft translations for entire subtitle files to speed up review and editing.",
+          "Used Whisper to transcribe full audio files and short snippets when lines were unclear.",
+          "Collected translation context by parsing .srt/.ass files and pulling supporting web info.",
+          "Provided a grading view to evaluate translations for accuracy, fluency, and cultural fit."
+        ],
+        "tags": [
+          "python",
+          "ai"
+        ],
+        "project_type": "AI",
+        "download_paths": []
+      },
+      {
+        "version": "Streamlit Ver 1.2",
+        "variable_name": "TranslatorHelper",
+        "title": "Translator Helper",
+        "vignette": "An AI-powered tool to assist with transcribing and translating anime drama CDs using LLMs and Whisper.",
+        "description": "A personal tool for helping with transcribing and translating anime drama CDs using LLMs and Whisper. I made it because there are times when I can’t clearly catch a line or I’m unsure how to phrase a translation, so the app helps by generating transcripts, organizing context, and producing translation outputs in a few styles to compare.",
+        "date": "2025-03-09",
+        "last_update": "2025-04-14",
+        "vid_link": "https://youtu.be/Zi3OjbpptQk",
+        "github_link": "https://github.com/dragonstonehafiz/translator-helper",
+        "img_paths": [
+          "images/other/translatorHelperVer2_1.png",
+          "images/other/translatorHelperVer2_2.png",
+          "images/other/translatorHelperVer2_3.png",
+          "images/other/translatorHelperVer2_4.png",
+          "images/other/translatorHelperVer2_5.png"
+        ],
+        "what_i_did": [
+          "Built a translation view that outputs natural, literal, and annotated versions.",
+          "Added transcription from audio files or microphone input using Whisper.",
+          "Added context support by parsing subtitle files and pulling supporting web info.",
+          "Built a grading view to review translations for fluency, accuracy, and cultural fit."
         ],
         "tags": [
           "python",
@@ -380,7 +453,8 @@
         "version": "1.0",
         "variable_name": "BudgetingSpreadsheet",
         "title": "Budgeting Spreadsheet Automation",
-        "description": "\n    A Python-based tool that automates the setup of budgeting spreadsheets by inserting formulas and formatting new sheets each year. \n    The program ensures consistent calculations and improves readability with automated conditional formatting.\n    \n    I have since replaced this with my Spending Dashboard project, which is a more robust solution for tracking my spending.\n    ",
+        "vignette": "A Python tool to automate the yearly setup of budgeting spreadsheets.",
+        "description": "A Python tool that automates the yearly setup of my budgeting spreadsheets by generating new sheets, inserting formulas, and applying formatting automatically. It keeps calculations consistent and improves readability with conditional formatting. This was later replaced by my Spending Dashboard project.",
         "date": "2024-01-16",
         "last_update": null,
         "vid_link": null,
@@ -392,8 +466,9 @@
           "images/other/spreadsheet4.png"
         ],
         "what_i_did": [
-          "Developed a Python script to automate spreadsheet formula insertion, **reducing manual effort** and **improving consistency** in yearly budget tracking.",
-          "Built a simple **Tkinter-based GUI** to enhance usability, enabling efficient spreadsheet updates without manual coding."
+          "Automated yearly sheet creation, formula insertion, and formatting in Excel with Python.",
+          "Added conditional formatting rules to keep categories and totals readable.",
+          "Built a small Tkinter GUI to run the setup without editing code."
         ],
         "tags": [
           "python"
@@ -410,16 +485,17 @@
         "version": "1.0",
         "variable_name": "DiamondCityRadio",
         "title": "Diamond City Radio (Fallout-Inspired Music Player)",
-        "description": "\n    A Java-based music player inspired by Fallout 4\u2019s Diamond City Radio. \n    The app plays a mix of music tracks and voice clips, dynamically interweaving DJ commentary between songs to simulate an in-game radio experience.\n    ",
+        "vignette": "A Java-based music player inspired by Fallout 4's Diamond City Radio.",
+        "description": "A Java-based music player inspired by Fallout 4's Diamond City Radio. It plays a mix of music tracks and DJ voice clips, inserting commentary between songs to recreate the feel of an in-game radio station.",
         "date": "2024-04-27",
         "last_update": null,
         "vid_link": "https://youtu.be/E9zW9e6HOzU",
         "github_link": null,
         "img_paths": [],
         "what_i_did": [
-          "Implemented an **optimized file-loading system** for music and voice lines, reducing load times and ensuring seamless playback.",
-          "Integrated Box2D for **accurate entity collision detection**, improving UI responsiveness.",
-          "Developed logic for **dynamic voice line selection**, enhancing game immersion with contextual dialogue."
+          "Built the app in LibGDX (Java), including the UI and playback controls.",
+          "Implemented audio loading and management for music tracks and voice clips.",
+          "Created the radio-style playback flow that interleaves DJ commentary between songs."
         ],
         "tags": [
           "java",
@@ -431,29 +507,85 @@
     ]
   },
   "PortfolioSite": {
-    "default_version": "1.1",
+    "default_version": "Flutter Ver 1.1",
     "versions": [
       {
-        "version": "1.1",
+        "version": "Flutter Ver 1.1",
         "variable_name": "PortfolioSite",
         "title": "Personal Portfolio Website",
-        "description": "\n    Built with **Flutter (web)** and **Docker**, this portfolio was created so I wouldn't have to touch raw HTML/CSS/frontend tooling I don't enjoy.\n\n    Project and page data are stored as structured **JSON** files and automatically rendered at runtime, so adding or updating projects only requires editing the JSON metadata.\n\n    The site is hosted on **Google Cloud** (managed with Docker), and uses a custom `ProjectObject` system to ensure consistent rendering from the JSON data.\n    ",
+        "vignette": "A portfolio website built on Flutter.",
+        "description": "Built with Flutter (Web) and deployed with Docker on Google Cloud, this is my personal portfolio site for hosting and organizing my work online. I moved from a Streamlit version to Flutter because Streamlit felt limiting for responsive layouts, and Flutter gave me better control over how the site adapts across desktop and mobile screens. \n\nAfter getting the first Flutter version working end-to-end, I iterated on it to improve the UI and make the site feel more finished. During that update, I also expanded the project data model to support multiple versions per project, so the portfolio can reflect how projects evolve over time.\n\nProject content is stored in structured JSON files and rendered into consistent project entries at runtime, so updates are mainly done by editing metadata. The goal was a serviceable, easy-to-update portfolio that presents my work clearly.",
         "date": "2025-03-07",
-        "last_update": "2025-11-10",
+        "last_update": "2025-11-25",
         "vid_link": null,
         "github_link": "https://github.com/dragonstonehafiz/portfolio-site",
         "img_paths": [
-          "images/other/portfolio1.png",
-          "images/other/portfolio2.png",
-          "images/other/portfolio3.png",
-          "images/other/portfolio4.png",
-          "images/other/portfolio5.png"
+          "images/other/portfolioVer3_1.png",
+          "images/other/portfolioVer3_2.png",
+          "images/other/portfolioVer3_3.png",
+          "images/other/portfolioVer3_4.png",
+          "images/other/portfolioVer3_5.png"
         ],
         "what_i_did": [
-          "**Implemented the entire frontend in Flutter (Web)** so I wouldn't have to work directly with HTML/CSS \u2014 I could build UI once and deploy to the web.",
-          "**Stored all project and page data as JSON** and built a runtime renderer that converts metadata into Flutter widgets automatically.",
-          "**Built responsive web layouts** that adapt to desktop and mobile browsers, prioritizing readability and touch-friendly navigation."
+          "Built a Flutter Web portfolio with responsive layouts for desktop and mobile.",
+          "Structured project and page content as JSON for data-driven rendering.",
+          "Implemented multi-version project entries to track changes over time.",
+          "Packaged the site with Docker for consistent deployment.",
+          "Hosted the deployed site on Google Cloud."
         ],
+        "tags": [
+          "web-dev"
+        ],
+        "project_type": "Productivity",
+        "download_paths": []
+      },  
+      {
+        "version": "Flutter Ver 1.0",
+        "variable_name": "PortfolioSite",
+        "title": "Personal Portfolio Website",
+        "vignette": "A portfolio website built on Flutter.",
+        "description": "Built with Flutter (Web) and deployed with Docker on Google Cloud, this is my personal portfolio site for hosting and organizing my work online. I moved from a Streamlit version to Flutter because Streamlit felt limiting for responsive layouts, and Flutter gave me better control over how the site adapts across desktop and mobile screens.  \n\nProject content is stored in structured JSON files and rendered into consistent project entries at runtime, so updates are mainly done by editing metadata. The goal was a serviceable, easy-to-update portfolio that presents my work clearly.",
+        "date": "2025-03-07",
+        "last_update": "2025-10-05",
+        "vid_link": null,
+        "github_link": "https://github.com/dragonstonehafiz/portfolio-site",
+        "img_paths": [
+          "images/other/portfolioVer2_1.png",
+          "images/other/portfolioVer2_2.png",
+          "images/other/portfolioVer2_3.png"
+        ],
+        "what_i_did": [
+          "Built a Flutter Web portfolio with responsive layouts for desktop and mobile.",
+          "Structured project and page content as JSON for data-driven rendering.",
+          "Packaged the site with Docker for consistent deployment.",
+          "Hosted the deployed site on Google Cloud."
+        ],
+        "tags": [
+          "web-dev"
+        ],
+        "project_type": "Productivity",
+        "download_paths": []
+      },
+      {
+        "version": "Streamlit",
+        "variable_name": "PortfolioSite",
+        "title": "Personal Portfolio Website",
+        "vignette": "A portfolio website built with Streamlit and Python.",
+        "description": "A personal portfolio site built with Python + Streamlit to get a simple web presence up quickly without needing much frontend work. The site's content (projects and pages) is stored in a JSON file, and each page is generated from that data so I can update the portfolio by editing entries rather than rewriting the UI. It's deployed on Google Cloud in a Docker container.",
+        "date": "2025-03-07",
+        "last_update": "2025-04-10",
+        "vid_link": null,
+        "github_link": "https://github.com/dragonstonehafiz/portfolio-site",
+        "img_paths": [
+          "images/other/portfolioVer1_1.png",
+          "images/other/portfolioVer1_2.png"
+        ],
+        "what_i_did": [
+          "Built the portfolio site in Streamlit with a simple multi-page layout.",
+          "Implemented tag and category filtering for browsing projects.",
+          "Set up Docker-based deployment on Google Cloud for hosting and updates.",
+          "Implemented a ProjectObject-based renderer to generate pages from structured project metadata."
+         ],
         "tags": [
           "web-dev"
         ],
@@ -469,7 +601,8 @@
         "version": "1.0",
         "variable_name": "YouTubeCommentAnalyzer",
         "title": "YouTube Comment Keyword Search",
-        "description": "\n    I started this project because I have a small YouTube channel that I run as a hobby and wanted to find out what people were saying about my videos. \n    I also wanted to take a crack at doing **sentiment analysis** just to see how it worked. \n    Using [YouTube Data API](https://developers.google.com/youtube/v3), I extracted video and comment data from my channel which I then used to perform sentiment analysis. \n    Using the generated sentiment scores, I generated multiple Word Clouds to visualize the most frequently appearing words on negative and positive comments.\n    \n    In the end, I wasn't able to learn anything I didn't already know from the word clouds, but it was a fun project nevertheless.\n\n    Everything in this project was written in `Python`. \n    Libraries like `pandas`, `matplotlib`, `wordcloud`, `spacy`, and `sklearn` were used to help with data manipulation and visualization.\n    ",
+        "vignette": "A Python project that analyzes YouTube comments for keyword and sentiment trends.",
+        "description": "A Python project that pulls video and comment data from my YouTube channel using the YouTube Data API, then runs keyword and sentiment analysis to see what topics show up most often. It generates separate word clouds for positive and negative comments to visualize common terms, mainly as a small experiment in sentiment analysis and basic text visualization.",
         "date": "2024-08-06",
         "last_update": null,
         "vid_link": null,
@@ -483,9 +616,9 @@
           "images/other/youtube6.png"
         ],
         "what_i_did": [
-          "Extracted and processed YouTube video and comment data **using the YouTube Data API** for sentiment analysis.",
-          "Implemented **sentiment classification using a pretrained RoBERTa model**, achieving high-accuracy results.",
-          "Developed word **cloud visualizations with matplotlib** and wordcloud, revealing key discussion trends."
+          "Pulled video and comment data from the YouTube Data API and cleaned it for analysis.",
+          "Implemented sentiment scoring over comments to separate positive vs negative text.",
+          "Generated word clouds and simple plots to visualize common keywords by sentiment."
         ],
         "tags": [
           "python",
@@ -724,6 +857,35 @@
           {
             "key": "Japanese Subs",
             "url": "https://drive.google.com/file/d/1dOnCKPbizrO557zMUHwtHiuqWsFg7m2q/view?usp=drive_link"
+          }
+        ]
+      }
+    ]
+  },
+  "gakumas_lilja_white_night_white_wish": {
+    "default_version": "Release",
+    "versions": [
+      {
+        "version": "Release",
+        "variable_name": "gakumas_lilja_white_night_white_wish",
+        "title": "Gakuen Idolmaster: Lilja \"White Night White Wish\" Commyu",
+        "description": null,
+        "date": "2025-12-25",
+        "last_update": null,
+        "vid_link": "https://youtu.be/SMGPHBY_sdE",
+        "github_link": null,
+        "img_paths": [],
+        "what_i_did": [],
+        "tags": ["games"],
+        "project_type": "Translations",
+        "download_paths": [
+          {
+            "key": "English Subs",
+            "url": "https://drive.google.com/file/d/1ZWiQJdVGJlv1rBlkh2JF9P9Cf4pWvy2z/view?usp=drive_link"
+          },
+          {
+            "key": "Japanese Subs",
+            "url": "https://drive.google.com/file/d/1IRSNpSJZcYtmIboblibimaoGtPCu0koj/view?usp=drive_link"
           }
         ]
       }

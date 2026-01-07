@@ -1209,15 +1209,21 @@ class _ProjectImageGallery extends StatefulWidget {
   State<_ProjectImageGallery> createState() => _ProjectImageGalleryState();
 }
 
-class _ProjectImageGalleryState extends State<_ProjectImageGallery> {
+class _ProjectImageGalleryState extends State<_ProjectImageGallery> with SingleTickerProviderStateMixin {
   late int _currentIndex;
   Timer? _timer;
   final ScrollController _thumbController = ScrollController();
+  late final AnimationController _progressController;
+  static const Duration _autoAdvanceDuration = Duration(seconds: 8);
 
   @override
   void initState() {
     super.initState();
     _currentIndex = 0;
+    _progressController = AnimationController(
+      vsync: this,
+      duration: _autoAdvanceDuration,
+    );
     _startTimer();
   }
 
@@ -1234,6 +1240,7 @@ class _ProjectImageGalleryState extends State<_ProjectImageGallery> {
   @override
   void dispose() {
     _timer?.cancel();
+    _progressController.dispose();
     _thumbController.dispose();
     super.dispose();
   }
@@ -1241,12 +1248,16 @@ class _ProjectImageGalleryState extends State<_ProjectImageGallery> {
   void _startTimer() {
     _timer?.cancel();
     if (widget.imagePaths.length > 1) {
-      _timer = Timer.periodic(const Duration(seconds: 5), (_) {
+      _progressController.forward(from: 0);
+      _timer = Timer.periodic(_autoAdvanceDuration, (_) {
         setState(() {
           _currentIndex = (_currentIndex + 1) % widget.imagePaths.length;
         });
+        _progressController.forward(from: 0);
         _scrollThumbnailIntoView();
       });
+    } else {
+      _progressController.value = 0;
     }
   }
 
@@ -1306,6 +1317,7 @@ class _ProjectImageGalleryState extends State<_ProjectImageGallery> {
   @override
   Widget build(BuildContext context) {
     final selectedPath = 'assets/${widget.imagePaths[_currentIndex]}';
+    final showProgress = widget.imagePaths.length > 1;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -1316,32 +1328,57 @@ class _ProjectImageGalleryState extends State<_ProjectImageGallery> {
             borderRadius: BorderRadius.circular(16),
             child: AspectRatio(
               aspectRatio: 16 / 9,
-              child: Image.asset(
-                selectedPath,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
-                  return Container(
-                    color: Colors.grey[300],
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(Icons.image_not_supported),
-                          const SizedBox(height: 8),
-                          Text(
-                            'Missing:\n${widget.imagePaths[_currentIndex]}',
-                            style: const TextStyle(fontSize: 12),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
+              child: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 350),
+                switchInCurve: Curves.easeOut,
+                switchOutCurve: Curves.easeIn,
+                transitionBuilder: (child, animation) =>
+                    FadeTransition(opacity: animation, child: child),
+                child: Image.asset(
+                  selectedPath,
+                  key: ValueKey(selectedPath),
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      color: Colors.grey[300],
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(Icons.image_not_supported),
+                            const SizedBox(height: 8),
+                            Text(
+                              'Missing:\n${widget.imagePaths[_currentIndex]}',
+                              style: const TextStyle(fontSize: 12),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
             ),
           ),
         ),
+        if (showProgress) ...[
+          const SizedBox(height: 8),
+          AnimatedBuilder(
+            animation: _progressController,
+            builder: (context, _) {
+              return ClipRRect(
+                borderRadius: BorderRadius.circular(999),
+                child: LinearProgressIndicator(
+                  value: _progressController.value,
+                  minHeight: 3,
+                  backgroundColor: Colors.white.withOpacity(0.6),
+                  valueColor: AlwaysStoppedAnimation<Color>(AppColors.accent),
+                ),
+              );
+            },
+          ),
+        ],
         const SizedBox(height: 16),
         SizedBox(
           height: 90,

@@ -391,7 +391,7 @@
         "title": "Translator Helper",
         "vignette": "A full-stack assistant for transcribing, and translating subtitle files with Angular and FastAPI.",
         "description": "Translator Helper is a full-stack tool I use to create fan translations for Japanese drama CDs and games. It handles transcription, context-building, and subtitle translation in one workflow, so I can generate a first pass and then review and edit the results. \n I was using the original Streamlit version at first, but I switched over to a separated frontend and backend when I realized it would make the app feel snappier.",
-        "date": "2025-04-28",
+        "date": "2025-12-01",
         "last_update": "2025-12-21",
         "vid_link": null,
         "github_link": "https://github.com/dragonstonehafiz/translator-helper",
@@ -712,6 +712,35 @@
           {
             "key": "Japanese Subs",
             "url": "https://drive.google.com/file/d/1VxsZOwXn8Sq9tK8hNTm7H7_ybhs_5rho/view?usp=sharing"
+          }
+        ]
+      }
+    ]
+  },
+  "gakumas_lilja_step3": {
+    "default_version": "Release",
+    "versions": [
+      {
+        "version": "Release",
+        "variable_name": "gakumas_lilja_step3",
+        "title": "Gakuen Idolmaster: Lilja Step 3",
+        "description": null,
+        "date": "2025-07-13",
+        "last_update": null,
+        "vid_link": "https://youtu.be/xHGXHPq4nZY",
+        "github_link": null,
+        "img_paths": [],
+        "what_i_did": [],
+        "tags": ["games"],
+        "project_type": "Translations",
+        "download_paths": [
+          {
+            "key": "English Subs",
+            "url": "https://drive.google.com/file/d/1U7QGdhFqKM0Y5jqgYjH9UPO0Mq81esjs/view?usp=sharing"
+          },
+          {
+            "key": "Japanese Subs",
+            "url": "https://drive.google.com/file/d/1lIjHiW8t4NQAQEOAOmNKltOcZgz-E1VY/view?usp=sharing"
           }
         ]
       }

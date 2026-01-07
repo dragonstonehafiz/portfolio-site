@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import '../routes/app_routes.dart';
 import '../utils/theme.dart';
 import '../utils/responsive_web_utils.dart';
+import '../utils/page_collection.dart';
+import '../utils/page_data.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({super.key});
+
+  static const EdgeInsets _navPadding = EdgeInsets.symmetric(horizontal: 12.0);
 
   @override
   Widget build(BuildContext context) {
@@ -34,82 +38,70 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 
   List<Widget> _buildDesktopActions(BuildContext context) {
-    final genericPages = AppRoutes.genericPageSlugs.entries.toList();
-    
-    // If there are 3 or fewer pages, show them all directly instead of dropdown
-    if (genericPages.length <= 3) {
-      return [
-        TextButton(
-          onPressed: () => _navigateTo(context, AppRoutes.landing),
-          child: const Text(
-            'Home',
-            style: TextStyle(color: Colors.white, fontSize: 16),
-          ),
-        ),
-        TextButton(
-          onPressed: () => _navigateTo(context, AppRoutes.featured),
-          child: const Text(
-            'Featured',
-            style: TextStyle(color: Colors.white, fontSize: 16),
-          ),
-        ),
-        // Add each generic page as individual button
-        ...genericPages.map((entry) => TextButton(
-          onPressed: () => _navigateTo(context, AppRoutes.pagePath(entry.key)),
-          child: Text(
-            entry.value,
-            style: const TextStyle(color: Colors.white, fontSize: 16),
-          ),
-        )),
-        const SizedBox(width: 16),
-      ];
-    }
-    
-    // For more than 3 pages, use the original dropdown behavior
+    final pages = PageCollection.instance.genericPages;
+    final primaryPages = pages.where((p) => !p.dropdown).toList();
+    final dropdownPages = pages.where((p) => p.dropdown).toList();
+
+    final navButtonStyle = TextButton.styleFrom(
+      padding: _navPadding,
+      foregroundColor: Colors.white,
+    );
+    final navTextStyle = const TextStyle(
+      color: Colors.white,
+      fontSize: 16,
+      fontWeight: FontWeight.w600,
+    );
+
     return [
       TextButton(
         onPressed: () => _navigateTo(context, AppRoutes.landing),
-        child: const Text(
-          'Home',
-          style: TextStyle(color: Colors.white, fontSize: 16),
-        ),
+        style: navButtonStyle,
+        child: Text('Home', style: navTextStyle),
       ),
-      TextButton(
-        onPressed: () => _navigateTo(context, AppRoutes.featured),
-        child: const Text(
-          'Featured Projects',
-          style: TextStyle(color: Colors.white, fontSize: 16),
+      ...primaryPages.map((page) => TextButton(
+        onPressed: () => _navigateTo(
+          context,
+          AppRoutes.pagePath(AppRoutes.slugForPageName(page.pageName)),
         ),
-      ),
-      PopupMenuButton<String>(
-        onSelected: (route) => _navigateTo(context, route),
-        color: AppColors.primary,
-        offset: const Offset(0, kToolbarHeight),
-        itemBuilder: (context) {
-          final genericEntries = _buildGenericPageEntries();
-          if (genericEntries.isEmpty) {
-            return [
-              PopupMenuItem<String>(
-                value: '',
-                enabled: false,
-                child: _menuItemText('No pages available'),
-              ),
-            ];
-          }
-          return genericEntries;
-        },
-        child: const Center(
-          child: Text(
-            'Projects',
-            style: TextStyle(color: Colors.white, fontSize: 16),
+        style: navButtonStyle,
+        child: Text(
+          page.pageName,
+          style: navTextStyle,
+        ),
+      )),
+      if (dropdownPages.isNotEmpty)
+        PopupMenuButton<String>(
+          onSelected: (route) => _navigateTo(context, route),
+          color: AppColors.primary,
+          offset: const Offset(0, kToolbarHeight),
+          padding: EdgeInsets.zero,
+          itemBuilder: (context) {
+            final genericEntries = _buildGenericPageEntries(dropdownPages);
+            if (genericEntries.isEmpty) {
+              return [
+                PopupMenuItem<String>(
+                  value: '',
+                  enabled: false,
+                  child: _menuItemText('No pages available'),
+                ),
+              ];
+            }
+            return genericEntries;
+          },
+          child: Padding(
+            padding: _navPadding,
+            child: Text(
+              'Projects',
+              style: navTextStyle,
+            ),
           ),
         ),
-      ),
       const SizedBox(width: 16),
     ];
   }
 
   List<Widget> _buildMobileActions(BuildContext context) {
+    final pages = PageCollection.instance.genericPages;
     return [
       PopupMenuButton<String>(
         onSelected: (route) {
@@ -124,13 +116,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               value: AppRoutes.landing,
               child: _menuItemText('Home'),
             ),
-            PopupMenuItem<String>(
-              value: AppRoutes.featured,
-              child: _menuItemText('Featured'),
-            ),
           ];
 
-          final genericEntries = _buildGenericPageEntries();
+          final genericEntries = _buildGenericPageEntries(pages);
           if (genericEntries.isNotEmpty) {
             items.add(const PopupMenuDivider());
             items.addAll(genericEntries);
@@ -150,19 +138,17 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     ];
   }
 
-  List<PopupMenuEntry<String>> _buildGenericPageEntries() {
-    if (AppRoutes.genericPageSlugs.isEmpty) {
+  List<PopupMenuEntry<String>> _buildGenericPageEntries(List<ProjectPageData> pages) {
+    if (pages.isEmpty) {
       return <PopupMenuEntry<String>>[];
     }
 
-    return AppRoutes.genericPageSlugs.entries
-        .map(
-          (entry) => PopupMenuItem<String>(
-            value: AppRoutes.pagePath(entry.key),
-            child: _menuItemText(entry.value),
-          ),
-        )
-        .toList();
+    return pages.map((page) {
+      return PopupMenuItem<String>(
+        value: AppRoutes.pagePath(AppRoutes.slugForPageName(page.pageName)),
+        child: _menuItemText(page.pageName),
+      );
+    }).toList();
   }
 
   Text _menuItemText(String label) {

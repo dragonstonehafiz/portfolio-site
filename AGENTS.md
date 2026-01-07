@@ -17,24 +17,22 @@
 - Routing is handled in lib/main.dart via onGenerateRoute
 - Static routes:
   - / -> LandingPage
-  - /featured -> ProjectsBasePage (configKey: featured_projects)
 - Dynamic routes:
   - /pages/<slug> -> ProjectsBasePage for a page name resolved from AppRoutes.genericPageSlugs
   - /projects/<slug> -> ProjectDetailLoader
 - Slug rules:
-  - Page slug: AppRoutes._slugify(page_name) from assets/page_config.json
+  - Page slug: AppRoutes.slugForPageName(page_name) from assets/page_config.json
   - Project slug: ProjectData.slug uses variable_name (fallback to title) from assets/projects.json
 
 ## Data Sources (JSON)
 - assets/page_config.json
-  - featured_projects: { description, projects[] }
-  - project_pages: [ { page_name, description, default_list_view, projects[] } ]
+  - project_pages: [ { page_name, description, default_list_view, dropdown } ]
   - Consumed by PageCollection (lib/utils/page_collection.dart)
   - Used by AppRoutes.initialize() and ProjectsBasePage
 - assets/projects.json
-  - Top-level map of projectId -> { default_version, versions[] }
+  - Top-level map of projectId -> { variable_name, page_list, default_version, versions[] }
   - Each version includes:
-    - version, variable_name, title, vignette, description, date, last_update
+    - version, title, vignette, description, date, last_update
     - vid_link, github_link, img_paths[], what_i_did[], tags[], project_type, download_paths[]
   - Loaded by ProjectsCollection (lib/utils/project_collection.dart)
   - Rendered by ProjectData widgets (lib/utils/project_data.dart)
@@ -63,7 +61,7 @@
 
 ## Widgets
 - lib/widgets/custom_app_bar.dart
-  - Desktop: Home, Featured, and generic pages (buttons or dropdown)
+  - Desktop: Home + non-dropdown pages as buttons; dropdown pages grouped into a menu
   - Mobile: Popup menu
   - Uses AppRoutes.genericPageSlugs
 - lib/widgets/custom_footer.dart
@@ -107,15 +105,17 @@
 - Add a new project:
   1) Add entry in assets/projects.json with unique projectId and versions.
   2) Ensure variable_name is stable (used in slugs).
-  3) Add images under assets/images/... and reference paths without the assets/ prefix.
-  4) Update assets/page_config.json to include the projectId on a page list.
+  3) Set page_list to the pages this project should appear on.
+  4) Add images under assets/images/... and reference paths without the assets/ prefix.
 - Add a new page:
-  1) Add a new object in page_config.json project_pages with page_name and projects.
+  1) Add a new object in page_config.json project_pages with page_name, description, and dropdown flag.
   2) AppRoutes.initialize() will slugify page_name for /pages/<slug> routing.
   3) CustomAppBar will auto-pick it up in navigation.
+  4) Update each project’s page_list to include the new page_name as needed.
 - Edit landing content:
   - Update assets/landing_page.json; LandingPage reads and renders dynamically.
 
 ## Notes
 - All content is data-driven from JSON in assets/.
 - For project detail routing, ensure project variable_name is unique so slugs do not collide.
+- For the Featured page, include 'Featured' in a project’s page_list.

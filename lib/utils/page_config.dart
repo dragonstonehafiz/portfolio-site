@@ -1,57 +1,37 @@
-/// Represents the featured projects block from `page_config.json`.
-class FeaturedProjectsData {
-  final String description;
-  final List<String> projects;
-
-  FeaturedProjectsData({required this.description, required this.projects});
-
-  factory FeaturedProjectsData.fromJson(Map<String, dynamic> json) {
-    return FeaturedProjectsData(
-      description: json['description'] ?? '',
-      projects: List<String>.from(json['projects'] ?? []),
-    );
-  }
-}
-
 /// A generic page that contains a title, description and a list of project ids.
 class ProjectPageData {
   final String pageName;
   final String description;
-  final List<String> projects;
+  final bool dropdown;
 
-  ProjectPageData({required this.pageName, required this.description, required this.projects});
+  ProjectPageData({
+    required this.pageName,
+    required this.description,
+    this.dropdown = false,
+  });
 
   factory ProjectPageData.fromJson(Map<String, dynamic> json) {
     return ProjectPageData(
       pageName: json['page_name'] ?? '',
       description: json['description'] ?? '',
-      projects: List<String>.from(json['projects'] ?? []),
+      dropdown: json['dropdown'] ?? false,
     );
   }
 }
 
 /// PageCollection is a single container representing both the featured
-/// projects block and the other project pages. The `featured_projects` block
-/// is exposed as a `ProjectPage` via `featuredAsPage` so callers can treat all
-/// pages uniformly.
+/// project pages.
 class PageCollection {
-  final FeaturedProjectsData featuredProjects;
   final List<ProjectPageData> projectPages;
 
-  PageCollection({required this.featuredProjects, required this.projectPages});
+  PageCollection({required this.projectPages});
 
   factory PageCollection.fromJson(Map<String, dynamic> json) {
-    final featured = FeaturedProjectsData.fromJson(json['featured_projects'] ?? {});
-
     final pagesRaw = json['project_pages'] as List<dynamic>? ?? [];
     final pages = pagesRaw.map((e) => ProjectPageData.fromJson(Map<String, dynamic>.from(e))).toList();
 
-    return PageCollection(featuredProjects: featured, projectPages: pages);
+    return PageCollection(projectPages: pages);
   }
-
-  /// Access the featured projects block. This is a distinct structure from the
-  /// generic project pages and should be handled separately by the UI.
-  FeaturedProjectsData get featuredPage => featuredProjects;
 
   /// Access the list of generic project pages (does not include the featured
   /// projects block).

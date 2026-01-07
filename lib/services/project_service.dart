@@ -5,27 +5,11 @@ import '../utils/project_collection.dart';
 
 class ProjectService {
   static List<ProjectData> getProjectsForPage(String pageName, {bool descending = true}) {
-
-    final projectsList = <String>[];
-    final pageCollection = PageCollection.instance;
-
-    if (pageName == 'featured_projects') {
-      projectsList.addAll(pageCollection.featuredPage.projects);
-    } else {
-      final page = pageCollection.findGenericPageByName(pageName);
-      if (page != null) projectsList.addAll(page.projects);
-    }
-
-    final projectIds = projectsList;
     final projects = <ProjectData>[];
     final projectsCollection = ProjectsCollection.instance;
-
-    for (final id in projectIds) {
-      final entry = projectsCollection.projects[id];
-      if (entry != null) {
+    for (final entry in projectsCollection.projects.values) {
+      if (entry.pageList.contains(pageName)) {
         projects.add(entry.defaultVersion);
-      } else {
-        debugPrint('Project not found: $id');
       }
     }
     
@@ -149,8 +133,6 @@ class ProjectService {
     final pageCollection = PageCollection.instance;
 
     final pages = <String, String>{};
-    // Featured block is a special key
-    pages['featured_projects'] = pageCollection.featuredPage.description;
     for (final p in pageCollection.genericPages) {
       pages[p.pageName] = p.description;
     }

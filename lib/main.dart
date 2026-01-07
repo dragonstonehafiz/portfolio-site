@@ -41,17 +41,6 @@ class PortfolioApp extends StatelessWidget {
           return MaterialPageRoute(builder: (_) => const LandingPage(), settings: settings);
         }
 
-        if (uri.path == AppRoutes.featured) {
-          return MaterialPageRoute(
-              builder: (_) => ProjectsBasePage(
-                    configKey: 'featured_projects',
-                    title: 'Featured',
-                    description: PageCollection.instance.featuredPage.description,
-                    emptyStateIcon: Icons.star_outline,
-                  ),
-              settings: settings);
-        }
-
         // Pattern: /pages/<slug> -> map slug to a configured generic page
         // Pattern: /projects/<slug> -> open project detail
         final segments = uri.pathSegments;

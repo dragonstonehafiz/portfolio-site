@@ -2,7 +2,6 @@ import '../utils/page_collection.dart';
 
 class AppRoutes {
   static const String landing = '/';
-  static const String featured = '/featured';
 
   // Map slug -> pageName for generic pages. Initialized at app startup.
   static final Map<String, String> genericPageSlugs = {};
@@ -27,4 +26,7 @@ class AppRoutes {
 
   /// Helper to generate the path for a generic page slug (e.g. '/pages/<slug>').
   static String pagePath(String slug) => '/pages/$slug';
+
+  /// Helper to generate a slug from a page name.
+  static String slugForPageName(String pageName) => _slugify(pageName);
 }

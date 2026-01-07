@@ -3,24 +3,19 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'page_data.dart';
 
 class PageCollection {
-  final FeaturedProjectsData _featuredProjectsData;
   final List<ProjectPageData> _genericProjectPageData;
-  FeaturedProjectsData get featuredPage => _featuredProjectsData;
   List<ProjectPageData> get genericPages => _genericProjectPageData;
   static PageCollection? _instance;
   static bool get isInitialized => _instance != null;
 
-  PageCollection._({required FeaturedProjectsData featuredProjects, required List<ProjectPageData> projectPages}) : 
-  _genericProjectPageData = projectPages, 
-  _featuredProjectsData = featuredProjects;
+  PageCollection._({required List<ProjectPageData> projectPages}) : 
+  _genericProjectPageData = projectPages;
 
   factory PageCollection._fromJson(Map<String, dynamic> json) {
-    final featured = FeaturedProjectsData.fromJson(json['featured_projects'] ?? {});
-
     final pagesRaw = json['project_pages'] as List<dynamic>? ?? [];
     final pages = pagesRaw.map((e) => ProjectPageData.fromJson(Map<String, dynamic>.from(e))).toList();
 
-    return PageCollection._(featuredProjects: featured, projectPages: pages);
+    return PageCollection._(projectPages: pages);
   }
 
   static PageCollection _fromRawJson(String str) => PageCollection._fromJson(json.decode(str));

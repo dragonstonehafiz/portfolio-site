@@ -23,6 +23,7 @@ class ProjectData {
   final String projectType;
   final String version;
   final String vignette;
+  final List<String> pageList;
   // Each download entry is expected to be a map with keys 'key' and 'url'.
   // For backward compatibility we still accept a list of string URLs.
   final List<dynamic> downloadPaths;
@@ -41,6 +42,7 @@ class ProjectData {
     required this.projectType,
     required this.version,
     required this.vignette,
+    required this.pageList,
     required this.downloadPaths,
   });
 
@@ -48,9 +50,11 @@ class ProjectData {
     String key,
     Map<String, dynamic> json, {
     String? versionOverride,
+    String? variableNameOverride,
+    List<String>? pageListOverride,
   }) {
     return ProjectData(
-      variableName: json['variable_name'] ?? key,
+      variableName: variableNameOverride ?? json['variable_name'] ?? key,
       title: json['title'] ?? '',
       description: json['description'],
       date: json['date'] ?? '',
@@ -63,6 +67,7 @@ class ProjectData {
       projectType: json['project_type'] ?? '',
       version: versionOverride ?? json['version']?.toString() ?? 'default',
       vignette: json['vignette']?.toString() ?? '',
+      pageList: pageListOverride ?? List<String>.from(json['page_list'] ?? []),
       downloadPaths: (json['download_paths'] as List<dynamic>?)?.toList() ?? [],
     );
   }
@@ -1110,14 +1115,20 @@ class ProjectEntry {
   final String id;
   final String defaultVersionId;
   final List<ProjectData> _versions;
+  final String variableName;
+  final List<String> pageList;
 
   ProjectEntry({
     required this.id,
     required this.defaultVersionId,
+    required this.variableName,
+    required this.pageList,
     required List<ProjectData> versions,
   }) : _versions = List.unmodifiable(versions);
 
   factory ProjectEntry.fromJson(String id, Map<String, dynamic> json) {
+    final projectVariableName = json['variable_name']?.toString();
+    final projectPageList = List<String>.from(json['page_list'] ?? []);
     if (json.containsKey('versions')) {
       final versionsRaw = (json['versions'] as List<dynamic>? ?? [])
           .map((e) => Map<String, dynamic>.from(e as Map))
@@ -1126,7 +1137,13 @@ class ProjectEntry {
       for (final versionJson in versionsRaw) {
         final versionId = versionJson['version']?.toString() ?? 'default';
         versions.add(
-          ProjectData.fromJson(id, versionJson, versionOverride: versionId),
+          ProjectData.fromJson(
+            id,
+            versionJson,
+            versionOverride: versionId,
+            variableNameOverride: projectVariableName,
+            pageListOverride: projectPageList,
+          ),
         );
       }
       final fallback = versions.isNotEmpty ? versions.first.version : 'default';
@@ -1138,15 +1155,25 @@ class ProjectEntry {
       return ProjectEntry(
         id: id,
         defaultVersionId: resolvedDefault,
+        variableName: projectVariableName ?? id,
+        pageList: projectPageList,
         versions: versions,
       );
     }
 
     final singleVersion =
-        ProjectData.fromJson(id, json, versionOverride: 'default');
+        ProjectData.fromJson(
+          id,
+          json,
+          versionOverride: 'default',
+          variableNameOverride: projectVariableName,
+          pageListOverride: projectPageList,
+        );
     return ProjectEntry(
       id: id,
       defaultVersionId: singleVersion.version,
+      variableName: projectVariableName ?? singleVersion.variableName,
+      pageList: projectPageList,
       versions: [singleVersion],
     );
   }

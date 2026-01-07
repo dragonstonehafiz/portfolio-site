@@ -1,9 +1,8 @@
 {
   "AI_Game": {
     "variable_name": "AI_Game",
-    "page_list": [
-      "Programming"
-    ],
+    "page_list": ["Programming"],
+    "shown": true,
     "default_version": "Submission",
     "versions": [
       {
@@ -28,10 +27,7 @@
           "Created a procedural maze generator for randomized maps.",
           "Integrated IrrKlang for sound effects and audio feedback."
         ],
-        "tags": [
-          "games",
-          "c++"
-        ],
+        "tags": ["games", "c++"],
         "project_type": "Games",
         "download_paths": []
       }
@@ -39,10 +35,8 @@
   },
   "BirdLaserTargeter": {
     "variable_name": "BirdLaserTargeter",
-    "page_list": [
-      "Featured",
-      "Programming"
-    ],
+    "page_list": ["Featured", "Programming"],
+    "shown": true,
     "default_version": "Submission",
     "versions": [
       {
@@ -65,10 +59,7 @@
           "Implemented MQTT messaging to support remote/offloaded detection and device-server communication.",
           "Assembled the end-to-end system so detection, targeting, and actuation worked together reliably."
         ],
-        "tags": [
-          "python",
-          "ai"
-        ],
+        "tags": ["python", "ai"],
         "project_type": "AI",
         "download_paths": []
       }
@@ -76,10 +67,8 @@
   },
   "ESRGAN_M": {
     "variable_name": "ESRGAN M",
-    "page_list": [
-      "Featured",
-      "Programming"
-    ],
+    "page_list": ["Featured", "Programming"],
+    "shown": true,
     "default_version": "Submission",
     "versions": [
       {
@@ -104,10 +93,7 @@
           "Ran ESRGAN fine-tuning experiments and adjusted training settings to improve output quality.",
           "Built a Streamlit UI to upload images and preview upscaled results."
         ],
-        "tags": [
-          "python",
-          "ai"
-        ],
+        "tags": ["python", "ai"],
         "project_type": "AI",
         "download_paths": []
       }
@@ -115,10 +101,8 @@
   },
   "Electronica": {
     "variable_name": "Electronica",
-    "page_list": [
-      "Featured",
-      "Programming"
-    ],
+    "page_list": ["Featured", "Programming"],
+    "shown": true,
     "default_version": "Submission",
     "versions": [
       {
@@ -145,11 +129,7 @@
           "Created two playable modes (Classic and Onslaught).",
           "Designed and animated the in-game UI, including player and boss health bars."
         ],
-        "tags": [
-          "c#",
-          "games",
-          "unity"
-        ],
+        "tags": ["c#", "games", "unity"],
         "project_type": "Games",
         "download_paths": [
           {
@@ -162,9 +142,8 @@
   },
   "JapaneseLearningCardGame": {
     "variable_name": "JapaneseLearningCardGame",
-    "page_list": [
-      "Programming"
-    ],
+    "page_list": ["Programming"],
+    "shown": true,
     "default_version": "Submission",
     "versions": [
       {
@@ -186,11 +165,7 @@
           "Built an object-oriented card system to define card data, effects, and behaviors.",
           "Implemented turn flow, deck/hand management, and win/loss conditions."
         ],
-        "tags": [
-          "c#",
-          "unity",
-          "games"
-        ],
+        "tags": ["c#", "unity", "games"],
         "project_type": "Games",
         "download_paths": [
           {
@@ -203,9 +178,8 @@
   },
   "Last_Survivor": {
     "variable_name": "Last_Survivor",
-    "page_list": [
-      "Programming"
-    ],
+    "page_list": ["Programming"],
+    "shown": true,
     "default_version": "Submission",
     "versions": [
       {
@@ -228,11 +202,7 @@
           "Built enemy movement and pathfinding logic without relying on Unity's NavMesh.",
           "Programmed multiple enemy/NPC types with different behaviors (melee, ranged, turret, and boss)."
         ],
-        "tags": [
-          "c#",
-          "games",
-          "unity"
-        ],
+        "tags": ["c#", "games", "unity"],
         "project_type": "Games",
         "download_paths": [
           {
@@ -245,9 +215,8 @@
   },
   "Locus": {
     "variable_name": "Locus",
-    "page_list": [
-      "Programming"
-    ],
+    "page_list": ["Programming"],
+    "shown": true,
     "default_version": "Submission",
     "versions": [
       {
@@ -269,12 +238,7 @@
           "Built and refined core gameplay systems including puzzles, scripted events, and progression flow.",
           "Integrated gameplay with art assets and level content produced by the art team."
         ],
-        "tags": [
-          "c#",
-          "games",
-          "unity",
-          "vr"
-        ],
+        "tags": ["c#", "games", "unity", "vr"],
         "project_type": "Games",
         "download_paths": []
       }
@@ -282,9 +246,8 @@
   },
   "Physics_Game": {
     "variable_name": "Physics_Game",
-    "page_list": [
-      "Programming"
-    ],
+    "page_list": ["Programming"],
+    "shown": true,
     "default_version": "Submission",
     "versions": [
       {
@@ -307,10 +270,7 @@
           "Built custom collision detection and response using vector math.",
           "Integrated IrrKlang for sound effects and audio playback."
         ],
-        "tags": [
-          "c++",
-          "games"
-        ],
+        "tags": ["c++", "games"],
         "project_type": "Games",
         "download_paths": []
       }
@@ -318,9 +278,8 @@
   },
   "ResourceManagementGame": {
     "variable_name": "ResourceManagementGame",
-    "page_list": [
-      "Programming"
-    ],
+    "page_list": ["Programming"],
+    "shown": true,
     "default_version": "Submission",
     "versions": [
       {
@@ -342,11 +301,7 @@
           "Designed object-oriented game object classes in Java to support core game mechanics.",
           "Implemented scene flow (menus and gameplay) including transitions and UI rendering in LibGDX."
         ],
-        "tags": [
-          "java",
-          "games",
-          "libgdx"
-        ],
+        "tags": ["java", "games", "libgdx"],
         "project_type": "Games",
         "download_paths": []
       }
@@ -354,10 +309,8 @@
   },
   "SpendingDashboard": {
     "variable_name": "SpendingDashboard",
-    "page_list": [
-      "Featured",
-      "Programming"
-    ],
+    "page_list": ["Featured", "Programming"],
+    "shown": true,
     "default_version": "PySide6",
     "versions": [
       {
@@ -380,9 +333,7 @@
           "Automated Excel validation, formatting, and backups with openpyxl.",
           "Added interactive charts for trends and category breakdowns."
         ],
-        "tags": [
-          "python"
-        ],
+        "tags": ["python"],
         "project_type": "Productivity",
         "download_paths": []
       },
@@ -407,9 +358,7 @@
           "Created Plotly charts for trends and breakdowns.",
           "Automated Excel formatting and conditional styling with openpyxl."
         ],
-        "tags": [
-          "python"
-        ],
+        "tags": ["python"],
         "project_type": "Productivity",
         "download_paths": []
       }
@@ -417,10 +366,8 @@
   },
   "TranslatorHelper": {
     "variable_name": "TranslatorHelper",
-    "page_list": [
-      "Featured",
-      "Programming"
-    ],
+    "page_list": ["Featured", "Programming"],
+    "shown": true,
     "default_version": "Angular & Node.js",
     "versions": [
       {
@@ -444,10 +391,7 @@
           "Generated translation context by parsing .srt/.ass files and pulling supporting web info.",
           "Produced first-draft translations for entire subtitle files to speed up review and editing."
         ],
-        "tags": [
-          "ai",
-          "python"
-        ],
+        "tags": ["ai", "python"],
         "project_type": "AI",
         "download_paths": []
       },
@@ -472,10 +416,7 @@
           "Collected translation context by parsing .srt/.ass files and pulling supporting web info.",
           "Provided a grading view to evaluate translations for accuracy, fluency, and cultural fit."
         ],
-        "tags": [
-          "python",
-          "ai"
-        ],
+        "tags": ["python", "ai"],
         "project_type": "AI",
         "download_paths": []
       },
@@ -501,10 +442,7 @@
           "Added context support by parsing subtitle files and pulling supporting web info.",
           "Built a grading view to review translations for fluency, accuracy, and cultural fit."
         ],
-        "tags": [
-          "python",
-          "ai"
-        ],
+        "tags": ["python", "ai"],
         "project_type": "AI",
         "download_paths": []
       }
@@ -512,7 +450,8 @@
   },
   "BudgetingSpreadsheet": {
     "variable_name": "BudgetingSpreadsheet",
-    "page_list": [],
+    "page_list": ["Programming"],
+    "shown": false,
     "default_version": "1.0",
     "versions": [
       {
@@ -535,9 +474,7 @@
           "Added conditional formatting rules to keep categories and totals readable.",
           "Built a small Tkinter GUI to run the setup without editing code."
         ],
-        "tags": [
-          "python"
-        ],
+        "tags": ["python"],
         "project_type": "Productivity",
         "download_paths": []
       }
@@ -545,9 +482,8 @@
   },
   "DiamondCityRadio": {
     "variable_name": "DiamondCityRadio",
-    "page_list": [
-      "Programming"
-    ],
+    "page_list": ["Programming"],
+    "shown": true,
     "default_version": "1.0",
     "versions": [
       {
@@ -565,10 +501,7 @@
           "Implemented audio loading and management for music tracks and voice clips.",
           "Created the radio-style playback flow that interleaves DJ commentary between songs."
         ],
-        "tags": [
-          "java",
-          "libgdx"
-        ],
+        "tags": ["java", "libgdx"],
         "project_type": "Productivity",
         "download_paths": []
       }
@@ -576,10 +509,8 @@
   },
   "PortfolioSite": {
     "variable_name": "PortfolioSite",
-    "page_list": [
-      "Featured",
-      "Programming"
-    ],
+    "page_list": ["Featured", "Programming"],
+    "shown": true,
     "default_version": "Flutter Ver 1.1",
     "versions": [
       {
@@ -587,7 +518,7 @@
         "title": "Personal Portfolio Website",
         "vignette": "A portfolio website built on Flutter.",
         "description": "Built with Flutter (Web) and deployed with Docker on Google Cloud, this is my personal portfolio site for hosting and organizing my work online. I moved from a Streamlit version to Flutter because Streamlit felt limiting for responsive layouts, and Flutter gave me better control over how the site adapts across desktop and mobile screens. \nAfter getting the first Flutter version working end-to-end, I iterated on it to improve the UI and make the site feel more finished. During that update, I also expanded the project data model to support multiple versions per project, so the portfolio can reflect how projects evolve over time.\nProject content is stored in structured JSON files and rendered into consistent project entries at runtime, so updates are mainly done by editing metadata. The goal was a serviceable, easy-to-update portfolio that presents my work clearly.",
-        "date": "2025-03-07",
+        "date": "2025-11-25",
         "last_update": "2025-11-25",
         "vid_link": null,
         "github_link": "https://github.com/dragonstonehafiz/portfolio-site",
@@ -605,9 +536,7 @@
           "Packaged the site with Docker for consistent deployment.",
           "Hosted the deployed site on Google Cloud."
         ],
-        "tags": [
-          "web-dev"
-        ],
+        "tags": ["web-dev"],
         "project_type": "Productivity",
         "download_paths": []
       },
@@ -616,7 +545,7 @@
         "title": "Personal Portfolio Website",
         "vignette": "A portfolio website built on Flutter.",
         "description": "Built with Flutter (Web) and deployed with Docker on Google Cloud, this is my personal portfolio site for hosting and organizing my work online. I moved from a Streamlit version to Flutter because Streamlit felt limiting for responsive layouts, and Flutter gave me better control over how the site adapts across desktop and mobile screens.  \nProject content is stored in structured JSON files and rendered into consistent project entries at runtime, so updates are mainly done by editing metadata. The goal was a serviceable, easy-to-update portfolio that presents my work clearly.",
-        "date": "2025-03-07",
+        "date": "2025-10-05",
         "last_update": "2025-10-05",
         "vid_link": null,
         "github_link": "https://github.com/dragonstonehafiz/portfolio-site",
@@ -631,9 +560,7 @@
           "Packaged the site with Docker for consistent deployment.",
           "Hosted the deployed site on Google Cloud."
         ],
-        "tags": [
-          "web-dev"
-        ],
+        "tags": ["web-dev"],
         "project_type": "Productivity",
         "download_paths": []
       },
@@ -656,9 +583,7 @@
           "Set up Docker-based deployment on Google Cloud for hosting and updates.",
           "Implemented a ProjectObject-based renderer to generate pages from structured project metadata."
         ],
-        "tags": [
-          "web-dev"
-        ],
+        "tags": ["web-dev"],
         "project_type": "Productivity",
         "download_paths": []
       }
@@ -666,9 +591,8 @@
   },
   "YouTubeCommentAnalyzer": {
     "variable_name": "YouTubeCommentAnalyzer",
-    "page_list": [
-      "Programming"
-    ],
+    "page_list": ["Programming"],
+    "shown": false,
     "default_version": "1.0",
     "versions": [
       {
@@ -693,11 +617,7 @@
           "Implemented sentiment scoring over comments to separate positive vs negative text.",
           "Generated word clouds and simple plots to visualize common keywords by sentiment."
         ],
-        "tags": [
-          "python",
-          "ai",
-          "visualizations"
-        ],
+        "tags": ["python", "ai", "visualizations"],
         "project_type": "Productivity",
         "download_paths": []
       }
@@ -705,14 +625,13 @@
   },
   "gakumas_lilja_step1": {
     "variable_name": "gakumas_lilja_step1",
-    "page_list": [
-      "Translations"
-    ],
+    "page_list": ["Translations"],
+    "shown": true,
     "default_version": "Release",
     "versions": [
       {
         "version": "Release",
-        "title": "Gakuen Idolmaster: Lilja Step 1",
+        "title": "Gakuen Idolmaster: Lilja Step 1 Commyu",
         "description": null,
         "date": "2025-06-15",
         "last_update": null,
@@ -720,9 +639,7 @@
         "github_link": null,
         "img_paths": [],
         "what_i_did": [],
-        "tags": [
-          "games"
-        ],
+        "tags": ["games"],
         "project_type": "Translations",
         "download_paths": [
           {
@@ -739,14 +656,13 @@
   },
   "gakumas_lilja_step2": {
     "variable_name": "gakumas_lilja_step2",
-    "page_list": [
-      "Translations"
-    ],
+    "page_list": ["Translations"],
+    "shown": true,
     "default_version": "Release",
     "versions": [
       {
         "version": "Release",
-        "title": "Gakuen Idolmaster: Lilja Step 2",
+        "title": "Gakuen Idolmaster: Lilja Step 2 Commyu",
         "description": null,
         "date": "2025-07-13",
         "last_update": null,
@@ -754,9 +670,7 @@
         "github_link": null,
         "img_paths": [],
         "what_i_did": [],
-        "tags": [
-          "games"
-        ],
+        "tags": ["games"],
         "project_type": "Translations",
         "download_paths": [
           {
@@ -773,14 +687,13 @@
   },
   "gakumas_lilja_step3": {
     "variable_name": "gakumas_lilja_step3",
-    "page_list": [
-      "Translations"
-    ],
+    "page_list": ["Translations"],
+    "shown": true,
     "default_version": "Release",
     "versions": [
       {
         "version": "Release",
-        "title": "Gakuen Idolmaster: Lilja Step 3",
+        "title": "Gakuen Idolmaster: Lilja Step 3 Commyu",
         "description": null,
         "date": "2026-01-07",
         "last_update": null,
@@ -788,9 +701,7 @@
         "github_link": null,
         "img_paths": [],
         "what_i_did": [],
-        "tags": [
-          "games"
-        ],
+        "tags": ["games"],
         "project_type": "Translations",
         "download_paths": [
           {
@@ -807,7 +718,8 @@
   },
   "gakumas_lilja_hakusen": {
     "variable_name": "gakumas_lilja_hakusen",
-    "page_list": [],
+    "page_list": ["Translations"],
+    "shown": false,
     "default_version": "Release",
     "versions": [
       {
@@ -820,9 +732,7 @@
         "github_link": null,
         "img_paths": [],
         "what_i_did": [],
-        "tags": [
-          "games"
-        ],
+        "tags": ["games"],
         "project_type": "Translations",
         "download_paths": [
           {
@@ -839,7 +749,8 @@
   },
   "gakumas_lilja_kamurogiku": {
     "variable_name": "gakumas_lilja_kamurogiku",
-    "page_list": [],
+    "page_list": ["Translations"],
+    "shown": false,
     "default_version": "Release",
     "versions": [
       {
@@ -852,9 +763,7 @@
         "github_link": null,
         "img_paths": [],
         "what_i_did": [],
-        "tags": [
-          "games"
-        ],
+        "tags": ["games"],
         "project_type": "Translations",
         "download_paths": [
           {
@@ -871,7 +780,8 @@
   },
   "gakumas_lilja_sakura_photograph": {
     "variable_name": "gakumas_lilja_sakura_photograph",
-    "page_list": [],
+    "page_list": ["Translations"],
+    "shown": false,
     "default_version": "Release",
     "versions": [
       {
@@ -884,9 +794,7 @@
         "github_link": null,
         "img_paths": [],
         "what_i_did": [],
-        "tags": [
-          "games"
-        ],
+        "tags": ["games"],
         "project_type": "Translations",
         "download_paths": [
           {
@@ -903,7 +811,8 @@
   },
   "gakumas_lilja_hotw": {
     "variable_name": "gakumas_lilja_hotw",
-    "page_list": [],
+    "page_list": ["Translations"],
+    "shown": false,
     "default_version": "Release",
     "versions": [
       {
@@ -916,9 +825,7 @@
         "github_link": null,
         "img_paths": [],
         "what_i_did": [],
-        "tags": [
-          "games"
-        ],
+        "tags": ["games"],
         "project_type": "Translations",
         "download_paths": [
           {
@@ -935,7 +842,8 @@
   },
   "gakumas_lilja_kyokkou": {
     "variable_name": "gakumas_lilja_kyokkou",
-    "page_list": [],
+    "page_list": ["Translations"],
+    "shown": false,
     "default_version": "Release",
     "versions": [
       {
@@ -948,9 +856,7 @@
         "github_link": null,
         "img_paths": [],
         "what_i_did": [],
-        "tags": [
-          "games"
-        ],
+        "tags": ["games"],
         "project_type": "Translations",
         "download_paths": [
           {
@@ -967,7 +873,8 @@
   },
   "gakumas_lilja_atmosphere": {
     "variable_name": "gakumas_lilja_atmosphere",
-    "page_list": [],
+    "page_list": ["Translations"],
+    "shown": false,
     "default_version": "Release",
     "versions": [
       {
@@ -980,9 +887,7 @@
         "github_link": null,
         "img_paths": [],
         "what_i_did": [],
-        "tags": [
-          "games"
-        ],
+        "tags": ["games"],
         "project_type": "Translations",
         "download_paths": [
           {
@@ -999,7 +904,8 @@
   },
   "gakumas_lilja_white_night_white_wish": {
     "variable_name": "gakumas_lilja_white_night_white_wish",
-    "page_list": [],
+    "page_list": ["Translations"],
+    "shown": false,
     "default_version": "Release",
     "versions": [
       {
@@ -1012,9 +918,7 @@
         "github_link": null,
         "img_paths": [],
         "what_i_did": [],
-        "tags": [
-          "games"
-        ],
+        "tags": ["games"],
         "project_type": "Translations",
         "download_paths": [
           {
@@ -1031,9 +935,8 @@
   },
   "makeine_vol1ep1": {
     "variable_name": "makeine_vol1ep1",
-    "page_list": [
-      "Translations"
-    ],
+    "page_list": ["Translations"],
+    "shown": true,
     "default_version": "Release",
     "versions": [
       {
@@ -1046,9 +949,7 @@
         "github_link": null,
         "img_paths": [],
         "what_i_did": [],
-        "tags": [
-          "audio-drama"
-        ],
+        "tags": ["audio-drama"],
         "project_type": "Translations",
         "download_paths": [
           {
@@ -1065,7 +966,8 @@
   },
   "makeine_vol1ep2": {
     "variable_name": "makeine_vol1ep2",
-    "page_list": [],
+    "page_list": ["Translations"],
+    "shown": false,
     "default_version": "Release",
     "versions": [
       {
@@ -1078,9 +980,7 @@
         "github_link": null,
         "img_paths": [],
         "what_i_did": [],
-        "tags": [
-          "audio-drama"
-        ],
+        "tags": ["audio-drama"],
         "project_type": "Translations",
         "download_paths": [
           {
@@ -1097,7 +997,8 @@
   },
   "makeine_vol1ep3": {
     "variable_name": "makeine_vol1ep3",
-    "page_list": [],
+    "page_list": ["Translations"],
+    "shown": false,
     "default_version": "Release",
     "versions": [
       {
@@ -1110,9 +1011,7 @@
         "github_link": null,
         "img_paths": [],
         "what_i_did": [],
-        "tags": [
-          "audio-drama"
-        ],
+        "tags": ["audio-drama"],
         "project_type": "Translations",
         "download_paths": [
           {
@@ -1129,9 +1028,8 @@
   },
   "makeine_vol2ep1": {
     "variable_name": "makeine_vol2ep1",
-    "page_list": [
-      "Translations"
-    ],
+    "page_list": ["Translations"],
+    "shown": true,
     "default_version": "Release",
     "versions": [
       {
@@ -1144,9 +1042,7 @@
         "github_link": null,
         "img_paths": [],
         "what_i_did": [],
-        "tags": [
-          "audio-drama"
-        ],
+        "tags": ["audio-drama"],
         "project_type": "Translations",
         "download_paths": [
           {
@@ -1163,7 +1059,8 @@
   },
   "makeine_vol2ep2": {
     "variable_name": "makeine_vol2ep2",
-    "page_list": [],
+    "page_list": ["Translations"],
+    "shown": false,
     "default_version": "Release",
     "versions": [
       {
@@ -1176,9 +1073,7 @@
         "github_link": null,
         "img_paths": [],
         "what_i_did": [],
-        "tags": [
-          "audio-drama"
-        ],
+        "tags": ["audio-drama"],
         "project_type": "Translations",
         "download_paths": [
           {
@@ -1195,7 +1090,8 @@
   },
   "makeine_vol2ep3": {
     "variable_name": "makeine_vol2ep3",
-    "page_list": [],
+    "page_list": ["Translations"],
+    "shown": false,
     "default_version": "Release",
     "versions": [
       {
@@ -1208,9 +1104,7 @@
         "github_link": null,
         "img_paths": [],
         "what_i_did": [],
-        "tags": [
-          "audio-drama"
-        ],
+        "tags": ["audio-drama"],
         "project_type": "Translations",
         "download_paths": [
           {
@@ -1227,9 +1121,8 @@
   },
   "nichijou_himekuri_vol1_4": {
     "variable_name": "nichijou_himekuri_vol1_4",
-    "page_list": [
-      "Translations"
-    ],
+    "page_list": ["Translations"],
+    "shown": true,
     "default_version": "Release",
     "versions": [
       {
@@ -1242,9 +1135,7 @@
         "github_link": null,
         "img_paths": [],
         "what_i_did": [],
-        "tags": [
-          "audio-drama"
-        ],
+        "tags": ["audio-drama"],
         "project_type": "Translations",
         "download_paths": [
           {

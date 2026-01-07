@@ -1117,18 +1117,21 @@ class ProjectEntry {
   final List<ProjectData> _versions;
   final String variableName;
   final List<String> pageList;
+  final bool shown;
 
   ProjectEntry({
     required this.id,
     required this.defaultVersionId,
     required this.variableName,
     required this.pageList,
+    required this.shown,
     required List<ProjectData> versions,
   }) : _versions = List.unmodifiable(versions);
 
   factory ProjectEntry.fromJson(String id, Map<String, dynamic> json) {
     final projectVariableName = json['variable_name']?.toString();
     final projectPageList = List<String>.from(json['page_list'] ?? []);
+    final projectShown = json['shown'] == null ? true : json['shown'] == true;
     if (json.containsKey('versions')) {
       final versionsRaw = (json['versions'] as List<dynamic>? ?? [])
           .map((e) => Map<String, dynamic>.from(e as Map))
@@ -1157,6 +1160,7 @@ class ProjectEntry {
         defaultVersionId: resolvedDefault,
         variableName: projectVariableName ?? id,
         pageList: projectPageList,
+        shown: projectShown,
         versions: versions,
       );
     }
@@ -1174,6 +1178,7 @@ class ProjectEntry {
       defaultVersionId: singleVersion.version,
       variableName: projectVariableName ?? singleVersion.variableName,
       pageList: projectPageList,
+      shown: projectShown,
       versions: [singleVersion],
     );
   }

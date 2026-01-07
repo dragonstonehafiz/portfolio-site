@@ -8,7 +8,7 @@ class ProjectService {
     final projects = <ProjectData>[];
     final projectsCollection = ProjectsCollection.instance;
     for (final entry in projectsCollection.projects.values) {
-      if (entry.pageList.contains(pageName)) {
+      if (entry.shown && entry.pageList.contains(pageName)) {
         projects.add(entry.defaultVersion);
       }
     }

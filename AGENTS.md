@@ -30,7 +30,7 @@
   - Consumed by PageCollection (lib/utils/page_collection.dart)
   - Used by AppRoutes.initialize() and ProjectsBasePage
 - assets/projects.json
-  - Top-level map of projectId -> { variable_name, page_list, default_version, versions[] }
+  - Top-level map of projectId -> { variable_name, page_list, shown, default_version, versions[] }
   - Each version includes:
     - version, title, vignette, description, date, last_update
     - vid_link, github_link, img_paths[], what_i_did[], tags[], project_type, download_paths[]
@@ -106,7 +106,8 @@
   1) Add entry in assets/projects.json with unique projectId and versions.
   2) Ensure variable_name is stable (used in slugs).
   3) Set page_list to the pages this project should appear on.
-  4) Add images under assets/images/... and reference paths without the assets/ prefix.
+  4) Set shown to control whether the project appears in listings.
+  5) Add images under assets/images/... and reference paths without the assets/ prefix.
 - Add a new page:
   1) Add a new object in page_config.json project_pages with page_name, description, and dropdown flag.
   2) AppRoutes.initialize() will slugify page_name for /pages/<slug> routing.
@@ -119,3 +120,4 @@
 - All content is data-driven from JSON in assets/.
 - For project detail routing, ensure project variable_name is unique so slugs do not collide.
 - For the Featured page, include 'Featured' in a project’s page_list.
+- In assets/projects.json, keep page_list and tags arrays on a single line for readability.

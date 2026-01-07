@@ -35,6 +35,28 @@ class PortfolioApp extends StatelessWidget {
       initialRoute: AppRoutes.landing,
       onGenerateRoute: (settings) {
         final uri = Uri.parse(settings.name ?? '');
+        PageRoute<T> _slideUpRoute<T>(Widget page) {
+          return PageRouteBuilder<T>(
+            settings: settings,
+            transitionDuration: const Duration(milliseconds: 320),
+            reverseTransitionDuration: const Duration(milliseconds: 240),
+            pageBuilder: (context, animation, secondaryAnimation) => page,
+            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+              final curved = CurvedAnimation(
+                parent: animation,
+                curve: Curves.easeOutCubic,
+                reverseCurve: Curves.easeInCubic,
+              );
+              return SlideTransition(
+                position: Tween<Offset>(
+                  begin: const Offset(0.0, 1.0),
+                  end: Offset.zero,
+                ).animate(curved),
+                child: child,
+              );
+            },
+          );
+        }
 
         // Home and static pages
         if (uri.path == AppRoutes.landing) {
@@ -50,17 +72,17 @@ class PortfolioApp extends StatelessWidget {
             final pageName = AppRoutes.genericPageSlugs[slug];
             if (pageName != null) {
               final pageData = PageCollection.instance.findGenericPageByName(pageName);
-              return MaterialPageRoute(
-                  builder: (_) => ProjectsBasePage(
-                        configKey: pageName,
-                        title: pageName,
-                        description: pageData?.description ?? '',
-                      ),
-                  settings: settings);
+              return _slideUpRoute(
+                ProjectsBasePage(
+                  configKey: pageName,
+                  title: pageName,
+                  description: pageData?.description ?? '',
+                ),
+              );
             }
           } else if (segments[0] == 'projects') {
             final slug = segments[1];
-            return MaterialPageRoute(builder: (_) => ProjectDetailLoader(slug: slug), settings: settings);
+            return _slideUpRoute(ProjectDetailLoader(slug: slug));
           }
         }
         debugPrint("No route match for: ${uri.path}");

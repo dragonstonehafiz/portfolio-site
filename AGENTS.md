@@ -56,8 +56,6 @@
   - Resolves project entry by slug via ProjectService
   - Handles multi-version projects with TabBar
   - Renders ProjectData.buildDetailBody
-- lib/pages/project_detail_page.dart
-  - Legacy detail page using route arguments; not used in main routing
 
 ## Widgets
 - lib/widgets/custom_app_bar.dart

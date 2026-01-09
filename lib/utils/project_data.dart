@@ -202,6 +202,8 @@ class ProjectData {
       );
     }
 
+    final linkColor = IconTheme.of(context).color ?? AppColors.primary;
+
     Widget buildLinkButton({
       required IconData icon,
       required String tooltip,
@@ -211,6 +213,7 @@ class ProjectData {
         message: tooltip,
         child: IconButton(
           icon: Icon(icon, size: 20),
+          color: linkColor,
           padding: EdgeInsets.zero,
           constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
           splashRadius: 18,
@@ -234,6 +237,10 @@ class ProjectData {
         url: vidLink!,
       ));
     }
+    final hasDownloads = downloadPaths.isNotEmpty;
+    final hasLastUpdate = lastUpdate != null && lastUpdate!.trim().isNotEmpty;
+    final displayDate = hasLastUpdate ? lastUpdate!.trim() : date.trim();
+    final dateLabel = hasLastUpdate ? 'Last updated on' : 'Released on';
 
     // Use the same subtle animated preview gradient for list items so the
     // UI reads consistently between grid previews and list previews. Keep
@@ -279,7 +286,7 @@ class ProjectData {
                         ],
                       ],
                     ),
-                    if (tags.isNotEmpty || linkButtons.isNotEmpty) ...[
+                    if (tags.isNotEmpty || linkButtons.isNotEmpty || hasDownloads) ...[
                       const SizedBox(height: 8),
                       Wrap(
                         spacing: 8,
@@ -302,9 +309,25 @@ class ProjectData {
                                 ],
                               ],
                             ),
+                          if (hasDownloads)
+                            _buildDownloadIndicator(
+                              isCompact: true,
+                              horizontalGap: horizontalGap,
+                              showLabel: false,
+                              color: linkColor,
+                            ),
                         ],
                       ),
                     ],
+    if (displayDate.isNotEmpty) ...[
+      const SizedBox(height: 8),
+      _buildDatePill(
+        label: dateLabel,
+        value: displayDate,
+        isCompact: isMobile,
+        horizontalGap: horizontalGap,
+      ),
+    ],
                   ],
                 ),
               ),
@@ -826,6 +849,7 @@ class ProjectData {
   Widget _buildMetaRow(BuildContext context, {bool isPreview = false}) {
     // Split meta into three stacked rows to avoid horizontal overflow on narrow
     // screens: (1) project type, (2) links (video & github), (3) dates
+    final hasDownloads = downloadPaths.isNotEmpty;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -853,7 +877,7 @@ class ProjectData {
         const SizedBox(height: 8),
 
         // Row 2: Links (video then github)
-        if (vidLink != null || githubLink != null)
+        if (vidLink != null || githubLink != null || hasDownloads)
           Row(
             children: [
               if (vidLink != null) ...[
@@ -893,38 +917,147 @@ class ProjectData {
                           style: TextButton.styleFrom(
                             foregroundColor: AppColors.primary,
                           ),
+                          ),
                         ),
-                      ),
               ],
+
+              if ((vidLink != null || githubLink != null) && hasDownloads)
+                const SizedBox(width: 8),
+
+              if (hasDownloads)
+                _buildDownloadIndicator(
+                  isCompact: isPreview,
+                  horizontalGap: 8,
+                  showLabel: true,
+                  color: AppColors.primary,
+                ),
             ],
           ),
 
         const SizedBox(height: 8),
 
-        // Row 3: Dates - always show Created and Updated (if present), even in preview.
-        Row(
-          children: [
-            Flexible(
-              child: Text(
-                'Created: ${_formatDate(date)}',
-                style: const TextStyle(fontSize: 12, color: Colors.grey),
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            // Keep a small gap and show Updated date if available
-            if (lastUpdate != null) ...[
-              const SizedBox(width: 12),
+        // Row 3: Dates - use the compact pill style for preview cards.
+        if (isPreview)
+          Builder(
+            builder: (context) {
+              final hasLastUpdate = lastUpdate != null && lastUpdate!.trim().isNotEmpty;
+              final displayDate = hasLastUpdate ? lastUpdate!.trim() : date.trim();
+              final dateLabel = hasLastUpdate ? 'Last updated on' : 'Released on';
+              if (displayDate.isEmpty) return const SizedBox.shrink();
+              return _buildDatePill(
+                label: dateLabel,
+                value: displayDate,
+                isCompact: true,
+                horizontalGap: 8,
+              );
+            },
+          )
+        else
+          Row(
+            children: [
               Flexible(
                 child: Text(
-                  'Updated: ${_formatDate(lastUpdate!)}',
+                  'Created: ${_formatDate(date)}',
                   style: const TextStyle(fontSize: 12, color: Colors.grey),
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
+              // Keep a small gap and show Updated date if available
+              if (lastUpdate != null) ...[
+                const SizedBox(width: 12),
+                Flexible(
+                  child: Text(
+                    'Updated: ${_formatDate(lastUpdate!)}',
+                    style: const TextStyle(fontSize: 12, color: Colors.grey),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
             ],
-          ],
-        ),
+          ),
       ],
+    );
+  }
+
+  Widget _buildDatePill({
+    required String label,
+    required String value,
+    required bool isCompact,
+    required double horizontalGap,
+  }) {
+    final fontSize = isCompact ? 12.0 : 13.0;
+    final paddingH = isCompact ? 8.0 : 10.0;
+    final paddingV = isCompact ? 4.0 : 5.0;
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: paddingH, vertical: paddingV),
+      decoration: BoxDecoration(
+        color: Colors.white.withValues(alpha: 0.65),
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(
+          color: Colors.blueGrey.withValues(alpha: 0.25),
+        ),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(
+            Icons.schedule,
+            size: 14,
+            color: Colors.blueGrey,
+          ),
+          SizedBox(width: horizontalGap / 2),
+          Text(
+            '$label: $value',
+            style: TextStyle(
+              fontSize: fontSize,
+              fontWeight: FontWeight.w600,
+              color: Colors.blueGrey,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDownloadIndicator({
+    required bool isCompact,
+    required double horizontalGap,
+    required bool showLabel,
+    required Color color,
+  }) {
+    final fontSize = isCompact ? 12.0 : 13.0;
+    final paddingH = isCompact ? 8.0 : 10.0;
+    final paddingV = isCompact ? 4.0 : 5.0;
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: paddingH, vertical: paddingV),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.12),
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(
+          color: color.withValues(alpha: 0.35),
+        ),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            Icons.download_for_offline_outlined,
+            size: 14,
+            color: color,
+          ),
+          if (showLabel) ...[
+            SizedBox(width: horizontalGap / 2),
+            Text(
+              'Download Available',
+              style: TextStyle(
+                fontSize: fontSize,
+                fontWeight: FontWeight.w600,
+                color: color,
+              ),
+            ),
+          ],
+        ],
+      ),
     );
   }
 

@@ -143,7 +143,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       return <PopupMenuEntry<String>>[];
     }
 
-    return pages.map((page) {
+    final normalPages = pages.where((p) => !p.allProjects).toList();
+    final allProjectsPages = pages.where((p) => p.allProjects).toList();
+    final orderedPages = [...normalPages, ...allProjectsPages];
+
+    return orderedPages.map((page) {
       return PopupMenuItem<String>(
         value: AppRoutes.pagePath(AppRoutes.slugForPageName(page.pageName)),
         child: _menuItemText(page.pageName),

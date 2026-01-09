@@ -7,8 +7,10 @@ class ProjectService {
   static List<ProjectData> getProjectsForPage(String pageName, {bool descending = true}) {
     final projects = <ProjectData>[];
     final projectsCollection = ProjectsCollection.instance;
+    final pageData = PageCollection.instance.findGenericPageByName(pageName);
+    final includeAllProjects = pageData?.allProjects ?? false;
     for (final entry in projectsCollection.projects.values) {
-      if (entry.shown && entry.pageList.contains(pageName)) {
+      if (entry.shown && (includeAllProjects || entry.pageList.contains(pageName))) {
         projects.add(entry.defaultVersion);
       }
     }

@@ -9,22 +9,27 @@
   },
   "experience": [
     {
+      "start": "2025-09",
+      "end": "2026-04",
+      "title": "Full Stack Developer Intern",
+      "company": "Synapxe",
+      "icon": "assets/svg/work-synapxe.png",
+      "bullets": [
+        "Built full-stack web flows for CV-based medical tests (capture → inference → results).",
+        "Implemented backend APIs/pipelines to run CV inference and return structured outputs."
+      ]
+    },
+    {
       "start": "2019-03",
-      "end": "2019-06",
+      "end": "2019-05",
       "title": "VR Development Intern",
       "company": "EON Reality",
+      "icon": "assets/svg/work-eon.png",
       "bullets": [
         "Developed interactive VR/AR experiences in Unity, implementing interaction logic, animations, and user interactions.",
         "Integrated and tested immersive hardware (HTC Vive, Microsoft HoloLens) for production workflows.",
         "Implemented object tracking and spatial interaction using Vuforia SDK and VRTK."
       ]
-    },
-    {
-      "start": "2025-09",
-      "end": "2026-04",
-      "title": "Full Stack Developer Intern",
-      "company": "Synapxe",
-      "bullets": []
     }
   ],
   "education": [
@@ -33,7 +38,8 @@
       "course": "BSc (Hons) Applied Artificial Intelligence",
       "start": "2023-08",
       "end": "2026-04",
-      "current_cumulative_gpa": "4.10 / 5.00",
+      "final_gpa": "4.10 / 5.00",
+      "icon": "assets/svg/school-sit.png",
       "modules": [
         {
           "name": "Artificial Intelligence & Machine Learning",
@@ -65,6 +71,7 @@
       "start": "2017-02",
       "end": "2020-02",
       "final_gpa": "3.56 / 4.00",
+      "icon": "assets/svg/school-nyp.png",
       "modules": [
         {
           "name": "Core Game Programming & Software Development",
@@ -98,12 +105,10 @@
       "Software Engineering", "Artificial Intelligence", "Large Language Models",
       "Dockerization", "Version Control"
     ],
-    "Programming Languages": ["C", "C++", "C#", "Java", "Python", "Flutter", "React JS", "R"],
+    "Programming Languages": ["C", "C++", "C#", "Java", "Python", "R", "Dart", "React JS", "Angular", "TypeScript"],
     "Software": [
-      "Visual Studio", "Vistual Studio Code", "Unity", 
-      "Adobe Premiere Pro", "Adobe Photoshop", "Davinci Resolve", "Affinity Photo",
-      "Docker", "Google Cloud", "Aegisub"
-    ],
-    "Language Skills": ["Fluent in Spoken and Written English", "Intermediate Proficiency in Japanese"]
+      "Visual Studio", "Vistual Studio Code", "Unity", "Docker", "Google Cloud",
+      "Adobe Premiere Pro", "Adobe Photoshop", "Davinci Resolve", "Affinity Photo"
+    ]
   }
 }

@@ -99,9 +99,10 @@ class WorkItem {
   final String? end;
   final String title;
   final String company;
+  final String? icon; // Path to company icon SVG
   final List<String> bullets;
 
-  WorkItem({required this.start, this.end, required this.title, required this.company, required this.bullets});
+  WorkItem({required this.start, this.end, required this.title, required this.company, this.icon, required this.bullets});
 
   factory WorkItem.fromJson(Map<String, dynamic> json) {
     return WorkItem(
@@ -109,6 +110,7 @@ class WorkItem {
       end: json['end'],
       title: json['title'] ?? '',
       company: json['company'] ?? '',
+      icon: json['icon'] as String?,
       bullets: List<String>.from(json['bullets'] ?? []),
     );
   }
@@ -119,9 +121,11 @@ class EducationItem {
   final String? end;
   final String school;
   final String course;
+  final String? gpa; // Final GPA from JSON (final_gpa)
+  final String? icon; // Path to school icon SVG
   final List<ModuleGroup> modules;
 
-  EducationItem({required this.start, this.end, required this.school, required this.course, required this.modules});
+  EducationItem({required this.start, this.end, required this.school, required this.course, this.gpa, this.icon, required this.modules});
 
   factory EducationItem.fromJson(Map<String, dynamic> json) {
     return EducationItem(
@@ -129,6 +133,9 @@ class EducationItem {
       end: json['end'],
       school: json['school'] ?? '',
       course: json['course'] ?? '',
+      // Always read final GPA from `final_gpa`
+      gpa: json['final_gpa'] as String?,
+      icon: json['icon'] as String?,
       modules: (json['modules'] as List<dynamic>? ?? [])
           .map((m) => ModuleGroup.fromJson(Map<String, dynamic>.from(m)))
           .toList(),

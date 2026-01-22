@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/custom_footer.dart';
 import '../widgets/animated_gradient.dart';
@@ -49,6 +50,21 @@ class _LandingPageState extends State<LandingPage> {
       if (!await launchUrl(uri)) {
         // ignore
       }
+    }
+  }
+
+  // Helper to render icon based on file extension (SVG or raster image)
+  Widget _buildIconWidget(String iconPath) {
+    final extension = iconPath.toLowerCase().split('.').last;
+    if (extension == 'svg') {
+      return SvgPicture.asset(iconPath, fit: BoxFit.contain);
+    } else {
+      // PNG, JPG, etc.
+      return Image.asset(
+        iconPath,
+        fit: BoxFit.contain,
+        filterQuality: FilterQuality.high,
+      );
     }
   }
 
@@ -144,10 +160,33 @@ class _LandingPageState extends State<LandingPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Header: Company, Title (bold), dates
-                Text(work.company, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
-                const SizedBox(height: 4),
-                Text(work.title, style: const TextStyle(fontWeight: FontWeight.bold)),
+                // Header row: Icon (left) + Company/Title (center-left, expanded)
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Icon on the left (fixed width for alignment)
+                    if (work.icon != null && work.icon!.isNotEmpty)
+                      SizedBox(
+                        width: 48,
+                        height: 48,
+                        child: _buildIconWidget(work.icon!),
+                      )
+                    else
+                      const SizedBox(width: 48, height: 48),
+                    const SizedBox(width: 12),
+                    // Company and title (expanded to fill available space)
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(work.company, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                          const SizedBox(height: 4),
+                          Text(work.title, style: const TextStyle(fontWeight: FontWeight.bold)),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
                 const SizedBox(height: 6),
                 Text('${_formatMonthYear(work.start)} — ${work.end != null ? _formatMonthYear(work.end) : 'Present'}', style: const TextStyle(color: Colors.grey, fontSize: 12)),
                 const SizedBox(height: 12),
@@ -155,7 +194,8 @@ class _LandingPageState extends State<LandingPage> {
                 ...work.bullets.map((b) => Padding(
                       padding: const EdgeInsets.only(bottom: 6.0),
                       child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.baseline,
+                        textBaseline: TextBaseline.alphabetic,
                         children: [
                           const Text('• ', style: TextStyle(fontSize: 16)),
                           Expanded(child: Text(b)),
@@ -173,6 +213,8 @@ class _LandingPageState extends State<LandingPage> {
   Widget _buildEducationCard(EducationItem edu) {
     // Render education entry with full-width animated gradient background matching project previews
     final groups = edu.modules;
+    final isMobile = ResponsiveWebUtils.isMobile(context);
+    
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.only(bottom: 16),
@@ -187,12 +229,50 @@ class _LandingPageState extends State<LandingPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Header: School, Programme (bold), dates
-                Text(edu.school, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
-                const SizedBox(height: 4),
-                Text(edu.course, style: const TextStyle(fontWeight: FontWeight.bold)),
+                // Header row: Icon (left) + School/Course (center-left, expanded)
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Icon on the left
+                    if (edu.icon != null && edu.icon!.isNotEmpty)
+                      SizedBox(
+                        width: isMobile ? 40 : 48,
+                        height: isMobile ? 40 : 48,
+                        child: _buildIconWidget(edu.icon!),
+                      )
+                    else
+                      SizedBox(width: isMobile ? 40 : 48, height: isMobile ? 40 : 48),
+                    SizedBox(width: isMobile ? 10 : 12),
+                    // School and course (expanded to fill available space)
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(edu.school, style: TextStyle(fontSize: isMobile ? 15 : 16, fontWeight: FontWeight.w600)),
+                          const SizedBox(height: 4),
+                          Text(edu.course, style: TextStyle(fontSize: isMobile ? 14 : 16, fontWeight: FontWeight.bold)),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
                 const SizedBox(height: 6),
-                Text('${_formatMonthYear(edu.start)} — ${edu.end != null ? _formatMonthYear(edu.end) : 'Present'}', style: const TextStyle(color: Colors.grey, fontSize: 12)),
+                // Date range and GPA on the same row
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        '${_formatMonthYear(edu.start)} — ${edu.end != null ? _formatMonthYear(edu.end) : 'Present'}',
+                        style: const TextStyle(color: Colors.grey, fontSize: 12),
+                      ),
+                    ),
+                    if (edu.gpa != null && edu.gpa!.isNotEmpty)
+                      Text(
+                        'GPA: ${edu.gpa}',
+                        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Colors.black87),
+                      ),
+                  ],
+                ),
                 const SizedBox(height: 12),
                 if (groups.isNotEmpty)
                   DefaultTabController(
@@ -202,9 +282,12 @@ class _LandingPageState extends State<LandingPage> {
                       children: [
                         TabBar(
                           isScrollable: true,
+                          tabAlignment: TabAlignment.start,
                           labelColor: Theme.of(context).primaryColor,
                           unselectedLabelColor: Colors.grey[600],
                           indicatorColor: Theme.of(context).primaryColor,
+                          labelStyle: TextStyle(fontSize: isMobile ? 12 : 14, fontWeight: FontWeight.w500),
+                          unselectedLabelStyle: TextStyle(fontSize: isMobile ? 12 : 14),
                           tabs: groups.map((g) => Tab(text: g.name)).toList(),
                         ),
                         const SizedBox(height: 8),
@@ -255,46 +338,59 @@ class _LandingPageState extends State<LandingPage> {
   }
 
   Widget _buildSkills(Skills skills) {
-    // Dynamically render each skill category as individual animated gradient cards
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Dynamic skill categories
-        ...skills.dynamicSkills.entries.map((entry) {
-          final categoryName = entry.key;
-          final skillItems = entry.value;
-          
-          if (skillItems.isEmpty) return const SizedBox.shrink();
-          
-          return Container(
-            width: double.infinity,
-            margin: const EdgeInsets.only(bottom: 16),
-            child: AnimatedGradient(
-              gradient: Theme.of(context).previewGradient,
-              borderRadius: BorderRadius.circular(12),
-              duration: const Duration(seconds: 8),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: DefaultTextStyle(
-                  style: const TextStyle(color: Color(0xFF0F1724)),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(categoryName, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
-                      const SizedBox(height: 12),
-                      Wrap(
-                        spacing: 8,
-                        runSpacing: 6,
-                        children: skillItems.map((s) => Chip(label: Text(s))).toList(),
-                      ),
-                    ],
+    final isMobile = ResponsiveWebUtils.isMobile(context);
+    final categories = skills.dynamicSkills.entries.where((e) => e.value.isNotEmpty).toList();
+    
+    if (categories.isEmpty) return const SizedBox.shrink();
+    
+    return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.only(bottom: 16),
+      child: AnimatedGradient(
+        gradient: Theme.of(context).previewGradient,
+        borderRadius: BorderRadius.circular(12),
+        duration: const Duration(seconds: 8),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: DefaultTextStyle(
+            style: const TextStyle(color: Color(0xFF0F1724)),
+            child: DefaultTabController(
+              length: categories.length,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TabBar(
+                    isScrollable: true,
+                    tabAlignment: TabAlignment.start,
+                    labelColor: Theme.of(context).primaryColor,
+                    unselectedLabelColor: Colors.grey[600],
+                    indicatorColor: Theme.of(context).primaryColor,
+                    labelStyle: TextStyle(fontSize: isMobile ? 12 : 14, fontWeight: FontWeight.w500),
+                    unselectedLabelStyle: TextStyle(fontSize: isMobile ? 12 : 14),
+                    tabs: categories.map((e) => Tab(text: e.key)).toList(),
                   ),
-                ),
+                  const SizedBox(height: 12),
+                  SizedBox(
+                    height: 140,
+                    child: TabBarView(
+                      children: categories.map((entry) {
+                        return SingleChildScrollView(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: Wrap(
+                            spacing: 8,
+                            runSpacing: 6,
+                            children: entry.value.map((skill) => Chip(label: Text(skill))).toList(),
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ],
               ),
             ),
-          );
-        }).toList(),
-      ],
+          ),
+        ),
+      ),
     );
   }
 

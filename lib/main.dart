@@ -60,7 +60,7 @@ class PortfolioApp extends StatelessWidget {
 
         // Home and static pages
         if (uri.path == AppRoutes.landing) {
-          return MaterialPageRoute(builder: (_) => const LandingPage(), settings: settings);
+          return _slideUpRoute(const LandingPage());
         }
 
         // Pattern: /pages/<slug> -> map slug to a configured generic page

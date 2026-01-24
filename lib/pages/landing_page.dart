@@ -7,6 +7,8 @@ import '../utils/theme.dart';
 import '../utils/landing_page_data.dart';
 import '../utils/responsive_web_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../utils/project_collection.dart';
+import '../widgets/timeline_widget.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
@@ -80,31 +82,12 @@ class _LandingPageState extends State<LandingPage> {
                 child: Padding(
                   padding: ResponsiveWebUtils.getResponsivePadding(context),
                   child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 980),
+                    constraints: const BoxConstraints(maxWidth: 1200),
                     child: _loading
                         ? const SizedBox(height: 240, child: Center(child: CircularProgressIndicator()))
                         : _data == null
                             ? const SizedBox(height: 240, child: Center(child: Text('Failed to load content')))
-                            : Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const SizedBox(height: 24),
-                                  _buildIntro(context, _data!.intro),
-                                  const SizedBox(height: 24),
-                                  _buildSectionTitle('Experience'),
-                                  const SizedBox(height: 12),
-                                  ..._data!.experience.map((w) => _buildWorkCard(w)).toList(),
-                                  const SizedBox(height: 18),
-                                  _buildSectionTitle('Education'),
-                                  const SizedBox(height: 12),
-                                  ..._data!.education.map((e) => _buildEducationCard(e)).toList(),
-                                  const SizedBox(height: 18),
-                                  _buildSectionTitle('Skills'),
-                                  const SizedBox(height: 12),
-                                  _buildSkills(_data!.skills),
-                                  const SizedBox(height: 48),
-                                ],
-                              ),
+                            : _buildHomeLayout(context, _data!),
                   ),
                 ),
               ),
@@ -113,6 +96,33 @@ class _LandingPageState extends State<LandingPage> {
           const CustomFooter(),
         ],
       ),
+    );
+  }
+
+  Widget _buildHomeLayout(BuildContext context, LandingPageData data) {
+    final projects = ProjectsCollection.instance.projects.values.toList();
+    final timeline = TimelineWidget(data: data, projects: projects);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 24),
+        _buildIntro(context, data.intro),
+        const SizedBox(height: 18),
+        timeline,
+        const SizedBox(height: 24),
+        _buildSectionTitle('Experience'),
+        const SizedBox(height: 12),
+        ...data.experience.map((w) => _buildWorkCard(w)).toList(),
+        const SizedBox(height: 18),
+        _buildSectionTitle('Education'),
+        const SizedBox(height: 12),
+        ...data.education.map((e) => _buildEducationCard(e)).toList(),
+        const SizedBox(height: 18),
+        _buildSectionTitle('Skills'),
+        const SizedBox(height: 12),
+        _buildSkills(data.skills),
+        const SizedBox(height: 48),
+      ],
     );
   }
 

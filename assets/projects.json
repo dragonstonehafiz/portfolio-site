@@ -380,12 +380,39 @@
     ]
   },
   "PortfolioSite": {
-    "default_version": "Flutter Ver 1.1",
+    "default_version": "Flutter Ver 1.2",
     "page_list": ["Featured", "Programming"],
     "show_in_timeline": true,
     "shown": true,
     "variable_name": "PortfolioSite",
-    "versions": [
+    "versions": [{
+        "date": "2026-01-25",
+        "description": "Built with Flutter (Web) and deployed with Docker on Google Cloud, this is my personal portfolio site for hosting and organizing my work online. I moved from a Streamlit version to Flutter because Streamlit felt limiting for responsive layouts, and Flutter gave me better control over how the site adapts across desktop and mobile screens. \nAfter getting the first Flutter version working end-to-end, I iterated on it to improve the UI and make the site feel more finished. During that update, I also expanded the project data model to support multiple versions per project, so the portfolio can reflect how projects evolve over time.\nProject content is stored in structured JSON files and rendered into consistent project entries at runtime, so updates are mainly done by editing metadata. The goal was a serviceable, easy-to-update portfolio that presents my work clearly.",
+        "download_paths": [],
+        "github_link": "https://github.com/dragonstonehafiz/portfolio-site",
+        "img_paths": [
+          "images/other/portfolioVer4_1.png",
+          "images/other/portfolioVer4_2.png",
+          "images/other/portfolioVer4_3.png",
+          "images/other/portfolioVer4_4.png",
+          "images/other/portfolioVer4_5.png"
+        ],
+        "last_update": "2026-01-25",
+        "project_type": "Productivity",
+        "tags": ["web-dev"],
+        "title": "Personal Portfolio Website",
+        "version": "Flutter Ver 1.2",
+        "vid_link": null,
+        "vignette": "A portfolio website built on Flutter.",
+        "what_i_did": [
+          "Built a Flutter Web portfolio with responsive layouts for desktop and mobile.",
+          "Structured project and page content as JSON for data-driven rendering.",
+          "Implemented multi-version project entries to track changes over time.",
+          "Packaged the site with Docker for consistent deployment.",
+          "Created a timeline on the landing page to showcase project history.",
+          "Hosted the deployed site on Google Cloud."
+        ]
+      },
       {
         "date": "2025-11-25",
         "description": "Built with Flutter (Web) and deployed with Docker on Google Cloud, this is my personal portfolio site for hosting and organizing my work online. I moved from a Streamlit version to Flutter because Streamlit felt limiting for responsive layouts, and Flutter gave me better control over how the site adapts across desktop and mobile screens. \nAfter getting the first Flutter version working end-to-end, I iterated on it to improve the UI and make the site feel more finished. During that update, I also expanded the project data model to support multiple versions per project, so the portfolio can reflect how projects evolve over time.\nProject content is stored in structured JSON files and rendered into consistent project entries at runtime, so updates are mainly done by editing metadata. The goal was a serviceable, easy-to-update portfolio that presents my work clearly.",

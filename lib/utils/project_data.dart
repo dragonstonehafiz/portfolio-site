@@ -1716,7 +1716,7 @@ class _ProjectGallerySwitcherState extends State<_ProjectGallerySwitcher> {
             color: Colors.blueGrey,
           ),
         ),
-        if (tabs.length > 1) ...[
+        if (tabs.isNotEmpty) ...[
           const SizedBox(height: 12),
           Wrap(
             spacing: 12,
@@ -1729,8 +1729,8 @@ class _ProjectGallerySwitcherState extends State<_ProjectGallerySwitcher> {
                 ),
             ],
           ),
+          const SizedBox(height: 16),
         ],
-        const SizedBox(height: 16),
         current,
       ],
     );

@@ -23,6 +23,18 @@ class TimelineWidget extends StatefulWidget {
 
 class _TimelineWidgetState extends State<TimelineWidget> {
   final ScrollController _scrollController = ScrollController();
+  final Set<String> _disabledProjectTypes = <String>{};
+  static const _projectTypePalette = <Color>[
+    Color(0xFF2563EB), // blue
+    Color(0xFF06B6D4), // cyan
+    Color(0xFFF59E0B), // amber
+    Color(0xFF10B981), // emerald
+    Color(0xFFEF4444), // red
+    Color(0xFF8B5CF6), // violet
+    Color(0xFFEC4899), // pink
+  ];
+  static const _workColor = Color(0xFF8B5CF6);
+  static const _eduColor = Color(0xFF22C55E);
 
   @override
   void dispose() {
@@ -34,6 +46,10 @@ class _TimelineWidgetState extends State<TimelineWidget> {
   Widget build(BuildContext context) {
     final entries = _buildEntries();
     final isMobile = ResponsiveWebUtils.isMobile(context);
+    final typeColorMap = _buildTypeColorMap(entries);
+    final filteredEntries = entries
+        .where((entry) => !_disabledProjectTypes.contains(entry.projectType))
+        .toList();
     final titleStyle = TextStyle(
       fontSize: isMobile ? 20 : 22,
       fontWeight: FontWeight.bold,
@@ -78,11 +94,13 @@ class _TimelineWidgetState extends State<TimelineWidget> {
                       scrollDirection: Axis.horizontal,
                       child: Padding(
                         padding: const EdgeInsets.only(bottom: 14, top: 18),
-                        child: _buildTimelineRow(context, entries),
+                        child: _buildTimelineRow(context, filteredEntries, typeColorMap),
                       ),
                     ),
                   ),
                 ),
+                const SizedBox(height: 12),
+                _buildLegend(context, typeColorMap),
               ],
             ),
           ),
@@ -95,26 +113,34 @@ class _TimelineWidgetState extends State<TimelineWidget> {
     final entries = <_TimelineEntry>[];
 
     for (final entry in widget.projects) {
-      if (!entry.shown) continue;
-      final version = entry.defaultVersion;
-      if (version.date.trim().isEmpty) continue;
-      final start = _parseDate(version.date);
-      if (start == null) continue;
-      final subtitle = version.projectType.trim().isEmpty
-          ? 'Project release'
-          : version.projectType.trim();
-      entries.add(_TimelineEntry(
-        start: start,
-        title: version.title,
-        subtitle: subtitle,
-      ));
+      if (!entry.showInTimeline) continue;
+      for (final version in entry.versions) {
+        if (version.date.trim().isEmpty) continue;
+        final start = _parseDate(version.date);
+        if (start == null) continue;
+        final rawType = version.projectType.trim();
+        final projectType = rawType.isEmpty ? 'Other' : rawType;
+        final subtitle = rawType.isEmpty ? 'Project release' : rawType;
+        entries.add(_TimelineEntry(
+          start: start,
+          title: version.title,
+          subtitle: subtitle,
+          version: version.version,
+          projectType: projectType,
+          slug: version.slug,
+        ));
+      }
     }
 
     entries.sort((a, b) => b.start.compareTo(a.start));
     return entries;
   }
 
-  Widget _buildTimelineRow(BuildContext context, List<_TimelineEntry> entries) {
+  Widget _buildTimelineRow(
+    BuildContext context,
+    List<_TimelineEntry> entries,
+    Map<String, Color> typeColorMap,
+  ) {
     final isMobile = ResponsiveWebUtils.isMobile(context);
     final screenWidth = MediaQuery.of(context).size.width;
     final segmentWidth = (screenWidth * (isMobile ? 0.75 : 0.45)).clamp(260.0, 440.0);
@@ -187,7 +213,6 @@ class _TimelineWidgetState extends State<TimelineWidget> {
       }
     }
     final totalWidth = cursor;
-
     return SizedBox(
       width: totalWidth,
       height: monthTextY + 36,
@@ -220,19 +245,25 @@ class _TimelineWidgetState extends State<TimelineWidget> {
             yearWidths: yearWidths,
           ),
           for (var i = 0; i < years.length; i++)
-            Positioned(
-              top: yearTextY,
-              left: (yearStarts[years[i]]! + (yearWidths[years.first] ?? segmentWidth) - (gapWidth / 2)) - (labelWidth / 4),
-              width: labelWidth,
-              child: Transform.rotate(
-                angle: -1.57079632679,
-                alignment: Alignment.center,
-                child: Text(
-                  '${years[i]}',
-                  textAlign: TextAlign.center,
-                  style: yearLabelStyle,
-                ),
-              ),
+            Builder(
+              builder: (context) {
+                final year = years[i];
+                final left = (yearStarts[year]! + yearWidths[year]!) - (labelWidth / 4) - (gapWidth / 2);
+                return Positioned(
+                  top: yearTextY,
+                  left: left,
+                  width: labelWidth,
+                  child: Transform.rotate(
+                    angle: -1.57079632679,
+                    alignment: Alignment.center,
+                    child: Text(
+                      '$year',
+                      textAlign: TextAlign.center,
+                      style: yearLabelStyle,
+                    ),
+                  ),
+                );
+              },
             ),
           ..._buildPositionedDots(
             entries: sorted,
@@ -250,6 +281,7 @@ class _TimelineWidgetState extends State<TimelineWidget> {
             dateStyle: dateStyle,
             yearStarts: yearStarts,
             yearWidths: yearWidths,
+            typeColorMap: typeColorMap,
           ),
         ],
       ),
@@ -290,12 +322,12 @@ class _TimelineWidgetState extends State<TimelineWidget> {
     return '${_formatMonthYear(start)} — ${_formatMonthYear(end)}';
   }
 
-  Widget _buildDot() {
+  Widget _buildDot(Color color) {
     return Container(
       width: 14,
       height: 14,
       decoration: BoxDecoration(
-        color: AppColors.accent,
+        color: color,
         shape: BoxShape.circle,
         border: Border.all(color: Colors.white, width: 2),
       ),
@@ -333,8 +365,6 @@ class _TimelineWidgetState extends State<TimelineWidget> {
     required Map<int, double> yearWidths,
   }) {
     const lineHeight = 4.0;
-    final workColor = const Color(0xFF8B5CF6);
-    final eduColor = const Color(0xFF22C55E);
     const offset = 8.0;
     final eduY = baseY + offset;
     final workY = baseY + (offset * 2);
@@ -363,7 +393,7 @@ class _TimelineWidgetState extends State<TimelineWidget> {
       );
       final left = startX < endX ? startX : endX;
       final width = (startX - endX).abs().clamp(4.0, double.infinity);
-      final color = range.kind == _RangeKind.work ? workColor : eduColor;
+      final color = range.kind == _RangeKind.work ? _workColor : _eduColor;
       final y = range.kind == _RangeKind.work ? workY : eduY;
 
       widgets.add(
@@ -427,10 +457,18 @@ class _TimelineWidgetState extends State<TimelineWidget> {
     required TextStyle dateStyle,
     required Map<int, double> yearStarts,
     required Map<int, double> yearWidths,
+    required Map<String, Color> typeColorMap,
   }) {
     const dotSize = 14.0;
+    const overlapSpacing = 10.0;
     final widgets = <Widget>[];
     double? lastLabelX;
+    final monthCounts = <String, int>{};
+    for (final entry in entries) {
+      final key = '${entry.start.year}-${entry.start.month}';
+      monthCounts[key] = (monthCounts[key] ?? 0) + 1;
+    }
+    final monthIndices = <String, int>{};
 
     for (final entry in entries) {
       final monthIndex = entry.start.month - 1;
@@ -438,11 +476,17 @@ class _TimelineWidgetState extends State<TimelineWidget> {
       final yearWidth = yearWidths[entry.start.year] ?? segmentWidth;
       final offsetInYear = monthPos * yearWidth;
       final start = yearStarts[entry.start.year] ?? leadingGap;
-      final x = start + offsetInYear;
+      final key = '${entry.start.year}-${entry.start.month}';
+      final idx = monthIndices[key] ?? 0;
+      monthIndices[key] = idx + 1;
+      final count = monthCounts[key] ?? 1;
+      final centerOffset = (idx - (count - 1) / 2) * overlapSpacing;
+      final x = start + offsetInYear + centerOffset;
       final showLabel = lastLabelX == null || (x - lastLabelX!).abs() >= minLabelSpacing;
       if (showLabel) {
         lastLabelX = x;
       }
+      final dotColor = typeColorMap[entry.projectType] ?? AppColors.accent;
 
       widgets.add(
         Positioned(
@@ -452,6 +496,8 @@ class _TimelineWidgetState extends State<TimelineWidget> {
             richMessage: TextSpan(
               children: [
                 TextSpan(text: entry.title, style: titleStyle),
+                if (entry.version.trim().isNotEmpty)
+                  TextSpan(text: '\nRelease: ${entry.version}', style: subtitleStyle),
                 TextSpan(text: '\n${entry.subtitle}', style: subtitleStyle),
                 TextSpan(
                   text: '\n${_formatMonthYear(entry.start)}',
@@ -471,7 +517,13 @@ class _TimelineWidgetState extends State<TimelineWidget> {
               ],
             ),
             textStyle: const TextStyle(color: AppColors.textPrimary),
-            child: _buildDot(),
+            child: GestureDetector(
+              onTap: () => Navigator.pushNamed(context, '/projects/${entry.slug}'),
+              child: MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: _buildDot(dotColor),
+              ),
+            ),
           ),
         ),
       );
@@ -494,17 +546,136 @@ class _TimelineWidgetState extends State<TimelineWidget> {
 
     return widgets;
   }
+
+  Map<String, Color> _buildTypeColorMap(List<_TimelineEntry> entries) {
+    final types = entries.map((e) => e.projectType).toSet().toList()..sort();
+    // Keep "Other" last if it exists.
+    if (types.remove('Other')) {
+      types.add('Other');
+    }
+    final map = <String, Color>{};
+    for (var i = 0; i < types.length; i++) {
+      map[types[i]] = _projectTypePalette[i % _projectTypePalette.length];
+    }
+    return map;
+  }
+
+  Widget _buildLegend(BuildContext context, Map<String, Color> typeColorMap) {
+    final isMobile = ResponsiveWebUtils.isMobile(context);
+    final labelStyle = TextStyle(
+      fontSize: isMobile ? 12 : 13,
+      fontWeight: FontWeight.w600,
+      color: Colors.blueGrey,
+    );
+    final itemStyle = TextStyle(
+      fontSize: isMobile ? 12 : 13,
+      color: AppColors.textSecondary,
+    );
+
+    final legendEntries = typeColorMap.entries.toList()
+      ..sort((a, b) => a.key.compareTo(b.key));
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Legend', style: labelStyle),
+        const SizedBox(height: 4),
+        Wrap(
+          spacing: 12,
+          runSpacing: 8,
+          children: [
+            for (final entry in legendEntries)
+              _legendDotItem(
+                label: entry.key,
+                color: entry.value,
+                textStyle: itemStyle,
+                disabled: _disabledProjectTypes.contains(entry.key),
+                onTap: () {
+                  setState(() {
+                    if (_disabledProjectTypes.contains(entry.key)) {
+                      _disabledProjectTypes.remove(entry.key);
+                    } else {
+                      _disabledProjectTypes.add(entry.key);
+                    }
+                  });
+                },
+              ),
+          ],
+        ),
+        const SizedBox(height: 6),
+        Wrap(
+          spacing: 12,
+          runSpacing: 8,
+          children: [
+            _legendLineItem('Work', _workColor, itemStyle),
+            _legendLineItem('Education', _eduColor, itemStyle),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _legendLineItem(String label, Color color, TextStyle textStyle) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          width: 28,
+          height: 4,
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.circular(999),
+          ),
+        ),
+        const SizedBox(width: 6),
+        Text(label, style: textStyle),
+      ],
+    );
+  }
+
+  Widget _legendDotItem({
+    required String label,
+    required Color color,
+    required TextStyle textStyle,
+    required bool disabled,
+    required VoidCallback onTap,
+  }) {
+    final displayColor = disabled ? Colors.grey : color;
+    final displayTextStyle = disabled
+        ? textStyle.copyWith(color: Colors.grey)
+        : textStyle;
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: onTap,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _buildDot(displayColor),
+            const SizedBox(width: 6),
+            Text(label, style: displayTextStyle),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 class _TimelineEntry {
   final DateTime start;
   final String title;
   final String subtitle;
+  final String version;
+  final String projectType;
+  final String slug;
 
   _TimelineEntry({
     required this.start,
     required this.title,
     required this.subtitle,
+    required this.version,
+    required this.projectType,
+    required this.slug,
   });
 }
 

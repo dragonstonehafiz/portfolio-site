@@ -31,6 +31,7 @@
   - Used by AppRoutes.initialize() and ProjectsBasePage
 - assets/projects.json
   - Top-level map of projectId -> { variable_name, page_list, shown, default_version, versions[] }
+  - show_in_timeline: optional flag to include/exclude a project from the Timeline widget (default true)
   - Each version includes:
     - version, title, vignette, description, date, last_update
     - vid_link, github_link, img_paths[], what_i_did[], tags[], project_type, download_paths[]

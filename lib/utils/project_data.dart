@@ -1251,6 +1251,7 @@ class ProjectEntry {
   final String variableName;
   final List<String> pageList;
   final bool shown;
+  final bool showInTimeline;
 
   ProjectEntry({
     required this.id,
@@ -1258,6 +1259,7 @@ class ProjectEntry {
     required this.variableName,
     required this.pageList,
     required this.shown,
+    required this.showInTimeline,
     required List<ProjectData> versions,
   }) : _versions = List.unmodifiable(versions);
 
@@ -1265,6 +1267,7 @@ class ProjectEntry {
     final projectVariableName = json['variable_name']?.toString();
     final projectPageList = List<String>.from(json['page_list'] ?? []);
     final projectShown = json['shown'] == null ? true : json['shown'] == true;
+    final showInTimeline = json['show_in_timeline'] == null ? true : json['show_in_timeline'] == true;
     if (json.containsKey('versions')) {
       final versionsRaw = (json['versions'] as List<dynamic>? ?? [])
           .map((e) => Map<String, dynamic>.from(e as Map))
@@ -1294,6 +1297,7 @@ class ProjectEntry {
         variableName: projectVariableName ?? id,
         pageList: projectPageList,
         shown: projectShown,
+        showInTimeline: showInTimeline,
         versions: versions,
       );
     }
@@ -1312,6 +1316,7 @@ class ProjectEntry {
       variableName: projectVariableName ?? singleVersion.variableName,
       pageList: projectPageList,
       shown: projectShown,
+      showInTimeline: showInTimeline,
       versions: [singleVersion],
     );
   }

@@ -182,7 +182,11 @@ class _LandingPageState extends State<LandingPage> {
                         child: _buildIconWidget(work.icon!),
                       )
                     else
-                      const SizedBox(width: 48, height: 48),
+                      const SizedBox(
+                        width: 48,
+                        height: 48,
+                        child: Icon(Icons.work_outline, color: Colors.blueGrey),
+                      ),
                     const SizedBox(width: 12),
                     // Company and title (expanded to fill available space)
                     Expanded(
@@ -251,7 +255,11 @@ class _LandingPageState extends State<LandingPage> {
                         child: _buildIconWidget(edu.icon!),
                       )
                     else
-                      SizedBox(width: isMobile ? 40 : 48, height: isMobile ? 40 : 48),
+                      SizedBox(
+                        width: isMobile ? 40 : 48,
+                        height: isMobile ? 40 : 48,
+                        child: const Icon(Icons.school_outlined, color: Colors.blueGrey),
+                      ),
                     SizedBox(width: isMobile ? 10 : 12),
                     // School and course (expanded to fill available space)
                     Expanded(

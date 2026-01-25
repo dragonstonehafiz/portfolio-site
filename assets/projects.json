@@ -345,6 +345,40 @@
       }
     ]
   },
+    "IronAge": {
+    "variable_name": "Iron Age",
+    "page_list": ["Programming"],
+    "shown": false,
+    "show_in_timeline": true,
+    "default_version": "Submission",
+    "versions": [
+      {
+        "version": "Submission",
+        "title": "Iron Age",
+        "vignette": "A team-built game project where I focused on systems and core systems in the game.",
+        "description": "Iron Age is a team game project I worked on during my time at NYP. My work focused on core systems: inventory and item management, audio integration, minigame systems, and world interaction/loading.",
+        "date": "2018-03-02",
+        "last_update": null,
+        "vid_link": "https://youtu.be/t_6nnBwooQk",
+        "github_link": null,
+        "img_paths": [
+          "images/games/ironAge1.png",
+          "images/games/ironAge2.png",
+          "images/games/ironAge3.png",
+          "images/games/ironAge4.png"
+        ],
+        "what_i_did": [
+          "Built the core inventory and item system to manage item data, storage, and usage in gameplay.",
+          "Integrated IrrKlang for sound playback and tied it into game events.",
+          "Developed the minigame systems and their supporting logic.",
+          "Implemented world interactions and loading to drive in-game triggers and scene flow."
+        ],
+        "tags": ["games", "c++", "systems"],
+        "project_type": "Games",
+        "download_paths": []
+      }
+    ]
+  },
   "PortfolioSite": {
     "default_version": "Flutter Ver 1.1",
     "page_list": ["Featured", "Programming"],

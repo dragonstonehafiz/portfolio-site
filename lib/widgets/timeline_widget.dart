@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../utils/landing_page_data.dart';
 import '../utils/project_data.dart';
 import '../utils/responsive_web_utils.dart';
@@ -341,14 +342,26 @@ class _TimelineWidgetState extends State<TimelineWidget> {
       if (start == null) continue;
       final end = _parseDate(work.end, endOfMonth: true) ?? DateTime.now();
       final label = '${work.title} — ${work.company}';
-      ranges.add(_TimeRange(start: start, end: end, kind: _RangeKind.work, label: label));
+      ranges.add(_TimeRange(
+        start: start,
+        end: end,
+        kind: _RangeKind.work,
+        label: label,
+        iconPath: work.icon,
+      ));
     }
     for (final edu in widget.data.education) {
       final start = _parseDate(edu.start);
       if (start == null) continue;
       final end = _parseDate(edu.end, endOfMonth: true) ?? DateTime.now();
       final label = '${edu.course} — ${edu.school}';
-      ranges.add(_TimeRange(start: start, end: end, kind: _RangeKind.education, label: label));
+      ranges.add(_TimeRange(
+        start: start,
+        end: end,
+        kind: _RangeKind.education,
+        label: label,
+        iconPath: edu.icon,
+      ));
     }
     return ranges;
   }
@@ -364,7 +377,7 @@ class _TimelineWidgetState extends State<TimelineWidget> {
     required Map<int, double> yearStarts,
     required Map<int, double> yearWidths,
   }) {
-    const lineHeight = 4.0;
+    const lineHeight = 6.0;
     const offset = 8.0;
     final eduY = baseY + offset;
     final workY = baseY + (offset * 2);
@@ -404,6 +417,8 @@ class _TimelineWidgetState extends State<TimelineWidget> {
             content: _RangeTooltipContent(
               title: range.label,
               subtitle: _formatRangeDates(range.start, range.end),
+              iconPath: range.iconPath,
+              kind: range.kind,
             ),
             child: Container(
               width: width,
@@ -686,26 +701,49 @@ class _TimeRange {
   final DateTime end;
   final _RangeKind kind;
   final String label;
+  final String? iconPath;
 
   _TimeRange({
     required this.start,
     required this.end,
     required this.kind,
     required this.label,
+    this.iconPath,
   });
 }
 
 class _RangeTooltipContent extends StatelessWidget {
   final String title;
   final String subtitle;
+  final String? iconPath;
+  final _RangeKind kind;
 
   const _RangeTooltipContent({
     required this.title,
     required this.subtitle,
+    this.iconPath,
+    required this.kind,
   });
 
   @override
   Widget build(BuildContext context) {
+    Widget? iconWidget;
+    final path = iconPath;
+    if (path != null && path.isNotEmpty) {
+      final ext = path.toLowerCase().split('.').last;
+      if (ext == 'svg') {
+        iconWidget = SvgPicture.asset(path, width: 28, height: 28, fit: BoxFit.contain);
+      } else {
+        iconWidget = Image.asset(path, width: 28, height: 28, fit: BoxFit.contain);
+      }
+    } else {
+      iconWidget = Icon(
+        kind == _RangeKind.work ? Icons.work_outline : Icons.school_outlined,
+        size: 24,
+        color: Colors.blueGrey,
+      );
+    }
+
     return Material(
       color: Colors.white,
       borderRadius: BorderRadius.circular(10),
@@ -714,13 +752,23 @@ class _RangeTooltipContent extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         child: DefaultTextStyle(
           style: const TextStyle(color: AppColors.textPrimary),
-          child: Column(
+          child: Row(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
-              const SizedBox(height: 4),
-              Text(subtitle),
+              if (iconWidget != null) ...[
+                SizedBox(width: 28, height: 28, child: iconWidget),
+                const SizedBox(width: 8),
+              ],
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
+                  const SizedBox(height: 4),
+                  Text(subtitle),
+                ],
+              ),
             ],
           ),
         ),

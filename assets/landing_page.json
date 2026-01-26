@@ -173,8 +173,6 @@
     "DevOps / Cloud": {
       "description": "Containerized services with Docker, deployed workloads on Google Cloud, and used Git as the core collaboration workflow.",
       "related_projects": [
-        "TranslatorHelper",
-        "SpendingDashboard",
         "PortfolioSite"
       ],
       "items": [

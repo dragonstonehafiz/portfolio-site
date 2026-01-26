@@ -11,6 +11,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../utils/project_collection.dart';
 import '../utils/project_data.dart';
 import '../widgets/timeline_widget.dart';
+import '../widgets/shared_tabs.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
@@ -301,15 +302,8 @@ class _LandingPageState extends State<LandingPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        TabBar(
-                          isScrollable: true,
-                          tabAlignment: TabAlignment.start,
-                          labelColor: Theme.of(context).primaryColor,
-                          unselectedLabelColor: Colors.grey[600],
-                          indicatorColor: Theme.of(context).primaryColor,
-                          labelStyle: TextStyle(fontSize: isMobile ? 12 : 14, fontWeight: FontWeight.w500),
-                          unselectedLabelStyle: TextStyle(fontSize: isMobile ? 12 : 14),
-                          tabs: groups.map((g) => Tab(text: g.name)).toList(),
+                        SharedTabs(
+                          labels: groups.map((g) => g.name).toList(),
                         ),
                         const SizedBox(height: 8),
                         SizedBox(
@@ -373,17 +367,10 @@ class _LandingPageState extends State<LandingPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TabBar(
-            isScrollable: true,
-            tabAlignment: TabAlignment.start,
-            labelColor: Theme.of(context).primaryColor,
-            unselectedLabelColor: Colors.grey[600],
-            indicatorColor: Theme.of(context).primaryColor,
-            labelStyle: TextStyle(fontSize: isMobile ? 12 : 14, fontWeight: FontWeight.w500),
-            unselectedLabelStyle: TextStyle(fontSize: isMobile ? 12 : 14),
-            onTap: (index) => setState(() => _skillsTabIndex = index),
-            tabs: categories.map((e) => Tab(text: e.key)).toList(),
-          ),
+                  SharedTabs(
+                    labels: categories.map((e) => e.key).toList(),
+                    onTap: (index) => setState(() => _skillsTabIndex = index),
+                  ),
           const SizedBox(height: 12),
           _buildSkillCategoryCard(currentEntry, isMobile),
         ],

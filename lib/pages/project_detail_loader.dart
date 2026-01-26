@@ -4,6 +4,7 @@ import '../widgets/custom_app_bar.dart';
 import '../widgets/custom_footer.dart';
 import '../utils/project_data.dart';
 import '../utils/theme.dart';
+import '../widgets/shared_tabs.dart';
 
 class ProjectDetailLoader extends StatelessWidget {
   final String slug;
@@ -144,25 +145,8 @@ class _VersionTabBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    return Container(
-      decoration: BoxDecoration(
-        color: theme.colorScheme.surface.withOpacity(0.2),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: theme.colorScheme.primary.withOpacity(0.2),
-        ),
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      child: TabBar(
-        isScrollable: true,
-        labelColor: theme.colorScheme.onSurface,
-        indicatorColor: theme.colorScheme.primary,
-        tabs: [
-          for (final version in versions) Tab(text: version.version),
-        ],
-      ),
+    return SharedTabs(
+      labels: versions.map((v) => v.version).toList(),
     );
   }
 }

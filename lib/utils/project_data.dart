@@ -165,6 +165,69 @@ class ProjectData {
     );
   }
 
+  // Returns a compact preview widget for constrained layouts (e.g. skills carousel).
+  Widget buildCompactPreviewWidget(
+    BuildContext context, {
+    double mediaHeight = 160,
+    int vignetteLines = 2,
+    int maxTags = 3,
+  }) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 8),
+      child: HoverCardWidget(
+        onTap: () {
+          Navigator.pushNamed(context, '/projects/${this.slug}');
+        },
+        child: AnimatedGradient(
+          gradient: Theme.of(context).previewGradient,
+          borderRadius: BorderRadius.circular(12),
+          duration: const Duration(seconds: 8),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: DefaultTextStyle(
+              style: const TextStyle(color: Color(0xFF0F1724)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildTitleWidget(context, isPreview: true),
+                  const SizedBox(height: 6),
+                  _buildMetaRow(context, isPreview: true),
+                  if (vignette.isNotEmpty) ...[
+                    const SizedBox(height: 6),
+                    _buildVignetteSection(context, maxLines: vignetteLines),
+                  ],
+                  if (tags.isNotEmpty) ...[
+                    const SizedBox(height: 6),
+                    _buildTagsWidget(maxToShow: maxTags),
+                  ],
+                  const SizedBox(height: 8),
+                  SizedBox(
+                    height: mediaHeight,
+                    width: double.infinity,
+                    child: _buildCompactMediaPreview(context),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCompactMediaPreview(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = (width / 16 * 9).clamp(120.0, 200.0);
+
+    if (imgPaths.isNotEmpty) {
+      return _buildResponsiveImagePreview(width, height);
+    }
+    if (vidLink != null) {
+      return _buildResponsiveVideoPreview(context, width, height);
+    }
+    return _buildPlaceholderWidget();
+  }
+
   // Returns a compact row-styled preview for list mode
   Widget buildListItemWidget(BuildContext context) {
     final isMobile = ResponsiveWebUtils.isMobile(context);
@@ -557,7 +620,7 @@ class ProjectData {
         ),
       );
     } else if (vidLink != null && vidLink!.isNotEmpty) {
-      final ytId = _extractYoutubeId(vidLink!);
+      final ytId = extractYoutubeId(vidLink!);
       if (ytId != null) {
         final thumbUrl = 'https://img.youtube.com/vi/$ytId/hqdefault.jpg';
         return ClipRRect(
@@ -635,7 +698,7 @@ class ProjectData {
   }
 
   // Extract a YouTube video id from common URL formats. Returns null if not found.
-  String? _extractYoutubeId(String url) {
+  static String? extractYoutubeId(String url) {
     try {
       // Common YouTube URL patterns: youtu.be/ID, v=ID, /embed/ID
       final patterns = [
@@ -711,6 +774,59 @@ class ProjectData {
         ),
       );
     }
+  }
+
+  // Shared thumbnail builder for small previews (e.g. timeline tooltips).
+  static Widget buildThumbnailPreview({
+    required List<String> imgPaths,
+    String? vidLink,
+    double width = 220,
+    double height = 120,
+  }) {
+    if (imgPaths.isNotEmpty) {
+      return Image.asset(
+        'assets/${imgPaths.first}',
+        fit: BoxFit.cover,
+        width: width,
+        height: height,
+        errorBuilder: (context, error, stackTrace) {
+          return Container(
+            width: width,
+            height: height,
+            color: Colors.grey[300],
+            child: const Icon(Icons.image_not_supported),
+          );
+        },
+      );
+    }
+
+    if (vidLink != null && vidLink.isNotEmpty) {
+      final id = ProjectData.extractYoutubeId(vidLink);
+      if (id != null) {
+        final url = 'https://img.youtube.com/vi/$id/hqdefault.jpg';
+        return Image.network(
+          url,
+          fit: BoxFit.cover,
+          width: width,
+          height: height,
+          errorBuilder: (context, error, stackTrace) {
+            return Container(
+              width: width,
+              height: height,
+              color: Colors.grey[300],
+              child: const Icon(Icons.play_circle_fill),
+            );
+          },
+        );
+      }
+    }
+
+    return Container(
+      width: width,
+      height: height,
+      color: Colors.grey[200],
+      child: const Icon(Icons.image_outlined),
+    );
   }
 
   // Responsive image preview that fits within container dimensions

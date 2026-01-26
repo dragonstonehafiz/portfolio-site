@@ -1,10 +1,13 @@
 {
   "introduction": {
     "name": "Muhd Hafiz",
-    "headline": "Developer — tools, apps, and games. Interested in UI, automation and localization.",
+    "headline": "Developer \u2014 tools, apps, and games. Interested in UI, automation and localization.",
     "summary": "I build practical tools and side projects to solve problems and learn new technologies. This site collects my projects, translations, and experiments.",
     "downloads": [
-      { "label": "View Resume", "url": "https://docs.google.com/document/d/1dhX48ga314RAh9zlC7fuVqM76eqttrY7/edit?usp=drive_link&ouid=110728528551183127993&rtpof=true&sd=true" }
+      {
+        "label": "View Resume",
+        "url": "https://docs.google.com/document/d/1dhX48ga314RAh9zlC7fuVqM76eqttrY7/edit?usp=drive_link&ouid=110728528551183127993&rtpof=true&sd=true"
+      }
     ]
   },
   "experience": [
@@ -15,7 +18,7 @@
       "company": "Synapxe",
       "icon": "assets/svg/work-synapxe.png",
       "bullets": [
-        "Built full-stack web flows for CV-based medical tests (capture → inference → results).",
+        "Built full-stack web flows for CV-based medical tests (capture \u2192 inference \u2192 results).",
         "Implemented backend APIs/pipelines to run CV inference and return structured outputs."
       ]
     },
@@ -25,8 +28,7 @@
       "title": "ASA",
       "company": "National Service",
       "icon": "",
-      "bullets": [
-      ]
+      "bullets": []
     },
     {
       "start": "2019-03",
@@ -110,14 +112,103 @@
     }
   ],
   "skills": {
-    "Professional Skills": [
-      "Software Engineering", "Artificial Intelligence", "Large Language Models", "Deep Learning",
-      "Dockerization", "Version Control"
-    ],
-    "Programming Languages": ["C", "C++", "C#", "Java", "Python", "R", "Dart", "React JS", "Angular", "TypeScript"],
-    "Software": [
-      "Visual Studio", "Vistual Studio Code", "Unity", "Docker", "Google Cloud",
-      "Adobe Premiere Pro", "Adobe Photoshop", "Davinci Resolve", "Affinity Photo"
-    ]
+    "Languages": {
+      "description": "I learned programming through C++ in polytechnic and picked up Python during college. Every other language here was learned through work experience and applied as needed.",
+      "related_projects": [
+        "AI_Game",
+        "ResourceManagementGame",
+        "Electronica",
+        "TranslatorHelper"
+      ],
+      "items": [
+        "Python",
+        "TypeScript",
+        "Dart",
+        "C++",
+        "C#",
+        "Java",
+        "R",
+        "C"
+      ]
+    },
+    "Frontend": {
+      "description": "I learned frontend work to make my apps easier to use, since web\u2011based UI programming was simpler than building app\u2011based UI.",
+      "related_projects": [
+        "PortfolioSite",
+        "TranslatorHelper"
+      ],
+      "items": [
+        "Flutter",
+        "Angular",
+        "React",
+        "HTML/CSS"
+      ]
+    },
+    "Backend": {
+      "description": "I design and build backend architecture for my own apps, focusing on clean APIs and maintainable data flows.",
+      "related_projects": [
+        "TranslatorHelper",
+        "BirdLaserTargeter"
+      ],
+      "items": [
+        "FastAPI",
+        "Node.js",
+        "REST APIs"
+      ]
+    },
+    "AI / ML": {
+      "description": "Most of my AI/ML work is about designing automation tools that save time and reduce manual effort.",
+      "related_projects": [
+        "ESRGAN_M",
+        "TranslatorHelper",
+        "BirdLaserTargeter"
+      ],
+      "items": [
+        "Computer Vision",
+        "Deep Learning",
+        "LLMs",
+        "Inference Pipelines"
+      ]
+    },
+    "DevOps / Cloud": {
+      "description": "Containerized services with Docker, deployed workloads on Google Cloud, and used Git as the core collaboration workflow.",
+      "related_projects": [
+        "TranslatorHelper",
+        "SpendingDashboard",
+        "PortfolioSite"
+      ],
+      "items": [
+        "Docker",
+        "Google Cloud",
+        "Git",
+        "SourceTree"
+      ]
+    },
+    "Tools": {
+      "description": "I learn whatever tools are necessary to get the programming job done, adapting quickly to new stacks and workflows.",
+      "related_projects": [],
+      "items": [
+        "Unity",
+        "Visual Studio Code",
+        "Visual Studio",
+        "IntelliJ IDEA",
+        "Android Studio"
+      ]
+    },
+    "Creative": {
+      "description": "Used these for personal hobbies such as YouTube posting and content editing.",
+      "related_projects": [
+        "gakumas_lilja_step1",
+        "makeine_vol2ep1"
+      ],
+      "items": [
+        "Adobe Premiere Pro",
+        "Adobe Photoshop",
+        "Adobe Audition",
+        "DaVinci Resolve",
+        "Affinity Photo 2",
+        "Audacity"
+      ]
+    }
   }
 }

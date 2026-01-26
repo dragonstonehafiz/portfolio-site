@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../widgets/custom_app_bar.dart';
@@ -8,6 +9,7 @@ import '../utils/landing_page_data.dart';
 import '../utils/responsive_web_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../utils/project_collection.dart';
+import '../utils/project_data.dart';
 import '../widgets/timeline_widget.dart';
 
 class LandingPage extends StatefulWidget {
@@ -20,6 +22,7 @@ class LandingPage extends StatefulWidget {
 class _LandingPageState extends State<LandingPage> {
   LandingPageData? _data;
   bool _loading = true;
+  int _skillsTabIndex = 0;
 
   @override
   void initState() {
@@ -357,10 +360,46 @@ class _LandingPageState extends State<LandingPage> {
 
   Widget _buildSkills(Skills skills) {
     final isMobile = ResponsiveWebUtils.isMobile(context);
-    final categories = skills.dynamicSkills.entries.where((e) => e.value.isNotEmpty).toList();
+    final categories = skills.categories.entries.where((e) => e.value.items.isNotEmpty).toList();
     
     if (categories.isEmpty) return const SizedBox.shrink();
+    if (_skillsTabIndex >= categories.length) {
+      _skillsTabIndex = 0;
+    }
+    final currentEntry = categories[_skillsTabIndex];
     
+    return DefaultTabController(
+      length: categories.length,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TabBar(
+            isScrollable: true,
+            tabAlignment: TabAlignment.start,
+            labelColor: Theme.of(context).primaryColor,
+            unselectedLabelColor: Colors.grey[600],
+            indicatorColor: Theme.of(context).primaryColor,
+            labelStyle: TextStyle(fontSize: isMobile ? 12 : 14, fontWeight: FontWeight.w500),
+            unselectedLabelStyle: TextStyle(fontSize: isMobile ? 12 : 14),
+            onTap: (index) => setState(() => _skillsTabIndex = index),
+            tabs: categories.map((e) => Tab(text: e.key)).toList(),
+          ),
+          const SizedBox(height: 12),
+          _buildSkillCategoryCard(currentEntry, isMobile),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSkillCategoryCard(
+    MapEntry<String, SkillCategory> entry,
+    bool isMobile,
+  ) {
+    final desc = entry.value.description;
+    final relatedProjects = _resolveRelatedProjects(entry.value.relatedProjects);
+    final carouselHeight = isMobile ? 420.0 : 430.0;
+    final filteredItems = entry.value.items;
+
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.only(bottom: 16),
@@ -372,39 +411,34 @@ class _LandingPageState extends State<LandingPage> {
           padding: const EdgeInsets.all(16.0),
           child: DefaultTextStyle(
             style: const TextStyle(color: Color(0xFF0F1724)),
-            child: DefaultTabController(
-              length: categories.length,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TabBar(
-                    isScrollable: true,
-                    tabAlignment: TabAlignment.start,
-                    labelColor: Theme.of(context).primaryColor,
-                    unselectedLabelColor: Colors.grey[600],
-                    indicatorColor: Theme.of(context).primaryColor,
-                    labelStyle: TextStyle(fontSize: isMobile ? 12 : 14, fontWeight: FontWeight.w500),
-                    unselectedLabelStyle: TextStyle(fontSize: isMobile ? 12 : 14),
-                    tabs: categories.map((e) => Tab(text: e.key)).toList(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (desc.trim().isNotEmpty) ...[
+                  Text(
+                    desc,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          height: 1.4,
+                        ) ??
+                        const TextStyle(height: 1.4, color: AppColors.textSecondary),
                   ),
+                  const SizedBox(height: 8),
+                ],
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 6,
+                  children: filteredItems
+                      .map((skill) => Chip(label: Text(skill)))
+                      .toList(),
+                ),
+                if (relatedProjects.isNotEmpty && filteredItems.isNotEmpty) ...[
                   const SizedBox(height: 12),
                   SizedBox(
-                    height: 140,
-                    child: TabBarView(
-                      children: categories.map((entry) {
-                        return SingleChildScrollView(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: Wrap(
-                            spacing: 8,
-                            runSpacing: 6,
-                            children: entry.value.map((skill) => Chip(label: Text(skill))).toList(),
-                          ),
-                        );
-                      }).toList(),
-                    ),
+                    height: carouselHeight,
+                    child: _SkillProjectCarousel(projects: relatedProjects),
                   ),
                 ],
-              ),
+              ],
             ),
           ),
         ),
@@ -412,4 +446,117 @@ class _LandingPageState extends State<LandingPage> {
     );
   }
 
+  List<ProjectData> _resolveRelatedProjects(List<String> ids) {
+    if (ids.isEmpty) return [];
+
+    final collection = ProjectsCollection.instance.projects;
+    final projects = <ProjectData>[];
+    for (final id in ids) {
+      final entry = collection[id];
+      if (entry != null) {
+        projects.add(entry.defaultVersion);
+        continue;
+      }
+      // Fallback: match by variableName or slug.
+      for (final p in collection.values) {
+        final def = p.defaultVersion;
+        if (p.variableName == id || def.slug == id) {
+          projects.add(def);
+          break;
+        }
+      }
+    }
+    return projects;
+  }
+
+}
+
+class _SkillProjectCarousel extends StatefulWidget {
+  final List<ProjectData> projects;
+
+  const _SkillProjectCarousel({required this.projects});
+
+  @override
+  State<_SkillProjectCarousel> createState() => _SkillProjectCarouselState();
+}
+
+class _SkillProjectCarouselState extends State<_SkillProjectCarousel> {
+  static const Duration _autoAdvanceDuration = Duration(seconds: 6);
+  Timer? _timer;
+  int _index = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _startTimer();
+  }
+
+  @override
+  void didUpdateWidget(covariant _SkillProjectCarousel oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.projects != widget.projects) {
+      _index = 0;
+      _startTimer();
+    }
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  void _startTimer() {
+    _timer?.cancel();
+    if (widget.projects.length > 1) {
+      _timer = Timer.periodic(_autoAdvanceDuration, (_) {
+        setState(() {
+          _index = (_index + 1) % widget.projects.length;
+        });
+      });
+    }
+  }
+
+  void _prev() {
+    setState(() {
+      _index = (_index - 1) % widget.projects.length;
+      if (_index < 0) _index = widget.projects.length - 1;
+    });
+  }
+
+  void _next() {
+    setState(() {
+      _index = (_index + 1) % widget.projects.length;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (widget.projects.isEmpty) return const SizedBox.shrink();
+    final project = widget.projects[_index];
+    final isMobile = ResponsiveWebUtils.isMobile(context);
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        IconButton(
+          onPressed: widget.projects.length > 1 ? _prev : null,
+          icon: const Icon(Icons.chevron_left),
+        ),
+        Expanded(
+          child: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 300),
+            child: ConstrainedBox(
+              key: ValueKey(project.slug),
+              constraints: const BoxConstraints(maxWidth: 560),
+              child: project.buildPreviewWidget(context),
+            ),
+          ),
+        ),
+        IconButton(
+          onPressed: widget.projects.length > 1 ? _next : null,
+          icon: const Icon(Icons.chevron_right),
+        ),
+      ],
+    );
+  }
 }

@@ -158,26 +158,48 @@ class ModuleGroup {
 }
 
 class Skills {
-  final Map<String, List<String>> dynamicSkills;
+  final Map<String, SkillCategory> categories;
 
-  Skills({required this.dynamicSkills,});
+  Skills({required this.categories});
 
   factory Skills.fromJson(Map<String, dynamic> json) {
-    // Extract dynamic skills (any string keys with List<String> values)
-    final dynamicSkills = <String, List<String>>{};
+    final categories = <String, SkillCategory>{};
     json.forEach((key, value) {
-      // Handle dynamic skill categories
-      if (value is List) {
+      if (value is Map<String, dynamic>) {
+        categories[key] = SkillCategory.fromJson(value);
+      } else if (value is List) {
+        // Backward compatibility: plain list -> items with empty description.
         try {
-          dynamicSkills[key] = List<String>.from(value);
+          categories[key] = SkillCategory(
+            description: '',
+            relatedProjects: const [],
+            items: List<String>.from(value),
+          );
         } catch (_) {
-          // Skip if not a list of strings
+          // ignore
         }
       }
     });
-    
-    return Skills(
-      dynamicSkills: dynamicSkills,
+    return Skills(categories: categories);
+  }
+}
+
+class SkillCategory {
+  final String description;
+  final List<String> items;
+  final List<String> relatedProjects;
+
+  SkillCategory({
+    required this.description,
+    required this.items,
+    required this.relatedProjects,
+  });
+
+  factory SkillCategory.fromJson(Map<String, dynamic> json) {
+    return SkillCategory(
+      description: json['description'] ?? '',
+      items: List<String>.from(json['items'] ?? []),
+      relatedProjects: List<String>.from(json['related_projects'] ?? []),
     );
   }
 }

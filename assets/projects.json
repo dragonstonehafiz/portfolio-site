@@ -702,7 +702,7 @@
   "gakumas_lilja_atmosphere": {
     "default_version": "Release",
     "page_list": ["Translations"],
-    "show_in_timeline": true,
+    "show_in_timeline": false,
     "shown": false,
     "variable_name": "gakumas_lilja_atmosphere",
     "versions": [
@@ -734,7 +734,7 @@
   "gakumas_lilja_hakusen": {
     "default_version": "Release",
     "page_list": ["Translations"],
-    "show_in_timeline": true,
+    "show_in_timeline": false,
     "shown": false,
     "variable_name": "gakumas_lilja_hakusen",
     "versions": [
@@ -766,7 +766,7 @@
   "gakumas_lilja_hotw": {
     "default_version": "Release",
     "page_list": ["Translations"],
-    "show_in_timeline": true,
+    "show_in_timeline": false,
     "shown": false,
     "variable_name": "gakumas_lilja_hotw",
     "versions": [
@@ -798,7 +798,7 @@
   "gakumas_lilja_kamurogiku": {
     "default_version": "Release",
     "page_list": ["Translations"],
-    "show_in_timeline": true,
+    "show_in_timeline": false,
     "shown": false,
     "variable_name": "gakumas_lilja_kamurogiku",
     "versions": [
@@ -830,7 +830,7 @@
   "gakumas_lilja_kyokkou": {
     "default_version": "Release",
     "page_list": ["Translations"],
-    "show_in_timeline": true,
+    "show_in_timeline": false,
     "shown": false,
     "variable_name": "gakumas_lilja_kyokkou",
     "versions": [
@@ -862,7 +862,7 @@
   "gakumas_lilja_sakura_photograph": {
     "default_version": "Release",
     "page_list": ["Translations"],
-    "show_in_timeline": true,
+    "show_in_timeline": false,
     "shown": false,
     "variable_name": "gakumas_lilja_sakura_photograph",
     "versions": [
@@ -887,6 +887,38 @@
         "title": "Gakuen Idolmaster: Lilja \"Sakura Photograph\" Commyu",
         "version": "Release",
         "vid_link": "https://youtu.be/QVPluVp2enw",
+        "what_i_did": []
+      }
+    ]
+  },  
+  "gakumas_lilja_white_night_white_wish": {
+    "default_version": "Release",
+    "page_list": ["Translations"],
+    "show_in_timeline": false,
+    "shown": false,
+    "variable_name": "gakumas_lilja_white_night_white_wish",
+    "versions": [
+      {
+        "date": "2025-12-25",
+        "description": null,
+        "download_paths": [
+          {
+            "key": "English Subs",
+            "url": "https://drive.google.com/file/d/1ZWiQJdVGJlv1rBlkh2JF9P9Cf4pWvy2z/view?usp=drive_link"
+          },
+          {
+            "key": "Japanese Subs",
+            "url": "https://drive.google.com/file/d/1IRSNpSJZcYtmIboblibimaoGtPCu0koj/view?usp=drive_link"
+          }
+        ],
+        "github_link": null,
+        "img_paths": [],
+        "last_update": null,
+        "project_type": "Translations",
+        "tags": ["translations"],
+        "title": "Gakuen Idolmaster: Lilja \"White Night White Wish\" Commyu",
+        "version": "Release",
+        "vid_link": "https://youtu.be/SMGPHBY_sdE",
         "what_i_did": []
       }
     ]
@@ -983,38 +1015,6 @@
         "title": "Gakuen Idolmaster: Lilja Step 3 Commyu",
         "version": "Release",
         "vid_link": "https://youtu.be/xHGXHPq4nZY",
-        "what_i_did": []
-      }
-    ]
-  },
-  "gakumas_lilja_white_night_white_wish": {
-    "default_version": "Release",
-    "page_list": ["Translations"],
-    "show_in_timeline": true,
-    "shown": false,
-    "variable_name": "gakumas_lilja_white_night_white_wish",
-    "versions": [
-      {
-        "date": "2025-12-25",
-        "description": null,
-        "download_paths": [
-          {
-            "key": "English Subs",
-            "url": "https://drive.google.com/file/d/1ZWiQJdVGJlv1rBlkh2JF9P9Cf4pWvy2z/view?usp=drive_link"
-          },
-          {
-            "key": "Japanese Subs",
-            "url": "https://drive.google.com/file/d/1IRSNpSJZcYtmIboblibimaoGtPCu0koj/view?usp=drive_link"
-          }
-        ],
-        "github_link": null,
-        "img_paths": [],
-        "last_update": null,
-        "project_type": "Translations",
-        "tags": ["translations"],
-        "title": "Gakuen Idolmaster: Lilja \"White Night White Wish\" Commyu",
-        "version": "Release",
-        "vid_link": "https://youtu.be/SMGPHBY_sdE",
         "what_i_did": []
       }
     ]

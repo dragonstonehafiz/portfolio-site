@@ -122,6 +122,7 @@ class _TimelineWidgetState extends State<TimelineWidget> {
         final rawType = version.projectType.trim();
         final projectType = rawType.isEmpty ? 'Other' : rawType;
         final subtitle = rawType.isEmpty ? 'Project release' : rawType;
+        final thumbnailPath = version.imgPaths.isNotEmpty ? version.imgPaths.first : null;
         entries.add(_TimelineEntry(
           start: start,
           title: version.title,
@@ -129,6 +130,8 @@ class _TimelineWidgetState extends State<TimelineWidget> {
           version: version.version,
           projectType: projectType,
           slug: version.slug,
+          thumbnailPath: thumbnailPath,
+          videoLink: version.vidLink,
         ));
       }
     }
@@ -507,31 +510,15 @@ class _TimelineWidgetState extends State<TimelineWidget> {
         Positioned(
           top: dotY,
           left: x - (dotSize / 2),
-          child: Tooltip(
-            richMessage: TextSpan(
-              children: [
-                TextSpan(text: entry.title, style: titleStyle),
-                if (entry.version.trim().isNotEmpty)
-                  TextSpan(text: '\nRelease: ${entry.version}', style: subtitleStyle),
-                TextSpan(text: '\n${entry.subtitle}', style: subtitleStyle),
-                TextSpan(
-                  text: '\n${_formatMonthYear(entry.start)}',
-                  style: subtitleStyle,
-                ),
-              ],
+          child: _HoverTooltip(
+            content: _ProjectTooltipContent(
+              title: entry.title,
+              subtitle: entry.subtitle,
+              version: entry.version,
+              dateLabel: _formatMonthYear(entry.start),
+              thumbnailPath: entry.thumbnailPath,
+              videoLink: entry.videoLink,
             ),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.08),
-                  blurRadius: 12,
-                  offset: const Offset(0, 6),
-                ),
-              ],
-            ),
-            textStyle: const TextStyle(color: AppColors.textPrimary),
             child: GestureDetector(
               onTap: () => Navigator.pushNamed(context, '/projects/${entry.slug}'),
               child: MouseRegion(
@@ -683,6 +670,8 @@ class _TimelineEntry {
   final String version;
   final String projectType;
   final String slug;
+  final String? thumbnailPath;
+  final String? videoLink;
 
   _TimelineEntry({
     required this.start,
@@ -691,6 +680,8 @@ class _TimelineEntry {
     required this.version,
     required this.projectType,
     required this.slug,
+    required this.thumbnailPath,
+    required this.videoLink,
   });
 }
 
@@ -770,6 +761,71 @@ class _RangeTooltipContent extends StatelessWidget {
                 ],
               ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ProjectTooltipContent extends StatelessWidget {
+  final String title;
+  final String subtitle;
+  final String version;
+  final String dateLabel;
+  final String? thumbnailPath;
+  final String? videoLink;
+
+  const _ProjectTooltipContent({
+    required this.title,
+    required this.subtitle,
+    required this.version,
+    required this.dateLabel,
+    required this.thumbnailPath,
+    required this.videoLink,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final thumb = ProjectData.buildThumbnailPreview(
+      imgPaths: thumbnailPath != null && thumbnailPath!.isNotEmpty
+          ? [thumbnailPath!]
+          : const [],
+      vidLink: videoLink,
+      width: 220,
+      height: 120,
+    );
+
+    return Material(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(10),
+      elevation: 6,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 240),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+          child: DefaultTextStyle(
+            style: const TextStyle(color: AppColors.textPrimary),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: SizedBox(
+                    width: 220,
+                    height: 120,
+                    child: thumb,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
+                if (version.trim().isNotEmpty)
+                  Text('Release: $version', style: const TextStyle(color: AppColors.textSecondary)),
+                Text(subtitle, style: const TextStyle(color: AppColors.textSecondary)),
+                Text(dateLabel, style: const TextStyle(color: AppColors.textSecondary)),
+              ],
+            ),
           ),
         ),
       ),

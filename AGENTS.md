@@ -41,7 +41,7 @@
   - introduction: { name, headline, summary, downloads[] }
   - experience: [ { start, end, title, company, bullets[] } ]
   - education: [ { school, course, start, end, modules[] } ]
-  - skills: dynamic map of category -> [ items ]
+  - skills: dynamic map of category -> { description, related_projects[], items[] }
   - Loaded by LandingPageData (lib/utils/landing_page_data.dart)
 
 ## Core Pages

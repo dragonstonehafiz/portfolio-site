@@ -1211,6 +1211,38 @@
       }
     ]
   },
+  "makeine_kagai_katsudou_dramacd": {
+    "default_version": "Release",
+    "page_list": ["Translations"],
+    "show_in_timeline": true,
+    "shown": true,
+    "variable_name": "makeine_kagai_katsudou_dramacd",
+    "versions": [
+      {
+        "date": "2026-02-07",
+        "description": null,
+        "download_paths": [
+          {
+            "key": "English Subs",
+            "url": "https://drive.google.com/file/d/1V5SjrIEG7A53p8568vXzjhuCstR0iXUg/view?usp=drive_link"
+          },
+          {
+            "key": "Japanese Subs",
+            "url": "https://drive.google.com/file/d/1NTSQHvqzcyf1wGVtT6o_-rcJbf_5BoKV/view?usp=drive_link"
+          }
+        ],
+        "github_link": null,
+        "img_paths": [],
+        "last_update": null,
+        "project_type": "Translations",
+        "tags": ["translations"],
+        "title": "Too Many Losing Heroines!!! Drama CD  \"Tsububaki High School Literature Club, Return to Toyohashi!\"",
+        "version": "Release",
+        "vid_link": "https://youtu.be/idU7PRCR_WI",
+        "what_i_did": []
+      }
+    ]
+  },
   "nichijou_himekuri_vol1_4": {
     "default_version": "Release",
     "page_list": ["Translations"],

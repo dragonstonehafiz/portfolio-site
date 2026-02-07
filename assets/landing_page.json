@@ -141,7 +141,9 @@
         "Flutter",
         "Angular",
         "React",
-        "HTML/CSS"
+        "TypeScript",
+        "HTML/CSS",
+        "JavaScript"
       ]
     },
     "Backend": {

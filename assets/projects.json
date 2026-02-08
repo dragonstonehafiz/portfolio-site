@@ -588,8 +588,7 @@
     "versions": [
       {
         "date": "2026-02-08",
-        "description": "Translator Helper is a full-stack tool I use to create fan translations for Japanese drama CDs and games. It handles transcription, context-building, and subtitle translation in one workflow, so I can generate a first pass and then review and edit the results. \n I was using the original Streamlit version at first, but I switched over to a separated frontend and backend when I realized it would make the app feel snappier.",
-        "download_paths": [],
+        "description": "Translator Helper is a full-stack tool I use to create fan translations for Japanese drama CDs and games. It covers transcription, context generation, and subtitle translation in one workflow, so I can produce a strong first pass and then review/edit efficiently.\n\nSince v1.1, I refactored both transcription and LLM usage behind backend interfaces, which made it much easier to add or swap providers (for example local models and API-based models with different keys/configs). I also redesigned parts of the UI based on real day-to-day usage to improve flow and reduce friction, and removed lower-value features like Tavily search to keep the app focused on core translation work.",
         "github_link": "https://github.com/dragonstonehafiz/translator-helper",
         "img_paths": [
           "images/other/translatorHelperVer5_1.png",
@@ -597,7 +596,7 @@
           "images/other/translatorHelperVer5_3.png",
           "images/other/translatorHelperVer5_4.png"
         ],
-        "last_update": "2025-12-21",
+        "last_update": "2026-02-08",
         "project_type": "AI",
         "tags": ["ai", "python"],
         "title": "Translator Helper",

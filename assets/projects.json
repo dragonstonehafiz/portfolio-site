@@ -345,7 +345,7 @@
       }
     ]
   },
-    "IronAge": {
+  "IronAge": {
     "variable_name": "Iron Age",
     "page_list": ["Programming"],
     "shown": false,
@@ -580,12 +580,37 @@
     ]
   },
   "TranslatorHelper": {
-    "default_version": "Angular & Node.js",
+    "default_version": "Version 1.1.1 (Angular & Node.js)",
     "page_list": ["Featured", "Programming"],
     "show_in_timeline": true,
     "shown": true,
     "variable_name": "TranslatorHelper",
     "versions": [
+      {
+        "date": "2026-02-08",
+        "description": "Translator Helper is a full-stack tool I use to create fan translations for Japanese drama CDs and games. It handles transcription, context-building, and subtitle translation in one workflow, so I can generate a first pass and then review and edit the results. \n I was using the original Streamlit version at first, but I switched over to a separated frontend and backend when I realized it would make the app feel snappier.",
+        "download_paths": [],
+        "github_link": "https://github.com/dragonstonehafiz/translator-helper",
+        "img_paths": [
+          "images/other/translatorHelperVer5_1.png",
+          "images/other/translatorHelperVer5_2.png",
+          "images/other/translatorHelperVer5_3.png",
+          "images/other/translatorHelperVer5_4.png"
+        ],
+        "last_update": "2025-12-21",
+        "project_type": "AI",
+        "tags": ["ai", "python"],
+        "title": "Translator Helper",
+        "version": "Version 1.1.1 (Angular & Node.js)",
+        "vid_link": "https://youtu.be/UQHwdxNiu9M",
+        "vignette": "A full-stack assistant for transcribing, and translating subtitle files with Angular and FastAPI.",
+        "what_i_did": [
+          "Built an Angular frontend with a FastAPI backend to manage transcription, context, and translation in one place.",
+          "Used Whisper to transcribe short voice snippets for individual lines when needed.",
+          "Generated translation context by parsing .srt/.ass files and pulling supporting web info.",
+          "Produced first-draft translations for entire subtitle files to speed up review and editing."
+        ]
+      },
       {
         "date": "2025-12-01",
         "description": "Translator Helper is a full-stack tool I use to create fan translations for Japanese drama CDs and games. It handles transcription, context-building, and subtitle translation in one workflow, so I can generate a first pass and then review and edit the results. \n I was using the original Streamlit version at first, but I switched over to a separated frontend and backend when I realized it would make the app feel snappier.",
@@ -601,7 +626,7 @@
         "project_type": "AI",
         "tags": ["ai", "python"],
         "title": "Translator Helper",
-        "version": "Angular & Node.js",
+        "version": "Version 1.1 (Angular & Node.js)",
         "vid_link": null,
         "vignette": "A full-stack assistant for transcribing, and translating subtitle files with Angular and FastAPI.",
         "what_i_did": [
@@ -626,7 +651,7 @@
         "project_type": "AI",
         "tags": ["python", "ai"],
         "title": "Translator Helper",
-        "version": "Streamlit Ver 1.3",
+        "version": "Version 1.0.4 (Streamlit)",
         "vid_link": null,
         "vignette": "An AI-powered tool to assist with transcribing and translating anime drama CDs using LLMs and Whisper.",
         "what_i_did": [
@@ -652,8 +677,8 @@
         "project_type": "AI",
         "tags": ["python", "ai"],
         "title": "Translator Helper",
-        "version": "Streamlit Ver 1.2",
-        "vid_link": "https://youtu.be/Zi3OjbpptQk",
+        "version": "Version 1.0.2 (Streamlit)",
+        "vid_link": null,
         "vignette": "An AI-powered tool to assist with transcribing and translating anime drama CDs using LLMs and Whisper.",
         "what_i_did": [
           "Built a translation view that outputs natural, literal, and annotated versions.",
@@ -1236,7 +1261,7 @@
         "last_update": null,
         "project_type": "Translations",
         "tags": ["translations"],
-        "title": "Too Many Losing Heroines!!! Drama CD  \"Tsububaki High School Literature Club, Return to Toyohashi!\"",
+        "title": "Too Many Losing Heroines!!! Drama CD  \"Tsuwabuki High School Literature Club, Return to Toyohashi!\"",
         "version": "Release",
         "vid_link": "https://youtu.be/idU7PRCR_WI",
         "what_i_did": []

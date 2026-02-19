@@ -132,25 +132,27 @@ class _LandingPageState extends State<LandingPage> {
 
   Widget _buildIntro(BuildContext context, Intro intro) {
     final theme = Theme.of(context);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(intro.name, style: theme.textTheme.displayLarge?.copyWith(fontWeight: FontWeight.bold)),
-        const SizedBox(height: 8),
-        Text(intro.headline, style: theme.textTheme.titleMedium),
-        const SizedBox(height: 12),
-        Text(intro.summary, style: const TextStyle(fontSize: 16, color: Colors.grey)),
-        const SizedBox(height: 12),
-        Wrap(
-          spacing: 12,
-          children: intro.downloads.map((d) {
-            return ElevatedButton(
-              onPressed: () => _openUrl(d.url, external: d.external),
-              child: Text(d.label),
-            );
-          }).toList(),
-        ),
-      ],
+    return SelectionArea(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(intro.name, style: theme.textTheme.displayLarge?.copyWith(fontWeight: FontWeight.bold)),
+          const SizedBox(height: 8),
+          Text(intro.headline, style: theme.textTheme.titleMedium),
+          const SizedBox(height: 12),
+          Text(intro.summary, style: const TextStyle(fontSize: 16, color: Colors.grey)),
+          const SizedBox(height: 12),
+          Wrap(
+            spacing: 12,
+            children: intro.downloads.map((d) {
+              return ElevatedButton(
+                onPressed: () => _openUrl(d.url, external: d.external),
+                child: Text(d.label),
+              );
+            }).toList(),
+          ),
+        ],
+      ),
     );
   }
 
@@ -169,11 +171,12 @@ class _LandingPageState extends State<LandingPage> {
         duration: const Duration(seconds: 8),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: DefaultTextStyle(
-            style: const TextStyle(color: Color(0xFF0F1724)),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+          child: SelectionArea(
+            child: DefaultTextStyle(
+              style: const TextStyle(color: Color(0xFF0F1724)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
                 // Header row: Icon (left) + Company/Title (center-left, expanded)
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -225,6 +228,7 @@ class _LandingPageState extends State<LandingPage> {
           ),
         ),
       ),
+    ),
     );
   }
 
@@ -242,11 +246,12 @@ class _LandingPageState extends State<LandingPage> {
         duration: const Duration(seconds: 8),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: DefaultTextStyle(
-            style: const TextStyle(color: Color(0xFF0F1724)),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+          child: SelectionArea(
+            child: DefaultTextStyle(
+              style: const TextStyle(color: Color(0xFF0F1724)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
                 // Header row: Icon (left) + School/Course (center-left, expanded)
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -330,6 +335,7 @@ class _LandingPageState extends State<LandingPage> {
           ),
         ),
       ),
+    ),
     );
   }
 
@@ -396,11 +402,12 @@ class _LandingPageState extends State<LandingPage> {
         duration: const Duration(seconds: 8),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: DefaultTextStyle(
-            style: const TextStyle(color: Color(0xFF0F1724)),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+          child: SelectionArea(
+            child: DefaultTextStyle(
+              style: const TextStyle(color: Color(0xFF0F1724)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
                 if (desc.trim().isNotEmpty) ...[
                   Text(
                     desc,
@@ -430,6 +437,7 @@ class _LandingPageState extends State<LandingPage> {
           ),
         ),
       ),
+    ),
     );
   }
 

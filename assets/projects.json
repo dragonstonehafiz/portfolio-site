@@ -7,6 +7,7 @@
     "variable_name": "AI_Game",
     "versions": [
       {
+        "version": "Submission",
         "date": "2019-01-06",
         "description": "A turn-based strategy game made during my Artificial Intelligence in Games module at NYP (Game Development & Technology). The project was mainly for learning pathfinding and finite state machines, and was built in C++ using a custom engine provided by the school.",
         "download_paths": [],
@@ -21,7 +22,6 @@
         "project_type": "Games",
         "tags": ["games", "c++"],
         "title": "AI Pathfinding Game",
-        "version": "Submission",
         "vid_link": "https://youtu.be/5544wAwSE1I",
         "vignette": "A turn-based game demonstrating AI pathfinding algorithms.",
         "what_i_did": [
@@ -42,6 +42,7 @@
     "variable_name": "BirdLaserTargeter",
     "versions": [
       {
+        "version": "Submission",
         "date": "2025-03-29",
         "description": "A Raspberry Pi Zero 2W project that detects birds and deters them using a laser pointer, combining camera input, audio triggers, servos, and a simple control state machine. It supports both on-device and remote detection by sending data over MQTT. My role focused on system integration, hardware interfacing, and overall architecture, while teammates handled model training and the YOLO implementation",
         "download_paths": [],
@@ -55,7 +56,6 @@
         "project_type": "AI",
         "tags": ["python", "ai"],
         "title": "Bird Laser Targeter on the Edge",
-        "version": "Submission",
         "vid_link": "https://www.youtube.com/watch?v=NGxBpvvaONQ",
         "vignette": "A Raspberry Pi Zero 2W-based bird detection and deterrence system.",
         "what_i_did": [
@@ -75,6 +75,7 @@
     "variable_name": "BudgetingSpreadsheet",
     "versions": [
       {
+        "version": "1.0",
         "date": "2024-01-16",
         "description": "A Python tool that automates the yearly setup of my budgeting spreadsheets by generating new sheets, inserting formulas, and applying formatting automatically. It keeps calculations consistent and improves readability with conditional formatting. This was later replaced by my Spending Dashboard project.",
         "download_paths": [],
@@ -89,7 +90,6 @@
         "project_type": "Productivity",
         "tags": ["python"],
         "title": "Budgeting Spreadsheet Automation",
-        "version": "1.0",
         "vid_link": null,
         "vignette": "A Python tool to automate the yearly setup of budgeting spreadsheets.",
         "what_i_did": [
@@ -108,6 +108,7 @@
     "variable_name": "DiamondCityRadio",
     "versions": [
       {
+        "version": "1.0",
         "date": "2024-04-27",
         "description": "A Java-based music player inspired by Fallout 4's Diamond City Radio. It plays a mix of music tracks and DJ voice clips, inserting commentary between songs to recreate the feel of an in-game radio station.",
         "download_paths": [],
@@ -117,7 +118,6 @@
         "project_type": "Productivity",
         "tags": ["java", "libgdx"],
         "title": "Diamond City Radio (Fallout-Inspired Music Player)",
-        "version": "1.0",
         "vid_link": "https://youtu.be/E9zW9e6HOzU",
         "vignette": "A Java-based music player inspired by Fallout 4's Diamond City Radio.",
         "what_i_did": [
@@ -136,6 +136,7 @@
     "variable_name": "ESRGAN M",
     "versions": [
       {
+        "version": "Submission",
         "date": "2024-11-29",
         "description": "An anime image upscaler built using ESRGAN and fine-tuned for anime-style images at 256x256 resolution. The model was trained on a dataset of 15,000+ images to reduce common upscaling artifacts and improve detail when enlarging low-resolution anime artwork. The project also includes a simple Streamlit interface for running upscales interactively.",
         "download_paths": [],
@@ -152,7 +153,6 @@
         "project_type": "AI",
         "tags": ["python", "ai"],
         "title": "Anime Image Upscaler",
-        "version": "Submission",
         "vid_link": "https://youtu.be/zZiL5X7dj4A?si=lbiVmPAo993uzuzh",
         "vignette": "An ESRGAN-based image upscaler fine-tuned for anime-style images.",
         "what_i_did": [
@@ -171,6 +171,7 @@
     "variable_name": "Electronica",
     "versions": [
       {
+        "version": "Submission",
         "date": "2020-02-10",
         "description": "A top-down shooter inspired by Geometry Wars, built in Unity. This was a solo project and the final game I worked on at NYP before graduating, so I treated it as a capstone piece and put serious effort into making something I'd be proud of. All gameplay code was written by me over roughly three months.",
         "download_paths": [
@@ -192,7 +193,6 @@
         "project_type": "Games",
         "tags": ["c#", "games", "unity"],
         "title": "Electronica",
-        "version": "Submission",
         "vid_link": "https://youtu.be/MX7wlNfxtfw",
         "vignette": "A Geometry Wars-inspired top-down shooter built in Unity.",
         "what_i_did": [
@@ -213,6 +213,7 @@
     "variable_name": "JapaneseLearningCardGame",
     "versions": [
       {
+        "version": "Submission",
         "date": "2025-07-17",
         "description": "A digital card game built in Unity around Japanese language learning. This started as a university design thinking assignment where we were supposed to create a physical board game, but I convinced my group to build a digital game instead since it was faster and cheaper to prototype. I implemented the game from scratch in Unity and handled the programming work.",
         "download_paths": [
@@ -231,7 +232,6 @@
         "project_type": "Games",
         "tags": ["c#", "unity", "games"],
         "title": "Japanese Learning Card Game",
-        "version": "Submission",
         "vid_link": "https://youtu.be/lCBHCaszdQ4",
         "vignette": "A digital card game built in Unity around Japanese language learning.",
         "what_i_did": [
@@ -250,6 +250,7 @@
     "variable_name": "Last_Survivor",
     "versions": [
       {
+        "version": "Submission",
         "date": "2019-03-01",
         "description": "A wave-based top-down shooter built in Unity as a Year 2 studio project at NYP. The game was developed by a team of four students and focuses on surviving progressively harder waves with different enemy types and attack patterns.",
         "download_paths": [
@@ -269,7 +270,6 @@
         "project_type": "Games",
         "tags": ["c#", "games", "unity"],
         "title": "The Last Survivor",
-        "version": "Submission",
         "vid_link": "https://youtu.be/aMmrSXN9EI8",
         "vignette": "A wave-based top-down shooter built in Unity.",
         "what_i_did": [
@@ -288,19 +288,19 @@
     "variable_name": "Locus",
     "versions": [
       {
+        "version": "Submission",
         "date": "2019-08-21",
         "description": "A VR horror puzzle game built for the HTC Vive in Unity. This was a final-year project where I worked with art students, continuing from a prototype started by another student group in the previous semester. The game focuses on motion-based interactions, environmental puzzles, and scripted horror events in a first-person VR setting.",
         "download_paths": [],
         "github_link": null,
         "img_paths": [
           "images/games/locus1.png",
-          "images/games/locus2.png"
+          "images/games/locus1.png"
         ],
         "last_update": null,
         "project_type": "Games",
         "tags": ["c#", "games", "unity", "vr"],
         "title": "L.O.C.U.S",
-        "version": "Submission",
         "vid_link": "https://youtu.be/nvTEuyOUynI",
         "vignette": "A virtual reality horror puzzle game for the HTC Vive.",
         "what_i_did": [
@@ -320,6 +320,7 @@
     "variable_name": "Physics_Game",
     "versions": [
       {
+        "version": "Submission",
         "date": "2017-06-04",
         "description": "A Peggle-inspired physics game made during my Physics for Game Programing module. The project was built in C++ using a custom school-provided engine, mwith a focus on applying basic physics concepts to gameplay.",
         "download_paths": [],
@@ -334,7 +335,6 @@
         "project_type": "Games",
         "tags": ["c++", "games"],
         "title": "Simple Physics Game",
-        "version": "Submission",
         "vid_link": "https://youtu.be/jAr9eGcGQJk",
         "vignette": "A Peggle-inspired physics game built in C++.",
         "what_i_did": [
@@ -386,9 +386,9 @@
     "shown": true,
     "variable_name": "PortfolioSite",
     "versions": [{
+        "version": "Flutter Ver 1.2",
         "date": "2026-01-25",
-        "description": "Built with Flutter (Web) and deployed with Docker on Google Cloud, this is my personal portfolio site for hosting and organizing my work online. I moved from a Streamlit version to Flutter because Streamlit felt limiting for responsive layouts, and Flutter gave me better control over how the site adapts across desktop and mobile screens. \nAfter getting the first Flutter version working end-to-end, I iterated on it to improve the UI and make the site feel more finished. During that update, I also expanded the project data model to support multiple versions per project, so the portfolio can reflect how projects evolve over time.\nProject content is stored in structured JSON files and rendered into consistent project entries at runtime, so updates are mainly done by editing metadata. The goal was a serviceable, easy-to-update portfolio that presents my work clearly.",
-        "download_paths": [],
+        "description": "Built with Flutter (Web) and deployed with Docker on Google Cloud, this is my personal portfolio site for hosting and organizing my work online.\n\nVersion 1.2 focused on restructuring the data model and improving the landing page. I updated how page data is stored so that projects now define which pages they belong to, instead of pages defining their projects which reduced the amount of cross-file editing needed when adding or updating projects. I also expanded the landing page with a personal history timeline that links to all my projects in chronological order, making it easier to see my work and education history at a glance.",        "download_paths": [],
         "github_link": "https://github.com/dragonstonehafiz/portfolio-site",
         "img_paths": [
           "images/other/portfolioVer4_1.png",
@@ -401,7 +401,6 @@
         "project_type": "Productivity",
         "tags": ["web-dev"],
         "title": "Personal Portfolio Website",
-        "version": "Flutter Ver 1.2",
         "vid_link": null,
         "vignette": "A portfolio website built on Flutter.",
         "what_i_did": [
@@ -414,9 +413,9 @@
         ]
       },
       {
+        "version": "Flutter Ver 1.1",
         "date": "2025-11-25",
-        "description": "Built with Flutter (Web) and deployed with Docker on Google Cloud, this is my personal portfolio site for hosting and organizing my work online. I moved from a Streamlit version to Flutter because Streamlit felt limiting for responsive layouts, and Flutter gave me better control over how the site adapts across desktop and mobile screens. \nAfter getting the first Flutter version working end-to-end, I iterated on it to improve the UI and make the site feel more finished. During that update, I also expanded the project data model to support multiple versions per project, so the portfolio can reflect how projects evolve over time.\nProject content is stored in structured JSON files and rendered into consistent project entries at runtime, so updates are mainly done by editing metadata. The goal was a serviceable, easy-to-update portfolio that presents my work clearly.",
-        "download_paths": [],
+        "description": "Built with Flutter (Web) and deployed with Docker on Google Cloud, this is my personal portfolio site for hosting and organizing my work online.\n\nAfter getting the first Flutter version working end-to-end, I was happy with the layout but found the page felt too stale visually. Version 1.1 focused on adding more color throughout the site to make it more engaging. I updated the project cards with richer styling and expanded the color palette across the interface. I also restructured the project data model to support multiple versions per project, so the site can show how a project evolved over time.",        "download_paths": [],
         "github_link": "https://github.com/dragonstonehafiz/portfolio-site",
         "img_paths": [
           "images/other/portfolioVer3_1.png",
@@ -429,7 +428,6 @@
         "project_type": "Productivity",
         "tags": ["web-dev"],
         "title": "Personal Portfolio Website",
-        "version": "Flutter Ver 1.1",
         "vid_link": null,
         "vignette": "A portfolio website built on Flutter.",
         "what_i_did": [
@@ -441,8 +439,9 @@
         ]
       },
       {
+        "version": "Flutter Ver 1.0",
         "date": "2025-10-05",
-        "description": "Built with Flutter (Web) and deployed with Docker on Google Cloud, this is my personal portfolio site for hosting and organizing my work online. I moved from a Streamlit version to Flutter because Streamlit felt limiting for responsive layouts, and Flutter gave me better control over how the site adapts across desktop and mobile screens.  \nProject content is stored in structured JSON files and rendered into consistent project entries at runtime, so updates are mainly done by editing metadata. The goal was a serviceable, easy-to-update portfolio that presents my work clearly.",
+        "description":  "Built with Flutter (Web) and deployed with Docker on Google Cloud, this is my personal portfolio site for hosting and organizing my work online. I moved from a Streamlit version to Flutter because Streamlit felt limiting for responsive layouts, and Flutter gave me better control over how the site adapts across desktop and mobile screens. Since I had Flutter experience from work, I migrated the site by adapting the existing JSON and image assets to work with Flutter's rendering system.\n\nProject content is stored in structured JSON files and rendered into consistent project entries at runtime, so updates are mainly done by editing metadata. The goal was a serviceable, easy-to-update portfolio that presents my work clearly.",
         "download_paths": [],
         "github_link": "https://github.com/dragonstonehafiz/portfolio-site",
         "img_paths": [
@@ -454,7 +453,6 @@
         "project_type": "Productivity",
         "tags": ["web-dev"],
         "title": "Personal Portfolio Website",
-        "version": "Flutter Ver 1.0",
         "vid_link": null,
         "vignette": "A portfolio website built on Flutter.",
         "what_i_did": [
@@ -465,6 +463,7 @@
         ]
       },
       {
+        "version": "Streamlit",
         "date": "2025-03-07",
         "description": "A personal portfolio site built with Python + Streamlit to get a simple web presence up quickly without needing much frontend work. The site's content (projects and pages) is stored in a JSON file, and each page is generated from that data so I can update the portfolio by editing entries rather than rewriting the UI. It's deployed on Google Cloud in a Docker container.",
         "download_paths": [],
@@ -477,7 +476,6 @@
         "project_type": "Productivity",
         "tags": ["web-dev"],
         "title": "Personal Portfolio Website",
-        "version": "Streamlit",
         "vid_link": null,
         "vignette": "A portfolio website built with Streamlit and Python.",
         "what_i_did": [
@@ -497,6 +495,7 @@
     "variable_name": "ResourceManagementGame",
     "versions": [
       {
+        "version": "Submission",
         "date": "2024-02-23",
         "description": "A real-time resource management simulation built in Java using LibGDX. This project focused on implementing a small game loop with structured game objects, basic UI, and scene management for switching between gameplay and menu screens.",
         "download_paths": [],
@@ -511,7 +510,6 @@
         "project_type": "Games",
         "tags": ["java", "games", "libgdx"],
         "title": "Resource Management Game",
-        "version": "Submission",
         "vid_link": "https://youtu.be/xTgrENeVFi4?si=33A5JgegELn4uFcM",
         "vignette": "A real-time resource management simulation built in Java using LibGDX.",
         "what_i_did": [
@@ -529,6 +527,7 @@
     "variable_name": "SpendingDashboard",
     "versions": [
       {
+        "version": "PySide6",
         "date": "2025-10-10",
         "description": "A PySide6 (Qt) desktop application for tracking, analyzing, and visualizing personal spending data. I moved from a Streamlit dashboard to PySide6 because I wanted to build the same kind of tool without a web-based frontend. The app loads purchase records from a structured .xlsx file, supports filtering and plotting, and includes utilities for maintaining and backing up the data. It includes a dashboard view, a sortable table view, and Excel file automation powered by openpyxl in an offline desktop workflow.",
         "download_paths": [],
@@ -543,7 +542,6 @@
         "project_type": "Productivity",
         "tags": ["python"],
         "title": "Spending Dashboard",
-        "version": "PySide6",
         "vid_link": null,
         "vignette": "A PySide6 desktop application for tracking and analyzing personal spending data.",
         "what_i_did": [
@@ -553,6 +551,7 @@
         ]
       },
       {
+        "version": "Streamlit",
         "date": "2025-04-28",
         "description": "A Streamlit dashboard for tracking, visualizing, and analyzing personal spending data. It reads purchase records from a structured Excel (.xlsx) file, supports interactive filtering and search, and presents trends through charts and summary views. The project also includes an Excel auto-formatting pipeline to keep data entry consistent and easier to maintain over time.",
         "download_paths": [],
@@ -567,7 +566,6 @@
         "project_type": "Productivity",
         "tags": ["python"],
         "title": "Spending Dashboard",
-        "version": "Streamlit",
         "vid_link": null,
         "vignette": "A Streamlit app for tracking and analyzing personal spending data.",
         "what_i_did": [
@@ -587,9 +585,9 @@
     "variable_name": "TranslatorHelper",
     "versions": [
       {
+        "version": "Version 1.1.1 (Angular & Node.js)",
         "date": "2026-02-08",
-        "description": "Translator Helper is a full-stack tool I use to create fan translations for Japanese drama CDs and games. It covers transcription, context generation, and subtitle translation in one workflow, so I can produce a strong first pass and then review/edit efficiently.\n\nSince v1.1, I refactored both transcription and LLM usage behind backend interfaces, which made it much easier to add or swap providers (for example local models and API-based models with different keys/configs). I also redesigned parts of the UI based on real day-to-day usage to improve flow and reduce friction, and removed lower-value features like Tavily search to keep the app focused on core translation work.",
-        "github_link": "https://github.com/dragonstonehafiz/translator-helper",
+        "description": "A tool I built to help with fan translations for Japanese drama CDs and games. It handles transcription, context-building, and subtitle translation in one workflow, so I can generate a first pass and then review and edit the results.\n\nSince v1.1, I refactored both transcription and LLM usage behind backend interfaces, which made it much easier to add or swap providers (for example local models and API-based models with different keys/configs). I also redesigned parts of the UI based on real day-to-day usage to improve flow and reduce friction, and removed lower-value features like Tavily search to keep the app focused on core translation work.",        "github_link": "https://github.com/dragonstonehafiz/translator-helper",
         "img_paths": [
           "images/other/translatorHelperVer5_1.png",
           "images/other/translatorHelperVer5_2.png",
@@ -600,7 +598,6 @@
         "project_type": "AI",
         "tags": ["ai", "python"],
         "title": "Translator Helper",
-        "version": "Version 1.1.1 (Angular & Node.js)",
         "vid_link": "https://youtu.be/UQHwdxNiu9M",
         "vignette": "A full-stack assistant for transcribing, and translating subtitle files with Angular and FastAPI.",
         "what_i_did": [
@@ -611,9 +608,9 @@
         ]
       },
       {
+        "version": "Version 1.1 (Angular & Node.js)",
         "date": "2025-12-01",
-        "description": "Translator Helper is a full-stack tool I use to create fan translations for Japanese drama CDs and games. It handles transcription, context-building, and subtitle translation in one workflow, so I can generate a first pass and then review and edit the results. \n I was using the original Streamlit version at first, but I switched over to a separated frontend and backend when I realized it would make the app feel snappier.",
-        "download_paths": [],
+        "description": "A tool I built to help with fan translations for Japanese drama CDs and games. It handles transcription, context-building, and subtitle translation in one workflow, so I can generate a first pass and then review and edit the results.\n\nI originally built this in Streamlit, but I found it wasn't very responsive, so I remade it with a proper frontend-backend split using Angular and FastAPI (Python) to make the app feel snappier.",        "download_paths": [],
         "github_link": "https://github.com/dragonstonehafiz/translator-helper",
         "img_paths": [
           "images/other/translatorHelperVer4_1.png",
@@ -625,7 +622,6 @@
         "project_type": "AI",
         "tags": ["ai", "python"],
         "title": "Translator Helper",
-        "version": "Version 1.1 (Angular & Node.js)",
         "vid_link": null,
         "vignette": "A full-stack assistant for transcribing, and translating subtitle files with Angular and FastAPI.",
         "what_i_did": [
@@ -637,7 +633,7 @@
       },
       {
         "date": "2025-10-27",
-        "description": "Translator Helper is an application that speeds up the process of transcribing and translating anime drama CDs using OpenAI\u2019s API and Whisper. It can generate a first-draft transcription and translation for an entire audio file, export the results into subtitle formats for review, and provide smaller tools for handling individual lines or short audio snippets when needed.",
+        "description": "An application that speeds up the process of transcribing and translating anime drama CDs using OpenAI\u2019s API and Whisper. It can generate a first-draft transcription and translation for an entire audio file, export the results into subtitle formats for review, and provide smaller tools for handling individual lines or short audio snippets when needed.",
         "download_paths": [],
         "github_link": "https://github.com/dragonstonehafiz/translator-helper",
         "img_paths": [
@@ -650,7 +646,6 @@
         "project_type": "AI",
         "tags": ["python", "ai"],
         "title": "Translator Helper",
-        "version": "Version 1.0.4 (Streamlit)",
         "vid_link": null,
         "vignette": "An AI-powered tool to assist with transcribing and translating anime drama CDs using LLMs and Whisper.",
         "what_i_did": [
@@ -676,7 +671,6 @@
         "project_type": "AI",
         "tags": ["python", "ai"],
         "title": "Translator Helper",
-        "version": "Version 1.0.2 (Streamlit)",
         "vid_link": null,
         "vignette": "An AI-powered tool to assist with transcribing and translating anime drama CDs using LLMs and Whisper.",
         "what_i_did": [
@@ -696,6 +690,7 @@
     "variable_name": "YouTubeCommentAnalyzer",
     "versions": [
       {
+        "version": "1.0",
         "date": "2024-08-06",
         "description": "A Python project that pulls video and comment data from my YouTube channel using the YouTube Data API, then runs keyword and sentiment analysis to see what topics show up most often. It generates separate word clouds for positive and negative comments to visualize common terms, mainly as a small experiment in sentiment analysis and basic text visualization.",
         "download_paths": [],
@@ -712,7 +707,6 @@
         "project_type": "Productivity",
         "tags": ["python", "ai", "visualizations"],
         "title": "YouTube Comment Keyword Search",
-        "version": "1.0",
         "vid_link": null,
         "vignette": "A Python project that analyzes YouTube comments for keyword and sentiment trends.",
         "what_i_did": [
@@ -731,6 +725,7 @@
     "variable_name": "gakumas_lilja_atmosphere",
     "versions": [
       {
+        "version": "Release",
         "date": "2025-12-13",
         "description": null,
         "download_paths": [
@@ -749,7 +744,6 @@
         "project_type": "Translations",
         "tags": ["translations"],
         "title": "Gakuen Idolmaster: Lilja \"Atmosphere\" Commyu",
-        "version": "Release",
         "vid_link": "https://youtu.be/21Zbr9QxaiI",
         "what_i_did": []
       }
@@ -763,6 +757,7 @@
     "variable_name": "gakumas_lilja_hakusen",
     "versions": [
       {
+        "version": "Release",
         "date": "2025-10-20",
         "description": null,
         "download_paths": [
@@ -781,7 +776,6 @@
         "project_type": "Translations",
         "tags": ["translations"],
         "title": "Gakuen Idolmaster: Lilja \"Hakusen\" Commyu",
-        "version": "Release",
         "vid_link": "https://youtu.be/FGMHf9UwcUo",
         "what_i_did": []
       }
@@ -795,6 +789,7 @@
     "variable_name": "gakumas_lilja_hotw",
     "versions": [
       {
+        "version": "Release",
         "date": "2025-11-05",
         "description": null,
         "download_paths": [
@@ -813,7 +808,6 @@
         "project_type": "Translations",
         "tags": ["translations"],
         "title": "Gakuen Idolmaster: Lilja \"Howling over the World\" Commyu",
-        "version": "Release",
         "vid_link": "https://youtu.be/lqMFhK0F6mA",
         "what_i_did": []
       }
@@ -827,6 +821,7 @@
     "variable_name": "gakumas_lilja_kamurogiku",
     "versions": [
       {
+        "version": "Release",
         "date": "2025-10-22",
         "description": null,
         "download_paths": [
@@ -845,7 +840,6 @@
         "project_type": "Translations",
         "tags": ["translations"],
         "title": "Gakuen Idolmaster: Lilja \"Kamurogiku\" Commyu",
-        "version": "Release",
         "vid_link": "https://youtu.be/EcFYNzcPKfE",
         "what_i_did": []
       }
@@ -859,6 +853,7 @@
     "variable_name": "gakumas_lilja_kyokkou",
     "versions": [
       {
+        "version": "Release",
         "date": "2025-11-15",
         "description": null,
         "download_paths": [
@@ -877,7 +872,6 @@
         "project_type": "Translations",
         "tags": ["translations"],
         "title": "Gakuen Idolmaster: Lilja \"Kyokkou\" Commyu",
-        "version": "Release",
         "vid_link": "https://youtu.be/C_ijOCcU5XU",
         "what_i_did": []
       }
@@ -891,6 +885,7 @@
     "variable_name": "gakumas_lilja_sakura_photograph",
     "versions": [
       {
+        "version": "Release",
         "date": "2025-10-27",
         "description": null,
         "download_paths": [
@@ -909,7 +904,6 @@
         "project_type": "Translations",
         "tags": ["translations"],
         "title": "Gakuen Idolmaster: Lilja \"Sakura Photograph\" Commyu",
-        "version": "Release",
         "vid_link": "https://youtu.be/QVPluVp2enw",
         "what_i_did": []
       }
@@ -923,6 +917,7 @@
     "variable_name": "gakumas_lilja_white_night_white_wish",
     "versions": [
       {
+        "version": "Release",
         "date": "2025-12-25",
         "description": null,
         "download_paths": [
@@ -941,7 +936,6 @@
         "project_type": "Translations",
         "tags": ["translations"],
         "title": "Gakuen Idolmaster: Lilja \"White Night White Wish\" Commyu",
-        "version": "Release",
         "vid_link": "https://youtu.be/SMGPHBY_sdE",
         "what_i_did": []
       }
@@ -955,6 +949,7 @@
     "variable_name": "gakumas_lilja_step1",
     "versions": [
       {
+        "version": "Release",
         "date": "2025-06-15",
         "description": null,
         "download_paths": [
@@ -973,7 +968,6 @@
         "project_type": "Translations",
         "tags": ["translations"],
         "title": "Gakuen Idolmaster: Lilja Step 1 Commyu",
-        "version": "Release",
         "vid_link": "https://youtu.be/8Ncm2_M6FSI",
         "what_i_did": []
       }
@@ -987,6 +981,7 @@
     "variable_name": "gakumas_lilja_step2",
     "versions": [
       {
+        "version": "Release",
         "date": "2025-07-13",
         "description": null,
         "download_paths": [
@@ -1005,7 +1000,6 @@
         "project_type": "Translations",
         "tags": ["translations"],
         "title": "Gakuen Idolmaster: Lilja Step 2 Commyu",
-        "version": "Release",
         "vid_link": "https://youtu.be/wigz91b--Xc",
         "what_i_did": []
       }
@@ -1019,6 +1013,7 @@
     "variable_name": "gakumas_lilja_step3",
     "versions": [
       {
+        "version": "Release",
         "date": "2026-01-07",
         "description": null,
         "download_paths": [
@@ -1037,7 +1032,6 @@
         "project_type": "Translations",
         "tags": ["translations"],
         "title": "Gakuen Idolmaster: Lilja Step 3 Commyu",
-        "version": "Release",
         "vid_link": "https://youtu.be/xHGXHPq4nZY",
         "what_i_did": []
       }
@@ -1051,6 +1045,7 @@
     "variable_name": "makeine_vol1ep1",
     "versions": [
       {
+        "version": "Release",
         "date": "2025-02-23",
         "description": null,
         "download_paths": [
@@ -1069,7 +1064,6 @@
         "project_type": "Translations",
         "tags": ["translations"],
         "title": "Too Many Losing Heroines!!! Drama CD Vol. 1 \"I'll teach you the secret to style\"",
-        "version": "Release",
         "vid_link": "https://youtu.be/gRx0sX_9PyA",
         "what_i_did": []
       }
@@ -1083,6 +1077,7 @@
     "variable_name": "makeine_vol1ep2",
     "versions": [
       {
+        "version": "Release",
         "date": "2025-03-15",
         "description": null,
         "download_paths": [
@@ -1101,7 +1096,6 @@
         "project_type": "Translations",
         "tags": ["translations"],
         "title": "Too Many Losing Heroines!!! Drama CD Vol. 1 \"Be careful with sneak photography.\"",
-        "version": "Release",
         "vid_link": "https://youtu.be/KPy_66wKk34",
         "what_i_did": []
       }
@@ -1115,6 +1109,7 @@
     "variable_name": "makeine_vol1ep3",
     "versions": [
       {
+        "version": "Release",
         "date": "2025-05-01",
         "description": null,
         "download_paths": [
@@ -1133,7 +1128,6 @@
         "project_type": "Translations",
         "tags": ["translations"],
         "title": "Too Many Losing Heroines!!! Drama CD Vol. 1 \"Let's aim for the one chance!\"",
-        "version": "Release",
         "vid_link": "https://youtu.be/vn_1bNIXBTU",
         "what_i_did": []
       }
@@ -1147,6 +1141,7 @@
     "variable_name": "makeine_vol2ep1",
     "versions": [
       {
+        "version": "Release",
         "date": "2025-07-27",
         "description": null,
         "download_paths": [
@@ -1165,7 +1160,6 @@
         "project_type": "Translations",
         "tags": ["translations"],
         "title": "Too Many Losing Heroines!!! Drama CD Vol. 2 \"Don't Forget to Level Up\"",
-        "version": "Release",
         "vid_link": "https://youtu.be/qJOps4YbTQU",
         "what_i_did": []
       }
@@ -1179,6 +1173,7 @@
     "variable_name": "makeine_vol2ep2",
     "versions": [
       {
+        "version": "Release",
         "date": "2025-07-27",
         "description": null,
         "download_paths": [
@@ -1197,7 +1192,6 @@
         "project_type": "Translations",
         "tags": ["translations"],
         "title": "Too Many Losing Heroines!!! Drama CD Vol. 2 \"Secret Photoshoot\"",
-        "version": "Release",
         "vid_link": "https://youtu.be/7gY6SVu6fsw",
         "what_i_did": []
       }
@@ -1211,6 +1205,7 @@
     "variable_name": "makeine_vol2ep3",
     "versions": [
       {
+        "version": "Release",
         "date": "2025-08-11",
         "description": null,
         "download_paths": [
@@ -1229,7 +1224,6 @@
         "project_type": "Translations",
         "tags": ["translations"],
         "title": "Too Many Losing Heroines!!! Drama CD Vol. 2 \"Take Responsibility\"",
-        "version": "Release",
         "vid_link": "https://youtu.be/xhvKAjgbikQ",
         "what_i_did": []
       }
@@ -1243,6 +1237,7 @@
     "variable_name": "makeine_kagai_katsudou_dramacd",
     "versions": [
       {
+        "version": "Release",
         "date": "2026-02-07",
         "description": null,
         "download_paths": [
@@ -1261,7 +1256,6 @@
         "project_type": "Translations",
         "tags": ["translations"],
         "title": "Too Many Losing Heroines!!! Drama CD  \"Tsuwabuki High School Literature Club, Return to Toyohashi!\"",
-        "version": "Release",
         "vid_link": "https://youtu.be/idU7PRCR_WI",
         "what_i_did": []
       }
@@ -1275,6 +1269,7 @@
     "variable_name": "nichijou_himekuri_vol1_4",
     "versions": [
       {
+        "version": "Release",
         "date": "2025-04-12",
         "description": null,
         "download_paths": [
@@ -1293,7 +1288,6 @@
         "project_type": "Translations",
         "tags": ["translations"],
         "title": "Nichijou Daily Calendar CD Vol. 1: \"April\"",
-        "version": "Release",
         "vid_link": "https://youtu.be/Jjik_sl7e-E",
         "what_i_did": []
       }

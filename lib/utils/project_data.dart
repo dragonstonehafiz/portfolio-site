@@ -1723,9 +1723,9 @@ class _ProjectDetailsSwitcherState extends State<_ProjectDetailsSwitcher> {
   @override
   void initState() {
     super.initState();
-    _selectedKey = widget.deliverablesContent != null
-        ? 'deliverables'
-        : 'description';
+    _selectedKey = widget.descriptionContent != null
+        ? 'description'
+        : 'deliverables';
   }
 
   @override

@@ -632,6 +632,7 @@
         ]
       },
       {
+        "version": "Version 1.0.4 (Streamlit)",
         "date": "2025-10-27",
         "description": "An application that speeds up the process of transcribing and translating anime drama CDs using OpenAI\u2019s API and Whisper. It can generate a first-draft transcription and translation for an entire audio file, export the results into subtitle formats for review, and provide smaller tools for handling individual lines or short audio snippets when needed.",
         "download_paths": [],
@@ -656,6 +657,7 @@
         ]
       },
       {
+        "version": "Version 1.0.2 (Streamlit)",
         "date": "2025-03-09",
         "description": "A personal tool for helping with transcribing and translating anime drama CDs using LLMs and Whisper. I made it because there are times when I can\u2019t clearly catch a line or I\u2019m unsure how to phrase a translation, so the app helps by generating transcripts, organizing context, and producing translation outputs in a few styles to compare.",
         "download_paths": [],

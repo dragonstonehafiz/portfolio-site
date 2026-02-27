@@ -1,4 +1,4 @@
-﻿import '../projects/project_data.dart';
+import '../projects/project_data.dart';
 import 'landing_page_data.dart';
 
 /// Timeline entry representing a single project version release.
@@ -75,8 +75,9 @@ class TimelineData {
         final rawType = version.projectType.trim();
         final projectType = rawType.isEmpty ? 'Other' : rawType;
         final subtitle = rawType.isEmpty ? 'Project release' : rawType;
-        final thumbnailPath =
-            version.imgPaths.isNotEmpty ? version.imgPaths.first : null;
+        final thumbnailPath = version.imgPaths.isNotEmpty
+            ? version.imgPaths.first
+            : null;
         entries.add(
           TimelineEntry(
             start: start,
@@ -178,6 +179,26 @@ class TimelineData {
     ];
     final m = (date.month >= 1 && date.month <= 12) ? months[date.month] : '';
     return m.isEmpty ? '${date.year}' : '$m ${date.year}';
+  }
+
+  static String formatDayMonthYear(DateTime date) {
+    const months = [
+      '',
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
+    final m = (date.month >= 1 && date.month <= 12) ? months[date.month] : '';
+    return m.isEmpty ? '${date.year}' : '${date.day} $m ${date.year}';
   }
 
   static String formatRangeDates(DateTime start, DateTime end) {

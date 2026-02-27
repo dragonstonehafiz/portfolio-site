@@ -1,24 +1,22 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import '../../data/landing/landing_page_data.dart';
 import '../../data/landing/timeline_data.dart';
-import '../../data/projects/project_data.dart';
 import '../../core/responsive_web_utils.dart';
 import '../../core/theme.dart';
 import '../ui/animated_gradient.dart';
 import 'timeline_tooltip_widgets.dart';
 
-class TimelineWidget extends StatefulWidget {
-  final LandingPageData data;
-  final List<ProjectEntry> projects;
+class MultiYearTimelineWidget extends StatefulWidget {
+  final TimelineData data;
 
-  const TimelineWidget({super.key, required this.data, required this.projects});
+  const MultiYearTimelineWidget({super.key, required this.data});
 
   @override
-  State<TimelineWidget> createState() => _TimelineWidgetState();
+  State<MultiYearTimelineWidget> createState() =>
+      _MultiYearTimelineWidgetState();
 }
 
-class _TimelineWidgetState extends State<TimelineWidget> {
+class _MultiYearTimelineWidgetState extends State<MultiYearTimelineWidget> {
   final ScrollController _scrollController = ScrollController();
   final Set<String> _disabledProjectTypes = <String>{};
   static const _projectTypePalette = <Color>[
@@ -41,7 +39,7 @@ class _TimelineWidgetState extends State<TimelineWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final entries = _buildEntries();
+    final entries = widget.data.entries;
     final isMobile = ResponsiveWebUtils.isMobile(context);
     final typeColorMap = _buildTypeColorMap(entries);
     final filteredEntries = entries
@@ -110,40 +108,6 @@ class _TimelineWidgetState extends State<TimelineWidget> {
     );
   }
 
-  List<TimelineEntry> _buildEntries() {
-    final entries = <TimelineEntry>[];
-
-    for (final entry in widget.projects) {
-      if (!entry.showInTimeline) continue;
-      for (final version in entry.versions) {
-        if (version.date.trim().isEmpty) continue;
-        final start = TimelineData.parseDate(version.date);
-        if (start == null) continue;
-        final rawType = version.projectType.trim();
-        final projectType = rawType.isEmpty ? 'Other' : rawType;
-        final subtitle = rawType.isEmpty ? 'Project release' : rawType;
-        final thumbnailPath = version.imgPaths.isNotEmpty
-            ? version.imgPaths.first
-            : null;
-        entries.add(
-          TimelineEntry(
-            start: start,
-            title: version.title,
-            subtitle: subtitle,
-            version: version.version,
-            projectType: projectType,
-            slug: version.slug,
-            thumbnailPath: thumbnailPath,
-            videoLink: version.vidLink,
-          ),
-        );
-      }
-    }
-
-    entries.sort((a, b) => b.start.compareTo(a.start));
-    return entries;
-  }
-
   Widget _buildTimelineRow(
     BuildContext context,
     List<TimelineEntry> entries,
@@ -178,7 +142,7 @@ class _TimelineWidgetState extends State<TimelineWidget> {
       color: Colors.blueGrey,
     );
 
-    final ranges = _buildRanges();
+    final ranges = widget.data.ranges;
     if (entries.isEmpty && ranges.isEmpty) return const SizedBox.shrink();
 
     final sorted = List<TimelineEntry>.from(entries)
@@ -319,43 +283,6 @@ class _TimelineWidgetState extends State<TimelineWidget> {
 
   String _formatMonthYear(DateTime date) {
     return TimelineData.formatMonthYear(date);
-  }
-
-  List<TimelineRange> _buildRanges() {
-    final ranges = <TimelineRange>[];
-    for (final work in widget.data.experience) {
-      final start = TimelineData.parseDate(work.start);
-      if (start == null) continue;
-      final end =
-          TimelineData.parseDate(work.end, endOfMonth: true) ?? DateTime.now();
-      final label = '${work.title} — ${work.company}';
-      ranges.add(
-        TimelineRange(
-          start: start,
-          end: end,
-          kind: RangeKind.work,
-          label: label,
-          iconPath: work.icon,
-        ),
-      );
-    }
-    for (final edu in widget.data.education) {
-      final start = TimelineData.parseDate(edu.start);
-      if (start == null) continue;
-      final end =
-          TimelineData.parseDate(edu.end, endOfMonth: true) ?? DateTime.now();
-      final label = '${edu.course} — ${edu.school}';
-      ranges.add(
-        TimelineRange(
-          start: start,
-          end: end,
-          kind: RangeKind.education,
-          label: label,
-          iconPath: edu.icon,
-        ),
-      );
-    }
-    return ranges;
   }
 
   List<Widget> _buildRangeSegments({
@@ -506,7 +433,7 @@ class _TimelineWidgetState extends State<TimelineWidget> {
               title: entry.title,
               subtitle: entry.subtitle,
               version: entry.version,
-              dateLabel: TimelineData.formatMonthYear(entry.start),
+              dateLabel: TimelineData.formatDayMonthYear(entry.start),
               thumbnailPath: entry.thumbnailPath,
               videoLink: entry.videoLink,
             ),
@@ -654,5 +581,3 @@ class _TimelineWidgetState extends State<TimelineWidget> {
     );
   }
 }
-
-

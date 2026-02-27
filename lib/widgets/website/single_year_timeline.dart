@@ -171,7 +171,10 @@ class _SingleYearTimelineWidgetState extends State<SingleYearTimelineWidget> {
     }).toList();
 
     const startPadding = 16.0;
-    final segmentWidth = (availableWidth - startPadding * 2).clamp(200.0, double.infinity);
+    final segmentWidth = (availableWidth - startPadding * 2).clamp(
+      200.0,
+      double.infinity,
+    );
 
     final lineColor = Colors.blueGrey.withValues(alpha: 0.25);
     final dateStyle = TextStyle(
@@ -336,14 +339,32 @@ class _SingleYearTimelineWidgetState extends State<SingleYearTimelineWidget> {
     required int selectedYear,
   }) {
     const dotSize = 14.0;
+    const overlapSpacing = 10.0;
     final widgets = <Widget>[];
 
+    // Count projects per month for overlap handling (same as multi-year timeline)
+    final monthCounts = <String, int>{};
     for (final entry in entries) {
-      final x =
+      final key = '${entry.start.year}-${entry.start.month}';
+      monthCounts[key] = (monthCounts[key] ?? 0) + 1;
+    }
+    final monthIndices = <String, int>{};
+
+    for (final entry in entries) {
+      final baseX =
           _getMonthPosition(entry.start.month, segmentWidth, startPadding) -
           ((entry.start.day - 1) /
                   DateTime(entry.start.year, entry.start.month + 1, 0).day) *
               (segmentWidth / 12);
+
+      // Calculate overlap offset (same as multi-year timeline)
+      final key = '${entry.start.year}-${entry.start.month}';
+      final idx = monthIndices[key] ?? 0;
+      monthIndices[key] = idx + 1;
+      final count = monthCounts[key] ?? 1;
+      final centerOffset = (idx - (count - 1) / 2) * overlapSpacing;
+      final x = baseX + centerOffset;
+
       final dotColor = typeColorMap[entry.projectType] ?? AppColors.accent;
 
       widgets.add(
@@ -355,7 +376,7 @@ class _SingleYearTimelineWidgetState extends State<SingleYearTimelineWidget> {
               title: entry.title,
               subtitle: entry.subtitle,
               version: entry.version,
-              dateLabel: TimelineData.formatMonthYear(entry.start),
+              dateLabel: TimelineData.formatDayMonthYear(entry.start),
               thumbnailPath: entry.thumbnailPath,
               videoLink: entry.videoLink,
             ),

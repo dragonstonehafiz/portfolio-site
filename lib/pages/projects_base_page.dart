@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../widgets/custom_app_bar.dart';
-import '../widgets/custom_footer.dart';
-import '../widgets/search_bar_widget.dart';
-import '../widgets/website/project_preview_card.dart';
-import '../widgets/website/project_list_item.dart';
+import '../widgets/website/custom_app_bar.dart';
+import '../widgets/website/custom_footer.dart';
+import '../widgets/generic/search_bar.dart';
+import '../widgets/project/project_preview_card.dart';
+import '../widgets/project/project_list_item.dart';
 import '../projects/project_service.dart';
 import '../projects/project_data.dart';
 import '../utils/responsive_web_utils.dart';

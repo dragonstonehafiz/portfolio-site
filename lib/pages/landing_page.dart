@@ -1,18 +1,18 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../widgets/custom_app_bar.dart';
-import '../widgets/custom_footer.dart';
-import '../widgets/animated_gradient.dart';
+import '../widgets/website/custom_app_bar.dart';
+import '../widgets/website/custom_footer.dart';
+import '../widgets/ui/animated_gradient.dart';
 import '../utils/theme.dart';
 import '../utils/landing_page_data.dart';
 import '../utils/responsive_web_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../projects/project_collection.dart';
 import '../projects/project_data.dart';
-import '../widgets/timeline_widget.dart';
-import '../widgets/shared_tabs.dart';
-import '../widgets/website/project_preview_card.dart';
+import '../widgets/website/timeline.dart';
+import '../widgets/generic/shared_tabs.dart';
+import '../widgets/project/project_preview_card.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});

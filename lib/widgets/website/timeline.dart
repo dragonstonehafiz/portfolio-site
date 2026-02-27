@@ -2,12 +2,12 @@ import 'dart:ui';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../utils/landing_page_data.dart';
-import '../projects/project_data.dart';
-import '../utils/responsive_web_utils.dart';
-import '../utils/theme.dart';
-import '../widgets/animated_gradient.dart';
-import '../widgets/website/project_thumbnail_preview.dart';
+import '../../utils/landing_page_data.dart';
+import '../../projects/project_data.dart';
+import '../../utils/responsive_web_utils.dart';
+import '../../utils/theme.dart';
+import '../ui/animated_gradient.dart';
+import '../project/project_thumbnail_preview.dart';
 
 class TimelineWidget extends StatefulWidget {
   final LandingPageData data;

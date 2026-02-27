@@ -3,8 +3,8 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../projects/project_data.dart';
 import '../../utils/theme.dart';
 import '../../utils/responsive_web_utils.dart';
-import '../hover_card_widget.dart';
-import '../animated_gradient.dart';
+import '../ui/hover_card.dart';
+import '../ui/animated_gradient.dart';
 import 'project_thumbnail_preview.dart';
 
 /// A preview card widget for displaying project information in grid or list views.

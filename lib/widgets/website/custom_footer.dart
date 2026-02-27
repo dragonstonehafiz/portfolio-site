@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../utils/theme.dart';
-import '../utils/responsive_web_utils.dart';
+import '../../utils/theme.dart';
+import '../../utils/responsive_web_utils.dart';
 
 class CustomFooter extends StatelessWidget {
   const CustomFooter({super.key});

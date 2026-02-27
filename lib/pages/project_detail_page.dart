@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import '../widgets/custom_app_bar.dart';
-import '../widgets/custom_footer.dart';
+import '../widgets/website/custom_app_bar.dart';
+import '../widgets/website/custom_footer.dart';
 import '../projects/project_service.dart';
 import '../projects/project_data.dart';
 import '../utils/theme.dart';
-import '../widgets/shared_tabs.dart';
-import '../widgets/website/project_full_detail_card.dart';
+import '../widgets/generic/shared_tabs.dart';
+import '../widgets/project/project_full_detail_card.dart';
 
 class ProjectDetailPage extends StatelessWidget {
   final String slug;

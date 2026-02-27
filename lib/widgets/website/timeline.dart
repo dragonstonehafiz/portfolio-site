@@ -1,23 +1,18 @@
 import 'dart:ui';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import '../../data/landing/landing_page_data.dart';
+import '../../data/landing/timeline_data.dart';
 import '../../data/projects/project_data.dart';
 import '../../core/responsive_web_utils.dart';
 import '../../core/theme.dart';
 import '../ui/animated_gradient.dart';
-import '../project/project_thumbnail_preview.dart';
+import 'timeline_tooltip_widgets.dart';
 
 class TimelineWidget extends StatefulWidget {
   final LandingPageData data;
   final List<ProjectEntry> projects;
 
-  const TimelineWidget({
-    super.key,
-    required this.data,
-    required this.projects,
-  });
+  const TimelineWidget({super.key, required this.data, required this.projects});
 
   @override
   State<TimelineWidget> createState() => _TimelineWidgetState();
@@ -96,7 +91,11 @@ class _TimelineWidgetState extends State<TimelineWidget> {
                       scrollDirection: Axis.horizontal,
                       child: Padding(
                         padding: const EdgeInsets.only(bottom: 14, top: 18),
-                        child: _buildTimelineRow(context, filteredEntries, typeColorMap),
+                        child: _buildTimelineRow(
+                          context,
+                          filteredEntries,
+                          typeColorMap,
+                        ),
                       ),
                     ),
                   ),
@@ -111,29 +110,33 @@ class _TimelineWidgetState extends State<TimelineWidget> {
     );
   }
 
-  List<_TimelineEntry> _buildEntries() {
-    final entries = <_TimelineEntry>[];
+  List<TimelineEntry> _buildEntries() {
+    final entries = <TimelineEntry>[];
 
     for (final entry in widget.projects) {
       if (!entry.showInTimeline) continue;
       for (final version in entry.versions) {
         if (version.date.trim().isEmpty) continue;
-        final start = _parseDate(version.date);
+        final start = TimelineData.parseDate(version.date);
         if (start == null) continue;
         final rawType = version.projectType.trim();
         final projectType = rawType.isEmpty ? 'Other' : rawType;
         final subtitle = rawType.isEmpty ? 'Project release' : rawType;
-        final thumbnailPath = version.imgPaths.isNotEmpty ? version.imgPaths.first : null;
-        entries.add(_TimelineEntry(
-          start: start,
-          title: version.title,
-          subtitle: subtitle,
-          version: version.version,
-          projectType: projectType,
-          slug: version.slug,
-          thumbnailPath: thumbnailPath,
-          videoLink: version.vidLink,
-        ));
+        final thumbnailPath = version.imgPaths.isNotEmpty
+            ? version.imgPaths.first
+            : null;
+        entries.add(
+          TimelineEntry(
+            start: start,
+            title: version.title,
+            subtitle: subtitle,
+            version: version.version,
+            projectType: projectType,
+            slug: version.slug,
+            thumbnailPath: thumbnailPath,
+            videoLink: version.vidLink,
+          ),
+        );
       }
     }
 
@@ -143,15 +146,18 @@ class _TimelineWidgetState extends State<TimelineWidget> {
 
   Widget _buildTimelineRow(
     BuildContext context,
-    List<_TimelineEntry> entries,
+    List<TimelineEntry> entries,
     Map<String, Color> typeColorMap,
   ) {
     final isMobile = ResponsiveWebUtils.isMobile(context);
     final screenWidth = MediaQuery.of(context).size.width;
-    final segmentWidth = (screenWidth * (isMobile ? 0.75 : 0.45)).clamp(260.0, 440.0);
+    final segmentWidth = (screenWidth * (isMobile ? 0.75 : 0.45)).clamp(
+      260.0,
+      440.0,
+    );
     final emptyYearWidth = (segmentWidth * 0.35).clamp(120.0, segmentWidth);
     final yearGap = isMobile ? 18.0 : 24.0;
-    final lineColor = Colors.blueGrey.withOpacity(0.25);
+    final lineColor = Colors.blueGrey.withValues(alpha: 0.25);
     final titleStyle = TextStyle(
       fontSize: isMobile ? 14 : 15,
       fontWeight: FontWeight.w600,
@@ -175,7 +181,7 @@ class _TimelineWidgetState extends State<TimelineWidget> {
     final ranges = _buildRanges();
     if (entries.isEmpty && ranges.isEmpty) return const SizedBox.shrink();
 
-    final sorted = List<_TimelineEntry>.from(entries)
+    final sorted = List<TimelineEntry>.from(entries)
       ..sort((a, b) => b.start.compareTo(a.start));
 
     final allDates = <DateTime>[];
@@ -189,7 +195,6 @@ class _TimelineWidgetState extends State<TimelineWidget> {
     allDates.sort((a, b) => a.compareTo(b));
     final minYear = allDates.first.year;
     final maxYear = allDates.last.year;
-    final yearCount = (maxYear - minYear) + 1;
     final lineY = 48.0;
     final dotY = lineY - 7;
     final yearTextY = 0.0;
@@ -232,7 +237,11 @@ class _TimelineWidgetState extends State<TimelineWidget> {
               children: [
                 SizedBox(width: startPadding),
                 for (var i = 0; i < years.length; i++) ...[
-                  Container(width: yearWidths[years[i]]!, height: 2, color: lineColor),
+                  Container(
+                    width: yearWidths[years[i]]!,
+                    height: 2,
+                    color: lineColor,
+                  ),
                   if (i < years.length - 1) SizedBox(width: yearGap),
                 ],
               ],
@@ -253,7 +262,10 @@ class _TimelineWidgetState extends State<TimelineWidget> {
             Builder(
               builder: (context) {
                 final year = years[i];
-                final left = (yearStarts[year]! + yearWidths[year]!) - (labelWidth / 4) - (gapWidth / 2);
+                final left =
+                    (yearStarts[year]! + yearWidths[year]!) -
+                    (labelWidth / 4) -
+                    (gapWidth / 2);
                 return Positioned(
                   top: yearTextY,
                   left: left,
@@ -293,40 +305,6 @@ class _TimelineWidgetState extends State<TimelineWidget> {
     );
   }
 
-  DateTime? _parseDate(String? raw, {bool endOfMonth = false}) {
-    if (raw == null || raw.trim().isEmpty) return null;
-    final trimmed = raw.trim();
-    try {
-      if (RegExp(r'^\d{4}-\d{2}$').hasMatch(trimmed)) {
-        if (endOfMonth) {
-          final parts = trimmed.split('-');
-          final year = int.parse(parts[0]);
-          final month = int.parse(parts[1]);
-          final lastDay = DateTime(year, month + 1, 0).day;
-          return DateTime(year, month, lastDay);
-        }
-        return DateTime.parse('$trimmed-01');
-      }
-      return DateTime.parse(trimmed);
-    } catch (_) {
-      return null;
-    }
-  }
-
-  String _formatMonthYear(DateTime date) {
-    const months = [
-      '',
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-    ];
-    final m = (date.month >= 1 && date.month <= 12) ? months[date.month] : '';
-    return m.isEmpty ? '${date.year}' : '$m ${date.year}';
-  }
-
-  String _formatRangeDates(DateTime start, DateTime end) {
-    return '${_formatMonthYear(start)} — ${_formatMonthYear(end)}';
-  }
-
   Widget _buildDot(Color color) {
     return Container(
       width: 14,
@@ -339,39 +317,49 @@ class _TimelineWidgetState extends State<TimelineWidget> {
     );
   }
 
-  List<_TimeRange> _buildRanges() {
-    final ranges = <_TimeRange>[];
+  String _formatMonthYear(DateTime date) {
+    return TimelineData.formatMonthYear(date);
+  }
+
+  List<TimelineRange> _buildRanges() {
+    final ranges = <TimelineRange>[];
     for (final work in widget.data.experience) {
-      final start = _parseDate(work.start);
+      final start = TimelineData.parseDate(work.start);
       if (start == null) continue;
-      final end = _parseDate(work.end, endOfMonth: true) ?? DateTime.now();
+      final end =
+          TimelineData.parseDate(work.end, endOfMonth: true) ?? DateTime.now();
       final label = '${work.title} — ${work.company}';
-      ranges.add(_TimeRange(
-        start: start,
-        end: end,
-        kind: _RangeKind.work,
-        label: label,
-        iconPath: work.icon,
-      ));
+      ranges.add(
+        TimelineRange(
+          start: start,
+          end: end,
+          kind: RangeKind.work,
+          label: label,
+          iconPath: work.icon,
+        ),
+      );
     }
     for (final edu in widget.data.education) {
-      final start = _parseDate(edu.start);
+      final start = TimelineData.parseDate(edu.start);
       if (start == null) continue;
-      final end = _parseDate(edu.end, endOfMonth: true) ?? DateTime.now();
+      final end =
+          TimelineData.parseDate(edu.end, endOfMonth: true) ?? DateTime.now();
       final label = '${edu.course} — ${edu.school}';
-      ranges.add(_TimeRange(
-        start: start,
-        end: end,
-        kind: _RangeKind.education,
-        label: label,
-        iconPath: edu.icon,
-      ));
+      ranges.add(
+        TimelineRange(
+          start: start,
+          end: end,
+          kind: RangeKind.education,
+          label: label,
+          iconPath: edu.icon,
+        ),
+      );
     }
     return ranges;
   }
 
   List<Widget> _buildRangeSegments({
-    required List<_TimeRange> ranges,
+    required List<TimelineRange> ranges,
     required int minYear,
     required int maxYear,
     required double segmentWidth,
@@ -410,17 +398,17 @@ class _TimelineWidgetState extends State<TimelineWidget> {
       );
       final left = startX < endX ? startX : endX;
       final width = (startX - endX).abs().clamp(4.0, double.infinity);
-      final color = range.kind == _RangeKind.work ? _workColor : _eduColor;
-      final y = range.kind == _RangeKind.work ? workY : eduY;
+      final color = range.kind == RangeKind.work ? _workColor : _eduColor;
+      final y = range.kind == RangeKind.work ? workY : eduY;
 
       widgets.add(
         Positioned(
           top: y,
           left: left,
-          child: _HoverTooltip(
-            content: _RangeTooltipContent(
+          child: HoverTooltipWidget(
+            content: RangeTooltipWidget(
               title: range.label,
-              subtitle: _formatRangeDates(range.start, range.end),
+              subtitle: TimelineData.formatRangeDates(range.start, range.end),
               iconPath: range.iconPath,
               kind: range.kind,
             ),
@@ -452,7 +440,8 @@ class _TimelineWidgetState extends State<TimelineWidget> {
   }) {
     final monthIndex = date.month - 1;
     final daysInMonth = DateTime(date.year, date.month + 1, 0).day;
-    final dayFraction = ((date.day - 1).clamp(0, daysInMonth - 1)) / daysInMonth;
+    final dayFraction =
+        ((date.day - 1).clamp(0, daysInMonth - 1)) / daysInMonth;
     final monthPos = ((11 - monthIndex) + dayFraction) / 12.0;
     final yearWidth = yearWidths[date.year] ?? segmentWidth;
     final offsetInYear = monthPos * yearWidth;
@@ -461,7 +450,7 @@ class _TimelineWidgetState extends State<TimelineWidget> {
   }
 
   List<Widget> _buildPositionedDots({
-    required List<_TimelineEntry> entries,
+    required List<TimelineEntry> entries,
     required int minYear,
     required int maxYear,
     required double segmentWidth,
@@ -501,7 +490,8 @@ class _TimelineWidgetState extends State<TimelineWidget> {
       final count = monthCounts[key] ?? 1;
       final centerOffset = (idx - (count - 1) / 2) * overlapSpacing;
       final x = start + offsetInYear + centerOffset;
-      final showLabel = lastLabelX == null || (x - lastLabelX!).abs() >= minLabelSpacing;
+      final showLabel =
+          lastLabelX == null || (x - lastLabelX).abs() >= minLabelSpacing;
       if (showLabel) {
         lastLabelX = x;
       }
@@ -511,17 +501,18 @@ class _TimelineWidgetState extends State<TimelineWidget> {
         Positioned(
           top: dotY,
           left: x - (dotSize / 2),
-          child: _HoverTooltip(
-            content: _ProjectTooltipContent(
+          child: HoverTooltipWidget(
+            content: ProjectTooltipWidget(
               title: entry.title,
               subtitle: entry.subtitle,
               version: entry.version,
-              dateLabel: _formatMonthYear(entry.start),
+              dateLabel: TimelineData.formatMonthYear(entry.start),
               thumbnailPath: entry.thumbnailPath,
               videoLink: entry.videoLink,
             ),
             child: GestureDetector(
-              onTap: () => Navigator.pushNamed(context, '/projects/${entry.slug}'),
+              onTap: () =>
+                  Navigator.pushNamed(context, '/projects/${entry.slug}'),
               child: MouseRegion(
                 cursor: SystemMouseCursors.click,
                 child: _buildDot(dotColor),
@@ -550,7 +541,7 @@ class _TimelineWidgetState extends State<TimelineWidget> {
     return widgets;
   }
 
-  Map<String, Color> _buildTypeColorMap(List<_TimelineEntry> entries) {
+  Map<String, Color> _buildTypeColorMap(List<TimelineEntry> entries) {
     final types = entries.map((e) => e.projectType).toSet().toList()..sort();
     // Keep "Other" last if it exists.
     if (types.remove('Other')) {
@@ -664,215 +655,4 @@ class _TimelineWidgetState extends State<TimelineWidget> {
   }
 }
 
-class _TimelineEntry {
-  final DateTime start;
-  final String title;
-  final String subtitle;
-  final String version;
-  final String projectType;
-  final String slug;
-  final String? thumbnailPath;
-  final String? videoLink;
 
-  _TimelineEntry({
-    required this.start,
-    required this.title,
-    required this.subtitle,
-    required this.version,
-    required this.projectType,
-    required this.slug,
-    required this.thumbnailPath,
-    required this.videoLink,
-  });
-}
-
-enum _RangeKind { work, education }
-
-class _TimeRange {
-  final DateTime start;
-  final DateTime end;
-  final _RangeKind kind;
-  final String label;
-  final String? iconPath;
-
-  _TimeRange({
-    required this.start,
-    required this.end,
-    required this.kind,
-    required this.label,
-    this.iconPath,
-  });
-}
-
-class _RangeTooltipContent extends StatelessWidget {
-  final String title;
-  final String subtitle;
-  final String? iconPath;
-  final _RangeKind kind;
-
-  const _RangeTooltipContent({
-    required this.title,
-    required this.subtitle,
-    this.iconPath,
-    required this.kind,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    Widget? iconWidget;
-    final path = iconPath;
-    if (path != null && path.isNotEmpty) {
-      final ext = path.toLowerCase().split('.').last;
-      if (ext == 'svg') {
-        iconWidget = SvgPicture.asset(path, width: 28, height: 28, fit: BoxFit.contain);
-      } else {
-        iconWidget = Image.asset(path, width: 28, height: 28, fit: BoxFit.contain);
-      }
-    } else {
-      iconWidget = Icon(
-        kind == _RangeKind.work ? Icons.work_outline : Icons.school_outlined,
-        size: 24,
-        color: Colors.blueGrey,
-      );
-    }
-
-    return Material(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(10),
-      elevation: 6,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        child: DefaultTextStyle(
-          style: const TextStyle(color: AppColors.textPrimary),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (iconWidget != null) ...[
-                SizedBox(width: 28, height: 28, child: iconWidget),
-                const SizedBox(width: 8),
-              ],
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
-                  const SizedBox(height: 4),
-                  Text(subtitle),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _ProjectTooltipContent extends StatelessWidget {
-  final String title;
-  final String subtitle;
-  final String version;
-  final String dateLabel;
-  final String? thumbnailPath;
-  final String? videoLink;
-
-  const _ProjectTooltipContent({
-    required this.title,
-    required this.subtitle,
-    required this.version,
-    required this.dateLabel,
-    required this.thumbnailPath,
-    required this.videoLink,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(10),
-      elevation: 6,
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 240),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-          child: DefaultTextStyle(
-            style: const TextStyle(color: AppColors.textPrimary),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ProjectThumbnailPreview(
-                  imgPaths: thumbnailPath != null && thumbnailPath!.isNotEmpty
-                      ? [thumbnailPath!]
-                      : null,
-                  videoLink: videoLink,
-                  width: 220,
-                  height: 120,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                const SizedBox(height: 8),
-                Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
-                if (version.trim().isNotEmpty)
-                  Text('Release: $version', style: const TextStyle(color: AppColors.textSecondary)),
-                Text(subtitle, style: const TextStyle(color: AppColors.textSecondary)),
-                Text(dateLabel, style: const TextStyle(color: AppColors.textSecondary)),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _HoverTooltip extends StatefulWidget {
-  final Widget child;
-  final Widget content;
-
-  const _HoverTooltip({
-    required this.child,
-    required this.content,
-  });
-
-  @override
-  State<_HoverTooltip> createState() => _HoverTooltipState();
-}
-
-class _HoverTooltipState extends State<_HoverTooltip> {
-  OverlayEntry? _entry;
-
-  void _showOverlay(PointerHoverEvent event) {
-    final overlay = Overlay.of(context);
-    if (overlay == null) return;
-    _entry?.remove();
-
-    final overlayBox = overlay.context.findRenderObject() as RenderBox?;
-    if (overlayBox == null) return;
-    final overlayOrigin = overlayBox.localToGlobal(Offset.zero);
-    final position = event.position - overlayOrigin + const Offset(0, 12);
-
-    _entry = OverlayEntry(
-      builder: (_) => Positioned(
-        left: position.dx,
-        top: position.dy,
-        child: IgnorePointer(child: widget.content),
-      ),
-    );
-    overlay.insert(_entry!);
-  }
-
-  void _hideOverlay() {
-    _entry?.remove();
-    _entry = null;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return MouseRegion(
-      onHover: _showOverlay,
-      onExit: (_) => _hideOverlay(),
-      child: widget.child,
-    );
-  }
-}

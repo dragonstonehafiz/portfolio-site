@@ -10,7 +10,8 @@ import '../core/responsive_web_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../data/projects/project_collection.dart';
 import '../data/projects/project_data.dart';
-import '../widgets/website/timeline.dart';
+import '../data/landing/timeline_data.dart';
+import '../widgets/website/single_year_timeline.dart';
 import '../widgets/generic/shared_tabs.dart';
 import '../widgets/project/project_preview_card.dart';
 
@@ -106,7 +107,8 @@ class _LandingPageState extends State<LandingPage> {
 
   Widget _buildHomeLayout(BuildContext context, LandingPageData data) {
     final projects = ProjectsCollection.instance.projects.values.toList();
-    final timeline = TimelineWidget(data: data, projects: projects);
+    final timelineData = TimelineData.fromLandingPageData(data, projects);
+    final timeline = SingleYearTimelineWidget(data: timelineData);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -117,11 +119,11 @@ class _LandingPageState extends State<LandingPage> {
         const SizedBox(height: 24),
         _buildSectionTitle('Experience'),
         const SizedBox(height: 12),
-        ...data.experience.map((w) => _buildWorkCard(w)).toList(),
+        ...data.experience.map((w) => _buildWorkCard(w)),
         const SizedBox(height: 18),
         _buildSectionTitle('Education'),
         const SizedBox(height: 12),
-        ...data.education.map((e) => _buildEducationCard(e)).toList(),
+        ...data.education.map((e) => _buildEducationCard(e)),
         const SizedBox(height: 18),
         _buildSectionTitle('Skills'),
         const SizedBox(height: 12),
@@ -530,7 +532,6 @@ class _SkillProjectCarouselState extends State<_SkillProjectCarousel> {
   Widget build(BuildContext context) {
     if (widget.projects.isEmpty) return const SizedBox.shrink();
     final project = widget.projects[_index];
-    final isMobile = ResponsiveWebUtils.isMobile(context);
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [

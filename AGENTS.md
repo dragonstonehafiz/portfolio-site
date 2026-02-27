@@ -1,122 +1,116 @@
-# AGENTS.md - Portfolio Site
+# AGENTS.md
 
-## Purpose
-- This repo is a Flutter Web portfolio site driven by JSON assets.
-- This file summarizes the data sources, routing, widgets, and pages needed to maintain the site.
+This is a data-driven Flutter Web portfolio site. All content comes from JSON assets in `assets/`. The architecture uses feature-based organization with reusable widgets, responsive utilities, and centralized theming.
 
-## Entry and Initialization
-- Entry point: lib/main.dart
-- Startup sequence:
-  - WidgetsFlutterBinding.ensureInitialized()
-  - usePathUrlStrategy() for clean URLs
-  - ProjectsCollection.initializeFromAssets() loads assets/projects.json
-  - AppRoutes.initialize() loads PageCollection from assets/page_config.json and builds slug map
-  - runApp(PortfolioApp)
+### Do
+- use `lib/core/theme.dart` for all colors, gradients, and text styles. no hard-coded values
+- use `lib/core/responsive_web_utils.dart` for responsive layout decisions. check `isMobile()` before conditional rendering
+- keep widgets small and composable. prefer `lib/widgets/generic/`, `lib/widgets/project/`, or `lib/widgets/website/` subdirectories
+- pass data explicitly as parameters rather than storing state in widgets
+- use `ProjectService.getProjectsForPage()` to fetch filtered project lists
+- reference images in `assets/projects.json` without the `assets/` prefix (e.g., `"images/games/project.png"`)
+- add new pages by editing `assets/page_config.json`, then `AppRoutes.initialize()` handles slug generation
+- default to small components focused on a single responsibility
 
-## Routing
-- Routing is handled in lib/main.dart via onGenerateRoute
-- Static routes:
-  - / -> LandingPage
-- Dynamic routes:
-  - /pages/<slug> -> ProjectsBasePage for a page name resolved from AppRoutes.genericPageSlugs
-  - /projects/<slug> -> ProjectDetailLoader
-- Slug rules:
-  - Page slug: AppRoutes.slugForPageName(page_name) from assets/page_config.json
-  - Project slug: ProjectData.slug uses variable_name (fallback to title) from assets/projects.json
+### Don't
+- do not hard-code colors or theme values. use `AppColors` from `lib/core/theme.dart`
+- do not create custom responsive logic. use `ResponsiveWebUtils.isMobile(context)` from `lib/core/responsive_web_utils.dart`
+- do not store project data or page config in code. keep everything in `assets/`
+- do not create large monolithic widgets. extract sub-widgets into separate files
+- do not skip null checks on optional fields like `vid_link`, `github_link`, or `download_paths` from JSON
+- do not modify `variable_name` in `assets/projects.json` after creation (it's used for URL slugs)
 
-## Data Sources (JSON)
-- assets/page_config.json
-  - project_pages: [ { page_name, description, default_list_view, dropdown } ]
-  - Consumed by PageCollection (lib/utils/page_collection.dart)
-  - Used by AppRoutes.initialize() and ProjectsBasePage
-- assets/projects.json
-  - Top-level map of projectId -> { variable_name, page_list, shown, default_version, versions[] }
-  - show_in_timeline: optional flag to include/exclude a project from the Timeline widget (default true)
-  - Each version includes:
-    - version, title, vignette, description, date, last_update
-    - vid_link, github_link, img_paths[], what_i_did[], tags[], project_type, download_paths[]
-  - Loaded by ProjectsCollection (lib/utils/project_collection.dart)
-  - Rendered by ProjectData widgets (lib/utils/project_data.dart)
-- assets/landing_page.json
-  - introduction: { name, headline, summary, downloads[] }
-  - experience: [ { start, end, title, company, bullets[] } ]
-  - education: [ { school, course, start, end, modules[] } ]
-  - skills: dynamic map of category -> { description, related_projects[], items[] }
-  - Loaded by LandingPageData (lib/utils/landing_page_data.dart)
+### Commands
 
-## Core Pages
-- lib/pages/landing_page.dart
-  - Loads LandingPageData from assets/landing_page.json
-  - Sections: Intro, Experience, Education (tabbed modules), Skills
-  - Uses AnimatedGradient cards and CustomAppBar/CustomFooter
-- lib/pages/projects_base_page.dart
-  - Generic listing page for featured or any page in page_config.json
-  - Filters: tag, project type; search query; sort by date; list/grid view
-  - Renders ProjectData previews or list items
-- lib/pages/project_detail_loader.dart
-  - Resolves project entry by slug via ProjectService
-  - Handles multi-version projects with TabBar
-  - Renders ProjectData.buildDetailBody
+```
+# Type check a single file
+dart analyze path/to/file.dart
 
-## Widgets
-- lib/widgets/custom_app_bar.dart
-  - Desktop: Home + non-dropdown pages as buttons; dropdown pages grouped into a menu
-  - Mobile: Popup menu
-  - Uses AppRoutes.genericPageSlugs
-- lib/widgets/custom_footer.dart
-  - Social links (LinkedIn, YouTube, GitHub) with SVG icons
-- lib/widgets/hover_card_widget.dart
-  - Web hover scale + elevation
-- lib/widgets/search_bar_widget.dart
-  - Simple text field used by ProjectsBasePage
-- lib/widgets/animated_gradient.dart
-  - Subtle animated gradient background container
-- lib/widgets/youtube_embedded.dart
-  - Embedded YouTube iframe on web, external link fallback elsewhere
-- lib/widgets/web_iframe_helper_html.dart
-  - Iframe creation and pointer-event gating for web
+# Format a single file
+dart format path/to/file.dart
 
-## Services and Utilities
-- lib/services/project_service.dart
-  - Reads PageCollection + ProjectsCollection
-  - getProjectsForPage() sorts by last_update/date
-  - Tag filtering, search, project type lists
-  - getProjectEntryBySlug() maps slug to a ProjectEntry
-- lib/utils/project_data.dart
-  - Defines ProjectData, ProjectEntry, and all project rendering widgets
-  - Preview cards, list items, gallery, details, downloads
-- lib/utils/page_collection.dart
-  - Singleton loader for page_config.json
-- lib/utils/landing_page_data.dart
-  - Loader + models for landing_page.json
-- lib/utils/responsive_web_utils.dart
-  - Mobile breakpoint and responsive padding helpers
-- lib/utils/theme.dart
-  - App colors, gradients, text theme, GradientScaffold wrapper
+# Lint a single file
+flutter analyze path/to/file.dart
 
-## Assets
-- Images: assets/images/games/, assets/images/other/, assets/images/sit/
-  - Referenced by img_paths in assets/projects.json
-- SVG icons: assets/svg/ (used by CustomFooter)
-- Included in pubspec.yaml under flutter/assets
+# Build web when explicitly requested
+flutter build web
+```
 
-## How to Add or Edit Content
-- Add a new project:
-  1) Add entry in assets/projects.json with unique projectId and versions.
-  2) Ensure variable_name is stable (used in slugs).
-  3) Set page_list to the pages this project should appear on.
-  4) Set shown to control whether the project appears in listings.
-  5) Add images under assets/images/... and reference paths without the assets/ prefix.
-- Add a new page:
-  1) Add a new object in page_config.json project_pages with page_name, description, and dropdown flag.
-  2) AppRoutes.initialize() will slugify page_name for /pages/<slug> routing.
-  3) CustomAppBar will auto-pick it up in navigation.
-  4) Update each project’s page_list to include the new page_name as needed.
-- Edit landing content:
-  - Update assets/landing_page.json; LandingPage reads and renders dynamically.
+Note: Always format and analyze updated files. Run full build only when explicitly requested.
 
-## Notes
-- All content is data-driven from JSON in assets/.
-- For project detail routing, ensure project variable_name is unique so slugs do not collide.
-- For the Featured page, include 'Featured' in a project’s page_list.
-- In assets/projects.json, keep page_list and tags arrays on a single line for readability.
+### Safety and permissions
+
+Allowed without prompt:
+- read files, list files
+- dart analyze, dart format
+- flutter pub get
+
+Ask first:
+- flutter pub add (adding dependencies)
+- flutter build web
+- deleting files
+- git push
+
+### Project structure
+
+- `lib/main.dart` - app entry point, routing setup, initialization
+- `lib/core/routes.dart` - URL routing and page slug generation (uses AppRoutes)
+- `lib/core/theme.dart` - all colors, gradients, and text styling (use for all UI constants)
+- `lib/core/responsive_web_utils.dart` - mobile detection and responsive breakpoints (use for layout decisions)
+- `lib/pages/` - full-page components (LandingPage, ProjectsBasePage, ProjectDetailPage)
+- `lib/widgets/generic/` - reusable widgets (ImageGallery, YoutubeVideoPlayer, SearchBar, SharedTabs)
+- `lib/widgets/website/` - site-level components (CustomAppBar, CustomFooter, Timeline)
+- `lib/widgets/project/` - project display widgets (PreviewCard, ListItem, FullDetailCard, ThumbnailPreview)
+- `lib/widgets/ui/` - UI utilities (HoverCard, AnimatedGradient)
+- `lib/services/project_service.dart` - data fetching and filtering
+- `lib/utils/` - data models and utilities (ProjectData, PageCollection, LandingPageData)
+- `assets/page_config.json` - page definitions and navigation
+- `assets/projects.json` - all project content (versions, tags, links, images)
+- `assets/landing_page.json` - intro, experience, education, skills
+- `assets/images/` - organized by category (games, other, sit)
+
+### Good and bad examples
+
+- ✅ follow `lib/widgets/project/project_preview_card.dart` for composable card widgets
+- ✅ follow `lib/widgets/generic/image_gallery.dart` for complex UI components
+- ✅ follow `lib/pages/projects_base_page.dart` for page filtering and selection
+- ❌ avoid creating custom color values. see `AppColors` in `lib/core/theme.dart` for available colors
+- ❌ avoid responsive conditionals without `ResponsiveWebUtils.isMobile()`. it centralizes breakpoint logic
+- ❌ avoid fetching projects directly. use `ProjectService` methods instead
+
+### Data sources
+
+All content is JSON-driven:
+
+- `assets/projects.json`: `{ projectId: { variable_name, page_list[], shown, default_version, versions[] } }`. Each version has title, description, date, last_update, img_paths[], tags[], github_link, vid_link, download_paths[]. Set `show_in_timeline` to control timeline visibility.
+- `assets/page_config.json`: `{ project_pages: [ { page_name, description, default_list_view, dropdown } ] }`. Page slugs generated from page_name by `AppRoutes.slugForPageName()`.
+- `assets/landing_page.json`: `{ introduction, experience[], education[], skills }`. Renders on `/`.
+
+### Key core files
+
+- `lib/core/theme.dart` - app theming. Always use `AppColors`, gradients, and `textTheme` from here. Do not create inline colors.
+- `lib/core/responsive_web_utils.dart` - responsive detection. Use `ResponsiveWebUtils.isMobile(context)` for all mobile/desktop decisions.
+- `lib/core/routes.dart` - routing and slug generation. See `AppRoutes.initialize()` and `genericPageSlugs` for page mapping.
+
+### How to add or edit content
+
+**Add a new project:**
+1. Add entry in `assets/projects.json` with unique `projectId` and `variable_name`
+2. Add version(s) with title, description, date, images, links
+3. Set `page_list: ["Featured"]` if it should show on Featured page
+4. Set `shown: true` to make it visible
+5. Add images to `assets/images/<category>/` and reference without `assets/` prefix
+
+**Add a new page:**
+1. Add object in `assets/page_config.json` under `project_pages` with `page_name`, `description`
+2. `AppRoutes.initialize()` auto-generates slug and routing
+3. Update projects' `page_list` to include the new `page_name`
+4. `CustomAppBar` auto-updates navigation
+
+**Edit landing content:**
+- Update `assets/landing_page.json`. `LandingPage` reads and renders dynamically.
+
+### When stuck
+- ask a clarifying question, propose a short plan, or check if data is missing/malformed in JSON
+- verify JSON schema before assuming code is broken (missing keys, wrong types, empty arrays)
+- check `ProjectService` to understand how data flows from assets to pages

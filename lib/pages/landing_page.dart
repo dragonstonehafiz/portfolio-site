@@ -8,10 +8,11 @@ import '../utils/theme.dart';
 import '../utils/landing_page_data.dart';
 import '../utils/responsive_web_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../utils/project_collection.dart';
-import '../utils/project_data.dart';
+import '../projects/project_collection.dart';
+import '../projects/project_data.dart';
 import '../widgets/timeline_widget.dart';
 import '../widgets/shared_tabs.dart';
+import '../widgets/website/project_preview_card.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
@@ -543,7 +544,7 @@ class _SkillProjectCarouselState extends State<_SkillProjectCarousel> {
             child: ConstrainedBox(
               key: ValueKey(project.slug),
               constraints: const BoxConstraints(maxWidth: 560),
-              child: project.buildPreviewWidget(context),
+              child: ProjectPreviewCard(project: project),
             ),
           ),
         ),

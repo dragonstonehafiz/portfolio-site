@@ -3,10 +3,11 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../utils/landing_page_data.dart';
-import '../utils/project_data.dart';
+import '../projects/project_data.dart';
 import '../utils/responsive_web_utils.dart';
 import '../utils/theme.dart';
 import '../widgets/animated_gradient.dart';
+import '../widgets/website/project_thumbnail_preview.dart';
 
 class TimelineWidget extends StatefulWidget {
   final LandingPageData data;
@@ -787,15 +788,6 @@ class _ProjectTooltipContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final thumb = ProjectData.buildThumbnailPreview(
-      imgPaths: thumbnailPath != null && thumbnailPath!.isNotEmpty
-          ? [thumbnailPath!]
-          : const [],
-      vidLink: videoLink,
-      width: 220,
-      height: 120,
-    );
-
     return Material(
       color: Colors.white,
       borderRadius: BorderRadius.circular(10),
@@ -810,13 +802,14 @@ class _ProjectTooltipContent extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ClipRRect(
+                ProjectThumbnailPreview(
+                  imgPaths: thumbnailPath != null && thumbnailPath!.isNotEmpty
+                      ? [thumbnailPath!]
+                      : null,
+                  videoLink: videoLink,
+                  width: 220,
+                  height: 120,
                   borderRadius: BorderRadius.circular(8),
-                  child: SizedBox(
-                    width: 220,
-                    height: 120,
-                    child: thumb,
-                  ),
                 ),
                 const SizedBox(height: 8),
                 Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),

@@ -1,7 +1,7 @@
 import 'package:flutter/rendering.dart';
-import '../utils/project_data.dart';
+import 'project_data.dart';
 import '../utils/page_collection.dart';
-import '../utils/project_collection.dart';
+import 'project_collection.dart';
 
 class ProjectService {
   static List<ProjectData> getProjectsForPage(String pageName, {bool descending = true}) {

@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/custom_footer.dart';
 import '../widgets/search_bar_widget.dart';
-import '../services/project_service.dart';
-import '../utils/project_data.dart';
+import '../widgets/website/project_preview_card.dart';
+import '../widgets/website/project_list_item.dart';
+import '../projects/project_service.dart';
+import '../projects/project_data.dart';
 import '../utils/responsive_web_utils.dart';
 import '../utils/theme.dart';
 import '../utils/page_collection.dart';
@@ -305,7 +307,7 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
             .map(
               (project) => Padding(
                 padding: const EdgeInsets.only(bottom: 12),
-                child: project.buildListItemWidget(context),
+                child: ProjectListItem(project: project),
               ),
             )
             .toList(),
@@ -315,10 +317,7 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
     if (crossAxisCount == 1) {
       return Column(
         children: projects
-            .map((project) => Padding(
-                  padding: const EdgeInsets.only(bottom: 16),
-                  child: project.buildPreviewWidget(context),
-                ))
+            .map((project) => ProjectPreviewCard(project: project))
             .toList(),
       );
     }
@@ -330,7 +329,7 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
       crossAxisSpacing: 16,
       mainAxisSpacing: 16,
       childAspectRatio: isMobile ? 0.8 : 0.9,
-      children: projects.map((project) => project.buildPreviewWidget(context)).toList(),
+      children: projects.map((project) => ProjectPreviewCard(project: project)).toList(),
     );
   }
 

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'pages/landing_page.dart';
 import 'pages/projects_base_page.dart';
-import 'pages/project_detail_loader.dart';
+import 'pages/project_detail_page.dart';
 import 'routes/app_routes.dart';
 import 'utils/theme.dart';
 import 'utils/page_collection.dart';
-import 'utils/project_collection.dart';
+import 'projects/project_collection.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 
 void main() async {
@@ -82,7 +82,7 @@ class PortfolioApp extends StatelessWidget {
             }
           } else if (segments[0] == 'projects') {
             final slug = segments[1];
-            return _slideUpRoute(ProjectDetailLoader(slug: slug));
+            return _slideUpRoute(ProjectDetailPage(slug: slug));
           }
         }
         debugPrint("No route match for: ${uri.path}");

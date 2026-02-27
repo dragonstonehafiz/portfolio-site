@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import '../services/project_service.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/custom_footer.dart';
-import '../utils/project_data.dart';
+import '../projects/project_service.dart';
+import '../projects/project_data.dart';
 import '../utils/theme.dart';
 import '../widgets/shared_tabs.dart';
+import '../widgets/website/project_full_detail_card.dart';
 
-class ProjectDetailLoader extends StatelessWidget {
+class ProjectDetailPage extends StatelessWidget {
   final String slug;
-  const ProjectDetailLoader({required this.slug, super.key});
+  const ProjectDetailPage({required this.slug, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +117,7 @@ class ProjectDetailLoader extends StatelessWidget {
                                     animation: animation,
                                     builder: (context, _) {
                                       final version = versions[controller.index];
-                                      return version.buildDetailBody(context);
+                                      return ProjectFullDetailCard(project: version);
                                     },
                                   ),
                                 ],

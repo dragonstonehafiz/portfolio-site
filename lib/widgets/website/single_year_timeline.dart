@@ -339,32 +339,42 @@ class _SingleYearTimelineWidgetState extends State<SingleYearTimelineWidget> {
     required int selectedYear,
   }) {
     const dotSize = 14.0;
-    const overlapSpacing = 10.0;
     final widgets = <Widget>[];
 
-    // Count projects per month for overlap handling (same as multi-year timeline)
-    final monthCounts = <String, int>{};
+    // Calculate positions for all entries
+    final entriesWithPositions = <List<dynamic>>[];
     for (final entry in entries) {
-      final key = '${entry.start.year}-${entry.start.month}';
-      monthCounts[key] = (monthCounts[key] ?? 0) + 1;
-    }
-    final monthIndices = <String, int>{};
-
-    for (final entry in entries) {
-      final baseX =
+      final x =
           _getMonthPosition(entry.start.month, segmentWidth, startPadding) -
           ((entry.start.day - 1) /
                   DateTime(entry.start.year, entry.start.month + 1, 0).day) *
               (segmentWidth / 12);
+      entriesWithPositions.add([entry, x]);
+    }
 
-      // Calculate overlap offset (same as multi-year timeline)
-      final key = '${entry.start.year}-${entry.start.month}';
-      final idx = monthIndices[key] ?? 0;
-      monthIndices[key] = idx + 1;
-      final count = monthCounts[key] ?? 1;
-      final centerOffset = (idx - (count - 1) / 2) * overlapSpacing;
-      final x = baseX + centerOffset;
+    // Sort by position (descending = right to left, older to newer)
+    entriesWithPositions.sort(
+      (a, b) => (b[1] as double).compareTo(a[1] as double),
+    );
 
+    // Adjust overlaps by moving more recent items (smaller x) further left
+    for (var i = 0; i < entriesWithPositions.length - 1; i++) {
+      final current = entriesWithPositions[i];
+      final next = entriesWithPositions[i + 1];
+      final currentX = current[1] as double;
+      final nextX = next[1] as double;
+      final distance = (currentX - nextX).abs();
+
+      if (distance < dotSize) {
+        final newNextX = currentX - dotSize;
+        next[1] = newNextX;
+      }
+    }
+
+    // Render dots at their adjusted positions
+    for (final item in entriesWithPositions) {
+      final entry = item[0] as TimelineEntry;
+      final x = item[1] as double;
       final dotColor = typeColorMap[entry.projectType] ?? AppColors.accent;
 
       widgets.add(

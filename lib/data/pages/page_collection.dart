@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
-import 'page_data.dart';
+import 'page_models.dart';
 
 class PageCollection {
   final List<ProjectPageData> _genericProjectPageData;

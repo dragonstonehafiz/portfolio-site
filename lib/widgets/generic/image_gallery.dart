@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import '../../utils/theme.dart';
+import '../../core/theme.dart';
 
 /// A reusable image gallery widget with auto-advancing carousel and thumbnail selector.
 /// Features:

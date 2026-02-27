@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../projects/project_data.dart';
-import '../../utils/theme.dart';
+import '../../data/projects/project_data.dart';
+import '../../core/theme.dart';
 
 /// A flexible thumbnail preview widget that displays project images or video thumbnails.
 /// Sized based on width/height parameters provided by parent.

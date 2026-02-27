@@ -4,11 +4,11 @@ import '../widgets/website/custom_footer.dart';
 import '../widgets/generic/search_bar.dart';
 import '../widgets/project/project_preview_card.dart';
 import '../widgets/project/project_list_item.dart';
-import '../projects/project_service.dart';
-import '../projects/project_data.dart';
-import '../utils/responsive_web_utils.dart';
-import '../utils/theme.dart';
-import '../utils/page_collection.dart';
+import '../data/projects/project_service.dart';
+import '../data/projects/project_data.dart';
+import '../core/responsive_web_utils.dart';
+import '../core/theme.dart';
+import '../data/pages/page_collection.dart';
 
 class ProjectsBasePage extends StatefulWidget {
   final String configKey;

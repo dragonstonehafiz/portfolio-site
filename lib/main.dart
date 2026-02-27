@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'pages/landing_page.dart';
 import 'pages/projects_base_page.dart';
 import 'pages/project_detail_page.dart';
-import 'routes/app_routes.dart';
-import 'utils/theme.dart';
-import 'utils/page_collection.dart';
-import 'projects/project_collection.dart';
+import 'core/routes.dart';
+import 'core/theme.dart';
+import 'data/pages/page_collection.dart';
+import 'data/projects/project_collection.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 
 void main() async {

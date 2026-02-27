@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import '../widgets/website/custom_app_bar.dart';
 import '../widgets/website/custom_footer.dart';
-import '../projects/project_service.dart';
-import '../projects/project_data.dart';
-import '../utils/theme.dart';
+import '../data/projects/project_service.dart';
+import '../data/projects/project_data.dart';
+import '../core/theme.dart';
 import '../widgets/generic/shared_tabs.dart';
 import '../widgets/project/project_full_detail_card.dart';
 

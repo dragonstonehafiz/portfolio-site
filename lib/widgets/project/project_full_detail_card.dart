@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../projects/project_data.dart';
-import '../../utils/theme.dart';
+import '../../data/projects/project_data.dart';
+import '../../core/theme.dart';
 import '../generic/image_gallery.dart';
 import '../generic/youtube_video_player.dart';
 

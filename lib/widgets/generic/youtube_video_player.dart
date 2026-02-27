@@ -3,7 +3,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:web/web.dart' as web;
 import 'dart:ui_web' as ui_web;
-import '../../utils/responsive_web_utils.dart';
+import '../../core/responsive_web_utils.dart';
 
 /// A reusable YouTube video player widget with responsive sizing and embedded playback.
 /// Automatically adapts to mobile and desktop layouts.

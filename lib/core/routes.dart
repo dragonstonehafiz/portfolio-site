@@ -1,4 +1,4 @@
-import '../utils/page_collection.dart';
+import '../data/pages/page_collection.dart';
 
 class AppRoutes {
   static const String landing = '/';

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../../routes/app_routes.dart';
-import '../../utils/theme.dart';
-import '../../utils/responsive_web_utils.dart';
-import '../../utils/page_collection.dart';
-import '../../utils/page_data.dart';
+import '../../core/routes.dart';
+import '../../core/theme.dart';
+import '../../core/responsive_web_utils.dart';
+import '../../data/pages/page_collection.dart';
+import '../../data/pages/page_models.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({super.key});

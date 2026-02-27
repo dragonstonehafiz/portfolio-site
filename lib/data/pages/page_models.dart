@@ -1,4 +1,4 @@
-/// A generic page that contains a title, description and a list of project ids.
+/// A page that contains a title, description, and display options.
 class ProjectPageData {
   final String pageName;
   final String description;
@@ -24,11 +24,11 @@ class ProjectPageData {
     );
   }
 
-      Map<String, dynamic> toJson() => {
-        'page_name': pageName,
-        'description': description,
-        'default_list_view': defaultListView,
-        'dropdown': dropdown,
-        'all_projects': allProjects,
-      };
+  Map<String, dynamic> toJson() => {
+    'page_name': pageName,
+    'description': description,
+    'default_list_view': defaultListView,
+    'dropdown': dropdown,
+    'all_projects': allProjects,
+  };
 }

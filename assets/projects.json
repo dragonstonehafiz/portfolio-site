@@ -536,12 +536,36 @@
     ]
   },
   "SpendingDashboard": {
-    "default_version": "PySide6",
+    "default_version": "Vue.js + FastAPI",
     "page_list": ["Featured", "Programming"],
     "show_in_timeline": true,
     "shown": true,
     "variable_name": "SpendingDashboard",
     "versions": [
+      {
+        "version": "Vue.js + FastAPI",
+        "date": "2026-02-27",
+        "last_update": "2026-02-27",
+        "description": "This version of Spending Dashboard is a full frontend-backend rebuild of my earlier PySide6 desktop app. I moved away from PySide6 because the app felt too slow to launch and navigate as the project grew. The new architecture uses a Vue.js frontend for the UI and a FastAPI backend for data processing and API endpoints, packaged in Docker so I can run it locally in a consistent environment. The result is a faster, more responsive workflow for loading, filtering, and visualizing spending data while keeping deployment simple on my own PC.",        "download_paths": [],
+        "github_link": "https://github.com/dragonstonehafiz/budgeting-analysis",
+        "img_paths": [
+          "images/other/budgetingVer3_1.png",
+          "images/other/budgetingVer3_2.png",
+          "images/other/budgetingVer3_3.png",
+          "images/other/budgetingVer3_4.png"
+        ],
+        "project_type": "Productivity",
+        "tags": ["data-processing", "frontend"],
+        "tools": ["python", "vue.js", "fastapi", "docker"],
+        "title": "Spending Dashboard",
+        "vid_link": null,
+        "vignette": "A Dockerized personal spending dashboard rebuilt with a Vue.js frontend and FastAPI backend for faster startup and smoother data exploration.",
+        "what_i_did": [
+          "Built FastAPI endpoints for loading and serving spending data to the UI.",
+          "Implemented the Vue.js dashboard interface for tables, filters, and spending visualizations.",
+          "Containerized the application with Docker so the full stack runs locally with consistent setup and faster startup."
+        ]
+      },
       {
         "version": "PySide6",
         "date": "2025-10-10",

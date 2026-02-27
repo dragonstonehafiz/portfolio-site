@@ -143,7 +143,8 @@
         "React",
         "TypeScript",
         "HTML/CSS",
-        "JavaScript"
+        "JavaScript",
+        "Vue.js"
       ]
     },
     "Backend": {
@@ -206,8 +207,7 @@
         "Adobe Photoshop",
         "Adobe Audition",
         "DaVinci Resolve",
-        "Affinity Photo 2",
-        "Audacity"
+        "Affinity Photo 2"
       ]
     }
   }

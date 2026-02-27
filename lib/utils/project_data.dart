@@ -19,6 +19,7 @@ class ProjectData {
   final String? githubLink;
   final List<String> imgPaths;
   final List<String> whatIDid;
+  final List<String> tools;
   final List<String> tags;
   final String projectType;
   final String version;
@@ -38,6 +39,7 @@ class ProjectData {
     this.githubLink,
     required this.imgPaths,
     required this.whatIDid,
+    required this.tools,
     required this.tags,
     required this.projectType,
     required this.version,
@@ -63,6 +65,7 @@ class ProjectData {
       githubLink: json['github_link'],
       imgPaths: List<String>.from(json['img_paths'] ?? []),
       whatIDid: List<String>.from(json['what_i_did'] ?? []),
+      tools: List<String>.from(json['tools'] ?? []),
       tags: List<String>.from(json['tags'] ?? []),
       projectType: json['project_type'] ?? '',
       version: versionOverride ?? json['version']?.toString() ?? 'default',
@@ -490,6 +493,12 @@ class ProjectData {
         if ((description?.isNotEmpty ?? false) || whatIDid.isNotEmpty) ...[
           const SizedBox(height: 12),
           _buildProjectDetailsSection(context),
+        ],
+        if (tools.isNotEmpty) ...[
+          const SizedBox(height: 12),
+          _buildSectionHeader('Tools'),
+          const SizedBox(height: 12),
+          _buildToolsWidget(maxToShow: tools.length),
         ],
         if (tags.isNotEmpty) ...[
           const SizedBox(height: 12),
@@ -1205,6 +1214,19 @@ class ProjectData {
       runSpacing: 4,
       children: tags.take(maxToShow).map((tag) => Chip(
         label: Text(tag, style: const TextStyle(fontSize: 12)),
+        backgroundColor: AppColors.secondary.withValues(alpha: 0.1),
+        side: BorderSide(color: AppColors.secondary.withValues(alpha: 0.3)),
+      )).toList(),
+    );
+  }
+
+  // Tools widget
+  Widget _buildToolsWidget({int maxToShow = 999}) {
+    return Wrap(
+      spacing: 8,
+      runSpacing: 4,
+      children: tools.take(maxToShow).map((tool) => Chip(
+        label: Text(tool, style: const TextStyle(fontSize: 12)),
         backgroundColor: AppColors.secondary.withValues(alpha: 0.1),
         side: BorderSide(color: AppColors.secondary.withValues(alpha: 0.3)),
       )).toList(),

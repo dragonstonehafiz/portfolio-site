@@ -4,6 +4,7 @@ import '../../data/projects/project_data.dart';
 import '../../core/theme.dart';
 import '../generic/image_gallery.dart';
 import '../generic/youtube_video_player.dart';
+import '../generic/tool_badge_list.dart';
 
 /// A comprehensive detail card widget for displaying full project information.
 /// Extracts all detail rendering logic from ProjectData for proper separation of concerns.
@@ -28,7 +29,8 @@ class ProjectFullDetailCard extends StatelessWidget {
           const SizedBox(height: 12),
           _buildProjectGallerySection(context),
         ],
-        if ((project.description?.isNotEmpty ?? false) || project.whatIDid.isNotEmpty) ...[
+        if ((project.description?.isNotEmpty ?? false) ||
+            project.whatIDid.isNotEmpty) ...[
           const SizedBox(height: 12),
           _buildProjectDetailsSection(context),
         ],
@@ -79,7 +81,9 @@ class ProjectFullDetailCard extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 8),
-        if (project.vidLink != null || project.githubLink != null || hasDownloads)
+        if (project.vidLink != null ||
+            project.githubLink != null ||
+            hasDownloads)
           Row(
             children: [
               if (project.vidLink != null) ...[
@@ -92,7 +96,7 @@ class ProjectFullDetailCard extends StatelessWidget {
                   ),
                 ),
               ],
-              if (project.vidLink != null && project.githubLink != null) 
+              if (project.vidLink != null && project.githubLink != null)
                 const SizedBox(width: 8),
               if (project.githubLink != null) ...[
                 TextButton.icon(
@@ -133,9 +137,11 @@ class ProjectFullDetailCard extends StatelessWidget {
   }
 
   Widget _buildProjectGallerySection(BuildContext context) {
-    final videoWidget = project.vidLink != null ? YoutubeVideoPlayer(videoUrl: project.vidLink!) : null;
-    final imagesWidget = project.imgPaths.isNotEmpty 
-        ? ImageGallery(imagePaths: project.imgPaths) 
+    final videoWidget = project.vidLink != null
+        ? YoutubeVideoPlayer(videoUrl: project.vidLink!)
+        : null;
+    final imagesWidget = project.imgPaths.isNotEmpty
+        ? ImageGallery(imagePaths: project.imgPaths)
         : null;
     return _ProjectGallerySwitcher(
       videoContent: videoWidget,
@@ -144,11 +150,12 @@ class ProjectFullDetailCard extends StatelessWidget {
   }
 
   Widget _buildProjectDetailsSection(BuildContext context) {
-    final descriptionWidget = (project.description != null && project.description!.isNotEmpty) 
-        ? _buildDescriptionWidget(context) 
+    final descriptionWidget =
+        (project.description != null && project.description!.isNotEmpty)
+        ? _buildDescriptionWidget(context)
         : null;
-    final deliverablesWidget = project.whatIDid.isNotEmpty 
-        ? _buildWhatIDidWidget(context) 
+    final deliverablesWidget = project.whatIDid.isNotEmpty
+        ? _buildWhatIDidWidget(context)
         : null;
     if (descriptionWidget == null && deliverablesWidget == null) {
       return const SizedBox.shrink();
@@ -185,78 +192,93 @@ class ProjectFullDetailCard extends StatelessWidget {
   Widget _buildDescriptionWidget(BuildContext context) {
     final content = project.description ?? '';
     final theme = Theme.of(context);
-    final textStyle = theme.textTheme.bodyMedium?.copyWith(
+    final textStyle =
+        theme.textTheme.bodyMedium?.copyWith(
           height: 1.6,
           fontSize: 16,
           color: AppColors.textSecondary,
         ) ??
-        const TextStyle(fontSize: 16, height: 1.6, color: AppColors.textSecondary);
+        const TextStyle(
+          fontSize: 16,
+          height: 1.6,
+          color: AppColors.textSecondary,
+        );
 
-    return Text(
-      content,
-      style: textStyle,
-      textAlign: TextAlign.justify,
-    );
+    return Text(content, style: textStyle, textAlign: TextAlign.justify);
   }
 
   Widget _buildTagsWidget({int maxToShow = 999}) {
     return Wrap(
       spacing: 8,
       runSpacing: 4,
-      children: project.tags.take(maxToShow).map((tag) => Chip(
-        label: Text(tag, style: const TextStyle(fontSize: 12)),
-        backgroundColor: AppColors.secondary.withValues(alpha: 0.1),
-        side: BorderSide(color: AppColors.secondary.withValues(alpha: 0.3)),
-      )).toList(),
+      children: project.tags
+          .take(maxToShow)
+          .map(
+            (tag) => Chip(
+              label: Text(tag, style: const TextStyle(fontSize: 12)),
+              backgroundColor: AppColors.secondary.withValues(alpha: 0.1),
+              side: BorderSide(
+                color: AppColors.secondary.withValues(alpha: 0.3),
+              ),
+            ),
+          )
+          .toList(),
     );
   }
 
   Widget _buildToolsWidget({int maxToShow = 999}) {
-    return Wrap(
+    return ToolBadgeList(
+      tools: project.tools.take(maxToShow).toList(),
+      showIcons: true,
+      fontSize: 12,
       spacing: 8,
-      runSpacing: 4,
-      children: project.tools.take(maxToShow).map((tool) => Chip(
-        label: Text(tool, style: const TextStyle(fontSize: 12)),
-        backgroundColor: AppColors.secondary.withValues(alpha: 0.1),
-        side: BorderSide(color: AppColors.secondary.withValues(alpha: 0.3)),
-      )).toList(),
+      runSpacing: 8,
     );
   }
 
   Widget _buildWhatIDidWidget(BuildContext context) {
     final theme = Theme.of(context);
-    final itemStyle = theme.textTheme.bodyLarge?.copyWith(
+    final itemStyle =
+        theme.textTheme.bodyLarge?.copyWith(
           height: 1.6,
           color: AppColors.textSecondary,
         ) ??
-        const TextStyle(fontSize: 16, height: 1.6, color: AppColors.textSecondary);
+        const TextStyle(
+          fontSize: 16,
+          height: 1.6,
+          color: AppColors.textSecondary,
+        );
 
     return Column(
-      children: project.whatIDid.map((item) => Padding(
-        padding: const EdgeInsets.only(bottom: 3.0),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              margin: const EdgeInsets.only(top: 8),
-              width: 6,
-              height: 6,
-              decoration: BoxDecoration(
-                color: AppColors.primary,
-                shape: BoxShape.circle,
+      children: project.whatIDid
+          .map(
+            (item) => Padding(
+              padding: const EdgeInsets.only(bottom: 3.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(top: 8),
+                    width: 6,
+                    height: 6,
+                    decoration: BoxDecoration(
+                      color: AppColors.primary,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      _normalizeIndentation(item),
+                      style: itemStyle,
+                      textAlign: TextAlign.justify,
+                    ),
+                  ),
+                ],
               ),
             ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Text(
-                _normalizeIndentation(item),
-                style: itemStyle,
-                textAlign: TextAlign.justify,
-              ),
-            ),
-          ],
-        ),
-      )).toList(),
+          )
+          .toList(),
     );
   }
 
@@ -297,8 +319,18 @@ class ProjectFullDetailCard extends StatelessWidget {
     try {
       final date = DateTime.parse(dateStr);
       final months = [
-        'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+        'Jan',
+        'Feb',
+        'Mar',
+        'Apr',
+        'May',
+        'Jun',
+        'Jul',
+        'Aug',
+        'Sep',
+        'Oct',
+        'Nov',
+        'Dec',
       ];
       return '${months[date.month - 1]} ${date.year}';
     } catch (e) {
@@ -324,10 +356,14 @@ class ProjectFullDetailCard extends StatelessWidget {
       return input.trim();
     }
 
-    final stripped = lines.map((line) {
-      if (line.trim().isEmpty) return '';
-      return line.length >= minIndent! ? line.substring(minIndent) : line.trimLeft();
-    }).join('\n');
+    final stripped = lines
+        .map((line) {
+          if (line.trim().isEmpty) return '';
+          return line.length >= minIndent!
+              ? line.substring(minIndent)
+              : line.trimLeft();
+        })
+        .join('\n');
 
     return stripped.trim();
   }
@@ -360,13 +396,11 @@ class _ProjectGallerySwitcher extends StatefulWidget {
   final Widget? videoContent;
   final Widget? imagesContent;
 
-  const _ProjectGallerySwitcher({
-    this.videoContent,
-    this.imagesContent,
-  });
+  const _ProjectGallerySwitcher({this.videoContent, this.imagesContent});
 
   @override
-  State<_ProjectGallerySwitcher> createState() => _ProjectGallerySwitcherState();
+  State<_ProjectGallerySwitcher> createState() =>
+      _ProjectGallerySwitcherState();
 }
 
 class _ProjectGallerySwitcherState extends State<_ProjectGallerySwitcher> {
@@ -381,9 +415,13 @@ class _ProjectGallerySwitcherState extends State<_ProjectGallerySwitcher> {
   @override
   void didUpdateWidget(covariant _ProjectGallerySwitcher oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (_selected == 'video' && widget.videoContent == null && widget.imagesContent != null) {
+    if (_selected == 'video' &&
+        widget.videoContent == null &&
+        widget.imagesContent != null) {
       _selected = 'images';
-    } else if (_selected == 'images' && widget.imagesContent == null && widget.videoContent != null) {
+    } else if (_selected == 'images' &&
+        widget.imagesContent == null &&
+        widget.videoContent != null) {
       _selected = 'video';
     }
   }
@@ -441,7 +479,8 @@ class _ProjectDetailsSwitcher extends StatefulWidget {
   });
 
   @override
-  State<_ProjectDetailsSwitcher> createState() => _ProjectDetailsSwitcherState();
+  State<_ProjectDetailsSwitcher> createState() =>
+      _ProjectDetailsSwitcherState();
 }
 
 class _ProjectDetailsSwitcherState extends State<_ProjectDetailsSwitcher> {

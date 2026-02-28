@@ -4,17 +4,21 @@ import '../pages/page_collection.dart';
 import 'project_collection.dart';
 
 class ProjectService {
-  static List<ProjectData> getProjectsForPage(String pageName, {bool descending = true}) {
+  static List<ProjectData> getProjectsForPage(
+    String pageName, {
+    bool descending = true,
+  }) {
     final projects = <ProjectData>[];
     final projectsCollection = ProjectsCollection.instance;
     final pageData = PageCollection.instance.findGenericPageByName(pageName);
     final includeAllProjects = pageData?.allProjects ?? false;
     for (final entry in projectsCollection.projects.values) {
-      if (entry.shown && (includeAllProjects || entry.pageList.contains(pageName))) {
+      if (entry.shown &&
+          (includeAllProjects || entry.pageList.contains(pageName))) {
         projects.add(entry.defaultVersion);
       }
     }
-    
+
     // Sort projects by lastUpdate (or created date) with the requested order.
     projects.sort((a, b) {
       final da = _parseProjectDate(a.lastUpdate ?? a.date);
@@ -40,8 +44,8 @@ class ProjectService {
     final parsed = DateTime.tryParse(trimmed);
     if (parsed != null) return parsed;
 
-  // Try year-only (e.g., "2024")
-  final yearOnly = RegExp(r'^\d{4}\$');
+    // Try year-only (e.g., "2024")
+    final yearOnly = RegExp(r'^\d{4}\$');
     if (yearOnly.hasMatch(trimmed)) {
       try {
         final y = int.parse(trimmed);
@@ -99,20 +103,36 @@ class ProjectService {
   // Get projects by tag
   static List<ProjectData> getProjectsByTag(String tag) {
     return ProjectsCollection.instance.projects.values
-      .map((entry) => entry.defaultVersion)
-      .where((project) => project.tags.contains(tag))
-      .toList();
+        .map((entry) => entry.defaultVersion)
+        .where((project) => project.tags.contains(tag))
+        .toList();
   }
 
   // Get all available tags
   static Set<String> getAllTags() {
     final allTags = <String>{};
-    final projects = ProjectsCollection.instance.projects.values
-        .map((entry) => entry.defaultVersion);
+    final projects = ProjectsCollection.instance.projects.values.map(
+      (entry) => entry.defaultVersion,
+    );
     for (final project in projects) {
       allTags.addAll(project.tags);
     }
     return allTags;
+  }
+
+  // Get all unique tools from all project versions
+  static Set<String> getAllTools() {
+    final allTools = <String>{};
+    final projectsCollection = ProjectsCollection.instance;
+
+    // Iterate through all projects and all versions to collect tools
+    for (final entry in projectsCollection.projects.values) {
+      for (final version in entry.versions) {
+        allTools.addAll(version.tools);
+      }
+    }
+
+    return allTools;
   }
 
   // Search projects by title or description
@@ -120,14 +140,17 @@ class ProjectService {
     if (query.isEmpty) {
       return getAllProjects();
     }
-    
+
     final lowercaseQuery = query.toLowerCase();
     return ProjectsCollection.instance.projects.values
-      .map((entry) => entry.defaultVersion)
-      .where((project) =>
-        project.title.toLowerCase().contains(lowercaseQuery) ||
-        (project.description?.toLowerCase().contains(lowercaseQuery) ?? false))
-      .toList();
+        .map((entry) => entry.defaultVersion)
+        .where(
+          (project) =>
+              project.title.toLowerCase().contains(lowercaseQuery) ||
+              (project.description?.toLowerCase().contains(lowercaseQuery) ??
+                  false),
+        )
+        .toList();
   }
 
   // Get available page configurations

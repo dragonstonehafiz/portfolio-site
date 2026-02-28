@@ -14,6 +14,7 @@ import '../data/landing/timeline_data.dart';
 import '../widgets/website/single_year_timeline.dart';
 import '../widgets/generic/shared_tabs.dart';
 import '../widgets/project/project_preview_card.dart';
+import '../widgets/generic/tool_badge_list.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
@@ -505,12 +506,12 @@ class _LandingPageState extends State<LandingPage> {
                     ),
                     const SizedBox(height: 8),
                   ],
-                  Wrap(
+                  ToolBadgeList(
+                    tools: filteredItems,
+                    showIcons: true,
+                    fontSize: 13,
                     spacing: 8,
-                    runSpacing: 6,
-                    children: filteredItems
-                        .map((skill) => Chip(label: Text(skill)))
-                        .toList(),
+                    runSpacing: 8,
                   ),
                   if (relatedProjects.isNotEmpty &&
                       filteredItems.isNotEmpty) ...[

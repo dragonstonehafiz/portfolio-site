@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../widgets/website/custom_app_bar.dart';
-import '../widgets/website/custom_footer.dart';
+import '../widgets/ui/custom_app_bar.dart';
+import '../widgets/ui/custom_footer.dart';
 import '../widgets/generic/search_bar.dart';
 import '../widgets/project/project_preview_card.dart';
 import '../widgets/project/project_list_item.dart';
@@ -45,12 +45,12 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
   @override
   void initState() {
     super.initState();
-    
+
     // Check if this page should default to list view based on page config
     final pageCollection = PageCollection.instance;
     final pageData = pageCollection.findGenericPageByName(widget.configKey);
     bool defaultListView = pageData?.defaultListView ?? false;
-    
+
     // Load available tags for the dropdown, scoped to this page's projects
     final projectsForPage = ProjectService.getProjectsForPage(widget.configKey);
     final tags = <String>{};
@@ -99,7 +99,10 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
             (t) => DropdownMenuItem<String?>(
               value: t,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 8.0,
+                  vertical: 4.0,
+                ),
                 child: Text(t),
               ),
             ),
@@ -131,7 +134,10 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
             (type) => DropdownMenuItem<String?>(
               value: type,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 8.0,
+                  vertical: 4.0,
+                ),
                 child: Text(type),
               ),
             ),
@@ -148,7 +154,9 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
       child: IconButton(
         padding: EdgeInsets.zero,
         constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
-        visualDensity: isMobile ? VisualDensity.compact : VisualDensity.standard,
+        visualDensity: isMobile
+            ? VisualDensity.compact
+            : VisualDensity.standard,
         iconSize: isMobile ? 18 : 20,
         onPressed: () {
           setState(() {
@@ -180,7 +188,10 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
   }
 
   // Build responsive layout for projects
-  Widget _buildResponsiveLayout(BuildContext context, List<ProjectData> projects) {
+  Widget _buildResponsiveLayout(
+    BuildContext context,
+    List<ProjectData> projects,
+  ) {
     final padding = ResponsiveWebUtils.getResponsivePadding(context);
     final crossAxisCount = _getCrossAxisCount(context);
     final isMobile = ResponsiveWebUtils.isMobile(context);
@@ -246,11 +257,7 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        titleWidget,
-        const SizedBox(height: 8),
-        controlsRow,
-      ],
+      children: [titleWidget, const SizedBox(height: 8), controlsRow],
     );
   }
 
@@ -258,10 +265,7 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
   Widget _buildDescription(BuildContext context, int count, bool isMobile) {
     return Text(
       ((widget.description ?? '')).replaceFirst('{count}', '$count'),
-      style: TextStyle(
-        fontSize: isMobile ? 14 : 18,
-        color: Colors.grey,
-      ),
+      style: TextStyle(fontSize: isMobile ? 14 : 18, color: Colors.grey),
     );
   }
 
@@ -277,24 +281,22 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
   }
 
   // Projects preview section
-  Widget _buildProjectsPreview(BuildContext context, List<ProjectData> projects, int crossAxisCount, bool isMobile) {
+  Widget _buildProjectsPreview(
+    BuildContext context,
+    List<ProjectData> projects,
+    int crossAxisCount,
+    bool isMobile,
+  ) {
     if (projects.isEmpty) {
       return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              widget.emptyStateIcon,
-              size: 64,
-              color: Colors.grey,
-            ),
+            Icon(widget.emptyStateIcon, size: 64, color: Colors.grey),
             const SizedBox(height: 16),
             Text(
               'No ${widget.title.toLowerCase()} found',
-              style: const TextStyle(
-                fontSize: 18,
-                color: Colors.grey,
-              ),
+              style: const TextStyle(fontSize: 18, color: Colors.grey),
             ),
           ],
         ),
@@ -329,7 +331,9 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
       crossAxisSpacing: 16,
       mainAxisSpacing: 16,
       childAspectRatio: isMobile ? 0.8 : 0.9,
-      children: projects.map((project) => ProjectPreviewCard(project: project)).toList(),
+      children: projects
+          .map((project) => ProjectPreviewCard(project: project))
+          .toList(),
     );
   }
 
@@ -342,23 +346,34 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
           Expanded(
             child: Builder(
               builder: (context) {
-                var projects = ProjectService.getProjectsForPage(widget.configKey, descending: _descending);
-                
+                var projects = ProjectService.getProjectsForPage(
+                  widget.configKey,
+                  descending: _descending,
+                );
+
                 // Apply tag filter if selected
                 if (_selectedTag != null && _selectedTag!.isNotEmpty) {
-                  projects = projects.where((p) => p.tags.contains(_selectedTag)).toList();
+                  projects = projects
+                      .where((p) => p.tags.contains(_selectedTag))
+                      .toList();
                 }
                 // Apply project type filter if selected
-                if (_selectedProjectType != null && _selectedProjectType!.isNotEmpty) {
-                  projects = projects.where((p) => p.projectType == _selectedProjectType).toList();
+                if (_selectedProjectType != null &&
+                    _selectedProjectType!.isNotEmpty) {
+                  projects = projects
+                      .where((p) => p.projectType == _selectedProjectType)
+                      .toList();
                 }
                 // Apply search filter if query entered
                 if (_searchQuery.isNotEmpty) {
                   final query = _searchQuery.toLowerCase();
                   projects = projects.where((project) {
-                    final titleMatch = project.title.toLowerCase().contains(query);
+                    final titleMatch = project.title.toLowerCase().contains(
+                      query,
+                    );
                     final descriptionMatch =
-                        project.description?.toLowerCase().contains(query) ?? false;
+                        project.description?.toLowerCase().contains(query) ??
+                        false;
                     final tagMatch = project.tags.any(
                       (tag) => tag.toLowerCase().contains(query),
                     );

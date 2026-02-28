@@ -4,19 +4,18 @@ import '../../data/landing/timeline_data.dart';
 import '../../core/responsive_web_utils.dart';
 import '../../core/theme.dart';
 import '../ui/animated_gradient.dart';
-import 'timeline_tooltip_widgets.dart';
+import 'timeline_tooltips.dart';
 
-class MultiYearTimelineWidget extends StatefulWidget {
+class TimelineMultiYear extends StatefulWidget {
   final TimelineData data;
 
-  const MultiYearTimelineWidget({super.key, required this.data});
+  const TimelineMultiYear({super.key, required this.data});
 
   @override
-  State<MultiYearTimelineWidget> createState() =>
-      _MultiYearTimelineWidgetState();
+  State<TimelineMultiYear> createState() => _TimelineMultiYearState();
 }
 
-class _MultiYearTimelineWidgetState extends State<MultiYearTimelineWidget> {
+class _TimelineMultiYearState extends State<TimelineMultiYear> {
   final ScrollController _scrollController = ScrollController();
   final Set<String> _disabledProjectTypes = <String>{};
   static const _projectTypePalette = <Color>[

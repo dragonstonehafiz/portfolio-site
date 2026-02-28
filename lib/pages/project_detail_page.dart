@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../widgets/website/custom_app_bar.dart';
-import '../widgets/website/custom_footer.dart';
+import '../widgets/ui/custom_app_bar.dart';
+import '../widgets/ui/custom_footer.dart';
 import '../data/projects/project_service.dart';
 import '../data/projects/project_data.dart';
 import '../core/theme.dart';
@@ -27,7 +27,13 @@ class ProjectDetailPage extends StatelessWidget {
                   children: const [
                     Icon(Icons.error_outline, size: 64, color: Colors.red),
                     SizedBox(height: 16),
-                    Text('Project not found', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+                    Text(
+                      'Project not found',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     SizedBox(height: 8),
                     Text('The requested project could not be found.'),
                   ],
@@ -51,9 +57,15 @@ class ProjectDetailPage extends StatelessWidget {
           Expanded(
             child: DefaultTabController(
               length: versions.length,
-              initialIndex: entry.defaultVersionIndex.clamp(0, versions.length - 1),
+              initialIndex: entry.defaultVersionIndex.clamp(
+                0,
+                versions.length - 1,
+              ),
               child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24.0,
+                  vertical: 24.0,
+                ),
                 child: Center(
                   child: ConstrainedBox(
                     constraints: BoxConstraints(maxWidth: maxWidth),
@@ -74,8 +86,11 @@ class ProjectDetailPage extends StatelessWidget {
                           padding: const EdgeInsets.all(24),
                           child: Builder(
                             builder: (context) {
-                              final controller = DefaultTabController.of(context)!;
-                              final animation = controller.animation ?? controller;
+                              final controller = DefaultTabController.of(
+                                context,
+                              )!;
+                              final animation =
+                                  controller.animation ?? controller;
 
                               return Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -84,11 +99,17 @@ class ProjectDetailPage extends StatelessWidget {
                                     children: [
                                       IconButton(
                                         onPressed: () => Navigator.pop(context),
-                                        icon: const Icon(Icons.arrow_back, color: Colors.blueGrey),
+                                        icon: const Icon(
+                                          Icons.arrow_back,
+                                          color: Colors.blueGrey,
+                                        ),
                                       ),
                                       const Text(
                                         'Back to Projects',
-                                        style: TextStyle(fontSize: 16, color: Colors.blueGrey),
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.blueGrey,
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -98,7 +119,8 @@ class ProjectDetailPage extends StatelessWidget {
                                   AnimatedBuilder(
                                     animation: animation,
                                     builder: (context, _) {
-                                      final version = versions[controller.index];
+                                      final version =
+                                          versions[controller.index];
                                       return Center(
                                         child: Text(
                                           version.title,
@@ -116,8 +138,11 @@ class ProjectDetailPage extends StatelessWidget {
                                   AnimatedBuilder(
                                     animation: animation,
                                     builder: (context, _) {
-                                      final version = versions[controller.index];
-                                      return ProjectFullDetailCard(project: version);
+                                      final version =
+                                          versions[controller.index];
+                                      return ProjectFullDetailCard(
+                                        project: version,
+                                      );
                                     },
                                   ),
                                 ],
@@ -146,8 +171,6 @@ class _VersionTabBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SharedTabs(
-      labels: versions.map((v) => v.version).toList(),
-    );
+    return SharedTabs(labels: versions.map((v) => v.version).toList());
   }
 }

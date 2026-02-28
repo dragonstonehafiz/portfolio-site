@@ -135,7 +135,8 @@
       "description": "I learned frontend work to make my apps easier to use, since web\u2011based UI programming was simpler than building app\u2011based UI.",
       "related_projects": [
         "PortfolioSite",
-        "TranslatorHelper"
+        "TranslatorHelper",
+        "SpendingDashboard"
       ],
       "items": [
         "Flutter",
@@ -183,17 +184,6 @@
         "Google Cloud",
         "Git",
         "SourceTree"
-      ]
-    },
-    "Tools": {
-      "description": "I learn whatever tools are necessary to get the programming job done, adapting quickly to new stacks and workflows.",
-      "related_projects": [],
-      "items": [
-        "Unity",
-        "Visual Studio Code",
-        "Visual Studio",
-        "IntelliJ IDEA",
-        "Android Studio"
       ]
     },
     "Creative": {

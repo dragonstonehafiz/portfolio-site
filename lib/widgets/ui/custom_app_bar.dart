@@ -15,21 +15,18 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final isMobile = ResponsiveWebUtils.isMobile(context);
 
     return Container(
-      decoration: BoxDecoration(
-        gradient: Theme.of(context).primaryGradient,
-      ),
+      decoration: BoxDecoration(gradient: Theme.of(context).primaryGradient),
       child: AppBar(
         title: const Text(
           'Muhd Hafiz',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: false,
-        actions: isMobile ? _buildMobileActions(context) : _buildDesktopActions(context),
+        actions: isMobile
+            ? _buildMobileActions(context)
+            : _buildDesktopActions(context),
       ),
     );
   }
@@ -58,17 +55,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         style: navButtonStyle,
         child: Text('Home', style: navTextStyle),
       ),
-      ...primaryPages.map((page) => TextButton(
-        onPressed: () => _navigateTo(
-          context,
-          AppRoutes.pagePath(AppRoutes.slugForPageName(page.pageName)),
+      ...primaryPages.map(
+        (page) => TextButton(
+          onPressed: () => _navigateTo(
+            context,
+            AppRoutes.pagePath(AppRoutes.slugForPageName(page.pageName)),
+          ),
+          style: navButtonStyle,
+          child: Text(page.pageName, style: navTextStyle),
         ),
-        style: navButtonStyle,
-        child: Text(
-          page.pageName,
-          style: navTextStyle,
-        ),
-      )),
+      ),
       if (dropdownPages.isNotEmpty)
         PopupMenuButton<String>(
           onSelected: (route) => _navigateTo(context, route),
@@ -90,10 +86,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           },
           child: Padding(
             padding: _navPadding,
-            child: Text(
-              'Projects',
-              style: navTextStyle,
-            ),
+            child: Text('Projects', style: navTextStyle),
           ),
         ),
       const SizedBox(width: 16),
@@ -138,7 +131,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     ];
   }
 
-  List<PopupMenuEntry<String>> _buildGenericPageEntries(List<ProjectPageData> pages) {
+  List<PopupMenuEntry<String>> _buildGenericPageEntries(
+    List<ProjectPageData> pages,
+  ) {
     if (pages.isEmpty) {
       return <PopupMenuEntry<String>>[];
     }
@@ -156,18 +151,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   Text _menuItemText(String label) {
-    return Text(
-      label,
-      style: const TextStyle(color: Colors.white),
-    );
+    return Text(label, style: const TextStyle(color: Colors.white));
   }
 
   void _navigateTo(BuildContext context, String route) {
     if (route.isEmpty) return;
-    Navigator.pushNamedAndRemoveUntil(
-      context,
-      route,
-      (r) => false,
-    );
+    Navigator.pushNamedAndRemoveUntil(context, route, (r) => false);
   }
 }

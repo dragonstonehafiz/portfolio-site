@@ -51,9 +51,7 @@ class CustomFooter extends StatelessWidget {
         horizontal: isMobile ? 16.0 : 24.0,
         vertical: isMobile ? 12.0 : 24.0,
       ),
-      decoration: BoxDecoration(
-        gradient: Theme.of(context).primaryGradient,
-      ),
+      decoration: BoxDecoration(gradient: Theme.of(context).primaryGradient),
       child: ConstrainedBox(
         constraints: BoxConstraints(
           maxHeight: isMobile ? 160.0 : double.infinity,
@@ -75,10 +73,7 @@ class CustomFooter extends StatelessWidget {
               children: [
                 // Render buttons from the centralized list
                 for (var i = 0; i < _links.length; i++) ...[
-                  _buildSocialButton(
-                    context,
-                    _links[i],
-                  ),
+                  _buildSocialButton(context, _links[i]),
                   if (i != _links.length - 1) SizedBox(width: spacing),
                 ],
               ],
@@ -91,7 +86,7 @@ class CustomFooter extends StatelessWidget {
 
   Widget _buildSocialButton(BuildContext context, _SocialLink link) {
     final isMobile = ResponsiveWebUtils.isMobile(context);
-    
+
     if (isMobile) {
       // Mobile: Show only icon button
       return ElevatedButton(

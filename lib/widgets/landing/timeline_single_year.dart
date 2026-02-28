@@ -3,19 +3,18 @@ import '../../data/landing/timeline_data.dart';
 import '../../core/responsive_web_utils.dart';
 import '../../core/theme.dart';
 import '../ui/animated_gradient.dart';
-import 'timeline_tooltip_widgets.dart';
+import 'timeline_tooltips.dart';
 
-class SingleYearTimelineWidget extends StatefulWidget {
+class TimelineSingleYear extends StatefulWidget {
   final TimelineData data;
 
-  const SingleYearTimelineWidget({super.key, required this.data});
+  const TimelineSingleYear({super.key, required this.data});
 
   @override
-  State<SingleYearTimelineWidget> createState() =>
-      _SingleYearTimelineWidgetState();
+  State<TimelineSingleYear> createState() => _TimelineSingleYearState();
 }
 
-class _SingleYearTimelineWidgetState extends State<SingleYearTimelineWidget> {
+class _TimelineSingleYearState extends State<TimelineSingleYear> {
   late int _selectedYear;
   late int _minYear;
   late int _maxYear;

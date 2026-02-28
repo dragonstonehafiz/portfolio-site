@@ -107,7 +107,7 @@ const Map<String, ToolConfig> toolConfigs = {
   'libgdx': ToolConfig(
     displayName: 'LibGDX',
     backgroundColor: Color(0xFFE64A19),
-    iconUrl: 'https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/libgdx.svg',
+    iconUrl: 'assets/svg/libgdx.svg',
   ),
 
   // Game Engines

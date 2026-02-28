@@ -5,6 +5,7 @@ import '../../core/theme.dart';
 import '../../core/responsive_web_utils.dart';
 import '../ui/hover_card.dart';
 import '../ui/animated_gradient.dart';
+import '../generic/tool_badge_list.dart';
 import 'project_thumbnail_preview.dart';
 
 /// A preview card widget for displaying project information in grid or list views.
@@ -68,16 +69,10 @@ class ProjectPreviewCard extends StatelessWidget {
         Expanded(
           child: Text(
             project.title,
-            style: const TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
+            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
         ),
-        const Icon(
-          Icons.arrow_forward_ios,
-          color: AppColors.primary,
-        ),
+        const Icon(Icons.arrow_forward_ios, color: AppColors.primary),
       ],
     );
   }
@@ -87,11 +82,11 @@ class ProjectPreviewCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Row 1: Project type
+        // Row 1: Project type and tools
         Row(
           children: [
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               decoration: BoxDecoration(
                 color: AppColors.accent.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(12),
@@ -101,41 +96,62 @@ class ProjectPreviewCard extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: 12,
                   color: AppColors.primary,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0.3,
                 ),
               ),
             ),
+            if (project.tools.isNotEmpty) ...[
+              const SizedBox(width: 8),
+              Expanded(
+                child: ToolBadgeList(
+                  tools: project.tools,
+                  showIcons: true,
+                  fontSize: 12,
+                  spacing: 8,
+                  runSpacing: 6,
+                ),
+              ),
+            ],
           ],
         ),
 
         const SizedBox(height: 8),
 
         // Row 2: Links (video then github)
-        if (project.vidLink != null || project.githubLink != null || hasDownloads)
+        if (project.vidLink != null ||
+            project.githubLink != null ||
+            hasDownloads)
           Row(
             children: [
               if (project.vidLink != null) ...[
                 TextButton(
                   onPressed: () => _openLink(project.vidLink!),
-                  child: const Text('Video Link', style: TextStyle(fontSize: 12)),
+                  child: const Text(
+                    'Video Link',
+                    style: TextStyle(fontSize: 12),
+                  ),
                 ),
               ],
 
-              if (project.vidLink != null && project.githubLink != null) 
+              if (project.vidLink != null && project.githubLink != null)
                 const SizedBox(width: 8),
 
               if (project.githubLink != null) ...[
                 TextButton(
                   onPressed: () => _openLink(project.githubLink!),
-                  child: const Text('GitHub Link', style: TextStyle(fontSize: 12)),
+                  child: const Text(
+                    'GitHub Link',
+                    style: TextStyle(fontSize: 12),
+                  ),
                 ),
               ],
 
-              if ((project.vidLink != null || project.githubLink != null) && hasDownloads)
+              if ((project.vidLink != null || project.githubLink != null) &&
+                  hasDownloads)
                 const SizedBox(width: 8),
 
-              if (hasDownloads)
-                _buildDownloadIndicator(),
+              if (hasDownloads) _buildDownloadIndicator(),
             ],
           ),
 
@@ -144,44 +160,33 @@ class ProjectPreviewCard extends StatelessWidget {
         // Row 3: Dates
         Builder(
           builder: (context) {
-            final hasLastUpdate = project.lastUpdate != null && 
-                                 project.lastUpdate!.trim().isNotEmpty;
-            final displayDate = hasLastUpdate 
-                ? project.lastUpdate!.trim() 
+            final hasLastUpdate =
+                project.lastUpdate != null &&
+                project.lastUpdate!.trim().isNotEmpty;
+            final displayDate = hasLastUpdate
+                ? project.lastUpdate!.trim()
                 : project.date.trim();
             final dateLabel = hasLastUpdate ? 'Last updated on' : 'Released on';
             if (displayDate.isEmpty) return const SizedBox.shrink();
-            return _buildDatePill(
-              label: dateLabel,
-              value: displayDate,
-            );
+            return _buildDatePill(label: dateLabel, value: displayDate);
           },
         ),
       ],
     );
   }
 
-  Widget _buildDatePill({
-    required String label,
-    required String value,
-  }) {
+  Widget _buildDatePill({required String label, required String value}) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
       decoration: BoxDecoration(
         color: Colors.white.withValues(alpha: 0.65),
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(
-          color: Colors.blueGrey.withValues(alpha: 0.25),
-        ),
+        border: Border.all(color: Colors.blueGrey.withValues(alpha: 0.25)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(
-            Icons.schedule,
-            size: 14,
-            color: Colors.blueGrey,
-          ),
+          const Icon(Icons.schedule, size: 14, color: Colors.blueGrey),
           const SizedBox(width: 4),
           Text(
             '$label: $value',
@@ -202,9 +207,7 @@ class ProjectPreviewCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.primary.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(
-          color: AppColors.primary.withValues(alpha: 0.35),
-        ),
+        border: Border.all(color: AppColors.primary.withValues(alpha: 0.35)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -246,33 +249,36 @@ class ProjectPreviewCard extends StatelessWidget {
     return Wrap(
       spacing: 8,
       runSpacing: 4,
-      children: project.tags.take(3).map((tag) => Chip(
-        label: Text(tag, style: const TextStyle(fontSize: 12)),
-        backgroundColor: AppColors.secondary.withValues(alpha: 0.1),
-        side: BorderSide(color: AppColors.secondary.withValues(alpha: 0.3)),
-      )).toList(),
+      children: project.tags
+          .take(3)
+          .map(
+            (tag) => Chip(
+              label: Text(tag, style: const TextStyle(fontSize: 12)),
+              backgroundColor: AppColors.secondary.withValues(alpha: 0.1),
+              side: BorderSide(
+                color: AppColors.secondary.withValues(alpha: 0.3),
+              ),
+            ),
+          )
+          .toList(),
     );
   }
 
   Widget _buildResponsiveMediaContainer(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     final isMobile = ResponsiveWebUtils.isMobile(context);
-    
-    final containerHeight = isMobile 
+
+    final containerHeight = isMobile
         ? screenSize.height * 0.15
         : (screenSize.height * 0.25).clamp(150.0, 250.0);
-    
-    final containerWidth = isMobile
-        ? screenSize.width * 0.85
-        : double.infinity;
+
+    final containerWidth = isMobile ? screenSize.width * 0.85 : double.infinity;
 
     if (isMobile) {
       return Container(
         width: containerWidth,
         height: containerHeight,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-        ),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
         child: Padding(
           padding: const EdgeInsets.all(6.0),
           child: ProjectThumbnailPreview(
@@ -288,12 +294,8 @@ class ProjectPreviewCard extends StatelessWidget {
       return Expanded(
         child: Container(
           width: double.infinity,
-          constraints: BoxConstraints(
-            minHeight: containerHeight,
-          ),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-          ),
+          constraints: BoxConstraints(minHeight: containerHeight),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
           child: Padding(
             padding: const EdgeInsets.all(6.0),
             child: ProjectThumbnailPreview(
@@ -308,7 +310,6 @@ class ProjectPreviewCard extends StatelessWidget {
       );
     }
   }
-
 
   Future<void> _openLink(String url) async {
     try {

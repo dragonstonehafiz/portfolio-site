@@ -37,6 +37,9 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
   // Project type filter
   String? _selectedProjectType;
   List<String> _availableProjectTypes = [];
+  // Tool filter
+  String? _selectedTool;
+  List<String> _availableTools = [];
   // Search query
   String _searchQuery = '';
   // Layout toggle
@@ -55,15 +58,18 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
     final projectsForPage = ProjectService.getProjectsForPage(widget.configKey);
     final tags = <String>{};
     final projectTypes = <String>{};
+    final tools = <String>{};
     for (final project in projectsForPage) {
       tags.addAll(project.tags);
       if (project.projectType.isNotEmpty) {
         projectTypes.add(project.projectType);
       }
+      tools.addAll(project.tools);
     }
     setState(() {
       _availableTags = tags.toList()..sort();
       _availableProjectTypes = projectTypes.toList()..sort();
+      _availableTools = tools.toList()..sort();
       _showListView = defaultListView;
     });
   }
@@ -148,6 +154,41 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
     );
   }
 
+  Widget _buildToolDropdown({bool isExpanded = false}) {
+    return DropdownButtonHideUnderline(
+      child: DropdownButton<String?>(
+        isExpanded: isExpanded,
+        value: _selectedTool,
+        hint: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+          child: Text('All tools'),
+        ),
+        items: [
+          const DropdownMenuItem<String?>(
+            value: null,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+              child: Text('All tools'),
+            ),
+          ),
+          ..._availableTools.map(
+            (tool) => DropdownMenuItem<String?>(
+              value: tool,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 8.0,
+                  vertical: 4.0,
+                ),
+                child: Text(tool),
+              ),
+            ),
+          ),
+        ],
+        onChanged: (value) => setState(() => _selectedTool = value),
+      ),
+    );
+  }
+
   Widget _buildListViewToggle({required bool isMobile}) {
     return Tooltip(
       message: _showListView ? 'Switch to grid view' : 'Switch to list view',
@@ -226,28 +267,39 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
     );
 
     // Controls row: will be shown below the title for all sizes. On mobile
-    // we force the two dropdowns to expand so the four controls fit on one line.
+    // we force the dropdowns to expand so the controls fit on two lines.
     Widget controlsRow;
     if (isMobile) {
-      controlsRow = Row(
+      controlsRow = Column(
         children: [
-          Expanded(child: _buildProjectTypeDropdown(isExpanded: true)),
-          const SizedBox(width: 8),
-          Expanded(child: _buildTagDropdown(isExpanded: true)),
-          const SizedBox(width: 8),
-          _buildSortButton(isMobile: true),
-          const SizedBox(width: 4),
-          _buildListViewToggle(isMobile: true),
+          Row(
+            children: [
+              Expanded(child: _buildProjectTypeDropdown(isExpanded: true)),
+              const SizedBox(width: 8),
+              Expanded(child: _buildTagDropdown(isExpanded: true)),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              Expanded(child: _buildToolDropdown(isExpanded: true)),
+              const SizedBox(width: 8),
+              _buildSortButton(isMobile: true),
+              const SizedBox(width: 4),
+              _buildListViewToggle(isMobile: true),
+            ],
+          ),
         ],
       );
     } else {
-      // On desktop/tablet spread the four controls across the entire row.
-      // Make them part of the same flex so spacing between them is balanced.
+      // On desktop/tablet spread the controls across the entire row.
       controlsRow = Row(
         children: [
           Expanded(child: _buildProjectTypeDropdown()),
           const SizedBox(width: 8),
           Expanded(child: _buildTagDropdown()),
+          const SizedBox(width: 8),
+          Expanded(child: _buildToolDropdown()),
           const SizedBox(width: 8),
           _buildSortButton(isMobile: false),
           _buildListViewToggle(isMobile: false),
@@ -364,6 +416,12 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
                       .where((p) => p.projectType == _selectedProjectType)
                       .toList();
                 }
+                // Apply tool filter if selected
+                if (_selectedTool != null && _selectedTool!.isNotEmpty) {
+                  projects = projects
+                      .where((p) => p.tools.contains(_selectedTool))
+                      .toList();
+                }
                 // Apply search filter if query entered
                 if (_searchQuery.isNotEmpty) {
                   final query = _searchQuery.toLowerCase();
@@ -377,7 +435,13 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
                     final tagMatch = project.tags.any(
                       (tag) => tag.toLowerCase().contains(query),
                     );
-                    return titleMatch || descriptionMatch || tagMatch;
+                    final toolMatch = project.tools.any(
+                      (tool) => tool.toLowerCase().contains(query),
+                    );
+                    return titleMatch ||
+                        descriptionMatch ||
+                        tagMatch ||
+                        toolMatch;
                   }).toList();
                 }
 

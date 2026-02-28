@@ -5,6 +5,7 @@ import '../../core/theme.dart';
 import '../../core/responsive_web_utils.dart';
 import '../ui/hover_card.dart';
 import '../ui/animated_gradient.dart';
+import '../generic/tool_badge_compact.dart';
 import 'project_thumbnail_preview.dart';
 
 /// A list item widget for displaying project information in list view.
@@ -18,13 +19,11 @@ class ProjectListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final isMobile = ResponsiveWebUtils.isMobile(context);
     final horizontalGap = isMobile ? 8.0 : 12.0;
-    final titleStyle = Theme.of(context).textTheme.titleMedium?.copyWith(
-          fontWeight: FontWeight.w600,
-        ) ??
-        TextStyle(
-          fontSize: isMobile ? 16 : 18,
-          fontWeight: FontWeight.w600,
-        );
+    final titleStyle =
+        Theme.of(
+          context,
+        ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600) ??
+        TextStyle(fontSize: isMobile ? 16 : 18, fontWeight: FontWeight.w600);
 
     Widget? projectTypeBadge;
     if (project.projectType.isNotEmpty) {
@@ -36,9 +35,7 @@ class ProjectListItem extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppColors.accent.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(
-            color: AppColors.accent.withValues(alpha: 0.3),
-          ),
+          border: Border.all(color: AppColors.accent.withValues(alpha: 0.3)),
         ),
         child: Text(
           project.projectType,
@@ -73,22 +70,29 @@ class ProjectListItem extends StatelessWidget {
 
     final linkButtons = <Widget>[];
     if (project.githubLink != null && project.githubLink!.isNotEmpty) {
-      linkButtons.add(buildLinkButton(
-        icon: Icons.code,
-        tooltip: 'Open GitHub',
-        url: project.githubLink!,
-      ));
+      linkButtons.add(
+        buildLinkButton(
+          icon: Icons.code,
+          tooltip: 'Open GitHub',
+          url: project.githubLink!,
+        ),
+      );
     }
     if (project.vidLink != null && project.vidLink!.isNotEmpty) {
-      linkButtons.add(buildLinkButton(
-        icon: Icons.play_circle_outline,
-        tooltip: 'Watch video',
-        url: project.vidLink!,
-      ));
+      linkButtons.add(
+        buildLinkButton(
+          icon: Icons.play_circle_outline,
+          tooltip: 'Watch video',
+          url: project.vidLink!,
+        ),
+      );
     }
     final hasDownloads = project.downloadPaths.isNotEmpty;
-    final hasLastUpdate = project.lastUpdate != null && project.lastUpdate!.trim().isNotEmpty;
-    final displayDate = hasLastUpdate ? project.lastUpdate!.trim() : project.date.trim();
+    final hasLastUpdate =
+        project.lastUpdate != null && project.lastUpdate!.trim().isNotEmpty;
+    final displayDate = hasLastUpdate
+        ? project.lastUpdate!.trim()
+        : project.date.trim();
     final dateLabel = hasLastUpdate ? 'Last updated on' : 'Released on';
 
     return HoverCardWidget(
@@ -137,7 +141,8 @@ class ProjectListItem extends StatelessWidget {
                         ],
                       ],
                     ),
-                    if (project.tags.isNotEmpty || linkButtons.isNotEmpty || hasDownloads) ...[
+                    if (project.tags.isNotEmpty ||
+                        project.tools.isNotEmpty) ...[
                       const SizedBox(height: 8),
                       Wrap(
                         spacing: 8,
@@ -146,17 +151,52 @@ class ProjectListItem extends StatelessWidget {
                         children: [
                           for (final tag in project.tags)
                             Chip(
-                              label: Text(tag, style: const TextStyle(fontSize: 12)),
-                              backgroundColor: AppColors.secondary.withValues(alpha: 0.1),
-                              side: BorderSide(color: AppColors.secondary.withValues(alpha: 0.3)),
+                              label: Text(
+                                tag,
+                                style: const TextStyle(fontSize: 12),
+                              ),
+                              backgroundColor: AppColors.secondary.withValues(
+                                alpha: 0.1,
+                              ),
+                              side: BorderSide(
+                                color: AppColors.secondary.withValues(
+                                  alpha: 0.3,
+                                ),
+                              ),
+                            ),
+                          for (final tool in project.tools)
+                            ToolBadgeCompact(toolKey: tool),
+                        ],
+                      ),
+                    ],
+                    if (displayDate.isNotEmpty ||
+                        linkButtons.isNotEmpty ||
+                        hasDownloads) ...[
+                      const SizedBox(height: 8),
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 4,
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [
+                          if (displayDate.isNotEmpty)
+                            _buildDatePill(
+                              label: dateLabel,
+                              value: displayDate,
+                              isCompact: isMobile,
+                              horizontalGap: horizontalGap,
                             ),
                           if (linkButtons.isNotEmpty)
                             Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                for (var i = 0; i < linkButtons.length; i++) ...[
+                                for (
+                                  var i = 0;
+                                  i < linkButtons.length;
+                                  i++
+                                ) ...[
                                   linkButtons[i],
-                                  if (i != linkButtons.length - 1) SizedBox(width: horizontalGap / 2),
+                                  if (i != linkButtons.length - 1)
+                                    SizedBox(width: horizontalGap / 2),
                                 ],
                               ],
                             ),
@@ -166,15 +206,6 @@ class ProjectListItem extends StatelessWidget {
                               color: linkColor,
                             ),
                         ],
-                      ),
-                    ],
-                    if (displayDate.isNotEmpty) ...[
-                      const SizedBox(height: 8),
-                      _buildDatePill(
-                        label: dateLabel,
-                        value: displayDate,
-                        isCompact: isMobile,
-                        horizontalGap: horizontalGap,
                       ),
                     ],
                   ],
@@ -201,18 +232,12 @@ class ProjectListItem extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white.withValues(alpha: 0.65),
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(
-          color: Colors.blueGrey.withValues(alpha: 0.25),
-        ),
+        border: Border.all(color: Colors.blueGrey.withValues(alpha: 0.25)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(
-            Icons.schedule,
-            size: 14,
-            color: Colors.blueGrey,
-          ),
+          const Icon(Icons.schedule, size: 14, color: Colors.blueGrey),
           SizedBox(width: horizontalGap / 2),
           Text(
             '$label: $value',
@@ -236,18 +261,12 @@ class ProjectListItem extends StatelessWidget {
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(
-          color: color.withValues(alpha: 0.35),
-        ),
+        border: Border.all(color: color.withValues(alpha: 0.35)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
-            Icons.download_for_offline_outlined,
-            size: 14,
-            color: color,
-          ),
+          Icon(Icons.download_for_offline_outlined, size: 14, color: color),
         ],
       ),
     );

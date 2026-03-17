@@ -619,6 +619,45 @@
       }
     ]
   },
+  "YouTube_Analytics": {
+    "default_version": "Version 1.0",
+    "page_list": ["Programming", "Featured"],
+    "show_in_timeline": true,
+    "shown": true,
+    "variable_name": "youtube-analytics",
+    "versions": [
+      {
+        "version": "Version 1.0",
+        "date": "2026-03-17",
+        "description": "A self-hosted full-stack web application for in-depth YouTube channel analytics. Syncs data from the YouTube Data API v3 and Analytics API v2 into a local SQLite database via an incremental sync engine designed to minimise API quota usage. Presents the data through a custom interactive dashboard with hand-built SVG charts, spike detection, traffic source breakdowns, and AI-powered comment analysis. Includes a thumbnail A/B testing tool that previews uploaded thumbnails inside simulated YouTube layouts (Home feed, Search results, Video Player sidebar) populated with real competitor videos matched by a fine-tuned sentence-transformer embedding model.",
+        "download_paths": [],
+        "github_link": "https://github.com/dragonstonehafiz/youtube-analytics",
+        "img_paths": [
+          "images/other/youtubeAnalyticsVer1_1.png",
+          "images/other/youtubeAnalyticsVer1_2.png",
+          "images/other/youtubeAnalyticsVer1_3.png",
+          "images/other/youtubeAnalyticsVer1_4.png",
+          "images/other/youtubeAnalyticsVer1_5.png"
+          
+        ],
+        "last_update": "2026-03-17",
+        "project_type": "Productivity",
+        "tags": ["frontend", "backend", "data-processing", "ai"],
+        "tools": ["python", "fastapi", "react", "typescript", "sqlite", "docker"],
+        "title": "YouTube Analytics Dashboard",
+        "vid_link": null,
+        "vignette": "A self-hosted YouTube analytics dashboard with AI-powered thumbnail testing and comment analysis.",
+        "what_i_did": [
+          "Built an analytics dashboard with time-series charts, spike detection, and traffic source breakdowns for YouTube channel data.",
+          "Created a thumbnail testing tool to preview uploaded thumbnails in simulated YouTube Home, Search, and Video Player layouts.",
+          "Fine-tuned a sentence-transformer model to find contextually similar competitor videos by title for the thumbnail testing feature.",
+          "Added AI-powered comment summarization and a word cloud generator with configurable LLM support.",
+          "Designed an incremental sync system that pulls channel data and analytics from the YouTube API with quota estimation and progress tracking.",
+          "Built per-video and per-playlist analytics pages with breakdown tabs for metrics, engagement, monetization, and discovery."
+        ]
+      }
+    ]
+  },
   "TranslatorHelper": {
     "default_version": "Version 1.1.1 (Angular & Node.js)",
     "page_list": ["Featured", "Programming"],

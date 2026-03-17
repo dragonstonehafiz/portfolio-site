@@ -159,6 +159,11 @@ const Map<String, ToolConfig> toolConfigs = {
     textColor: Color(0xFF000000),
     iconUrl: 'https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/firebase.svg',
   ),
+  'sqlite': ToolConfig(
+    displayName: 'SQLite',
+    backgroundColor: Color(0xFF003B57),
+    iconUrl: 'https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/sqlite.svg',
+  ),
 
   // Concepts/Categories (use generic icons or placeholders)
   'ai': ToolConfig(

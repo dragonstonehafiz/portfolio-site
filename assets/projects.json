@@ -134,7 +134,7 @@
   },
   "ESRGAN_M": {
     "default_version": "Submission",
-    "page_list": ["Featured", "Programming"],
+    "page_list": ["Programming"],
     "show_in_timeline": true,
     "shown": true,
     "variable_name": "ESRGAN M",

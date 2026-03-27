@@ -1135,6 +1135,39 @@
       }
     ]
   },
+  "gakumas_event_01": {
+    "default_version": "Release",
+    "page_list": ["Translations"],
+    "show_in_timeline": true,
+    "shown": true,
+    "variable_name": "gakumas_event_01",
+    "versions": [
+      {
+        "version": "Release",
+        "date": "2026-03-27",
+        "description": null,
+        "download_paths": [
+          {
+            "key": "English Subs",
+            "url": "https://drive.google.com/file/d/1T9Gj7o2BmWx0wB6vkWBaqhY2LcP78fds/view?usp=sharing"
+          },
+          {
+            "key": "Japanese Subs",
+            "url": "https://drive.google.com/file/d/1abg5LCrIs6XHB3B9VSb7CF6lY5lbS37d/view?usp=sharing"
+          }
+        ],
+        "github_link": null,
+        "img_paths": [],
+        "last_update": null,
+        "project_type": "Translations",
+        "tags": ["translations"],
+        "tools": [],
+        "title": "Gakuen Idolmaster: The Idols of Class 1-1 Event Commyu",
+        "vid_link": "https://youtu.be/py43cfm4kq0",
+        "what_i_did": []
+      }
+    ]
+  },
   "makeine_vol1ep1": {
     "default_version": "Release",
     "page_list": ["Translations"],
@@ -1171,7 +1204,7 @@
   "makeine_vol1ep2": {
     "default_version": "Release",
     "page_list": ["Translations"],
-    "show_in_timeline": true,
+    "show_in_timeline": false,
     "shown": false,
     "variable_name": "makeine_vol1ep2",
     "versions": [
@@ -1204,7 +1237,7 @@
   "makeine_vol1ep3": {
     "default_version": "Release",
     "page_list": ["Translations"],
-    "show_in_timeline": true,
+    "show_in_timeline": false,
     "shown": false,
     "variable_name": "makeine_vol1ep3",
     "versions": [
@@ -1270,7 +1303,7 @@
   "makeine_vol2ep2": {
     "default_version": "Release",
     "page_list": ["Translations"],
-    "show_in_timeline": true,
+    "show_in_timeline": false,
     "shown": false,
     "variable_name": "makeine_vol2ep2",
     "versions": [
@@ -1303,7 +1336,7 @@
   "makeine_vol2ep3": {
     "default_version": "Release",
     "page_list": ["Translations"],
-    "show_in_timeline": true,
+    "show_in_timeline": false,
     "shown": false,
     "variable_name": "makeine_vol2ep3",
     "versions": [

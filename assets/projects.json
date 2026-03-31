@@ -1168,6 +1168,39 @@
       }
     ]
   },
+  "gakumas_event_02": {
+    "default_version": "Release",
+    "page_list": ["Translations"],
+    "show_in_timeline": false,
+    "shown": false,
+    "variable_name": "gakumas_event_02",
+    "versions": [
+      {
+        "title": "Gakuen Idolmaster: Midsummer Live Fest Event Commyu",
+        "vid_link": "https://youtu.be/py43cfm4kq0",
+        "version": "Release",
+        "date": "2026-03-31",
+        "description": null,
+        "download_paths": [
+          {
+            "key": "English Subs",
+            "url": "https://drive.google.com/file/d/1V2QH--u4uBK9r1IA9QWMK1L9yVWX9A6g/view?usp=sharing"
+          },
+          {
+            "key": "Japanese Subs",
+            "url": "https://drive.google.com/file/d/1lCRx20RKhcn8sLiiwOOzJ-xIxzJOeiTS/view?usp=sharing"
+          }
+        ],
+        "github_link": null,
+        "img_paths": [],
+        "last_update": null,
+        "project_type": "Translations",
+        "tags": ["translations"],
+        "tools": [],
+        "what_i_did": []
+      }
+    ]
+  },
   "makeine_vol1ep1": {
     "default_version": "Release",
     "page_list": ["Translations"],

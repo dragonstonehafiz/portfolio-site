@@ -1,10 +1,10 @@
 {
-  "AI_Game": {
+  "NYP-AIGame": {
     "default_version": "Submission",
-    "page_list": ["Programming"],
+    "page_list": ["Nanyang Polytechnic Projects"],
     "show_in_timeline": true,
     "shown": true,
-    "variable_name": "AI_Game",
+    "variable_name": "nyp-ai-game",
     "versions": [
       {
         "version": "Submission",
@@ -35,109 +35,276 @@
       }
     ]
   },
-  "BirdLaserTargeter": {
+  "NYP-Electronica": {
     "default_version": "Submission",
-    "page_list": ["Featured", "Programming"],
+    "page_list": ["Featured", "Nanyang Polytechnic Projects"],
     "show_in_timeline": true,
     "shown": true,
-    "variable_name": "BirdLaserTargeter",
+    "variable_name": "nyp-electronica",
     "versions": [
       {
         "version": "Submission",
-        "date": "2025-03-29",
-        "description": "A Raspberry Pi Zero 2W project that detects birds and deters them using a laser pointer, combining camera input, audio triggers, servos, and a simple control state machine. It supports both on-device and remote detection by sending data over MQTT. My role focused on system integration, hardware interfacing, and overall architecture, while teammates handled model training and the YOLO implementation",
-        "download_paths": [],
-        "github_link": "https://github.com/dragonstonehafiz/inf2009-project",
-        "img_paths": [
-          "images/sit/inf2009_project1.png",
-          "images/sit/inf2009_project2.png",
-          "images/sit/inf2009_project3.png"
+        "date": "2020-02-10",
+        "description": "A Geometry Wars-inspired top-down shooter built solo in Unity (C#) as my final year project at NYP. Players accumulate points by defeating enemies across two modes: Classic (wave-based with boss waves every fourth wave) and Onslaught (endless spawning with increasing intensity and no bosses). All gameplay code, UI, audio integration, and systems were built from scratch over 16 weeks.",
+        "download_paths": [
+          {
+            "key": "Game Download Link",
+            "url": "https://drive.google.com/file/d/10MbbouKJsSvqp5h-CGrCHKvFrKoR4hvP/view?usp=sharing"
+          }
         ],
-        "last_update": null,
-        "project_type": "AI",
-        "tags": ["ai", "embedded"],
-        "tools": ["python"],
-        "title": "Bird Laser Targeter on the Edge",
-        "vid_link": "https://www.youtube.com/watch?v=NGxBpvvaONQ",
-        "vignette": "A Raspberry Pi Zero 2W-based bird detection and deterrence system.",
-        "what_i_did": [
-          "Integrated the Raspberry Pi hardware stack (camera, servos, laser diode, and audio trigger input).",
-          "Built the control flow as a state machine to coordinate detection and targeting behavior.",
-          "Implemented MQTT messaging to support remote/offloaded detection and device-server communication.",
-          "Assembled the end-to-end system so detection, targeting, and actuation worked together reliably."
-        ]
-      }
-    ]
-  },
-  "BudgetingSpreadsheet": {
-    "default_version": "1.0",
-    "page_list": ["Programming"],
-    "show_in_timeline": true,
-    "shown": false,
-    "variable_name": "BudgetingSpreadsheet",
-    "versions": [
-      {
-        "version": "1.0",
-        "date": "2024-01-16",
-        "description": "A Python tool that automates the yearly setup of my budgeting spreadsheets by generating new sheets, inserting formulas, and applying formatting automatically. It keeps calculations consistent and improves readability with conditional formatting. This was later replaced by my Spending Dashboard project.",
-        "download_paths": [],
         "github_link": null,
         "img_paths": [
-          "images/other/spreadsheet1.png",
-          "images/other/spreadsheet2.png",
-          "images/other/spreadsheet3.png",
-          "images/other/spreadsheet4.png"
+          "images/games/electronica1.png",
+          "images/games/electronica2.png",
+          "images/games/electronica3.png",
+          "images/games/electronica4.png",
+          "images/games/electronica5.png",
+          "images/games/electronica6.png"
         ],
         "last_update": null,
-        "project_type": "Productivity",
-        "tags": ["automation", "data-processing"],
-        "tools": ["python", "excel"],
-        "title": "Budgeting Spreadsheet Automation",
-        "vid_link": null,
-        "vignette": "A Python tool to automate the yearly setup of budgeting spreadsheets.",
-        "what_i_did": [
-          "Automated yearly sheet creation, formula insertion, and formatting in Excel with Python.",
-          "Added conditional formatting rules to keep categories and totals readable.",
-          "Built a small Tkinter GUI to run the setup without editing code."
-        ]
-      }
-    ]
-  },
-  "DiamondCityRadio": {
-    "default_version": "1.0",
-    "page_list": ["Programming"],
-    "show_in_timeline": true,
-    "shown": true,
-    "variable_name": "DiamondCityRadio",
-    "versions": [
-      {
-        "version": "1.0",
-        "date": "2024-04-27",
-        "description": "A Java-based music player inspired by Fallout 4's Diamond City Radio. It plays a mix of music tracks and DJ voice clips, inserting commentary between songs to recreate the feel of an in-game radio station.",
-        "download_paths": [],
-        "github_link": null,
-        "img_paths": [],
-        "last_update": null,
-        "project_type": "Productivity",
+        "project_type": "Games",
         "tags": ["games"],
-        "tools": ["java", "libgdx"],
-        "title": "Diamond City Radio (Fallout-Inspired Music Player)",
-        "vid_link": "https://youtu.be/E9zW9e6HOzU",
-        "vignette": "A Java-based music player inspired by Fallout 4's Diamond City Radio.",
+        "tools": ["c#", "unity"],
+        "title": "Electronica",
+        "vid_link": "https://youtu.be/MX7wlNfxtfw",
+        "vignette": "A Geometry Wars-inspired top-down shooter built solo in Unity.",
         "what_i_did": [
-          "Built the app in LibGDX (Java), including the UI and playback controls.",
-          "Implemented audio loading and management for music tracks and voice clips.",
-          "Created the radio-style playback flow that interleaves DJ commentary between songs."
+          "Built the full game solo in Unity (C#) over 16 weeks, including all gameplay, UI, audio, and systems.",
+          "Implemented five enemy types with distinct behaviors: melee, weirdo (elliptical movement), ranged, charger (boost with damage vulnerability window), and dodger (evades incoming shots).",
+          "Designed and programmed four boss fights: Devouring Maw (rotating multi-directional shooting), Ascendant Maw (scaling laser count as health drops), Super Charger (variable charge speed), and The Wall (lateral movement, weak point only).",
+          "Built a three-pool object pooling system (UI, general, enemy) with configurable expansion limits to manage all spawned objects.",
+          "Implemented two separate local leaderboards (Classic and Onslaught), each storing up to 8 score-sorted entries."
         ]
       }
     ]
   },
-  "ESRGAN_M": {
+  "NYP-LastSurvivor": {
     "default_version": "Submission",
-    "page_list": ["Programming"],
+    "page_list": ["Nanyang Polytechnic Projects"],
     "show_in_timeline": true,
     "shown": true,
-    "variable_name": "ESRGAN M",
+    "variable_name": "nyp-last-survivor",
+    "versions": [
+      {
+        "version": "Submission",
+        "title": "The Last Survivor",
+        "vignette": "A 2D top-down survival shooter with wave-based enemy spawning, AI pathfinding, and a multi-phase boss, built in Unity.",
+        "description": "The Last Survivor is a 2D top-down survival shooter developed as a team project at NYP, targeting PC and Android. Players defend against endless waves of increasingly difficult enemies using weapons, turrets, and a shop system. My work covered all enemy and AI systems — spawning, pathfinding, FSM-driven behavior for three enemy types, friendly turret AI, a multi-phase boss fight, and supporting VFX and sound effects.",
+        "date": "2019-03-01",
+        "last_update": null,
+        "vid_link": "https://youtu.be/aMmrSXN9EI8",
+        "github_link": null,
+        "img_paths": [
+          "images/games/thelastsurvivor1.png",
+          "images/games/thelastsurvivor2.png",
+          "images/games/thelastsurvivor3.png",
+          "images/games/thelastsurvivor4.png"
+        ],
+        "project_type": "Games",
+        "tags": ["games"],
+        "tools": ["c#", "unity"],
+        "download_paths": [
+          {
+            "key": "Game Download Link",
+            "url": "https://drive.google.com/file/d/1lX0HsbAOqpZBcLhfOvB0912PlUwueISH/view?usp=sharing"
+          }
+        ],
+        "what_i_did": [
+          "Built the enemy spawning system and round progression, with enemies scaling in strength each wave and dedicated boss rounds.",
+          "Implemented AI pathfinding and finite state machines for three enemy types: melee zombie, ranged servitor, and a multi-phase boss.",
+          "Programmed shielded enemy variants with invulnerability until shield nodes are destroyed, and attack nodes that shoot at the player.",
+          "Built friendly turret AI with three turret tiers that automatically target and shoot enemies when activated.",
+          "Added sound effects for enemy and combat events, VFX, and the game over screen."
+        ]
+      }
+    ]
+  },
+  "NYP-Locus": {
+    "default_version": "Submission",
+    "page_list": ["Nanyang Polytechnic Projects"],
+    "show_in_timeline": true,
+    "shown": true,
+    "variable_name": "nyp-locus",
+    "versions": [
+      {
+        "version": "Submission",
+        "date": "2019-08-21",
+        "description": "A VR horror puzzle game built for the HTC Vive in Unity. This was a final-year project where I worked with art students, continuing from a prototype started by another student group in the previous semester. The game focuses on motion-based interactions, environmental puzzles, and scripted horror events in a first-person VR setting.",
+        "download_paths": [],
+        "github_link": null,
+        "img_paths": [
+          "images/games/locus1.png",
+          "images/games/locus2.png"
+        ],
+        "last_update": null,
+        "project_type": "Games",
+        "tags": ["games", "vr"],
+        "tools": ["c#", "unity"],
+        "title": "L.O.C.U.S",
+        "vid_link": "https://youtu.be/nvTEuyOUynI",
+        "vignette": "A virtual reality horror puzzle game for the HTC Vive.",
+        "what_i_did": [
+          "Took over an existing project codebase and continued development from a previous trimester team.",
+          "Implemented HTC Vive controller input and interaction logic in Unity (C#).",
+          "Built and refined core gameplay systems including puzzles, scripted events, and progression flow.",
+          "Integrated gameplay with art assets and level content produced by the art team."
+        ]
+      }
+    ]
+  },
+  "NYP-PhysicsGame": {
+    "default_version": "Submission",
+    "page_list": ["Nanyang Polytechnic Projects"],
+    "show_in_timeline": true,
+    "shown": true,
+    "variable_name": "nyp-physics-game",
+    "versions": [
+      {
+        "version": "Submission",
+        "date": "2018-08-05",
+        "description": "A Peggle-inspired physics game made during my Physics for Game Programing module. The project was built in C++ using a custom school-provided engine, mwith a focus on applying basic physics concepts to gameplay.",
+        "download_paths": [],
+        "github_link": null,
+        "img_paths": [
+          "images/games/physicsgame1.png",
+          "images/games/physicsgame2.png",
+          "images/games/physicsgame3.png",
+          "images/games/physicsgame4.png"
+        ],
+        "last_update": null,
+        "project_type": "Games",
+        "tags": ["games"],
+        "tools": ["c++"],
+        "title": "Simple Physics Game",
+        "vid_link": "https://youtu.be/jAr9eGcGQJk",
+        "vignette": "A Peggle-inspired physics game built in C++.",
+        "what_i_did": [
+          "Implemented basic physics simulation (gravity and impulse forces) for moving objects.",
+          "Built custom collision detection and response using vector math.",
+          "Integrated IrrKlang for sound effects and audio playback."
+        ]
+      }
+    ]
+  },
+  "NYP-IronAge": {
+    "variable_name": "nyp-iron-age",
+    "page_list": ["Nanyang Polytechnic Projects"],
+    "shown": true,
+    "show_in_timeline": true,
+    "default_version": "Submission",
+    "versions": [
+      {
+        "version": "Submission",
+        "title": "Iron Age",
+        "vignette": "A first-person medieval RPG with inventory, shops, quests, and AI-driven enemies, built in C++.",
+        "description": "Iron Age is a team-built first-person medieval RPG developed during my time at NYP. Players explore a 3D open world, complete quests, fight enemies, and manage gear through a shop and inventory system. My work covered the full item and inventory system, shop logic, sound, UI screens, interaction/collision checks, and in-game minigame animations.",
+        "date": "2018-03-02",
+        "last_update": null,
+        "vid_link": "https://youtu.be/t_6nnBwooQk",
+        "github_link": null,
+        "img_paths": [
+          "images/games/ironAge1.png",
+          "images/games/ironAge2.png",
+          "images/games/ironAge3.png",
+          "images/games/ironAge4.png"
+        ],
+        "what_i_did": [
+          "Built the full inventory system using a linked list (CInventory, CItemNode, CBaseItem) with support for weapons, armour, and miscellaneous items.",
+          "Implemented the shop system — item browsing, buying (clones item into player inventory), and selling (removes item, reimburses gold).",
+          "Implemented the sound system using IrrKlang for background music and sound effects tied to game events.",
+          "Built UI screens for inventory, shop, and pause, plus camera movement logic on the main menu.",
+          "Implemented interaction and collision checks for player-world objects.",
+          "Created minigame animations for forging, tree-felling, crafting, and a rotating item preview."
+        ],
+        "tags": ["games"],
+        "tools": ["c++"],
+        "project_type": "Games",
+        "download_paths": []
+      }
+    ]
+  },
+  "NYP-SimpleShooter": {
+    "variable_name": "nyp-simple-shooter",
+    "page_list": ["Nanyang Polytechnic Projects"],
+    "shown": true,
+    "show_in_timeline": true,
+    "default_version": "Submission",
+    "versions": [
+      {
+        "version": "Submission",
+        "title": "Simple Shooter",
+        "vignette": "A 3D open-world FPS with timed challenges, enemy AI, pickups, and a full objective system, built in C++.",
+        "description": "A 3D open-world first-person shooter developed as a team project at NYP. Players complete a series of challenges across multiple zones in the shortest time possible. My work covered a large portion of the game's core systems: AI, pickups, weapons, objectives, audio, UI, weather, and open-world loading.",
+        "date": "2018-08-13",
+        "last_update": null,
+        "vid_link": null,
+        "github_link": null,
+        "img_paths": [
+          "images/games/studioProject3_1.jpg",
+          "images/games/studioProject3_2.jpg",
+          "images/games/studioProject3_3.jpg",
+          "images/games/studioProject3_4.jpg"
+        ],
+        "what_i_did": [
+          "Implemented enemy AI and collision boxes, with guaranteed pickup drops on enemy death.",
+          "Built the weapon system including a pulse rifle, shotgun, auto rifle, weapon recoil, and bullet spray.",
+          "Designed a base objective class with elimination and bounty objective types, plus an objective indicator.",
+          "Implemented the full audio system using irrKlang: looping music playlist, 3D positional sound, and 2D sound.",
+          "Built the minimap to display enemies and world objects.",
+          "Created the UI manager and all UI screens: main menu, pause, options, and win screen.",
+          "Implemented a timed challenge mode, randomised weather (rain/snow), and open-world zone loading.",
+          "Built the leaderboard and save/load system for player data."
+        ],
+        "tags": ["games"],
+        "tools": ["c++"],
+        "project_type": "Games",
+        "download_paths": []
+      }
+    ]
+  },
+  "NYP-Lost": {
+    "variable_name": "nyp-lost",
+    "page_list": ["Nanyang Polytechnic Projects"],
+    "shown": true,
+    "show_in_timeline": true,
+    "default_version": "Submission",
+    "versions": [
+      {
+        "version": "Submission",
+        "title": "LOST",
+        "vignette": "A maze RPG with hidden exploration, random encounters, and a Rock Paper Scissors combat system, built in C++.",
+        "description": "LOST is a team-built maze game with RPG elements, developed during my time at NYP. The game features 6 levels, a hidden fog-of-war map, random encounters, and a Rock Paper Scissors combat system. My work covered all UI screens and their logic, battle system updates, and cosmetic customization features.",
+        "date": "2017-08-30",
+        "last_update": null,
+        "vid_link": null,
+        "github_link": null,
+        "img_paths": [
+          "images/games/studioProject1_1.png",
+          "images/games/studioProject1_2.png",
+          "images/games/studioProject1_3.png",
+          "images/games/studioProject1_4.png",
+          "images/games/studioProject1_5.png",
+          "images/games/studioProject1_6.png"
+        ],
+        "what_i_did": [
+          "Built UI for all major screens: main menu, shop, battle, map, and options.",
+          "Implemented logic for all menus including shop interactions and purchase flow.",
+          "Updated and extended the battle system logic.",
+          "Added background clouds and logic to allow players to change character and map colours."
+        ],
+        "tags": ["games"],
+        "tools": ["c++"],
+        "project_type": "Games",
+        "download_paths": []
+      }
+    ]
+  },
+  "SIT-ESRGAN_M": {
+    "default_version": "Submission",
+    "page_list": ["Singapore Institute of Technology Projects"],
+    "show_in_timeline": true,
+    "shown": true,
+    "variable_name": "sit-esrgan-m",
     "versions": [
       {
         "version": "Submission",
@@ -168,55 +335,46 @@
       }
     ]
   },
-  "Electronica": {
+  "SIT-BirdLaserTargeter": {
     "default_version": "Submission",
-    "page_list": ["Featured", "Programming"],
+    "page_list": ["Featured", "Singapore Institute of Technology Projects"],
     "show_in_timeline": true,
     "shown": true,
-    "variable_name": "Electronica",
+    "variable_name": "sit-bird-laser-targeter",
     "versions": [
       {
         "version": "Submission",
-        "date": "2020-02-10",
-        "description": "A top-down shooter inspired by Geometry Wars, built in Unity. This was a solo project and the final game I worked on at NYP before graduating, so I treated it as a capstone piece and put serious effort into making something I'd be proud of. All gameplay code was written by me over roughly three months.",
-        "download_paths": [
-          {
-            "key": "Game Download Link",
-            "url": "https://drive.google.com/file/d/10MbbouKJsSvqp5h-CGrCHKvFrKoR4hvP/view?usp=sharing"
-          }
-        ],
-        "github_link": null,
+        "date": "2025-03-29",
+        "description": "A Raspberry Pi Zero 2W project that detects birds and deters them using a laser pointer, combining camera input, audio triggers, servos, and a simple control state machine. It supports both on-device and remote detection by sending data over MQTT. My role focused on system integration, hardware interfacing, and overall architecture, while teammates handled model training and the YOLO implementation",
+        "download_paths": [],
+        "github_link": "https://github.com/dragonstonehafiz/inf2009-project",
         "img_paths": [
-          "images/games/electronica1.png",
-          "images/games/electronica2.png",
-          "images/games/electronica3.png",
-          "images/games/electronica4.png",
-          "images/games/electronica5.png",
-          "images/games/electronica6.png"
+          "images/sit/inf2009_project1.png",
+          "images/sit/inf2009_project2.png",
+          "images/sit/inf2009_project3.png"
         ],
         "last_update": null,
-        "project_type": "Games",
-        "tags": ["games"],
-        "tools": ["c#", "unity"],
-        "title": "Electronica",
-        "vid_link": "https://youtu.be/MX7wlNfxtfw",
-        "vignette": "A Geometry Wars-inspired top-down shooter built in Unity.",
+        "project_type": "AI",
+        "tags": ["ai", "embedded"],
+        "tools": ["python"],
+        "title": "Bird Laser Targeter on the Edge",
+        "vid_link": "https://www.youtube.com/watch?v=NGxBpvvaONQ",
+        "vignette": "A Raspberry Pi Zero 2W-based bird detection and deterrence system.",
         "what_i_did": [
-          "Built the full game in Unity (C#) as a solo project over three months.",
-          "Implemented five enemy behavior types to vary combat patterns and difficulty.",
-          "Designed and programmed four boss fights with distinct mechanics and phases.",
-          "Created two playable modes (Classic and Onslaught).",
-          "Designed and animated the in-game UI, including player and boss health bars."
+          "Integrated the Raspberry Pi hardware stack (camera, servos, laser diode, and audio trigger input).",
+          "Built the control flow as a state machine to coordinate detection and targeting behavior.",
+          "Implemented MQTT messaging to support remote/offloaded detection and device-server communication.",
+          "Assembled the end-to-end system so detection, targeting, and actuation worked together reliably."
         ]
       }
     ]
   },
-  "JapaneseLearningCardGame": {
+  "SIT-JapaneseLearningCardGame": {
     "default_version": "Submission",
-    "page_list": ["Programming"],
+    "page_list": ["Singapore Institute of Technology Projects"],
     "show_in_timeline": true,
     "shown": true,
-    "variable_name": "JapaneseLearningCardGame",
+    "variable_name": "nyp-japanese-learning-card-game",
     "versions": [
       {
         "version": "Submission",
@@ -249,153 +407,45 @@
       }
     ]
   },
-  "Last_Survivor": {
+  "SIT-ResourceManagementGame": {
     "default_version": "Submission",
-    "page_list": ["Programming"],
+    "page_list": ["Singapore Institute of Technology Projects"],
     "show_in_timeline": true,
     "shown": true,
-    "variable_name": "Last_Survivor",
+    "variable_name": "sit-resource-management-game",
     "versions": [
       {
         "version": "Submission",
-        "date": "2019-03-01",
-        "description": "A wave-based top-down shooter built in Unity as a Year 2 studio project at NYP. The game was developed by a team of four students and focuses on surviving progressively harder waves with different enemy types and attack patterns.",
-        "download_paths": [
-          {
-            "key": "Game Download Link",
-            "url": "https://drive.google.com/file/d/1lX0HsbAOqpZBcLhfOvB0912PlUwueISH/view?usp=sharing"
-          }
-        ],
-        "github_link": null,
-        "img_paths": [
-          "images/games/thelastsurvivor1.png",
-          "images/games/thelastsurvivor2.png",
-          "images/games/thelastsurvivor3.png",
-          "images/games/thelastsurvivor4.png"
-        ],
-        "last_update": null,
-        "project_type": "Games",
-        "tags": ["games"],
-        "tools": ["c#", "unity"],
-        "title": "The Last Survivor",
-        "vid_link": "https://youtu.be/aMmrSXN9EI8",
-        "vignette": "A wave-based top-down shooter built in Unity.",
-        "what_i_did": [
-          "Implemented the wave progression and enemy spawning system in Unity (C#).",
-          "Built enemy movement and pathfinding logic without relying on Unity's NavMesh.",
-          "Programmed multiple enemy/NPC types with different behaviors (melee, ranged, turret, and boss)."
-        ]
-      }
-    ]
-  },
-  "Locus": {
-    "default_version": "Submission",
-    "page_list": ["Programming"],
-    "show_in_timeline": true,
-    "shown": true,
-    "variable_name": "Locus",
-    "versions": [
-      {
-        "version": "Submission",
-        "date": "2019-08-21",
-        "description": "A VR horror puzzle game built for the HTC Vive in Unity. This was a final-year project where I worked with art students, continuing from a prototype started by another student group in the previous semester. The game focuses on motion-based interactions, environmental puzzles, and scripted horror events in a first-person VR setting.",
+        "date": "2024-02-23",
+        "description": "A real-time resource management simulation built in Java using LibGDX. This project focused on implementing a small game loop with structured game objects, basic UI, and scene management for switching between gameplay and menu screens.",
         "download_paths": [],
         "github_link": null,
         "img_paths": [
-          "images/games/locus1.png",
-          "images/games/locus1.png"
-        ],
-        "last_update": null,
-        "project_type": "Games",
-        "tags": ["games", "vr"],
-        "tools": ["c#", "unity"],
-        "title": "L.O.C.U.S",
-        "vid_link": "https://youtu.be/nvTEuyOUynI",
-        "vignette": "A virtual reality horror puzzle game for the HTC Vive.",
-        "what_i_did": [
-          "Took over an existing project codebase and continued development from a previous trimester team.",
-          "Implemented HTC Vive controller input and interaction logic in Unity (C#).",
-          "Built and refined core gameplay systems including puzzles, scripted events, and progression flow.",
-          "Integrated gameplay with art assets and level content produced by the art team."
-        ]
-      }
-    ]
-  },
-  "Physics_Game": {
-    "default_version": "Submission",
-    "page_list": ["Programming"],
-    "show_in_timeline": true,
-    "shown": true,
-    "variable_name": "Physics_Game",
-    "versions": [
-      {
-        "version": "Submission",
-        "date": "2017-06-04",
-        "description": "A Peggle-inspired physics game made during my Physics for Game Programing module. The project was built in C++ using a custom school-provided engine, mwith a focus on applying basic physics concepts to gameplay.",
-        "download_paths": [],
-        "github_link": null,
-        "img_paths": [
-          "images/games/physicsgame1.png",
-          "images/games/physicsgame2.png",
-          "images/games/physicsgame3.png",
-          "images/games/physicsgame4.png"
+          "images/sit/oop-game1.png",
+          "images/sit/oop-game2.png",
+          "images/sit/oop-game3.png",
+          "images/sit/oop-game4.png"
         ],
         "last_update": null,
         "project_type": "Games",
         "tags": ["games"],
-        "tools": ["c++"],
-        "title": "Simple Physics Game",
-        "vid_link": "https://youtu.be/jAr9eGcGQJk",
-        "vignette": "A Peggle-inspired physics game built in C++.",
+        "tools": ["java", "libgdx"],
+        "title": "Resource Management Game",
+        "vid_link": "https://youtu.be/xTgrENeVFi4?si=33A5JgegELn4uFcM",
+        "vignette": "A real-time resource management simulation built in Java using LibGDX.",
         "what_i_did": [
-          "Implemented basic physics simulation (gravity and impulse forces) for moving objects.",
-          "Built custom collision detection and response using vector math.",
-          "Integrated IrrKlang for sound effects and audio playback."
+          "Designed object-oriented game object classes in Java to support core game mechanics.",
+          "Implemented scene flow (menus and gameplay) including transitions and UI rendering in LibGDX."
         ]
       }
     ]
   },
-  "IronAge": {
-    "variable_name": "Iron Age",
-    "page_list": ["Programming"],
-    "shown": false,
-    "show_in_timeline": true,
-    "default_version": "Submission",
-    "versions": [
-      {
-        "version": "Submission",
-        "title": "Iron Age",
-        "vignette": "A team-built game project where I focused on systems and core systems in the game.",
-        "description": "Iron Age is a team game project I worked on during my time at NYP. My work focused on core systems: inventory and item management, audio integration, minigame systems, and world interaction/loading.",
-        "date": "2018-03-02",
-        "last_update": null,
-        "vid_link": "https://youtu.be/t_6nnBwooQk",
-        "github_link": null,
-        "img_paths": [
-          "images/games/ironAge1.png",
-          "images/games/ironAge2.png",
-          "images/games/ironAge3.png",
-          "images/games/ironAge4.png"
-        ],
-        "what_i_did": [
-          "Built the core inventory and item system to manage item data, storage, and usage in gameplay.",
-          "Integrated IrrKlang for sound playback and tied it into game events.",
-          "Developed the minigame systems and their supporting logic.",
-          "Implemented world interactions and loading to drive in-game triggers and scene flow."
-        ],
-        "tags": ["games"],
-        "tools": ["c++"],
-        "project_type": "Games",
-        "download_paths": []
-      }
-    ]
-  },
-  "PortfolioSite": {
+  "Personal-PortfolioSite": {
     "default_version": "Flutter Ver 1.2",
-    "page_list": ["Featured", "Programming"],
+    "page_list": ["Featured", "Personal Projects"],
     "show_in_timeline": true,
     "shown": true,
-    "variable_name": "PortfolioSite",
+    "variable_name": "personal-portfolio-site",
     "versions": [{
         "version": "Flutter Ver 1.2",
         "date": "2026-01-25",
@@ -502,45 +552,12 @@
       }
     ]
   },
-  "ResourceManagementGame": {
-    "default_version": "Submission",
-    "page_list": ["Programming"],
-    "show_in_timeline": true,
-    "shown": true,
-    "variable_name": "ResourceManagementGame",
-    "versions": [
-      {
-        "version": "Submission",
-        "date": "2024-02-23",
-        "description": "A real-time resource management simulation built in Java using LibGDX. This project focused on implementing a small game loop with structured game objects, basic UI, and scene management for switching between gameplay and menu screens.",
-        "download_paths": [],
-        "github_link": null,
-        "img_paths": [
-          "images/sit/oop-game1.png",
-          "images/sit/oop-game2.png",
-          "images/sit/oop-game3.png",
-          "images/sit/oop-game4.png"
-        ],
-        "last_update": null,
-        "project_type": "Games",
-        "tags": ["games"],
-        "tools": ["java", "libgdx"],
-        "title": "Resource Management Game",
-        "vid_link": "https://youtu.be/xTgrENeVFi4?si=33A5JgegELn4uFcM",
-        "vignette": "A real-time resource management simulation built in Java using LibGDX.",
-        "what_i_did": [
-          "Designed object-oriented game object classes in Java to support core game mechanics.",
-          "Implemented scene flow (menus and gameplay) including transitions and UI rendering in LibGDX."
-        ]
-      }
-    ]
-  },
-  "SpendingDashboard": {
+  "Personal-SpendingDashboard": {
     "default_version": "Vue.js + FastAPI",
-    "page_list": ["Featured", "Programming"],
+    "page_list": ["Featured", "Personal Projects"],
     "show_in_timeline": true,
     "shown": true,
-    "variable_name": "SpendingDashboard",
+    "variable_name": "personal-spending-dashboard",
     "versions": [
       {
         "version": "Vue.js + FastAPI",
@@ -619,12 +636,12 @@
       }
     ]
   },
-  "YouTube_Analytics": {
+  "Personal-YouTubeAnalytics": {
     "default_version": "Version 1.0",
-    "page_list": ["Programming", "Featured"],
+    "page_list": ["Personal Projects", "Featured"],
     "show_in_timeline": true,
     "shown": true,
-    "variable_name": "youtube-analytics",
+    "variable_name": "personal-youtube-analytics",
     "versions": [
       {
         "version": "Version 1.0",
@@ -658,12 +675,12 @@
       }
     ]
   },
-  "TranslatorHelper": {
+  "Personal-TranslatorHelper": {
     "default_version": "Version 1.1.1 (Angular & Node.js)",
-    "page_list": ["Featured", "Programming"],
+    "page_list": ["Featured", "Personal Projects"],
     "show_in_timeline": true,
     "shown": true,
-    "variable_name": "TranslatorHelper",
+    "variable_name": "personal-translator-helper",
     "versions": [
       {
         "version": "Version 1.1.1 (Angular & Node.js)",
@@ -679,6 +696,16 @@
         "project_type": "AI",
         "tags": ["ai", "automation", "frontend"],
         "tools": ["angular", "fastapi", "python"],
+        "download_paths": [
+          {
+            "key": "Gakumas Lilja Step 2 Original JA Transcription",
+            "url": "https://drive.google.com/file/d/1lIjHiW8t4NQAQEOAOmNKltOcZgz-E1VY/view?usp=sharing"
+          }, 
+          {
+            "key": "Gakumas Lilja Step 2 EN Translation",
+            "url": "https://drive.google.com/file/d/1U7QGdhFqKM0Y5jqgYjH9UPO0Mq81esjs/view?usp=sharing"
+          }
+        ],
         "title": "Translator Helper",
         "vid_link": "https://youtu.be/UQHwdxNiu9M",
         "vignette": "A full-stack assistant for transcribing, and translating subtitle files with Angular and FastAPI.",
@@ -692,7 +719,7 @@
       {
         "version": "Version 1.1 (Angular & Node.js)",
         "date": "2025-12-01",
-        "description": "A tool I built to help with fan translations for Japanese drama CDs and games. It handles transcription, context-building, and subtitle translation in one workflow, so I can generate a first pass and then review and edit the results.\n\nI originally built this in Streamlit, but I found it wasn't very responsive, so I remade it with a proper frontend-backend split using Angular and FastAPI (Python) to make the app feel snappier.",        "download_paths": [],
+        "description": "A tool I built to help with fan translations for Japanese drama CDs and games. It handles transcription, context-building, and subtitle translation in one workflow, so I can generate a first pass and then review and edit the results.\n\nI originally built this in Streamlit, but I found it wasn't very responsive, so I remade it with a proper frontend-backend split using Angular and FastAPI (Python) to make the app feel snappier.",        
         "github_link": "https://github.com/dragonstonehafiz/translator-helper",
         "img_paths": [
           "images/other/translatorHelperVer4_1.png",
@@ -704,6 +731,16 @@
         "project_type": "AI",
         "tags": ["ai", "automation", "frontend"],
         "tools": ["angular", "fastapi", "python"],
+        "download_paths": [
+          {
+            "key": "Gakumas Lilja Step 1 Original JA Transcription",
+            "url": "https://drive.google.com/file/d/1G11AGhtz4hywHGwEzd8AoQggVDVyoBWT/view?usp=sharing"
+          }, 
+          {
+            "key": "Gakumas Lilja Step 1 EN Translation",
+            "url": "https://drive.google.com/file/d/19hHleqfErNXyzKS_zTfkzDEOzpnO9cOu/view?usp=sharing"
+          }
+        ],
         "title": "Translator Helper",
         "vid_link": null,
         "vignette": "A full-stack assistant for transcribing, and translating subtitle files with Angular and FastAPI.",
@@ -718,7 +755,16 @@
         "version": "Version 1.0.4 (Streamlit)",
         "date": "2025-10-27",
         "description": "An application that speeds up the process of transcribing and translating anime drama CDs using OpenAI\u2019s API and Whisper. It can generate a first-draft transcription and translation for an entire audio file, export the results into subtitle formats for review, and provide smaller tools for handling individual lines or short audio snippets when needed.",
-        "download_paths": [],
+        "download_paths": [
+          {
+            "key": "Makeine Drama CD JA Transcription 2-1",
+            "url": "https://drive.google.com/file/d/1-gtoE0CmyUtvz0wtnbHEVt_iiHNdLke3/view?usp=sharing"
+          }, 
+          {
+            "key": "Makeine Drama CD EN Translation 2-1",
+            "url": "https://drive.google.com/file/d/1UG0m2f0NPHF9OZg1h-S9v9nCnCDvIxKj/view?usp=sharing"
+          }
+        ],
         "github_link": "https://github.com/dragonstonehafiz/translator-helper",
         "img_paths": [
           "images/other/translatorHelperVer3_1.png",
@@ -744,7 +790,16 @@
         "version": "Version 1.0.2 (Streamlit)",
         "date": "2025-03-09",
         "description": "A personal tool for helping with transcribing and translating anime drama CDs using LLMs and Whisper. I made it because there are times when I can\u2019t clearly catch a line or I\u2019m unsure how to phrase a translation, so the app helps by generating transcripts, organizing context, and producing translation outputs in a few styles to compare.",
-        "download_paths": [],
+        "download_paths": [
+          {
+            "key": "Makeine Drama CD JA Transcription 1-2",
+            "url": "https://drive.google.com/file/d/1mmFF-kUvl_Tmlog3-7QV9pUC8zsGgUth/view?usp=sharing"
+          }, 
+          {
+            "key": "Makeine Drama CD EN Translation 1-2",
+            "url": "https://drive.google.com/file/d/13dQoyXy0pLzUij2HGqpZFgnkgyZ0VXkP/view?usp=sharing"
+          }
+        ],
         "github_link": "https://github.com/dragonstonehafiz/translator-helper",
         "img_paths": [
           "images/other/translatorHelperVer2_1.png",
@@ -769,12 +824,12 @@
       }
     ]
   },
-  "YouTubeCommentAnalyzer": {
+  "Personal-YouTubeCommentAnalyzer": {
     "default_version": "1.0",
-    "page_list": ["Programming"],
+    "page_list": ["Personal Projects"],
     "show_in_timeline": true,
-    "shown": false,
-    "variable_name": "YouTubeCommentAnalyzer",
+    "shown": true,
+    "variable_name": "personal-youtube-comment-analyzer",
     "versions": [
       {
         "version": "1.0",
@@ -805,243 +860,75 @@
       }
     ]
   },
-  "gakumas_lilja_atmosphere": {
-    "default_version": "Release",
-    "page_list": ["Translations"],
-    "show_in_timeline": false,
+  "Personal-BudgetingSpreadsheet": {
+    "default_version": "1.0",
+    "page_list": ["Personal Projects"],
+    "show_in_timeline": true,
     "shown": false,
-    "variable_name": "gakumas_lilja_atmosphere",
+    "variable_name": "personal-budgeting-spreadsheet",
     "versions": [
       {
-        "version": "Release",
-        "date": "2025-12-13",
-        "description": null,
-        "download_paths": [
-          {
-            "key": "English Subs",
-            "url": "https://drive.google.com/file/d/12kdO4bNWKxiwj_t6Cpwfr-dQNWkI5PHS/view?usp=drive_link"
-          },
-          {
-            "key": "Japanese Subs",
-            "url": "https://drive.google.com/file/d/1dOnCKPbizrO557zMUHwtHiuqWsFg7m2q/view?usp=drive_link"
-          }
-        ],
+        "version": "1.0",
+        "date": "2024-01-16",
+        "description": "A Python tool that automates the yearly setup of my budgeting spreadsheets by generating new sheets, inserting formulas, and applying formatting automatically. It keeps calculations consistent and improves readability with conditional formatting. This was later replaced by my Spending Dashboard project.",
+        "download_paths": [],
         "github_link": null,
-        "img_paths": [],
+        "img_paths": [
+          "images/other/spreadsheet1.png",
+          "images/other/spreadsheet2.png",
+          "images/other/spreadsheet3.png",
+          "images/other/spreadsheet4.png"
+        ],
         "last_update": null,
-        "project_type": "Translations",
-        "tags": ["translations"],
-        "tools": [],
-        "title": "Gakuen Idolmaster: Lilja \"Atmosphere\" Commyu",
-        "vid_link": "https://youtu.be/21Zbr9QxaiI",
-        "what_i_did": []
+        "project_type": "Productivity",
+        "tags": ["automation", "data-processing"],
+        "tools": ["python", "excel"],
+        "title": "Budgeting Spreadsheet Automation",
+        "vid_link": null,
+        "vignette": "A Python tool to automate the yearly setup of budgeting spreadsheets.",
+        "what_i_did": [
+          "Automated yearly sheet creation, formula insertion, and formatting in Excel with Python.",
+          "Added conditional formatting rules to keep categories and totals readable.",
+          "Built a small Tkinter GUI to run the setup without editing code."
+        ]
       }
     ]
   },
-  "gakumas_lilja_hakusen": {
-    "default_version": "Release",
-    "page_list": ["Translations"],
-    "show_in_timeline": false,
-    "shown": false,
-    "variable_name": "gakumas_lilja_hakusen",
-    "versions": [
-      {
-        "version": "Release",
-        "date": "2025-10-20",
-        "description": null,
-        "download_paths": [
-          {
-            "key": "English Subs",
-            "url": "https://drive.google.com/file/d/1yPGH5bge-MFPNe_EO17A9YnGznzkVSnH/view?usp=drive_link"
-          },
-          {
-            "key": "Japanese Subs",
-            "url": "https://drive.google.com/file/d/1uBBsbcymA64BPd3OMtJ9hRswAGSBV3oq/view?usp=drive_link"
-          }
-        ],
-        "github_link": null,
-        "img_paths": [],
-        "last_update": null,
-        "project_type": "Translations",
-        "tags": ["translations"],
-        "tools": [],
-        "title": "Gakuen Idolmaster: Lilja \"Hakusen\" Commyu",
-        "vid_link": "https://youtu.be/FGMHf9UwcUo",
-        "what_i_did": []
-      }
-    ]
-  },
-  "gakumas_lilja_hotw": {
-    "default_version": "Release",
-    "page_list": ["Translations"],
-    "show_in_timeline": false,
-    "shown": false,
-    "variable_name": "gakumas_lilja_hotw",
-    "versions": [
-      {
-        "version": "Release",
-        "date": "2025-11-05",
-        "description": null,
-        "download_paths": [
-          {
-            "key": "English Subs",
-            "url": "https://drive.google.com/file/d/1CouYpbwipb9wzqKKuyN_me3jFVdJaZxU/view?usp=drive_link"
-          },
-          {
-            "key": "Japanese Subs",
-            "url": "https://drive.google.com/file/d/1Q3mfd4UrPfn6irNCTrpsoJsfhjc_0lVA/view?usp=drive_link"
-          }
-        ],
-        "github_link": null,
-        "img_paths": [],
-        "last_update": null,
-        "project_type": "Translations",
-        "tags": ["translations"],
-        "tools": [],
-        "title": "Gakuen Idolmaster: Lilja \"Howling over the World\" Commyu",
-        "vid_link": "https://youtu.be/lqMFhK0F6mA",
-        "what_i_did": []
-      }
-    ]
-  },
-  "gakumas_lilja_kamurogiku": {
-    "default_version": "Release",
-    "page_list": ["Translations"],
-    "show_in_timeline": false,
-    "shown": false,
-    "variable_name": "gakumas_lilja_kamurogiku",
-    "versions": [
-      {
-        "version": "Release",
-        "date": "2025-10-22",
-        "description": null,
-        "download_paths": [
-          {
-            "key": "English Subs",
-            "url": "https://drive.google.com/file/d/16iDt5TZoxrbFiYU4WUxzwmV1E2IRqBy_/view?usp=drive_link"
-          },
-          {
-            "key": "Japanese Subs",
-            "url": "https://drive.google.com/file/d/16iDt5TZoxrbFiYU4WUxzwmV1E2IRqBy_/view?usp=drive_link"
-          }
-        ],
-        "github_link": null,
-        "img_paths": [],
-        "last_update": null,
-        "project_type": "Translations",
-        "tags": ["translations"],
-        "tools": [],
-        "title": "Gakuen Idolmaster: Lilja \"Kamurogiku\" Commyu",
-        "vid_link": "https://youtu.be/EcFYNzcPKfE",
-        "what_i_did": []
-      }
-    ]
-  },
-  "gakumas_lilja_kyokkou": {
-    "default_version": "Release",
-    "page_list": ["Translations"],
-    "show_in_timeline": false,
-    "shown": false,
-    "variable_name": "gakumas_lilja_kyokkou",
-    "versions": [
-      {
-        "version": "Release",
-        "date": "2025-11-15",
-        "description": null,
-        "download_paths": [
-          {
-            "key": "English Subs",
-            "url": "https://drive.google.com/file/d/1ULAF5T6Mnki-rgDj2RyaTjGJxZ0S1KJr/view?usp=drive_link"
-          },
-          {
-            "key": "Japanese Subs",
-            "url": "https://drive.google.com/file/d/17m6WvxO5beA8misB3sOT4CeqZ116sySS/view?usp=drive_link"
-          }
-        ],
-        "github_link": null,
-        "img_paths": [],
-        "last_update": null,
-        "project_type": "Translations",
-        "tags": ["translations"],
-        "tools": [],
-        "title": "Gakuen Idolmaster: Lilja \"Kyokkou\" Commyu",
-        "vid_link": "https://youtu.be/C_ijOCcU5XU",
-        "what_i_did": []
-      }
-    ]
-  },
-  "gakumas_lilja_sakura_photograph": {
-    "default_version": "Release",
-    "page_list": ["Translations"],
-    "show_in_timeline": false,
-    "shown": false,
-    "variable_name": "gakumas_lilja_sakura_photograph",
-    "versions": [
-      {
-        "version": "Release",
-        "date": "2025-10-27",
-        "description": null,
-        "download_paths": [
-          {
-            "key": "English Subs",
-            "url": "https://drive.google.com/file/d/12Niu_5oFKX547xIzVU-tFa1q37zjZa30/view?usp=drive_link"
-          },
-          {
-            "key": "Japanese Subs",
-            "url": "https://drive.google.com/file/d/12Niu_5oFKX547xIzVU-tFa1q37zjZa30/view?usp=drive_link"
-          }
-        ],
-        "github_link": null,
-        "img_paths": [],
-        "last_update": null,
-        "project_type": "Translations",
-        "tags": ["translations"],
-        "tools": [],
-        "title": "Gakuen Idolmaster: Lilja \"Sakura Photograph\" Commyu",
-        "vid_link": "https://youtu.be/QVPluVp2enw",
-        "what_i_did": []
-      }
-    ]
-  },  
-  "gakumas_lilja_white_night_white_wish": {
-    "default_version": "Release",
-    "page_list": ["Translations"],
-    "show_in_timeline": false,
-    "shown": false,
-    "variable_name": "gakumas_lilja_white_night_white_wish",
-    "versions": [
-      {
-        "version": "Release",
-        "date": "2025-12-25",
-        "description": null,
-        "download_paths": [
-          {
-            "key": "English Subs",
-            "url": "https://drive.google.com/file/d/1ZWiQJdVGJlv1rBlkh2JF9P9Cf4pWvy2z/view?usp=drive_link"
-          },
-          {
-            "key": "Japanese Subs",
-            "url": "https://drive.google.com/file/d/1IRSNpSJZcYtmIboblibimaoGtPCu0koj/view?usp=drive_link"
-          }
-        ],
-        "github_link": null,
-        "img_paths": [],
-        "last_update": null,
-        "project_type": "Translations",
-        "tags": ["translations"],
-        "tools": [],
-        "title": "Gakuen Idolmaster: Lilja \"White Night White Wish\" Commyu",
-        "vid_link": "https://youtu.be/SMGPHBY_sdE",
-        "what_i_did": []
-      }
-    ]
-  },
-  "gakumas_lilja_step1": {
-    "default_version": "Release",
-    "page_list": ["Translations"],
+  "Personal-DiamondCityRadio": {
+    "default_version": "1.0",
+    "page_list": ["Personal Projects"],
     "show_in_timeline": true,
     "shown": true,
-    "variable_name": "gakumas_lilja_step1",
+    "variable_name": "personal-diamond-city-radio",
+    "versions": [
+      {
+        "version": "1.0",
+        "date": "2024-04-27",
+        "description": "A Java-based music player inspired by Fallout 4's Diamond City Radio. It plays a mix of music tracks and DJ voice clips, inserting commentary between songs to recreate the feel of an in-game radio station.",
+        "download_paths": [],
+        "github_link": null,
+        "img_paths": [],
+        "last_update": null,
+        "project_type": "Miscellaneous",
+        "tags": ["games"],
+        "tools": ["java", "libgdx"],
+        "title": "Diamond City Radio (Fallout-Inspired Music Player)",
+        "vid_link": "https://youtu.be/E9zW9e6HOzU",
+        "vignette": "A Java-based music player inspired by Fallout 4's Diamond City Radio.",
+        "what_i_did": [
+          "Built the app in LibGDX (Java), including the UI and playback controls.",
+          "Implemented audio loading and management for music tracks and voice clips.",
+          "Created the radio-style playback flow that interleaves DJ commentary between songs."
+        ]
+      }
+    ]
+  },
+  "Personal-GakumasLiljaStep1": {
+    "default_version": "Release",
+    "page_list": ["Personal Projects"],
+    "show_in_timeline": true,
+    "shown": true,
+    "variable_name": "personal-gakumas-lilja-step-1",
     "versions": [
       {
         "version": "Release",
@@ -1060,407 +947,11 @@
         "github_link": null,
         "img_paths": [],
         "last_update": null,
-        "project_type": "Translations",
-        "tags": ["translations"],
+        "project_type": "Miscellaneous",
+        "tags": [],
         "tools": [],
         "title": "Gakuen Idolmaster: Lilja Step 1 Commyu",
         "vid_link": "https://youtu.be/8Ncm2_M6FSI",
-        "what_i_did": []
-      }
-    ]
-  },
-  "gakumas_lilja_step2": {
-    "default_version": "Release",
-    "page_list": ["Translations"],
-    "show_in_timeline": true,
-    "shown": true,
-    "variable_name": "gakumas_lilja_step2",
-    "versions": [
-      {
-        "version": "Release",
-        "date": "2025-07-13",
-        "description": null,
-        "download_paths": [
-          {
-            "key": "English Subs",
-            "url": "https://drive.google.com/file/d/1KkpEdYN9XV_DZwQrhG6S0Zj2JUzAWPOS/view?usp=sharing"
-          },
-          {
-            "key": "Japanese Subs",
-            "url": "https://drive.google.com/file/d/1VxsZOwXn8Sq9tK8hNTm7H7_ybhs_5rho/view?usp=sharing"
-          }
-        ],
-        "github_link": null,
-        "img_paths": [],
-        "last_update": null,
-        "project_type": "Translations",
-        "tags": ["translations"],
-        "tools": [],
-        "title": "Gakuen Idolmaster: Lilja Step 2 Commyu",
-        "vid_link": "https://youtu.be/wigz91b--Xc",
-        "what_i_did": []
-      }
-    ]
-  },
-  "gakumas_lilja_step3": {
-    "default_version": "Release",
-    "page_list": ["Translations"],
-    "show_in_timeline": true,
-    "shown": true,
-    "variable_name": "gakumas_lilja_step3",
-    "versions": [
-      {
-        "version": "Release",
-        "date": "2026-01-07",
-        "description": null,
-        "download_paths": [
-          {
-            "key": "English Subs",
-            "url": "https://drive.google.com/file/d/1U7QGdhFqKM0Y5jqgYjH9UPO0Mq81esjs/view?usp=sharing"
-          },
-          {
-            "key": "Japanese Subs",
-            "url": "https://drive.google.com/file/d/1lIjHiW8t4NQAQEOAOmNKltOcZgz-E1VY/view?usp=sharing"
-          }
-        ],
-        "github_link": null,
-        "img_paths": [],
-        "last_update": null,
-        "project_type": "Translations",
-        "tags": ["translations"],
-        "tools": [],
-        "title": "Gakuen Idolmaster: Lilja Step 3 Commyu",
-        "vid_link": "https://youtu.be/xHGXHPq4nZY",
-        "what_i_did": []
-      }
-    ]
-  },
-  "gakumas_event_01": {
-    "default_version": "Release",
-    "page_list": ["Translations"],
-    "show_in_timeline": true,
-    "shown": true,
-    "variable_name": "gakumas_event_01",
-    "versions": [
-      {
-        "version": "Release",
-        "date": "2026-03-27",
-        "description": null,
-        "download_paths": [
-          {
-            "key": "English Subs",
-            "url": "https://drive.google.com/file/d/1T9Gj7o2BmWx0wB6vkWBaqhY2LcP78fds/view?usp=sharing"
-          },
-          {
-            "key": "Japanese Subs",
-            "url": "https://drive.google.com/file/d/1abg5LCrIs6XHB3B9VSb7CF6lY5lbS37d/view?usp=sharing"
-          }
-        ],
-        "github_link": null,
-        "img_paths": [],
-        "last_update": null,
-        "project_type": "Translations",
-        "tags": ["translations"],
-        "tools": [],
-        "title": "Gakuen Idolmaster: The Idols of Class 1-1 Event Commyu",
-        "vid_link": "https://youtu.be/py43cfm4kq0",
-        "what_i_did": []
-      }
-    ]
-  },
-  "gakumas_event_02": {
-    "default_version": "Release",
-    "page_list": ["Translations"],
-    "show_in_timeline": false,
-    "shown": false,
-    "variable_name": "gakumas_event_02",
-    "versions": [
-      {
-        "title": "Gakuen Idolmaster: Midsummer Live Fest Event Commyu",
-        "vid_link": "https://youtu.be/py43cfm4kq0",
-        "version": "Release",
-        "date": "2026-03-31",
-        "description": null,
-        "download_paths": [
-          {
-            "key": "English Subs",
-            "url": "https://drive.google.com/file/d/1V2QH--u4uBK9r1IA9QWMK1L9yVWX9A6g/view?usp=sharing"
-          },
-          {
-            "key": "Japanese Subs",
-            "url": "https://drive.google.com/file/d/1lCRx20RKhcn8sLiiwOOzJ-xIxzJOeiTS/view?usp=sharing"
-          }
-        ],
-        "github_link": null,
-        "img_paths": [],
-        "last_update": null,
-        "project_type": "Translations",
-        "tags": ["translations"],
-        "tools": [],
-        "what_i_did": []
-      }
-    ]
-  },
-  "makeine_vol1ep1": {
-    "default_version": "Release",
-    "page_list": ["Translations"],
-    "show_in_timeline": true,
-    "shown": true,
-    "variable_name": "makeine_vol1ep1",
-    "versions": [
-      {
-        "version": "Release",
-        "date": "2025-02-23",
-        "description": null,
-        "download_paths": [
-          {
-            "key": "English Subs",
-            "url": "https://drive.google.com/file/d/1zbo4K6AgdqbiR-dOGyl5uItmUDBrkFKE/view?usp=sharing"
-          },
-          {
-            "key": "Japanese Subs",
-            "url": "https://drive.google.com/file/d/1Y6nBqVw2RYx0RwI6lTUddSo0tLbfVQ5h/view?usp=sharing"
-          }
-        ],
-        "github_link": null,
-        "img_paths": [],
-        "last_update": null,
-        "project_type": "Translations",
-        "tags": ["translations"],
-        "tools": [],
-        "title": "Too Many Losing Heroines!!! Drama CD Vol. 1 \"I'll teach you the secret to style\"",
-        "vid_link": "https://youtu.be/gRx0sX_9PyA",
-        "what_i_did": []
-      }
-    ]
-  },
-  "makeine_vol1ep2": {
-    "default_version": "Release",
-    "page_list": ["Translations"],
-    "show_in_timeline": false,
-    "shown": false,
-    "variable_name": "makeine_vol1ep2",
-    "versions": [
-      {
-        "version": "Release",
-        "date": "2025-03-15",
-        "description": null,
-        "download_paths": [
-          {
-            "key": "English Subs",
-            "url": "https://drive.google.com/file/d/13dQoyXy0pLzUij2HGqpZFgnkgyZ0VXkP/view?usp=sharing"
-          },
-          {
-            "key": "Japanese Subs",
-            "url": "https://drive.google.com/file/d/1mmFF-kUvl_Tmlog3-7QV9pUC8zsGgUth/view?usp=sharing"
-          }
-        ],
-        "github_link": null,
-        "img_paths": [],
-        "last_update": null,
-        "project_type": "Translations",
-        "tags": ["translations"],
-        "tools": [],
-        "title": "Too Many Losing Heroines!!! Drama CD Vol. 1 \"Be careful with sneak photography.\"",
-        "vid_link": "https://youtu.be/KPy_66wKk34",
-        "what_i_did": []
-      }
-    ]
-  },
-  "makeine_vol1ep3": {
-    "default_version": "Release",
-    "page_list": ["Translations"],
-    "show_in_timeline": false,
-    "shown": false,
-    "variable_name": "makeine_vol1ep3",
-    "versions": [
-      {
-        "version": "Release",
-        "date": "2025-05-01",
-        "description": null,
-        "download_paths": [
-          {
-            "key": "English Subs",
-            "url": "https://drive.google.com/file/d/1xqfFBsN5gv3ZfHzeWzpTH9Ty-lYc5Ulx/view?usp=sharing"
-          },
-          {
-            "key": "Japanese Subs",
-            "url": "https://drive.google.com/file/d/18fKawmTU3TADcEeJBD10f-G5YXxf0Ngf/view?usp=sharing"
-          }
-        ],
-        "github_link": null,
-        "img_paths": [],
-        "last_update": null,
-        "project_type": "Translations",
-        "tags": ["translations"],
-        "tools": [],
-        "title": "Too Many Losing Heroines!!! Drama CD Vol. 1 \"Let's aim for the one chance!\"",
-        "vid_link": "https://youtu.be/vn_1bNIXBTU",
-        "what_i_did": []
-      }
-    ]
-  },
-  "makeine_vol2ep1": {
-    "default_version": "Release",
-    "page_list": ["Translations"],
-    "show_in_timeline": true,
-    "shown": true,
-    "variable_name": "makeine_vol2ep1",
-    "versions": [
-      {
-        "version": "Release",
-        "date": "2025-07-27",
-        "description": null,
-        "download_paths": [
-          {
-            "key": "English Subs",
-            "url": "https://drive.google.com/file/d/18gEvRojjPvfRrwD761B7W3ydvjdLRzMV/view?usp=sharing"
-          },
-          {
-            "key": "Japanese Subs",
-            "url": "https://drive.google.com/file/d/1U5DqfRlovKga8PuULshzCJ7kt2DCPJlf/view?usp=sharing"
-          }
-        ],
-        "github_link": null,
-        "img_paths": [],
-        "last_update": null,
-        "project_type": "Translations",
-        "tags": ["translations"],
-        "tools": [],
-        "title": "Too Many Losing Heroines!!! Drama CD Vol. 2 \"Don't Forget to Level Up\"",
-        "vid_link": "https://youtu.be/qJOps4YbTQU",
-        "what_i_did": []
-      }
-    ]
-  },
-  "makeine_vol2ep2": {
-    "default_version": "Release",
-    "page_list": ["Translations"],
-    "show_in_timeline": false,
-    "shown": false,
-    "variable_name": "makeine_vol2ep2",
-    "versions": [
-      {
-        "version": "Release",
-        "date": "2025-07-31",
-        "description": null,
-        "download_paths": [
-          {
-            "key": "English Subs",
-            "url": "https://drive.google.com/file/d/13mj5lEMe706O5FmpurtoUJSpaV5u6zLE/view?usp=sharing"
-          },
-          {
-            "key": "Japanese Subs",
-            "url": "https://drive.google.com/file/d/15TGZrKMN7Md8EaaXf5m-Qj9agxwu1t-F/view?usp=sharing"
-          }
-        ],
-        "github_link": null,
-        "img_paths": [],
-        "last_update": null,
-        "project_type": "Translations",
-        "tags": ["translations"],
-        "tools": [],
-        "title": "Too Many Losing Heroines!!! Drama CD Vol. 2 \"Secret Photoshoot\"",
-        "vid_link": "https://youtu.be/7gY6SVu6fsw",
-        "what_i_did": []
-      }
-    ]
-  },
-  "makeine_vol2ep3": {
-    "default_version": "Release",
-    "page_list": ["Translations"],
-    "show_in_timeline": false,
-    "shown": false,
-    "variable_name": "makeine_vol2ep3",
-    "versions": [
-      {
-        "version": "Release",
-        "date": "2025-08-11",
-        "description": null,
-        "download_paths": [
-          {
-            "key": "English Subs",
-            "url": "https://drive.google.com/file/d/1UG0m2f0NPHF9OZg1h-S9v9nCnCDvIxKj/view?usp=sharing"
-          },
-          {
-            "key": "Japanese Subs",
-            "url": "https://drive.google.com/file/d/1-gtoE0CmyUtvz0wtnbHEVt_iiHNdLke3/view?usp=sharing"
-          }
-        ],
-        "github_link": null,
-        "img_paths": [],
-        "last_update": null,
-        "project_type": "Translations",
-        "tags": ["translations"],
-        "tools": [],
-        "title": "Too Many Losing Heroines!!! Drama CD Vol. 2 \"Take Responsibility\"",
-        "vid_link": "https://youtu.be/xhvKAjgbikQ",
-        "what_i_did": []
-      }
-    ]
-  },
-  "makeine_kagai_katsudou_dramacd": {
-    "default_version": "Release",
-    "page_list": ["Translations"],
-    "show_in_timeline": true,
-    "shown": true,
-    "variable_name": "makeine_kagai_katsudou_dramacd",
-    "versions": [
-      {
-        "version": "Release",
-        "date": "2026-02-07",
-        "description": null,
-        "download_paths": [
-          {
-            "key": "English Subs",
-            "url": "https://drive.google.com/file/d/1V5SjrIEG7A53p8568vXzjhuCstR0iXUg/view?usp=drive_link"
-          },
-          {
-            "key": "Japanese Subs",
-            "url": "https://drive.google.com/file/d/1NTSQHvqzcyf1wGVtT6o_-rcJbf_5BoKV/view?usp=drive_link"
-          }
-        ],
-        "github_link": null,
-        "img_paths": [],
-        "last_update": null,
-        "project_type": "Translations",
-        "tags": ["translations"],
-        "tools": [],
-        "title": "Too Many Losing Heroines!!! Drama CD  \"Tsuwabuki High School Literature Club, Return to Toyohashi!\"",
-        "vid_link": "https://youtu.be/idU7PRCR_WI",
-        "what_i_did": []
-      }
-    ]
-  },
-  "nichijou_himekuri_vol1_4": {
-    "default_version": "Release",
-    "page_list": ["Translations"],
-    "show_in_timeline": true,
-    "shown": true,
-    "variable_name": "nichijou_himekuri_vol1_4",
-    "versions": [
-      {
-        "version": "Release",
-        "date": "2025-04-12",
-        "description": null,
-        "download_paths": [
-          {
-            "key": "English Subs",
-            "url": "https://drive.google.com/file/d/1XyBpJKoZvWOWXqXywZ3vrX4eDrNmcIzF/view?usp=sharing"
-          },
-          {
-            "key": "Japanese Subs",
-            "url": "https://drive.google.com/file/d/16YQI5JksUD3MFUyg5HTilK5ROmfvNmfw/view?usp=sharing"
-          }
-        ],
-        "github_link": null,
-        "img_paths": [],
-        "last_update": null,
-        "project_type": "Translations",
-        "tags": ["translations"],
-        "tools": [],
-        "title": "Nichijou Daily Calendar CD Vol. 1: \"April\"",
-        "vid_link": "https://youtu.be/Jjik_sl7e-E",
         "what_i_did": []
       }
     ]

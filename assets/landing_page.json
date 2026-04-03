@@ -115,10 +115,10 @@
     "Languages": {
       "description": "I learned programming through C++ in polytechnic and picked up Python during college. Every other language here was learned through work experience and applied as needed.",
       "related_projects": [
-        "AI_Game",
-        "ResourceManagementGame",
-        "Electronica",
-        "TranslatorHelper"
+        "NYP-AIGame",
+        "NYP-Electronica",
+        "SIT-ResourceManagementGame",
+        "Personal-TranslatorHelper"
       ],
       "items": [
         "Python",
@@ -134,9 +134,9 @@
     "Frontend": {
       "description": "I learned frontend work to make my apps easier to use, since web\u2011based UI programming was simpler than building app\u2011based UI.",
       "related_projects": [
-        "PortfolioSite",
-        "TranslatorHelper",
-        "SpendingDashboard"
+        "Personal-PortfolioSite",
+        "Personal-TranslatorHelper",
+        "Personal-SpendingDashboard"
       ],
       "items": [
         "Flutter",
@@ -151,8 +151,9 @@
     "Backend": {
       "description": "I design and build backend architecture for my own apps, focusing on clean APIs and maintainable data flows.",
       "related_projects": [
-        "TranslatorHelper",
-        "BirdLaserTargeter"
+        "Personal-TranslatorHelper",
+        "Personal-YouTubeAnalytics",
+        "SIT-BirdLaserTargeter"
       ],
       "items": [
         "FastAPI",
@@ -163,9 +164,9 @@
     "AI / ML": {
       "description": "Most of my AI/ML work is about designing automation tools that save time and reduce manual effort.",
       "related_projects": [
-        "ESRGAN_M",
-        "TranslatorHelper",
-        "BirdLaserTargeter"
+        "SIT-ESRGAN_M",
+        "Personal-TranslatorHelper",
+        "SIT-BirdLaserTargeter"
       ],
       "items": [
         "Computer Vision",
@@ -177,27 +178,14 @@
     "DevOps / Cloud": {
       "description": "Containerized services with Docker, deployed workloads on Google Cloud, and used Git as the core collaboration workflow.",
       "related_projects": [
-        "PortfolioSite"
+        "Personal-PortfolioSite",
+        "Personal-SpendingDashboard"
       ],
       "items": [
         "Docker",
         "Google Cloud",
         "Git",
         "SourceTree"
-      ]
-    },
-    "Creative": {
-      "description": "Used these for personal hobbies such as YouTube posting and content editing.",
-      "related_projects": [
-        "gakumas_lilja_step1",
-        "makeine_vol2ep1"
-      ],
-      "items": [
-        "Adobe Premiere Pro",
-        "Adobe Photoshop",
-        "Adobe Audition",
-        "DaVinci Resolve",
-        "Affinity Photo 2"
       ]
     }
   }

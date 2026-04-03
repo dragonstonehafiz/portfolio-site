@@ -1,8 +1,8 @@
 {
   "introduction": {
     "name": "Muhd Hafiz",
-    "headline": "Developer \u2014 tools, apps, and games. Interested in UI, automation and localization.",
-    "summary": "I build practical tools and side projects to solve problems and learn new technologies. This site collects my projects, translations, and experiments.",
+    "headline": "Developer. I build things to solve my own problems.",
+    "summary": "Most of my projects start the same way: I have a problem, I can't find a good solution, so I build one. This site collects the tools, games, and experiments that came out of that habit.\n\nSome of the bigger ones: a self-hosted YouTube analytics dashboard with AI-powered comment analysis and thumbnail testing, a full-stack translation assistant that uses Whisper and LLMs to speed up subtitle work, and a personal spending dashboard for tracking and visualizing my finances.",
     "downloads": [
       {
         "label": "View Resume",

@@ -14,14 +14,12 @@ class ProjectCompactCard extends StatelessWidget {
   final ProjectData project;
   final double width;
   final double height;
-  final double mediaHeight;
 
   const ProjectCompactCard({
     super.key,
     required this.project,
     this.width = 190,
     this.height = 210,
-    this.mediaHeight = 120,
   });
 
   @override
@@ -39,76 +37,79 @@ class ProjectCompactCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SizedBox(height: mediaHeight, child: _buildMedia()),
               Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
+                child: LayoutBuilder(
+                  builder: (context, constraints) =>
+                      _buildMedia(constraints.maxHeight),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(
+                      height: 18,
+                      child: _LoopingTicker(
+                        tickerId: 'title:${project.slug}:${project.version}',
+                        velocity: 26,
+                        child: Text(
+                          project.title,
+                          maxLines: 1,
+                          overflow: TextOverflow.visible,
+                          softWrap: false,
+                          style: const TextStyle(
+                            fontSize: 15,
+                            height: 1.15,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    if (project.tools.isNotEmpty)
+                      SizedBox(
+                        height: 22,
+                        child: _LoopingTicker(
+                          tickerId:
+                              'tools:${project.slug}:${project.tools.join("|")}',
+                          velocity: 24,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: project.tools
+                                .map(
+                                  (tool) => Padding(
+                                    padding: const EdgeInsets.only(right: 6),
+                                    child: ToolBadgeCompact(
+                                      toolKey: tool,
+                                      fontSize: 10,
+                                    ),
+                                  ),
+                                )
+                                .toList(),
+                          ),
+                        ),
+                      )
+                    else
                       SizedBox(
                         height: 18,
                         child: _LoopingTicker(
-                          tickerId: 'title:${project.slug}:${project.version}',
-                          velocity: 26,
+                          tickerId: 'version:${project.slug}:${project.version}',
+                          velocity: 24,
                           child: Text(
-                            project.title,
+                            project.version,
                             maxLines: 1,
                             overflow: TextOverflow.visible,
                             softWrap: false,
                             style: const TextStyle(
-                              fontSize: 15,
-                              height: 1.15,
-                              fontWeight: FontWeight.w700,
+                              fontSize: 12,
+                              color: Colors.blueGrey,
                             ),
                           ),
                         ),
                       ),
-                      const SizedBox(height: 4),
-                      if (project.tools.isNotEmpty)
-                        SizedBox(
-                          height: 22,
-                          child: _LoopingTicker(
-                            tickerId:
-                                'tools:${project.slug}:${project.tools.join("|")}',
-                            velocity: 24,
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: project.tools
-                                  .map(
-                                    (tool) => Padding(
-                                      padding: const EdgeInsets.only(right: 6),
-                                      child: ToolBadgeCompact(
-                                        toolKey: tool,
-                                        fontSize: 10,
-                                      ),
-                                    ),
-                                  )
-                                  .toList(),
-                            ),
-                          ),
-                        )
-                      else
-                        SizedBox(
-                          height: 18,
-                          child: _LoopingTicker(
-                            tickerId: 'version:${project.slug}:${project.version}',
-                            velocity: 24,
-                            child: Text(
-                              project.version,
-                              maxLines: 1,
-                              overflow: TextOverflow.visible,
-                              softWrap: false,
-                              style: const TextStyle(
-                                fontSize: 12,
-                                color: Colors.blueGrey,
-                              ),
-                            ),
-                          ),
-                        ),
-                    ],
-                  ),
+                  ],
                 ),
               ),
             ],
@@ -118,7 +119,7 @@ class ProjectCompactCard extends StatelessWidget {
     );
   }
 
-  Widget _buildMedia() {
+  Widget _buildMedia(double mediaHeight) {
     final hasMedia =
         project.imgPaths.isNotEmpty ||
         (project.vidLink != null && project.vidLink!.isNotEmpty);
@@ -303,9 +304,9 @@ class _LoopingTickerState extends State<_LoopingTicker> {
           return ClipRect(
             child: Align(
               alignment: Alignment.centerLeft,
-              child: UnconstrainedBox(
-                alignment: Alignment.centerLeft,
-                constrainedAxis: Axis.vertical,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                physics: const NeverScrollableScrollPhysics(),
                 child: KeyedSubtree(key: _contentKey, child: widget.child),
               ),
             ),
@@ -319,17 +320,9 @@ class _LoopingTickerState extends State<_LoopingTicker> {
             physics: const NeverScrollableScrollPhysics(),
             child: Row(
               children: [
-                UnconstrainedBox(
-                  alignment: Alignment.centerLeft,
-                  constrainedAxis: Axis.vertical,
-                  child: KeyedSubtree(key: _contentKey, child: widget.child),
-                ),
+                KeyedSubtree(key: _contentKey, child: widget.child),
                 const SizedBox(width: _gap),
-                UnconstrainedBox(
-                  alignment: Alignment.centerLeft,
-                  constrainedAxis: Axis.vertical,
-                  child: widget.child,
-                ),
+                widget.child,
               ],
             ),
           ),

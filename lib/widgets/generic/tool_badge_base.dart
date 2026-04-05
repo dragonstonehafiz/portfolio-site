@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../data/projects/tool_config.dart';
 
@@ -60,6 +61,8 @@ class ToolBadge extends StatelessWidget {
 
 /// A wrapper widget that safely loads SVG icons and handles errors gracefully
 class _SafeSvgIcon extends StatelessWidget {
+  static final Map<String, Future<bool>> _assetCheckCache = {};
+
   final String iconUrl;
   final double size;
   final Color color;
@@ -76,16 +79,32 @@ class _SafeSvgIcon extends StatelessWidget {
     final isAsset = iconUrl.startsWith('assets/');
     final isSvg = iconUrl.toLowerCase().endsWith('.svg');
 
-    return SizedBox(
-      width: size,
-      height: size,
-      child: isAsset
-          ? (isSvg
+    if (isAsset) {
+      final future = _assetCheckCache.putIfAbsent(
+        iconUrl,
+        () async {
+          try {
+            await rootBundle.load(iconUrl);
+            return true;
+          } catch (_) {
+            return false;
+          }
+        },
+      );
+
+      return FutureBuilder<bool>(
+        future: future,
+        builder: (context, snapshot) {
+          if (snapshot.data != true) return const SizedBox.shrink();
+          return SizedBox(
+            width: size,
+            height: size,
+            child: isSvg
                 ? SvgPicture.asset(
                     iconUrl,
                     width: size,
                     height: size,
-                  color: color,
+                    color: color,
                     fit: BoxFit.contain,
                     placeholderBuilder: (context) =>
                         SizedBox(width: size, height: size),
@@ -99,31 +118,38 @@ class _SafeSvgIcon extends StatelessWidget {
                     fit: BoxFit.contain,
                     errorBuilder: (context, error, stackTrace) =>
                         const SizedBox.shrink(),
-                  ))
-          : (isSvg
-                ? SvgPicture.network(
-                    iconUrl,
-                    width: size,
-                    height: size,
-                    color: color,
-                    fit: BoxFit.contain,
-                    placeholderBuilder: (context) =>
-                        SizedBox(width: size, height: size),
-                  )
-                : Image.network(
-                    iconUrl,
-                    width: size,
-                    height: size,
-                    color: color,
-                    colorBlendMode: BlendMode.srcIn,
-                    fit: BoxFit.contain,
-                    errorBuilder: (context, error, stackTrace) =>
-                        const SizedBox.shrink(),
-                    loadingBuilder: (context, child, loadingProgress) {
-                      if (loadingProgress == null) return child;
-                      return SizedBox(width: size, height: size);
-                    },
-                  )),
+                  ),
+          );
+        },
+      );
+    }
+
+    return SizedBox(
+      width: size,
+      height: size,
+      child: isSvg
+          ? SvgPicture.network(
+              iconUrl,
+              width: size,
+              height: size,
+              color: color,
+              fit: BoxFit.contain,
+              placeholderBuilder: (context) => SizedBox(width: size, height: size),
+            )
+          : Image.network(
+              iconUrl,
+              width: size,
+              height: size,
+              color: color,
+              colorBlendMode: BlendMode.srcIn,
+              fit: BoxFit.contain,
+              errorBuilder: (context, error, stackTrace) =>
+                  const SizedBox.shrink(),
+              loadingBuilder: (context, child, loadingProgress) {
+                if (loadingProgress == null) return child;
+                return SizedBox(width: size, height: size);
+              },
+            ),
     );
   }
 }

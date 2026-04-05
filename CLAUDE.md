@@ -163,6 +163,12 @@ This section is the practical map for redesign work. Prefer styling/composition 
   - Used by: `ProjectFullDetailCard`.
   - Responsibility: Responsive video embed (iframe on web) with external-link fallback.
 
+- `ProjectHorizontalCarousel`
+  - Used by: `LandingSkillsSection` (and intended for reuse in any page).
+  - Responsibility: Reusable horizontal carousel for `ProjectCompactCard` items.
+  - Contract: Sizing is controlled by explicit `cardWidth` (+ height constraints), not items-per-viewport.
+  - Interaction: Supports drag/trackpad + mouse wheel horizontal scrolling.
+
 ### Project Domain Widgets (`lib/widgets/project/`)
 
 - `ProjectPreviewCard`
@@ -174,9 +180,9 @@ This section is the practical map for redesign work. Prefer styling/composition 
   - Responsibility: Dense row-style project summary with links, tags, tools, and date/download indicators.
 
 - `ProjectCompactCard`
-  - Used by: `LandingSkillsCarousel`.
+  - Used by: `ProjectHorizontalCarousel`.
   - Responsibility: Small clickable project tile with top media, type badge, and compact meta rows.
-  - Notes: title/tools rows support automatic horizontal ticker behavior when content overflows.
+  - Notes: title/tools rows support automatic horizontal ticker behavior when content overflows; media area consumes remaining height after title/tools block.
 
 - `ProjectFullDetailCard`
   - Used by: Project detail page.
@@ -199,9 +205,7 @@ This section is the practical map for redesign work. Prefer styling/composition 
 
 - `LandingSkillsSection`
   - Responsibility: Skills category tabs, skill badges, related projects integration.
-
-- `LandingSkillsCarousel`
-  - Responsibility: Auto-cycling related-project carousel using `ProjectCompactCard`.
+  - Notes: tabs render inside the skills card; related projects render via `ProjectHorizontalCarousel`.
 
 - `TimelineSingleYear`
   - Used by: landing page today.
@@ -253,6 +257,7 @@ This is the full widget file map under `lib/widgets/`.
 - `tool_badge_list.dart`: wrap list of tool badges.
 - `tool_badge_compact.dart`: compact badge variant.
 - `tool_badge_large.dart`: large badge variant.
+- `project_horizontal_carousel.dart`: reusable horizontal carousel for project compact cards.
 - `image_gallery.dart`: image carousel with auto-advance + thumbnail strip + fullscreen dialog.
 - `youtube_video_player.dart`: responsive YouTube embed/fallback button.
 
@@ -270,7 +275,6 @@ This is the full widget file map under `lib/widgets/`.
 - `landing_work_card.dart`: experience card.
 - `landing_education_card.dart`: education card with modules tabbing.
 - `landing_skills_section.dart`: skills tabbed section + related project mapping.
-- `landing_skills_carousel.dart`: rotating related projects carousel.
 - `timeline_single_year.dart`: active timeline implementation currently mounted on landing page.
 - `timeline_multi_year.dart`: alternate timeline implementation (present, not currently mounted).
 - `timeline_tooltips.dart`: hover tooltip overlay system + tooltip widgets.

@@ -20,7 +20,7 @@ class LandingEducationCard extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.only(bottom: 16),
+      margin: const EdgeInsets.only(bottom: 2),
       child: AnimatedGradient(
         gradient: Theme.of(context).previewGradient,
         borderRadius: BorderRadius.circular(12),

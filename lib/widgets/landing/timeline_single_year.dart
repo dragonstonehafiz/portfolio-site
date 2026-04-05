@@ -59,8 +59,9 @@ class _TimelineSingleYearState extends State<TimelineSingleYear> {
         .toList();
 
     final titleStyle = TextStyle(
-      fontSize: isMobile ? 20 : 22,
-      fontWeight: FontWeight.bold,
+      fontSize: isMobile ? 13 : 14,
+      fontWeight: FontWeight.w700,
+      letterSpacing: 0.6,
       color: Colors.blueGrey,
     );
 
@@ -72,7 +73,7 @@ class _TimelineSingleYearState extends State<TimelineSingleYear> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('Timeline', style: titleStyle),
-        const SizedBox(height: 12),
+        const SizedBox(height: 8),
         AnimatedGradient(
           gradient: Theme.of(context).previewGradient,
           borderRadius: BorderRadius.circular(12),

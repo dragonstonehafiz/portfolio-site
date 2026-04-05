@@ -47,9 +47,6 @@ class ProjectDetailPage extends StatelessWidget {
     }
 
     final versions = entry.versions;
-    final screenWidth = MediaQuery.of(context).size.width;
-    final maxWidth = screenWidth > 1000 ? 1000.0 : screenWidth * 0.9;
-
     return GradientScaffold(
       appBar: const CustomAppBar(),
       body: Column(
@@ -62,94 +59,81 @@ class ProjectDetailPage extends StatelessWidget {
                 versions.length - 1,
               ),
               child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 24.0,
-                  vertical: 24.0,
-                ),
-                child: Center(
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(maxWidth: maxWidth),
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        gradient: Theme.of(context).previewGradient,
-                        borderRadius: BorderRadius.circular(16),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
-                            blurRadius: 12,
-                            offset: const Offset(0, 6),
-                          ),
-                        ],
+                padding: const EdgeInsets.symmetric(vertical: 24.0),
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    gradient: Theme.of(context).previewGradient,
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 12,
+                        offset: const Offset(0, 6),
                       ),
-                      child: SelectionArea(
-                        child: Padding(
-                          padding: const EdgeInsets.all(24),
-                          child: Builder(
-                            builder: (context) {
-                              final controller = DefaultTabController.of(
-                                context,
-                              )!;
-                              final animation =
-                                  controller.animation ?? controller;
+                    ],
+                  ),
+                  child: SelectionArea(
+                    child: Padding(
+                      padding: const EdgeInsets.all(24),
+                      child: Builder(
+                        builder: (context) {
+                          final controller = DefaultTabController.of(context)!;
+                          final animation = controller.animation ?? controller;
 
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
                                 children: [
-                                  Row(
-                                    children: [
-                                      IconButton(
-                                        onPressed: () => Navigator.pop(context),
-                                        icon: const Icon(
-                                          Icons.arrow_back,
-                                          color: Colors.blueGrey,
-                                        ),
-                                      ),
-                                      const Text(
-                                        'Back to Projects',
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          color: Colors.blueGrey,
-                                        ),
-                                      ),
-                                    ],
+                                  IconButton(
+                                    onPressed: () => Navigator.pop(context),
+                                    icon: const Icon(
+                                      Icons.arrow_back,
+                                      color: Colors.blueGrey,
+                                    ),
                                   ),
-                                  const SizedBox(height: 24),
-                                  _VersionTabBar(versions: versions),
-                                  const SizedBox(height: 16),
-                                  AnimatedBuilder(
-                                    animation: animation,
-                                    builder: (context, _) {
-                                      final version =
-                                          versions[controller.index];
-                                      return Center(
-                                        child: Text(
-                                          version.title,
-                                          textAlign: TextAlign.center,
-                                          style: const TextStyle(
-                                            fontSize: 36,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.blueGrey,
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                  const SizedBox(height: 16),
-                                  AnimatedBuilder(
-                                    animation: animation,
-                                    builder: (context, _) {
-                                      final version =
-                                          versions[controller.index];
-                                      return ProjectFullDetailCard(
-                                        project: version,
-                                      );
-                                    },
+                                  const Text(
+                                    'Back to Projects',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.blueGrey,
+                                    ),
                                   ),
                                 ],
-                              );
-                            },
-                          ),
-                        ),
+                              ),
+                              const SizedBox(height: 24),
+                              _VersionTabBar(versions: versions),
+                              const SizedBox(height: 16),
+                              AnimatedBuilder(
+                                animation: animation,
+                                builder: (context, _) {
+                                  final version = versions[controller.index];
+                                  return Center(
+                                    child: Text(
+                                      version.title,
+                                      textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                        fontSize: 36,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.blueGrey,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                              const SizedBox(height: 16),
+                              AnimatedBuilder(
+                                animation: animation,
+                                builder: (context, _) {
+                                  final version = versions[controller.index];
+                                  return ProjectFullDetailCard(
+                                    project: version,
+                                  );
+                                },
+                              ),
+                            ],
+                          );
+                        },
                       ),
                     ),
                   ),

@@ -51,26 +51,21 @@ class _LandingPageState extends State<LandingPage> {
         children: [
           Expanded(
             child: SingleChildScrollView(
-              child: Center(
-                child: Padding(
-                  padding: ResponsiveWebUtils.getResponsivePadding(context),
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 1200),
-                    child: _loading
-                        ? const SizedBox(
-                            height: 240,
-                            child: Center(child: CircularProgressIndicator()),
-                          )
-                        : _data == null
-                        ? const SizedBox(
-                            height: 240,
-                            child: Center(
-                              child: Text('Failed to load content'),
-                            ),
-                          )
-                        : _buildHomeLayout(context, _data!),
-                  ),
-                ),
+              child: Padding(
+                padding: ResponsiveWebUtils.getResponsivePadding(context),
+                child: _loading
+                    ? const SizedBox(
+                        height: 240,
+                        child: Center(child: CircularProgressIndicator()),
+                      )
+                    : _data == null
+                    ? const SizedBox(
+                        height: 240,
+                        child: Center(
+                          child: Text('Failed to load content'),
+                        ),
+                      )
+                    : _buildHomeLayout(context, _data!),
               ),
             ),
           ),
@@ -87,23 +82,28 @@ class _LandingPageState extends State<LandingPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 24),
-        LandingIntro(intro: data.intro),
-        const SizedBox(height: 18),
+        const SizedBox(height: 12),
+        LandingIntro(
+          intro: data.intro,
+          topExperience:
+              data.experience.isNotEmpty ? data.experience.first : null,
+          topEducation: data.education.isNotEmpty ? data.education.first : null,
+        ),
+        const SizedBox(height: 10),
         timeline,
-        const SizedBox(height: 24),
+        const SizedBox(height: 10),
         _buildSectionTitle('Experience'),
-        const SizedBox(height: 12),
+        const SizedBox(height: 8),
         ...data.experience.map((w) => LandingWorkCard(work: w)),
-        const SizedBox(height: 18),
+        const SizedBox(height: 10),
         _buildSectionTitle('Education'),
-        const SizedBox(height: 12),
+        const SizedBox(height: 8),
         ...data.education.map((e) => LandingEducationCard(edu: e)),
-        const SizedBox(height: 18),
+        const SizedBox(height: 10),
         _buildSectionTitle('Skills'),
-        const SizedBox(height: 12),
+        const SizedBox(height: 8),
         LandingSkillsSection(skills: data.skills),
-        const SizedBox(height: 48),
+        const SizedBox(height: 20),
       ],
     );
   }
@@ -112,10 +112,12 @@ class _LandingPageState extends State<LandingPage> {
     return Text(
       title,
       style: const TextStyle(
-        fontSize: 22,
-        fontWeight: FontWeight.bold,
+        fontSize: 14,
+        fontWeight: FontWeight.w700,
+        letterSpacing: 0.6,
         color: Colors.blueGrey,
       ),
     );
   }
+
 }

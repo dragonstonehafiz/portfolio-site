@@ -76,7 +76,12 @@ class _AnimatedGradientState extends State<AnimatedGradient>
         return Container(
           decoration: BoxDecoration(
             gradient: animated,
-            borderRadius: widget.borderRadius,
+            // Shared card containers are intentionally hard-edged.
+            borderRadius: BorderRadius.zero,
+            border: Border.all(
+              color: Colors.black12,
+              width: 1,
+            ),
           ),
           child: child,
         );

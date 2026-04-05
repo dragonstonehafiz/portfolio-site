@@ -8,7 +8,7 @@ import '../../data/pages/page_models.dart';
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({super.key});
 
-  static const EdgeInsets _navPadding = EdgeInsets.symmetric(horizontal: 12.0);
+  static const EdgeInsets _navPadding = EdgeInsets.symmetric(horizontal: 10.0);
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +17,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return Container(
       decoration: BoxDecoration(gradient: Theme.of(context).primaryGradient),
       child: AppBar(
+        titleSpacing: 16,
         title: const Text(
           'Muhd Hafiz',
           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
@@ -120,7 +121,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           return items;
         },
         child: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 12.0),
+          padding: EdgeInsets.symmetric(horizontal: 10.0),
           child: Text(
             'Pages',
             style: TextStyle(color: Colors.white, fontSize: 16),

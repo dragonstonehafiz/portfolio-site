@@ -33,7 +33,7 @@ class LandingEducationCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Header row: Icon (left) + School/Course (center-left, expanded)
+                  // Header row: Icon (left) + School/Course + GPA (right)
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -77,30 +77,35 @@ class LandingEducationCard extends StatelessWidget {
                           ],
                         ),
                       ),
+                      if (edu.gpa != null && edu.gpa!.isNotEmpty) ...[
+                        SizedBox(width: isMobile ? 8 : 16),
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            'GPA: ${edu.gpa}',
+                            style: TextStyle(
+                              fontSize: isMobile ? 16 : 22,
+                              fontWeight: FontWeight.w800,
+                              color: AppColors.textPrimary,
+                            ),
+                          ),
+                        ),
+                      ],
                     ],
                   ),
                   const SizedBox(height: 6),
-                  // Date range and GPA on the same row
+                  // Date range row
                   Row(
                     children: [
                       Expanded(
                         child: Text(
-                          '${_formatMonthYear(edu.start)} — ${edu.end != null ? _formatMonthYear(edu.end) : 'Present'}',
+                          '${_formatMonthYear(edu.start)} - ${edu.end != null ? _formatMonthYear(edu.end) : 'Present'}',
                           style: const TextStyle(
                             color: Colors.grey,
                             fontSize: 12,
                           ),
                         ),
                       ),
-                      if (edu.gpa != null && edu.gpa!.isNotEmpty)
-                        Text(
-                          'GPA: ${edu.gpa}',
-                          style: const TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black87,
-                          ),
-                        ),
                     ],
                   ),
                   const SizedBox(height: 12),

@@ -165,9 +165,7 @@ class ProjectCompactCard extends StatelessWidget {
     if (type.isEmpty) return 'PROJECT';
     final t = type.trim().toLowerCase();
     if (t == 'artificial intelligence') return 'AI';
-    return t.length <= 10
-        ? type.toUpperCase()
-        : type.substring(0, 10).toUpperCase();
+    return type.toUpperCase();
   }
 
   Color _placeholderColorForType(String type) {

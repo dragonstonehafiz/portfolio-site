@@ -29,6 +29,8 @@ class ProjectHorizontalCarousel extends StatefulWidget {
 
 class _ProjectHorizontalCarouselState extends State<ProjectHorizontalCarousel> {
   final ScrollController _scrollController = ScrollController();
+  static const double _hoverBleed = 14.0;
+  static const double _scrubberThickness = 10.0;
 
   @override
   void dispose() {
@@ -54,22 +56,15 @@ class _ProjectHorizontalCarouselState extends State<ProjectHorizontalCarousel> {
         ).toDouble();
 
         return SizedBox(
-          height: cardHeight,
-          child: Listener(
-            onPointerSignal: (event) {
-              if (event is! PointerScrollEvent || !_scrollController.hasClients) return;
-              final dx = event.scrollDelta.dx;
-              final dy = event.scrollDelta.dy;
-              final delta = dx.abs() > dy.abs() ? dx : dy;
-              if (delta == 0) return;
-
-              final position = _scrollController.position;
-              final target = (position.pixels + delta).clamp(
-                position.minScrollExtent,
-                position.maxScrollExtent,
-              );
-              _scrollController.jumpTo(target);
-            },
+          height: cardHeight + _hoverBleed + _scrubberThickness + 10,
+          child: Scrollbar(
+            controller: _scrollController,
+            thumbVisibility: true,
+            trackVisibility: true,
+            interactive: true,
+            thickness: _scrubberThickness,
+            radius: const Radius.circular(999),
+            scrollbarOrientation: ScrollbarOrientation.bottom,
             child: ScrollConfiguration(
               behavior: const MaterialScrollBehavior().copyWith(
                 scrollbars: false,
@@ -84,6 +79,13 @@ class _ProjectHorizontalCarouselState extends State<ProjectHorizontalCarousel> {
               child: ListView.separated(
                 controller: _scrollController,
                 scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.fromLTRB(
+                  0,
+                  _hoverBleed / 2,
+                  0,
+                  _hoverBleed / 2 + _scrubberThickness + 10,
+                ),
+                clipBehavior: Clip.hardEdge,
                 itemCount: widget.projects.length,
                 itemBuilder: (context, index) {
                   final project = widget.projects[index];

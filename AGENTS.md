@@ -27,6 +27,7 @@ Startup flow in `lib/main.dart`:
 Routing is handled in `MaterialApp.onGenerateRoute`:
 
 - `/` -> `LandingPage`
+- `/pages/project-summary/` (and legacy `/project-summary`) -> `ProjectSummaryPage`
 - `/pages/<slug>` -> resolves slug from `AppRoutes.genericPageSlugs`, then builds `ProjectsBasePage`
 - `/projects/<slug>` -> `ProjectDetailPage(slug: slug)`
 
@@ -84,6 +85,7 @@ Filtering on tags/type/tools/search for `ProjectsBasePage` is currently done in-
 Core pages:
 
 - `lib/pages/landing_page.dart`
+- `lib/pages/project_summary_page.dart`
 - `lib/pages/projects_base_page.dart`
 - `lib/pages/project_detail_page.dart`
 
@@ -115,8 +117,8 @@ This section is the practical map for redesign work. Prefer styling/composition 
 ### UI Shell Widgets (`lib/widgets/ui/`)
 
 - `CustomAppBar`
-  - Used by: Landing, Projects list page, Project detail page.
-  - Responsibility: Dynamic nav from `PageCollection`; desktop primary links + Projects dropdown; mobile popup menu.
+  - Used by: Landing, Project summary page, Projects list page, Project detail page.
+  - Responsibility: Dynamic nav from `PageCollection`; desktop primary links + dedicated `Projects` route to project summary; mobile popup menu with `Home`, `Projects`, and generic page entries.
   - Contract: Route generation must keep using `AppRoutes.pagePath(AppRoutes.slugForPageName(...))`.
 
 - `CustomFooter`
@@ -136,7 +138,7 @@ This section is the practical map for redesign work. Prefer styling/composition 
   - Contract: Preserve clickability and hover affordance.
 
 - `GradientScaffold` (`lib/core/theme.dart`)
-  - Used by: All 3 top-level pages.
+  - Used by: All top-level pages.
   - Responsibility: Shared page shell with scaffold gradient and transparent scaffold background.
   - Contract: Keep page-level gradient behavior centralized.
 
@@ -164,10 +166,10 @@ This section is the practical map for redesign work. Prefer styling/composition 
   - Responsibility: Responsive video embed (iframe on web) with external-link fallback.
 
 - `ProjectHorizontalCarousel`
-  - Used by: `LandingSkillsSection` (and intended for reuse in any page).
+  - Used by: `LandingSkillsSection`, `ProjectSummaryPage`.
   - Responsibility: Reusable horizontal carousel for `ProjectCompactCard` items.
   - Contract: Sizing is controlled by explicit `cardWidth` (+ height constraints), not items-per-viewport.
-  - Interaction: Supports drag/trackpad + mouse wheel horizontal scrolling.
+  - Interaction: Supports drag/trackpad/mouse drag and includes an always-visible draggable horizontal scrollbar. No custom mouse-wheel-to-horizontal remapping.
 
 ### Project Domain Widgets (`lib/widgets/project/`)
 
@@ -227,6 +229,11 @@ This section is the practical map for redesign work. Prefer styling/composition 
 - Projects base page (`projects_base_page.dart`)
   - `GradientScaffold` + `CustomAppBar` + `CustomFooter`
   - `SearchBarWidget`, `ProjectPreviewCard`, `ProjectListItem`
+
+- Project summary page (`project_summary_page.dart`)
+  - `GradientScaffold` + `CustomAppBar` + `CustomFooter`
+  - Per-page sections separated by divider lines
+  - Each section: heading + count + `View all ->`, description, `ToolBadgeList`, `ProjectHorizontalCarousel`
 
 - Project detail page (`project_detail_page.dart`)
   - `GradientScaffold` + `CustomAppBar` + `CustomFooter`
@@ -289,6 +296,11 @@ This is the full widget file map under `lib/widgets/`.
   - Shell: `GradientScaffold` -> `CustomAppBar` + `CustomFooter`
   - Controls: header filter dropdowns + `SearchBarWidget` + sort + list/grid toggle
   - Content: `ProjectPreviewCard*` (grid) or `ProjectListItem*` (list)
+
+- Project summary page (`lib/pages/project_summary_page.dart`)
+  - Shell: `GradientScaffold` -> `CustomAppBar` + `CustomFooter`
+  - Body: per-page summary sections separated by divider lines
+  - Section: heading + count + `View all ->` link, description, deduplicated `ToolBadgeList`, `ProjectHorizontalCarousel`
 
 - Project detail (`lib/pages/project_detail_page.dart`)
   - Shell: `GradientScaffold` -> `CustomAppBar` + `CustomFooter`

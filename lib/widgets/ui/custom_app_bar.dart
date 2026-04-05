@@ -38,7 +38,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   List<Widget> _buildDesktopActions(BuildContext context) {
     final pages = PageCollection.instance.genericPages;
     final primaryPages = pages.where((p) => !p.dropdown).toList();
-    final dropdownPages = pages.where((p) => p.dropdown).toList();
 
     final navButtonStyle = TextButton.styleFrom(
       padding: _navPadding,
@@ -66,30 +65,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           child: Text(page.pageName, style: navTextStyle),
         ),
       ),
-      if (dropdownPages.isNotEmpty)
-        PopupMenuButton<String>(
-          onSelected: (route) => _navigateTo(context, route),
-          color: AppColors.primary,
-          offset: const Offset(0, kToolbarHeight),
-          padding: EdgeInsets.zero,
-          itemBuilder: (context) {
-            final genericEntries = _buildGenericPageEntries(dropdownPages);
-            if (genericEntries.isEmpty) {
-              return [
-                PopupMenuItem<String>(
-                  value: '',
-                  enabled: false,
-                  child: _menuItemText('No pages available'),
-                ),
-              ];
-            }
-            return genericEntries;
-          },
-          child: Padding(
-            padding: _navPadding,
-            child: Text('Projects', style: navTextStyle),
-          ),
-        ),
+      TextButton(
+        onPressed: () => _navigateTo(context, AppRoutes.projectSummaryPath),
+        style: navButtonStyle,
+        child: Text('Projects', style: navTextStyle),
+      ),
       const SizedBox(width: 16),
     ];
   }
@@ -109,6 +89,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             PopupMenuItem<String>(
               value: AppRoutes.landing,
               child: _menuItemText('Home'),
+            ),
+            PopupMenuItem<String>(
+              value: AppRoutes.projectSummaryPath,
+              child: _menuItemText('Projects'),
             ),
           ];
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'pages/landing_page.dart';
 import 'pages/projects_base_page.dart';
 import 'pages/project_detail_page.dart';
+import 'pages/project_summary_page.dart';
 import 'core/routes.dart';
 import 'core/theme.dart';
 import 'data/pages/page_collection.dart';
@@ -62,13 +63,16 @@ class PortfolioApp extends StatelessWidget {
         if (uri.path == AppRoutes.landing) {
           return slideUpRoute(const LandingPage());
         }
+        if (uri.path == '/pages/projects' || uri.path == AppRoutes.projectSummaryPath) {
+          return slideUpRoute(const ProjectSummaryPage());
+        }
 
-        // Pattern: /pages/<slug> -> map slug to a configured generic page
+        // Pattern: /pages/projects/<slug> -> map slug to a configured generic page
         // Pattern: /projects/<slug> -> open project detail
         final segments = uri.pathSegments;
-        if (segments.length == 2) {
-          if (segments[0] == 'pages') {
-            final slug = segments[1];
+        if (segments.length == 3) {
+          if (segments[0] == 'pages' && segments[1] == AppRoutes.projectSummarySlug) {
+            final slug = segments[2];
             final pageName = AppRoutes.genericPageSlugs[slug];
             if (pageName != null) {
               final pageData = PageCollection.instance.findGenericPageByName(pageName);
@@ -80,10 +84,10 @@ class PortfolioApp extends StatelessWidget {
                 ),
               );
             }
-          } else if (segments[0] == 'projects') {
-            final slug = segments[1];
-            return slideUpRoute(ProjectDetailPage(slug: slug));
           }
+        } else if (segments.length == 2 && segments[0] == 'projects') {
+          final slug = segments[1];
+          return slideUpRoute(ProjectDetailPage(slug: slug));
         }
         debugPrint("No route match for: ${uri.path}");
         return null;

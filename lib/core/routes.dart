@@ -2,6 +2,8 @@ import '../data/pages/page_collection.dart';
 
 class AppRoutes {
   static const String landing = '/';
+  static const String projectSummarySlug = 'projects';
+  static const String projectSummaryPath = '/pages/projects/';
 
   // Map slug -> pageName for generic pages. Initialized at app startup.
   static final Map<String, String> genericPageSlugs = {};
@@ -24,8 +26,8 @@ class AppRoutes {
     return s.replaceAll(RegExp(r'-+'), '-').trim().replaceAll(RegExp(r'^-+|-+$'), '');
   }
 
-  /// Helper to generate the path for a generic page slug (e.g. `/pages/<slug>`).
-  static String pagePath(String slug) => '/pages/$slug';
+  /// Helper to generate the path for a generic page slug (e.g. `/pages/projects/<slug>`).
+  static String pagePath(String slug) => '/pages/projects/$slug';
 
   /// Helper to generate a slug from a page name.
   static String slugForPageName(String pageName) => _slugify(pageName);

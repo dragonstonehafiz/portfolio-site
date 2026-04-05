@@ -35,7 +35,7 @@ class PortfolioApp extends StatelessWidget {
       initialRoute: AppRoutes.landing,
       onGenerateRoute: (settings) {
         final uri = Uri.parse(settings.name ?? '');
-        PageRoute<T> _slideUpRoute<T>(Widget page) {
+        PageRoute<T> slideUpRoute<T>(Widget page) {
           return PageRouteBuilder<T>(
             settings: settings,
             transitionDuration: const Duration(milliseconds: 320),
@@ -60,7 +60,7 @@ class PortfolioApp extends StatelessWidget {
 
         // Home and static pages
         if (uri.path == AppRoutes.landing) {
-          return _slideUpRoute(const LandingPage());
+          return slideUpRoute(const LandingPage());
         }
 
         // Pattern: /pages/<slug> -> map slug to a configured generic page
@@ -72,7 +72,7 @@ class PortfolioApp extends StatelessWidget {
             final pageName = AppRoutes.genericPageSlugs[slug];
             if (pageName != null) {
               final pageData = PageCollection.instance.findGenericPageByName(pageName);
-              return _slideUpRoute(
+              return slideUpRoute(
                 ProjectsBasePage(
                   configKey: pageName,
                   title: pageName,
@@ -82,7 +82,7 @@ class PortfolioApp extends StatelessWidget {
             }
           } else if (segments[0] == 'projects') {
             final slug = segments[1];
-            return _slideUpRoute(ProjectDetailPage(slug: slug));
+            return slideUpRoute(ProjectDetailPage(slug: slug));
           }
         }
         debugPrint("No route match for: ${uri.path}");

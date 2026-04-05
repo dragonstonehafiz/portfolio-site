@@ -189,7 +189,7 @@ class _ImageGalleryState extends State<ImageGallery> with SingleTickerProviderSt
                 child: LinearProgressIndicator(
                   value: _progressController.value,
                   minHeight: 3,
-                  backgroundColor: Colors.white.withOpacity(0.6),
+                  backgroundColor: Colors.white.withValues(alpha: 0.6),
                   valueColor: AlwaysStoppedAnimation<Color>(AppColors.accent),
                 ),
               );

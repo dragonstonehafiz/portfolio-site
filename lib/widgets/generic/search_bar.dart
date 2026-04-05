@@ -6,11 +6,11 @@ class SearchBarWidget extends StatelessWidget {
   final bool isDense;
 
   const SearchBarWidget({
-    Key? key,
+    super.key,
     this.onChanged,
     this.hintText = 'Search projects...',
     this.isDense = true,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

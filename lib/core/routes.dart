@@ -24,7 +24,7 @@ class AppRoutes {
     return s.replaceAll(RegExp(r'-+'), '-').trim().replaceAll(RegExp(r'^-+|-+$'), '');
   }
 
-  /// Helper to generate the path for a generic page slug (e.g. '/pages/<slug>').
+  /// Helper to generate the path for a generic page slug (e.g. `/pages/<slug>`).
   static String pagePath(String slug) => '/pages/$slug';
 
   /// Helper to generate a slug from a page name.

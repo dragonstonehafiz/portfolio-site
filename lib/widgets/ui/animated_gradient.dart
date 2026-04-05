@@ -13,14 +13,14 @@ class AnimatedGradient extends StatefulWidget {
   final double? initialProgress;
 
   const AnimatedGradient({
-    Key? key,
+    super.key,
     required this.gradient,
     this.child,
     this.duration = const Duration(seconds: 6),
     this.curve = Curves.easeInOut,
     this.borderRadius,
     this.initialProgress,
-  }) : super(key: key);
+  });
 
   @override
   State<AnimatedGradient> createState() => _AnimatedGradientState();

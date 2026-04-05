@@ -7,11 +7,11 @@ class HoverCardWidget extends StatefulWidget {
   final double borderRadius;
 
   const HoverCardWidget({
+    super.key,
     required this.child,
     this.onTap,
     this.borderRadius = 12.0,
-    Key? key,
-  }) : super(key: key);
+  });
 
   @override
   State<HoverCardWidget> createState() => _HoverCardWidgetState();
@@ -33,11 +33,11 @@ class _HoverCardWidgetState extends State<HoverCardWidget> {
       cursor: SystemMouseCursors.click,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 220),
-        transform: Matrix4.identity()..scale(scale, scale),
+        transform: Matrix4.identity()..scaleByDouble(scale, scale, 1.0, 1.0),
         curve: Curves.easeOut,
         child: Material(
           elevation: elevation,
-          shadowColor: Colors.black.withOpacity(0.12),
+          shadowColor: Colors.black.withValues(alpha: 0.12),
           color: Theme.of(context).cardColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(widget.borderRadius),

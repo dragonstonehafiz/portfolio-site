@@ -98,7 +98,9 @@ class LandingIntro extends StatelessWidget {
         const SizedBox(height: 12),
         Text(
           intro.summary,
-          style: const TextStyle(fontSize: 16, color: Colors.grey),
+          style: theme.textTheme.bodyLarge?.copyWith(
+            color: AppColors.textPrimary.withValues(alpha: 0.84),
+          ),
         ),
         const SizedBox(height: 12),
         Wrap(

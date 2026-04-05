@@ -92,12 +92,13 @@ Shared shells/components:
 - `lib/widgets/ui/custom_app_bar.dart`
 - `lib/widgets/ui/custom_footer.dart`
 - `lib/core/theme.dart` (`AppColors`, gradients, `GradientScaffold`)
-- `lib/core/responsive_web_utils.dart` (`mobileBreakpoint = 768`, responsive padding helpers)
+- `lib/core/responsive_web_utils.dart` (`mobileBreakpoint = 768`, responsive padding helpers; currently moderate global horizontal gutters)
 
 Project widgets:
 
 - Grid card: `project_preview_card.dart`
 - List row: `project_list_item.dart`
+- Compact card: `project_compact_card.dart`
 - Detail body: `project_full_detail_card.dart`
 - Media: `project_thumbnail_preview.dart`, `image_gallery.dart`, `youtube_video_player.dart`
 
@@ -127,9 +128,10 @@ This section is the practical map for redesign work. Prefer styling/composition 
   - Used by: Project cards/list items, timeline containers, work/education/skills cards.
   - Responsibility: Reusable animated gradient background wrapper.
   - Contract: Visual only; should not contain business logic.
+  - Current behavior: hard-edged container (`BorderRadius.zero`) with a subtle 1px border.
 
 - `HoverCardWidget`
-  - Used by: `ProjectPreviewCard`, `ProjectListItem`.
+  - Used by: `ProjectPreviewCard`, `ProjectListItem`, `ProjectCompactCard`.
   - Responsibility: Shared hover lift/scale + material ink behavior for clickable cards on web.
   - Contract: Preserve clickability and hover affordance.
 
@@ -164,12 +166,17 @@ This section is the practical map for redesign work. Prefer styling/composition 
 ### Project Domain Widgets (`lib/widgets/project/`)
 
 - `ProjectPreviewCard`
-  - Used by: Projects grid and skills carousel.
+  - Used by: Projects grid views.
   - Responsibility: Primary card view for project summaries; navigates to `/projects/<slug>`.
 
 - `ProjectListItem`
   - Used by: Projects list view mode.
   - Responsibility: Dense row-style project summary with links, tags, tools, and date/download indicators.
+
+- `ProjectCompactCard`
+  - Used by: `LandingSkillsCarousel`.
+  - Responsibility: Small clickable project tile with top media, type badge, and compact meta rows.
+  - Notes: title/tools rows support automatic horizontal ticker behavior when content overflows.
 
 - `ProjectFullDetailCard`
   - Used by: Project detail page.
@@ -194,7 +201,7 @@ This section is the practical map for redesign work. Prefer styling/composition 
   - Responsibility: Skills category tabs, skill badges, related projects integration.
 
 - `LandingSkillsCarousel`
-  - Responsibility: Auto-cycling related-project carousel using `ProjectPreviewCard`.
+  - Responsibility: Auto-cycling related-project carousel using `ProjectCompactCard`.
 
 - `TimelineSingleYear`
   - Used by: landing page today.
@@ -253,6 +260,7 @@ This is the full widget file map under `lib/widgets/`.
 
 - `project_preview_card.dart`: grid-style project card, links to project detail route.
 - `project_list_item.dart`: list-style project row, links to project detail route.
+- `project_compact_card.dart`: compact clickable project tile used in landing skills carousel.
 - `project_full_detail_card.dart`: full detail content renderer including gallery/details switchers.
 - `project_thumbnail_preview.dart`: thumbnail renderer for image/video placeholder.
 

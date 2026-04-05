@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import '../../data/projects/project_data.dart';
-import '../project/project_preview_card.dart';
+import '../project/project_compact_card.dart';
 
 /// Auto-cycling carousel for displaying related projects in skills section
 class LandingSkillsCarousel extends StatefulWidget {
@@ -77,10 +77,10 @@ class _LandingSkillsCarouselState extends State<LandingSkillsCarousel> {
         Expanded(
           child: AnimatedSwitcher(
             duration: const Duration(milliseconds: 300),
-            child: ConstrainedBox(
+            child: Align(
               key: ValueKey(project.slug),
-              constraints: const BoxConstraints(maxWidth: 560),
-              child: ProjectPreviewCard(project: project),
+              alignment: Alignment.centerLeft,
+              child: ProjectCompactCard(project: project),
             ),
           ),
         ),

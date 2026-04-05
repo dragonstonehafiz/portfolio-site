@@ -4,6 +4,7 @@ import '../widgets/ui/custom_footer.dart';
 import '../data/projects/project_service.dart';
 import '../data/projects/project_data.dart';
 import '../core/theme.dart';
+import '../core/responsive_web_utils.dart';
 import '../widgets/generic/shared_tabs.dart';
 import '../widgets/project/project_full_detail_card.dart';
 
@@ -59,7 +60,7 @@ class ProjectDetailPage extends StatelessWidget {
                 versions.length - 1,
               ),
               child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(vertical: 24.0),
+                padding: ResponsiveWebUtils.getResponsivePadding(context),
                 child: DecoratedBox(
                   decoration: BoxDecoration(
                     gradient: Theme.of(context).previewGradient,

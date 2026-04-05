@@ -9,16 +9,19 @@ class ResponsiveWebUtils {
   }
 
   /// Returns responsive padding that scales based on screen width.
-  /// Horizontal padding is intentionally zero to allow edge-to-edge layouts.
-  /// Vertical spacing is preserved.
+  /// Adds moderate horizontal breathing room while keeping content full-width.
   static EdgeInsets getResponsivePadding(BuildContext context) {
-    final isMobile = MediaQuery.of(context).size.width < mobileBreakpoint;
-    return EdgeInsets.symmetric(vertical: isMobile ? 24.0 : 32.0);
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isMobile = screenWidth < mobileBreakpoint;
+    final horizontal = isMobile ? 16.0 : 64.0;
+    final vertical = isMobile ? 16.0 : 24.0;
+    return EdgeInsets.symmetric(horizontal: horizontal, vertical: vertical);
   }
 
   /// Returns responsive horizontal padding for content that needs consistent left/right spacing.
-  /// Intentionally zero for full-width site layout.
+  /// Matches the site's global content gutter.
   static EdgeInsets getResponsiveHorizontalPadding(BuildContext context) {
-    return EdgeInsets.zero;
+    final isMobile = MediaQuery.of(context).size.width < mobileBreakpoint;
+    return EdgeInsets.symmetric(horizontal: isMobile ? 16.0 : 24.0);
   }
 }

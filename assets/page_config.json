@@ -2,35 +2,35 @@
   "project_pages": [
     {
       "page_name": "Featured",
-      "description": "These are some of the projects I've found the most meaningful. Some were especially useful in my day-to-day life, while others were just fun to build or helped me learn something new. I wouldn't say they're perfect, but they're the ones I've been most proud of or ended up using the most myself. I hope a few of them might be interesting or helpful to someone else too.",
+      "description": "A curated set of projects that best represent my strengths across AI, full-stack development, and practical product building. This section is meant to be a quick snapshot of work I consider most complete, useful, or technically meaningful.\n\nYou'll find projects like the YouTube Analytics Dashboard, Translator Helper, Bird Laser Targeter on the Edge, and selected game/software projects such as Electronica. Together they show a mix of production-style engineering, applied AI workflows, and end-to-end ownership.",
       "default_list_view": false,
       "dropdown": false,
       "all_projects": false
     },
     {
       "page_name": "Personal Projects",
-      "description": "",
+      "description": "A collection of projects I built outside school to solve personal problems, explore ideas, or practice specific technologies in depth. The work here spans productivity tools, AI-assisted workflows, and experimental app concepts.\n\nExamples include Spending Dashboard for personal finance tracking, Translator Helper for transcription and translation workflows, YouTube Analytics Dashboard for channel insights, and smaller experiments like Diamond City Radio and fan-translation subtitle work.",
       "default_list_view": false,
       "dropdown": true,
       "all_projects": false
     },
     {
       "page_name": "Singapore Institute of Technology Projects",
-      "description": "This is will be where I put all of the project I worked on for coursework at Singapore Institute of Technology. There's a pretty good spread of projects across different modules, but most of them are related to using AI in some way.",
+      "description": "Projects completed during my coursework at Singapore Institute of Technology, with a strong focus on applied AI and system integration. This section reflects module work where I had to balance technical implementation with practical constraints and team collaboration.\n\nHighlighted work includes Anime Image Upscaler (ESRGAN fine-tuning), Bird Laser Targeter on the Edge (embedded AI plus hardware control), and Japanese Learning Card Game (Unity-based educational game prototype).",
       "default_list_view": false,
       "dropdown": true,
       "all_projects": false
     },
     {
       "page_name": "Nanyang Polytechnic Projects",
-      "description": "This is a collection of all the projects I worked on during my time at Nanyang Polytechnic. All of them are school projects, and you'll notice most of them are in C++ with a couple C# projects built on Unity. ",
+      "description": "Projects from my time at Nanyang Polytechnic, covering core game-development fundamentals across C++ and Unity (C#). These projects emphasize gameplay systems, AI behavior, physics, UI flows, and team-based development.\n\nYou'll see work like Electronica, The Last Survivor, L.O.C.U.S, Iron Age, and several C++ coursework games. They show my foundation in game programming, from low-level systems to complete playable builds.",
       "default_list_view": false,
       "dropdown": true,
       "all_projects": false
     },
     {
       "page_name": "All Projects",
-      "description": "Every project in one place, including featured work and everything else.",
+      "description": "Every visible project in one place across featured, personal, and school categories. Use this section when you want the full picture of my work without filtering by source.\n\nIt combines AI tools, data and productivity apps, embedded systems projects, and game-development work. Representative entries include YouTube Analytics Dashboard, Translator Helper, Bird Laser Targeter on the Edge, Electronica, and many others.",
       "default_list_view": true,
       "dropdown": true,
       "all_projects": true

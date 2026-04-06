@@ -121,7 +121,7 @@
   },
   "NYP-Locus": {
     "default_version": "Submission",
-    "page_list": ["Nanyang Polytechnic Projects"],
+    "page_list": ["Nanyang Polytechnic Projects", "Featured"],
     "show_in_timeline": true,
     "shown": true,
     "variable_name": "nyp-locus",
@@ -442,7 +442,7 @@
   },
   "Personal-PortfolioSite": {
     "default_version": "Flutter Ver 1.2",
-    "page_list": ["Featured", "Personal Projects"],
+    "page_list": ["Personal Projects"],
     "show_in_timeline": true,
     "shown": true,
     "variable_name": "personal-portfolio-site",

@@ -3,36 +3,26 @@
     {
       "page_name": "Featured",
       "description": "These are some of the projects I've found the most meaningful. Some were especially useful in my day-to-day life, while others were just fun to build or helped me learn something new. I wouldn't say they're perfect, but they're the ones I've been most proud of or ended up using the most myself. I hope a few of them might be interesting or helpful to someone else too.",
-      "default_list_view": false,
-      "dropdown": false,
       "all_projects": false
     },
     {
       "page_name": "Personal Projects",
       "description": "",
-      "default_list_view": false,
-      "dropdown": true,
       "all_projects": false
     },
     {
       "page_name": "Singapore Institute of Technology Projects",
       "description": "This is will be where I put all of the project I worked on for coursework at Singapore Institute of Technology. There's a pretty good spread of projects across different modules, but most of them are related to using AI in some way.",
-      "default_list_view": false,
-      "dropdown": true,
       "all_projects": false
     },
     {
       "page_name": "Nanyang Polytechnic Projects",
       "description": "This is a collection of all the projects I worked on during my time at Nanyang Polytechnic. All of them are school projects, and you'll notice most of them are in C++ with a couple C# projects built on Unity. ",
-      "default_list_view": false,
-      "dropdown": true,
       "all_projects": false
     },
     {
       "page_name": "All Projects",
       "description": "Every project in one place, including featured work and everything else.",
-      "default_list_view": true,
-      "dropdown": true,
       "all_projects": true
     }
   ]

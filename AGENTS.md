@@ -61,7 +61,7 @@ Important behavior:
 - Source: `assets/page_config.json`
 - Loader: `PageCollection.initializeFromAssets()`
 - Singleton: `PageCollection.instance`
-- Model: `ProjectPageData` (`page_name`, `description`, `default_list_view`, `dropdown`, `all_projects`)
+- Model: `ProjectPageData` (`page_name`, `description`, `all_projects`)
 
 ### Landing
 
@@ -370,15 +370,11 @@ Notes:
     {
       "page_name": "Featured",
       "description": "Highlights from recent work ({count} projects).",
-      "default_list_view": false,
-      "dropdown": false,
       "all_projects": false
     },
     {
       "page_name": "All Projects",
       "description": "Everything I've built ({count} projects).",
-      "default_list_view": true,
-      "dropdown": true,
       "all_projects": true
     }
   ]
@@ -386,7 +382,6 @@ Notes:
 ```
 
 Notes:
-- `dropdown: true` controls inclusion under the Projects menu in nav.
 - `all_projects: true` ignores `page_list` filtering and includes all shown projects.
 
 ### `assets/landing_page.json` example (parsed by `LandingPageData.fromJson`)

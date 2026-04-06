@@ -1,9 +1,8 @@
 {
   "introduction": {
     "name": "Muhd Hafiz",
-    "headline": "Developer. I build things to solve my own problems.",
-    "summary": "Most of my projects start the same way: I have a problem, I can't find a good solution, so I build one. This site collects the tools, games, and experiments that came out of that habit.\n\nSome of the bigger ones: a self-hosted YouTube analytics dashboard with AI-powered comment analysis and thumbnail testing, a full-stack translation assistant that uses Whisper and LLMs to speed up subtitle work, and a personal spending dashboard for tracking and visualizing my finances.",
-    "downloads": [
+    "headline": "Software Developer focused on practical tools, and AI workflows",
+    "summary": "I build projects around real problems I run into, then iterate until they are reliable and useful. This portfolio is a collection of those systems, from productivity tools to AI-enabled applications and game projects.\n\nNotable work includes a YouTube analytics dashboard with AI-assisted analysis, a full-stack translation assistant for transcription and subtitle workflows, and a personal spending dashboard for tracking and visualizing financial data.",    "downloads": [
       {
         "label": "View Resume",
         "url": "https://docs.google.com/document/d/1dhX48ga314RAh9zlC7fuVqM76eqttrY7/edit?usp=drive_link&ouid=110728528551183127993&rtpof=true&sd=true"

@@ -933,7 +933,8 @@
       {
         "version": "Release",
         "date": "2025-06-15",
-        "description": null,
+        "description": "Gakumas is a Japanese gacha game without a worldwide release. I transcribed and translated the main story for one of the idols in the game.",
+        "vignette": "Fan translation of a Japanese gacha game.",
         "download_paths": [
           {
             "key": "English Subs",
@@ -952,7 +953,10 @@
         "tools": [],
         "title": "Gakuen Idolmaster: Lilja Step 1 Commyu",
         "vid_link": "https://youtu.be/8Ncm2_M6FSI",
-        "what_i_did": []
+        "what_i_did": [
+          "Created a clean line-by-line transcript from the in-game dialogue and timing.",
+          "Ran an AI translation pass, then rewrote lines for natural English and character tone."
+        ]
       }
     ]
   }

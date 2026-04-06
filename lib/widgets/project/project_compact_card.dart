@@ -29,7 +29,7 @@ class ProjectCompactCard extends StatelessWidget {
       height: height,
       child: HoverCardWidget(
         borderRadius: 0,
-        onTap: () => Navigator.pushNamed(context, '/projects/${project.slug}'),
+        onTap: () => Navigator.pushNamed(context, '/project/${project.slug}'),
         child: AnimatedGradient(
           gradient: Theme.of(context).previewGradient,
           borderRadius: BorderRadius.zero,

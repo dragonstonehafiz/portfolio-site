@@ -1,6 +1,6 @@
 # AGENTS.MD
 
-This document reflects how the codebase currently works. Use it as the source of truth before making redesign changes.
+This document reflects how the codebase currently works.
 
 ## Stack
 
@@ -26,10 +26,11 @@ Startup flow in `lib/main.dart`:
 
 Routing is handled in `MaterialApp.onGenerateRoute`:
 
-- `/` -> `LandingPage`
-- `/pages/project-summary/` (and legacy `/project-summary`) -> `ProjectSummaryPage`
-- `/pages/<slug>` -> resolves slug from `AppRoutes.genericPageSlugs`, then builds `ProjectsBasePage`
-- `/projects/<slug>` -> `ProjectDetailPage(slug: slug)`
+- `/` -> redirects to `/home`
+- `/home` -> `LandingPage`
+- `/projects` and `/projects/` -> `ProjectSummaryPage`
+- `/projects/<slug>` -> resolves slug from `AppRoutes.genericPageSlugs`, then builds `ProjectsBasePage`
+- `/project/<slug>` -> `ProjectDetailPage(slug: slug)`
 
 Navigation UI is dynamic from `PageCollection` in `lib/widgets/ui/custom_app_bar.dart`.
 
@@ -112,7 +113,7 @@ Landing widgets:
 
 ## Shared Widget Catalog (What Exists, How It Is Used)
 
-This section is the practical map for redesign work. Prefer styling/composition changes inside these widgets instead of replacing page flows.
+This section maps widget responsibilities and current usage.
 
 ### UI Shell Widgets (`lib/widgets/ui/`)
 
@@ -175,7 +176,7 @@ This section is the practical map for redesign work. Prefer styling/composition 
 
 - `ProjectPreviewCard`
   - Used by: Projects grid views.
-  - Responsibility: Primary card view for project summaries; navigates to `/projects/<slug>`.
+  - Responsibility: Primary card view for project summaries; navigates to `/project/<slug>`.
 
 - `ProjectListItem`
   - Used by: Projects list view mode.
@@ -238,12 +239,6 @@ This section is the practical map for redesign work. Prefer styling/composition 
 - Project detail page (`project_detail_page.dart`)
   - `GradientScaffold` + `CustomAppBar` + `CustomFooter`
   - `SharedTabs` (version tabs), `ProjectFullDetailCard`
-
-### Redesign Boundaries for Shared Widgets
-
-1. Safe changes: spacing, typography, color tokens, hover/transition polish, layout composition.
-2. Risky changes: route behavior, slug generation, data loading lifecycle, JSON key contracts.
-3. If redesigning a page, first prefer editing leaf widgets (`project_*`, `landing_*`) before changing page-level control flow.
 
 ## Complete Widget Inventory (Current Files)
 

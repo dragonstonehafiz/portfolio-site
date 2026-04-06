@@ -60,32 +60,36 @@ class PortfolioApp extends StatelessWidget {
         }
 
         // Home and static pages
+        if (uri.path == '/') {
+          return MaterialPageRoute<void>(
+            settings: settings,
+            builder: (_) => const _RedirectToHomePage(),
+          );
+        }
         if (uri.path == AppRoutes.landing) {
           return slideUpRoute(const LandingPage());
         }
-        if (uri.path == '/pages/projects' || uri.path == AppRoutes.projectSummaryPath) {
+        if (uri.path == '/projects' || uri.path == AppRoutes.projectSummaryPath) {
           return slideUpRoute(const ProjectSummaryPage());
         }
 
-        // Pattern: /pages/projects/<slug> -> map slug to a configured generic page
-        // Pattern: /projects/<slug> -> open project detail
+        // Pattern: /projects/<slug> -> map slug to a configured generic page
+        // Pattern: /project/<slug> -> open project detail
         final segments = uri.pathSegments;
-        if (segments.length == 3) {
-          if (segments[0] == 'pages' && segments[1] == AppRoutes.projectSummarySlug) {
-            final slug = segments[2];
-            final pageName = AppRoutes.genericPageSlugs[slug];
-            if (pageName != null) {
-              final pageData = PageCollection.instance.findGenericPageByName(pageName);
-              return slideUpRoute(
-                ProjectsBasePage(
-                  configKey: pageName,
-                  title: pageName,
-                  description: pageData?.description ?? '',
-                ),
-              );
-            }
+        if (segments.length == 2 && segments[0] == AppRoutes.projectSummarySlug) {
+          final slug = segments[1];
+          final pageName = AppRoutes.genericPageSlugs[slug];
+          if (pageName != null) {
+            final pageData = PageCollection.instance.findGenericPageByName(pageName);
+            return slideUpRoute(
+              ProjectsBasePage(
+                configKey: pageName,
+                title: pageName,
+                description: pageData?.description ?? '',
+              ),
+            );
           }
-        } else if (segments.length == 2 && segments[0] == 'projects') {
+        } else if (segments.length == 2 && segments[0] == 'project') {
           final slug = segments[1];
           return slideUpRoute(ProjectDetailPage(slug: slug));
         }
@@ -94,4 +98,25 @@ class PortfolioApp extends StatelessWidget {
       },
     );
   }
+}
+
+class _RedirectToHomePage extends StatefulWidget {
+  const _RedirectToHomePage();
+
+  @override
+  State<_RedirectToHomePage> createState() => _RedirectToHomePageState();
+}
+
+class _RedirectToHomePageState extends State<_RedirectToHomePage> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      Navigator.pushReplacementNamed(context, AppRoutes.landing);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) => const SizedBox.shrink();
 }

@@ -438,7 +438,7 @@ class _TimelineMultiYearState extends State<TimelineMultiYear> {
             ),
             child: GestureDetector(
               onTap: () =>
-                  Navigator.pushNamed(context, '/projects/${entry.slug}'),
+                  Navigator.pushNamed(context, '/project/${entry.slug}'),
               child: MouseRegion(
                 cursor: SystemMouseCursors.click,
                 child: _buildDot(dotColor),

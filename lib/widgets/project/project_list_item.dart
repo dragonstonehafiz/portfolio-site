@@ -97,7 +97,7 @@ class ProjectListItem extends StatelessWidget {
 
     return HoverCardWidget(
       onTap: () {
-        Navigator.pushNamed(context, '/projects/${project.slug}');
+        Navigator.pushNamed(context, '/project/${project.slug}');
       },
       child: AnimatedGradient(
         gradient: Theme.of(context).previewGradient,

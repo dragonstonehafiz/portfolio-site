@@ -21,7 +21,7 @@ class ProjectPreviewCard extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 16),
       child: HoverCardWidget(
         onTap: () {
-          Navigator.pushNamed(context, '/projects/${project.slug}');
+          Navigator.pushNamed(context, '/project/${project.slug}');
         },
         child: AnimatedGradient(
           gradient: Theme.of(context).previewGradient,

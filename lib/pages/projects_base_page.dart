@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
+import '../core/routes.dart';
 import '../widgets/ui/custom_app_bar.dart';
 import '../widgets/ui/custom_footer.dart';
 import '../widgets/generic/search_bar.dart';
-import '../widgets/project/project_preview_card.dart';
 import '../widgets/project/project_list_item.dart';
 import '../data/projects/project_service.dart';
 import '../data/projects/project_data.dart';
 import '../core/responsive_web_utils.dart';
 import '../core/theme.dart';
-import '../data/pages/page_collection.dart';
 
 class ProjectsBasePage extends StatefulWidget {
   final String configKey;
@@ -42,17 +41,10 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
   List<String> _availableTools = [];
   // Search query
   String _searchQuery = '';
-  // Layout toggle
-  bool _showListView = false;
 
   @override
   void initState() {
     super.initState();
-
-    // Check if this page should default to list view based on page config
-    final pageCollection = PageCollection.instance;
-    final pageData = pageCollection.findGenericPageByName(widget.configKey);
-    bool defaultListView = pageData?.defaultListView ?? false;
 
     // Load available tags for the dropdown, scoped to this page's projects
     final projectsForPage = ProjectService.getProjectsForPage(widget.configKey);
@@ -70,18 +62,7 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
       _availableTags = tags.toList()..sort();
       _availableProjectTypes = projectTypes.toList()..sort();
       _availableTools = tools.toList()..sort();
-      _showListView = defaultListView;
     });
-  }
-
-  // Helper method to get appropriate cross axis count based on screen size
-  int _getCrossAxisCount(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    if (screenWidth < ResponsiveWebUtils.mobileBreakpoint) {
-      return 1; // Mobile: single column
-    } else {
-      return 2; // Desktop/Tablet: 2 columns
-    }
   }
 
   Widget _buildTagDropdown({bool isExpanded = false}) {
@@ -189,30 +170,6 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
     );
   }
 
-  Widget _buildListViewToggle({required bool isMobile}) {
-    return Tooltip(
-      message: _showListView ? 'Switch to grid view' : 'Switch to list view',
-      child: IconButton(
-        padding: EdgeInsets.zero,
-        constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
-        visualDensity: isMobile
-            ? VisualDensity.compact
-            : VisualDensity.standard,
-        iconSize: isMobile ? 18 : 20,
-        onPressed: () {
-          setState(() {
-            _showListView = !_showListView;
-          });
-        },
-        icon: Icon(
-          _showListView ? Icons.view_list : Icons.view_list_outlined,
-          // Slightly emphasize active state
-          color: _showListView ? Theme.of(context).colorScheme.primary : null,
-        ),
-      ),
-    );
-  }
-
   Widget _buildSortButton({required bool isMobile}) {
     return IconButton(
       padding: EdgeInsets.zero,
@@ -234,7 +191,6 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
     List<ProjectData> projects,
   ) {
     final padding = ResponsiveWebUtils.getResponsivePadding(context);
-    final crossAxisCount = _getCrossAxisCount(context);
     final isMobile = ResponsiveWebUtils.isMobile(context);
     return SingleChildScrollView(
       child: Padding(
@@ -242,30 +198,57 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            _buildBreadcrumb(context),
+            const SizedBox(height: 10),
             _buildHeader(context, isMobile),
             const SizedBox(height: 12),
             _buildSearchBar(context, isMobile),
             const SizedBox(height: 16),
             _buildDescription(context, projects.length, isMobile),
             const SizedBox(height: 20),
-            _buildProjectsPreview(context, projects, crossAxisCount, isMobile),
+            _buildProjectsPreview(context, projects),
           ],
         ),
       ),
     );
   }
 
+  Widget _buildBreadcrumb(BuildContext context) {
+    return Row(
+      children: [
+        TextButton(
+          onPressed: () {
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              AppRoutes.projectSummaryPath,
+              (r) => false,
+            );
+          },
+          style: TextButton.styleFrom(
+            foregroundColor: AppColors.textSecondary,
+            padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 0),
+            minimumSize: Size.zero,
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          ),
+          child: const Text('Projects'),
+        ),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 6),
+          child: Text('/', style: TextStyle(color: AppColors.textSecondary)),
+        ),
+        Text(
+          widget.title,
+          style: const TextStyle(
+            fontWeight: FontWeight.w700,
+            color: AppColors.textPrimary,
+          ),
+        ),
+      ],
+    );
+  }
+
   // Header (title + filter + sort). On mobile the filter and sort stack below the title
   Widget _buildHeader(BuildContext context, bool isMobile) {
-    final titleWidget = Text(
-      widget.title,
-      style: TextStyle(
-        fontSize: isMobile ? 26 : 32,
-        fontWeight: FontWeight.bold,
-        color: Colors.blueGrey,
-      ),
-    );
-
     // Controls row: will be shown below the title for all sizes. On mobile
     // we force the dropdowns to expand so the controls fit on two lines.
     Widget controlsRow;
@@ -285,8 +268,6 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
               Expanded(child: _buildToolDropdown(isExpanded: true)),
               const SizedBox(width: 8),
               _buildSortButton(isMobile: true),
-              const SizedBox(width: 4),
-              _buildListViewToggle(isMobile: true),
             ],
           ),
         ],
@@ -302,15 +283,11 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
           Expanded(child: _buildToolDropdown()),
           const SizedBox(width: 8),
           _buildSortButton(isMobile: false),
-          _buildListViewToggle(isMobile: false),
         ],
       );
     }
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [titleWidget, const SizedBox(height: 8), controlsRow],
-    );
+    return controlsRow;
   }
 
   // Description row
@@ -336,8 +313,6 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
   Widget _buildProjectsPreview(
     BuildContext context,
     List<ProjectData> projects,
-    int crossAxisCount,
-    bool isMobile,
   ) {
     if (projects.isEmpty) {
       return Center(
@@ -355,36 +330,14 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
       );
     }
 
-    if (_showListView) {
-      return Column(
-        children: projects
-            .map(
-              (project) => Padding(
-                padding: const EdgeInsets.only(bottom: 12),
-                child: ProjectListItem(project: project),
-              ),
-            )
-            .toList(),
-      );
-    }
-
-    if (crossAxisCount == 1) {
-      return Column(
-        children: projects
-            .map((project) => ProjectPreviewCard(project: project))
-            .toList(),
-      );
-    }
-
-    return GridView.count(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      crossAxisCount: crossAxisCount,
-      crossAxisSpacing: 16,
-      mainAxisSpacing: 16,
-      childAspectRatio: isMobile ? 0.8 : 0.9,
+    return Column(
       children: projects
-          .map((project) => ProjectPreviewCard(project: project))
+          .map(
+            (project) => Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: ProjectListItem(project: project),
+            ),
+          )
           .toList(),
     );
   }

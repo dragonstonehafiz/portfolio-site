@@ -7,15 +7,15 @@ import '../../core/theme.dart';
 class ProjectThumbnailPreview extends StatelessWidget {
   final List<String>? imgPaths;
   final String? videoLink;
-  final double width;
-  final double height;
+  final double? width;
+  final double? height;
   final BorderRadiusGeometry borderRadius;
 
   const ProjectThumbnailPreview({
     this.imgPaths,
     this.videoLink,
-    required this.width,
-    required this.height,
+    this.width,
+    this.height,
     this.borderRadius = const BorderRadius.all(Radius.circular(6)),
     super.key,
   });
@@ -79,7 +79,7 @@ class ProjectThumbnailPreview extends StatelessWidget {
                     child: Icon(
                       Icons.play_circle_fill,
                       color: AppColors.accent,
-                      size: height * 0.4,
+                      size: (height ?? 120) * 0.4,
                     ),
                   ),
                 );
@@ -91,7 +91,7 @@ class ProjectThumbnailPreview extends StatelessWidget {
               child: Icon(
                 Icons.play_circle_fill,
                 color: Colors.white70,
-                size: height * 0.35,
+                size: (height ?? 120) * 0.35,
               ),
             ),
           ],
@@ -111,7 +111,7 @@ class ProjectThumbnailPreview extends StatelessWidget {
           child: Icon(
             Icons.image_outlined,
             color: Colors.grey[600],
-            size: height * 0.3,
+            size: (height ?? 120) * 0.3,
           ),
         ),
       ),

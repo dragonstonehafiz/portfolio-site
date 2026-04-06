@@ -36,7 +36,10 @@ Routing is handled in `MaterialApp.onGenerateInitialRoutes` and `MaterialApp.onG
 - `/project/<slug>` -> `ProjectDetailPage(slug: slug)`
 - Any unmatched runtime navigation route -> URL is replaced to `/404`, then `NotFoundPage` is shown
 
-Navigation UI is dynamic from `PageCollection` in `lib/widgets/ui/custom_app_bar.dart`.
+Navigation UI in `lib/widgets/ui/custom_app_bar.dart` is currently fixed to two links:
+
+- `Home` -> `/home`
+- `Projects` -> `/projects/`
 
 ## Data Layer
 
@@ -123,8 +126,8 @@ This section maps widget responsibilities and current usage.
 
 - `CustomAppBar`
   - Used by: Landing, Project summary page, Projects list page, Project detail page.
-  - Responsibility: Dynamic nav from `PageCollection`; desktop primary links + dedicated `Projects` route to project summary; mobile popup menu with `Home`, `Projects`, and generic page entries.
-  - Contract: Route generation must keep using `AppRoutes.pagePath(AppRoutes.slugForPageName(...))`.
+  - Responsibility: Shared top nav with only `Home` and `Projects` links on desktop and mobile.
+  - Contract: Navigation currently uses `Navigator.pushNamedAndRemoveUntil(..., (r) => false)` for both links.
 
 - `CustomFooter`
   - Used by: Landing, Projects list page, Project detail page.
@@ -183,8 +186,14 @@ This section maps widget responsibilities and current usage.
   - Responsibility: Primary card view for project summaries; navigates to `/project/<slug>`.
 
 - `ProjectListItem`
-  - Used by: Projects list view mode.
-  - Responsibility: Dense row-style project summary with links, tags, tools, and date/download indicators.
+  - Used by: `ProjectsBasePage` list mode (currently the only mode rendered).
+  - Responsibility: Dense row-style project summary with left media column and right content column.
+  - Current layout order:
+    - title + project type badge
+    - tags and tools row
+    - vignette/summary
+    - `what_i_did` bullets (up to 3) + `+N more`
+    - updated date pill + icon link buttons
 
 - `ProjectCompactCard`
   - Used by: `ProjectHorizontalCarousel`.
@@ -233,7 +242,9 @@ This section maps widget responsibilities and current usage.
 
 - Projects base page (`projects_base_page.dart`)
   - `GradientScaffold` + `CustomAppBar` + `CustomFooter`
-  - `SearchBarWidget`, `ProjectPreviewCard`, `ProjectListItem`
+  - `SearchBarWidget`, `ProjectListItem`
+  - Includes breadcrumb (`Projects / <PageName>`) and filter/sort controls
+  - No list/grid toggle in current implementation
 
 - Project summary page (`project_summary_page.dart`)
   - `GradientScaffold` + `CustomAppBar` + `CustomFooter`
@@ -250,7 +261,7 @@ This is the full widget file map under `lib/widgets/`.
 
 ### `lib/widgets/ui`
 
-- `custom_app_bar.dart`: dynamic top navigation from `PageCollection`.
+- `custom_app_bar.dart`: fixed top navigation (`Home`, `Projects`) for desktop and mobile.
 - `custom_footer.dart`: global footer with social links.
 - `animated_gradient.dart`: animated gradient wrapper container.
 - `hover_card.dart`: hover scale/elevation wrapper for clickable cards.
@@ -293,8 +304,8 @@ This is the full widget file map under `lib/widgets/`.
 
 - Projects page (`lib/pages/projects_base_page.dart`)
   - Shell: `GradientScaffold` -> `CustomAppBar` + `CustomFooter`
-  - Controls: header filter dropdowns + `SearchBarWidget` + sort + list/grid toggle
-  - Content: `ProjectPreviewCard*` (grid) or `ProjectListItem*` (list)
+  - Controls: breadcrumb + filter dropdowns + `SearchBarWidget` + sort button
+  - Content: `ProjectListItem*` (list only, with per-item bottom spacing of `10`)
 
 - Project summary page (`lib/pages/project_summary_page.dart`)
   - Shell: `GradientScaffold` -> `CustomAppBar` + `CustomFooter`

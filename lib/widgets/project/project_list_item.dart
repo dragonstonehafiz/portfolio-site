@@ -5,11 +5,10 @@ import '../../core/theme.dart';
 import '../../core/responsive_web_utils.dart';
 import '../ui/hover_card.dart';
 import '../ui/animated_gradient.dart';
-import '../generic/tool_badge_compact.dart';
+import '../generic/tool_badge_list.dart';
 import 'project_thumbnail_preview.dart';
 
 /// A list item widget for displaying project information in list view.
-/// Extracts rendering logic from ProjectData to follow separation of concerns.
 class ProjectListItem extends StatelessWidget {
   final ProjectData project;
 
@@ -18,211 +17,294 @@ class ProjectListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isMobile = ResponsiveWebUtils.isMobile(context);
-    final horizontalGap = isMobile ? 8.0 : 12.0;
-    final titleStyle =
-        Theme.of(
-          context,
-        ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600) ??
-        TextStyle(fontSize: isMobile ? 16 : 18, fontWeight: FontWeight.w600);
-
-    Widget? projectTypeBadge;
-    if (project.projectType.isNotEmpty) {
-      projectTypeBadge = Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: isMobile ? 8 : 10,
-          vertical: isMobile ? 4 : 5,
-        ),
-        decoration: BoxDecoration(
-          color: AppColors.accent.withValues(alpha: 0.1),
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: AppColors.accent.withValues(alpha: 0.3)),
-        ),
-        child: Text(
-          project.projectType,
-          style: TextStyle(
-            fontSize: isMobile ? 12 : 13,
-            fontWeight: FontWeight.w600,
-            color: AppColors.accent,
-          ),
-        ),
-      );
-    }
-
-    final linkColor = IconTheme.of(context).color ?? AppColors.primary;
-
-    Widget buildLinkButton({
-      required IconData icon,
-      required String tooltip,
-      required String url,
-    }) {
-      return Tooltip(
-        message: tooltip,
-        child: IconButton(
-          icon: Icon(icon, size: 20),
-          color: linkColor,
-          padding: EdgeInsets.zero,
-          constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
-          splashRadius: 18,
-          onPressed: () => _openLink(url),
-        ),
-      );
-    }
-
-    final linkButtons = <Widget>[];
-    if (project.githubLink != null && project.githubLink!.isNotEmpty) {
-      linkButtons.add(
-        buildLinkButton(
-          icon: Icons.code,
-          tooltip: 'Open GitHub',
-          url: project.githubLink!,
-        ),
-      );
-    }
-    if (project.vidLink != null && project.vidLink!.isNotEmpty) {
-      linkButtons.add(
-        buildLinkButton(
-          icon: Icons.play_circle_outline,
-          tooltip: 'Watch video',
-          url: project.vidLink!,
-        ),
-      );
-    }
-    final hasDownloads = project.downloadPaths.isNotEmpty;
+    final horizontalPadding = isMobile ? 12.0 : 16.0;
+    final verticalPadding = isMobile ? 12.0 : 14.0;
+    final mediaWidth = isMobile ? double.infinity : 220.0;
+    final mediaHeight = 180.0;
+    final bulletItems = project.whatIDid.take(3).toList();
+    final extraCount = project.whatIDid.length - bulletItems.length;
+    final summaryText = project.vignette.trim().isNotEmpty
+        ? project.vignette.trim()
+        : (project.description ?? '').trim();
     final hasLastUpdate =
         project.lastUpdate != null && project.lastUpdate!.trim().isNotEmpty;
     final displayDate = hasLastUpdate
         ? project.lastUpdate!.trim()
         : project.date.trim();
-    final dateLabel = hasLastUpdate ? 'Last updated on' : 'Released on';
+    final downloadUrl = _firstDownloadUrl(project.downloadPaths);
+    final linkColor = IconTheme.of(context).color ?? AppColors.primary;
 
     return HoverCardWidget(
+      borderRadius: 0,
       onTap: () {
         Navigator.pushNamed(context, '/project/${project.slug}');
       },
       child: AnimatedGradient(
         gradient: Theme.of(context).previewGradient,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.zero,
         duration: const Duration(seconds: 6),
         child: Padding(
           padding: EdgeInsets.symmetric(
-            horizontal: isMobile ? 12 : 16,
-            vertical: isMobile ? 10 : 12,
+            horizontal: horizontalPadding,
+            vertical: verticalPadding,
           ),
-          child: Row(
-            children: [
-              // Small thumbnail preview on the left
-              ProjectThumbnailPreview(
-                imgPaths: project.imgPaths.isNotEmpty ? project.imgPaths : null,
-                videoLink: project.vidLink,
-                width: isMobile ? 48.0 : 56.0,
-                height: isMobile ? 48.0 : 56.0,
-                borderRadius: BorderRadius.circular(6),
-              ),
-              SizedBox(width: isMobile ? 8 : 12),
-              // Main content (title, tags, links)
-              Expanded(
-                child: Column(
+          child: isMobile
+              ? Flex(
+                  direction: Axis.vertical,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Flexible(
-                          child: Text(
-                            project.title,
-                            style: titleStyle,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
+                    SizedBox(
+                      width: mediaWidth,
+                      child: Container(
+                        height: mediaHeight,
+                        padding: const EdgeInsets.all(6),
+                        decoration: BoxDecoration(
+                          color: AppColors.primary.withValues(alpha: 0.06),
+                          borderRadius: BorderRadius.circular(6),
+                          border: Border.all(
+                            color: AppColors.primary.withValues(alpha: 0.18),
                           ),
                         ),
-                        if (projectTypeBadge != null) ...[
-                          SizedBox(width: horizontalGap),
-                          projectTypeBadge,
-                        ],
-                      ],
+                        child: ProjectThumbnailPreview(
+                          imgPaths: project.imgPaths.isNotEmpty
+                              ? project.imgPaths
+                              : null,
+                          videoLink: project.vidLink,
+                          width: mediaWidth,
+                          height: mediaHeight,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
                     ),
-                    if (project.tags.isNotEmpty ||
-                        project.tools.isNotEmpty) ...[
-                      const SizedBox(height: 8),
-                      Wrap(
-                        spacing: 8,
-                        runSpacing: 4,
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        children: [
-                          for (final tag in project.tags)
-                            Chip(
-                              label: Text(
-                                tag,
-                                style: const TextStyle(fontSize: 12),
-                              ),
-                              backgroundColor: AppColors.secondary.withValues(
-                                alpha: 0.1,
-                              ),
-                              side: BorderSide(
-                                color: AppColors.secondary.withValues(
-                                  alpha: 0.3,
-                                ),
-                              ),
-                            ),
-                          for (final tool in project.tools)
-                            ToolBadgeCompact(toolKey: tool),
-                        ],
-                      ),
-                    ],
-                    if (displayDate.isNotEmpty ||
-                        linkButtons.isNotEmpty ||
-                        hasDownloads) ...[
-                      const SizedBox(height: 8),
-                      Wrap(
-                        spacing: 8,
-                        runSpacing: 4,
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        children: [
-                          if (displayDate.isNotEmpty)
-                            _buildDatePill(
-                              label: dateLabel,
-                              value: displayDate,
-                              isCompact: isMobile,
-                              horizontalGap: horizontalGap,
-                            ),
-                          if (linkButtons.isNotEmpty)
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                for (
-                                  var i = 0;
-                                  i < linkButtons.length;
-                                  i++
-                                ) ...[
-                                  linkButtons[i],
-                                  if (i != linkButtons.length - 1)
-                                    SizedBox(width: horizontalGap / 2),
-                                ],
-                              ],
-                            ),
-                          if (hasDownloads)
-                            _buildDownloadIndicator(
-                              horizontalGap: horizontalGap,
-                              color: linkColor,
-                            ),
-                        ],
-                      ),
-                    ],
+                    const SizedBox(height: 10),
+                    _buildContentColumn(
+                      isMobile: true,
+                      summaryText: summaryText,
+                      bulletItems: bulletItems,
+                      extraCount: extraCount,
+                      displayDate: displayDate,
+                      linkColor: linkColor,
+                      downloadUrl: downloadUrl,
+                    ),
                   ],
+                )
+              : IntrinsicHeight(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      SizedBox(
+                        width: mediaWidth,
+                        child: Container(
+                          padding: const EdgeInsets.all(6),
+                          decoration: BoxDecoration(
+                            color: AppColors.primary.withValues(alpha: 0.06),
+                            borderRadius: BorderRadius.circular(6),
+                            border: Border.all(
+                              color: AppColors.primary.withValues(alpha: 0.18),
+                            ),
+                          ),
+                          child: ProjectThumbnailPreview(
+                            imgPaths: project.imgPaths.isNotEmpty
+                                ? project.imgPaths
+                                : null,
+                            videoLink: project.vidLink,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 14),
+                      Expanded(
+                        child: _buildContentColumn(
+                          isMobile: false,
+                          summaryText: summaryText,
+                          bulletItems: bulletItems,
+                          extraCount: extraCount,
+                          displayDate: displayDate,
+                          linkColor: linkColor,
+                          downloadUrl: downloadUrl,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
         ),
       ),
     );
   }
 
+  Widget _buildContentColumn({
+    required bool isMobile,
+    required String summaryText,
+    required List<String> bulletItems,
+    required int extraCount,
+    required String displayDate,
+    required Color linkColor,
+    required String? downloadUrl,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Wrap(
+          spacing: 10,
+          runSpacing: 8,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            Text(
+              project.title,
+              style: TextStyle(
+                fontSize: isMobile ? 22 : 30,
+                fontWeight: FontWeight.w700,
+                color: AppColors.textPrimary,
+              ),
+            ),
+            if (project.projectType.trim().isNotEmpty)
+              _buildProjectTypeBadge(project.projectType, isMobile),
+          ],
+        ),
+        if (project.tags.isNotEmpty || project.tools.isNotEmpty) ...[
+          const SizedBox(height: 10),
+          Wrap(
+            spacing: 6,
+            runSpacing: 6,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              for (final tag in project.tags) _buildTagChip(tag),
+              for (final tool in project.tools) _buildToolBadge(tool),
+            ],
+          ),
+        ],
+        if (summaryText.isNotEmpty) ...[
+          const SizedBox(height: 8),
+          Text(
+            summaryText,
+            style: const TextStyle(
+              fontSize: 16,
+              height: 1.6,
+              color: AppColors.textSecondary,
+            ),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
+        if (bulletItems.isNotEmpty) ...[
+          const SizedBox(height: 8),
+          ...bulletItems.map(_buildBulletLine),
+          if (extraCount > 0) ...[
+            const SizedBox(height: 4),
+            Text(
+              '+$extraCount more',
+              style: TextStyle(
+                fontSize: 12,
+                color: AppColors.textSecondary.withValues(alpha: 0.85),
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
+        ],
+        const SizedBox(height: 10),
+        Wrap(
+          spacing: 12,
+          runSpacing: 6,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            if (displayDate.isNotEmpty)
+              _buildDatePill(
+                value: displayDate,
+                isCompact: isMobile,
+              ),
+            if (project.githubLink != null && project.githubLink!.trim().isNotEmpty)
+              _buildIconLinkButton(
+                icon: Icons.code,
+                tooltip: 'Open GitHub',
+                url: project.githubLink!,
+                color: linkColor,
+              ),
+            if (project.vidLink != null && project.vidLink!.trim().isNotEmpty)
+              _buildIconLinkButton(
+                icon: Icons.play_circle_outline,
+                tooltip: 'Watch video',
+                url: project.vidLink!,
+                color: linkColor,
+              ),
+            if (downloadUrl != null)
+              _buildIconLinkButton(
+                icon: Icons.download_for_offline_outlined,
+                tooltip: 'Download',
+                url: downloadUrl,
+                color: linkColor,
+              ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildProjectTypeBadge(String type, bool isMobile) {
+    return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: isMobile ? 8 : 10,
+        vertical: isMobile ? 4 : 5,
+      ),
+      decoration: BoxDecoration(
+        color: AppColors.accent.withValues(alpha: 0.12),
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: Text(
+        type.toUpperCase(),
+        style: TextStyle(
+          fontSize: isMobile ? 11 : 12,
+          fontWeight: FontWeight.w700,
+          color: AppColors.primary,
+          letterSpacing: 0.6,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBulletLine(String text) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 4),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            margin: const EdgeInsets.only(top: 8),
+            width: 6,
+            height: 6,
+            decoration: const BoxDecoration(
+              color: AppColors.primary,
+              shape: BoxShape.circle,
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              text.trim(),
+              style: const TextStyle(
+                fontSize: 16,
+                height: 1.6,
+                color: AppColors.textSecondary,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTagChip(String tag) {
+    return Chip(
+      label: Text(tag, style: const TextStyle(fontSize: 12)),
+      backgroundColor: AppColors.secondary.withValues(alpha: 0.1),
+      side: BorderSide(
+        color: AppColors.secondary.withValues(alpha: 0.3),
+      ),
+    );
+  }
+
   Widget _buildDatePill({
-    required String label,
     required String value,
     required bool isCompact,
-    required double horizontalGap,
   }) {
     final fontSize = isCompact ? 12.0 : 13.0;
     final paddingH = isCompact ? 8.0 : 10.0;
@@ -238,9 +320,9 @@ class ProjectListItem extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           const Icon(Icons.schedule, size: 14, color: Colors.blueGrey),
-          SizedBox(width: horizontalGap / 2),
+          const SizedBox(width: 6),
           Text(
-            '$label: $value',
+            'Updated $value',
             style: TextStyle(
               fontSize: fontSize,
               fontWeight: FontWeight.w600,
@@ -252,24 +334,48 @@ class ProjectListItem extends StatelessWidget {
     );
   }
 
-  Widget _buildDownloadIndicator({
-    required double horizontalGap,
+  Widget _buildIconLinkButton({
+    required IconData icon,
+    required String tooltip,
+    required String url,
     required Color color,
   }) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.12),
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: color.withValues(alpha: 0.35)),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(Icons.download_for_offline_outlined, size: 14, color: color),
-        ],
+    return Tooltip(
+      message: tooltip,
+      child: IconButton(
+        icon: Icon(icon, size: 20),
+        color: color,
+        padding: EdgeInsets.zero,
+        constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
+        splashRadius: 18,
+        onPressed: () => _openLink(url),
       ),
     );
+  }
+
+  Widget _buildToolBadge(String tool) {
+    return ToolBadgeList(
+      tools: [tool],
+      showIcons: true,
+      fontSize: 11.5,
+      spacing: 0,
+      runSpacing: 0,
+    );
+  }
+
+  String? _firstDownloadUrl(List<dynamic> downloadPaths) {
+    for (final item in downloadPaths) {
+      if (item is String && item.trim().isNotEmpty) {
+        return item.trim();
+      }
+      if (item is Map) {
+        final url = item['url'];
+        if (url is String && url.trim().isNotEmpty) {
+          return url.trim();
+        }
+      }
+    }
+    return null;
   }
 
   Future<void> _openLink(String url) async {

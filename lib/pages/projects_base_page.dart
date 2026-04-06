@@ -3,6 +3,7 @@ import '../core/routes.dart';
 import '../widgets/ui/custom_app_bar.dart';
 import '../widgets/ui/custom_footer.dart';
 import '../widgets/generic/search_bar.dart';
+import '../widgets/generic/app_breadcrumb.dart';
 import '../widgets/project/project_list_item.dart';
 import '../data/projects/project_service.dart';
 import '../data/projects/project_data.dart';
@@ -214,35 +215,19 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
   }
 
   Widget _buildBreadcrumb(BuildContext context) {
-    return Row(
-      children: [
-        TextButton(
-          onPressed: () {
+    return AppBreadcrumb(
+      items: [
+        BreadcrumbItem(
+          label: 'Projects',
+          onTap: () {
             Navigator.pushNamedAndRemoveUntil(
               context,
               AppRoutes.projectSummaryPath,
               (r) => false,
             );
           },
-          style: TextButton.styleFrom(
-            foregroundColor: AppColors.textSecondary,
-            padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 0),
-            minimumSize: Size.zero,
-            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          ),
-          child: const Text('Projects'),
         ),
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 6),
-          child: Text('/', style: TextStyle(color: AppColors.textSecondary)),
-        ),
-        Text(
-          widget.title,
-          style: const TextStyle(
-            fontWeight: FontWeight.w700,
-            color: AppColors.textPrimary,
-          ),
-        ),
+        BreadcrumbItem(label: widget.title),
       ],
     );
   }

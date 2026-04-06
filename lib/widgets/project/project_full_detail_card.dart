@@ -254,58 +254,6 @@ class _AboutSection extends StatelessWidget {
   }
 }
 
-class _WhatIDidSection extends StatelessWidget {
-  final ProjectData project;
-
-  const _WhatIDidSection({required this.project});
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final itemStyle = theme.textTheme.bodyLarge?.copyWith(
-          height: 1.6,
-          color: AppColors.textSecondary,
-        ) ??
-        const TextStyle(
-          fontSize: 16,
-          height: 1.6,
-          color: AppColors.textSecondary,
-        );
-
-    return Column(
-      children: project.whatIDid
-          .map(
-            (item) => Padding(
-              padding: const EdgeInsets.only(bottom: 3.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(top: 8),
-                    width: 6,
-                    height: 6,
-                    decoration: BoxDecoration(
-                      color: AppColors.primary,
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Text(
-                      ProjectDetailFormatter.normalizeIndentation(item),
-                      style: itemStyle,
-                      textAlign: TextAlign.justify,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          )
-          .toList(),
-    );
-  }
-}
-
 class _WhatIDidRailSection extends StatelessWidget {
   final ProjectData project;
 

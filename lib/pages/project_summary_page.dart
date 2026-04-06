@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../core/responsive_web_utils.dart';
 import '../core/routes.dart';
 import '../core/theme.dart';
@@ -28,9 +29,10 @@ class ProjectSummaryPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 12),
                     ...pages.map((page) {
-                      final projects = ProjectService.getProjectsForPage(page.pageName);
+                      final projects = ProjectService.getProjectsForPage(
+                        page.pageName,
+                      );
                       return _ProjectSummarySection(
                         pageName: page.pageName,
                         description: page.description,
@@ -65,63 +67,82 @@ class _ProjectSummarySection extends StatelessWidget {
   Widget build(BuildContext context) {
     final isMobile = ResponsiveWebUtils.isMobile(context);
     final cardWidth = isMobile ? 280.0 : 340.0;
-    final carouselHeight = isMobile ? 235.0 : 255.0;
+    final carouselHeight = isMobile ? 240.0 : 260.0;
     final pageTools = _collectTools(projects);
+    final countLabel =
+        '${projects.length} project${projects.length == 1 ? '' : 's'}';
 
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.only(bottom: 16),
+      margin: const EdgeInsets.only(bottom: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  pageName.toUpperCase(),
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.textPrimary,
-                    letterSpacing: 0.8,
+          if (isMobile) ...[
+            Text(
+              pageName.toUpperCase(),
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+                color: AppColors.textPrimary,
+                letterSpacing: 0.8,
+              ),
+            ),
+            const SizedBox(height: 4),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    countLabel,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.textSecondary,
+                      letterSpacing: 0.4,
+                    ),
                   ),
                 ),
-              ),
-              Text(
-                '${projects.length} project${projects.length == 1 ? '' : 's'}',
-                style: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.textSecondary,
-                  letterSpacing: 0.4,
+                _buildViewAllButton(context),
+              ],
+            ),
+          ] else
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    pageName.toUpperCase(),
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.textPrimary,
+                      letterSpacing: 0.8,
+                    ),
+                  ),
                 ),
-              ),
-              const SizedBox(width: 14),
-              TextButton(
-                onPressed: () {
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    AppRoutes.pagePath(AppRoutes.slugForPageName(pageName)),
-                    (r) => false,
-                  );
-                },
-                child: const Text(
-                  'View all ->',
-                  style: TextStyle(fontWeight: FontWeight.w700),
+                Text(
+                  countLabel,
+                  style: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.textSecondary,
+                    letterSpacing: 0.4,
+                  ),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 4),
+                const SizedBox(width: 12),
+                _buildViewAllButton(context),
+              ],
+            ),
+          const SizedBox(height: 8),
           Text(
             description.replaceFirst('{count}', '${projects.length}'),
-            style: const TextStyle(
-              fontSize: 13,
+            style: TextStyle(
+              fontSize: isMobile ? 14 : 15,
               color: AppColors.textSecondary,
+              height: 1.4,
             ),
           ),
           if (pageTools.isNotEmpty) ...[
-            const SizedBox(height: 10),
+            const SizedBox(height: 12),
             ToolBadgeList(
               tools: pageTools,
               showIcons: true,
@@ -130,10 +151,10 @@ class _ProjectSummarySection extends StatelessWidget {
               runSpacing: 8,
             ),
           ],
-          const SizedBox(height: 12),
+          const SizedBox(height: 14),
           if (projects.isEmpty)
             const SizedBox(
-              height: 70,
+              height: 80,
               child: Center(
                 child: Text(
                   'No projects to show',
@@ -151,9 +172,30 @@ class _ProjectSummarySection extends StatelessWidget {
                 ),
               ),
             ),
-          const SizedBox(height: 14),
-          const Divider(height: 1, color: Colors.black12),
+          const SizedBox(height: 16),
+          Divider(height: 1, color: Colors.black.withValues(alpha: 0.12)),
         ],
+      ),
+    );
+  }
+
+  Widget _buildViewAllButton(BuildContext context) {
+    return TextButton(
+      onPressed: () {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          AppRoutes.pagePath(AppRoutes.slugForPageName(pageName)),
+          (r) => false,
+        );
+      },
+      style: TextButton.styleFrom(
+        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+        minimumSize: Size.zero,
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      ),
+      child: const Text(
+        'View all ->',
+        style: TextStyle(fontWeight: FontWeight.w700),
       ),
     );
   }

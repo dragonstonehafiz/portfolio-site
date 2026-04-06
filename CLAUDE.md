@@ -130,7 +130,7 @@ This section maps widget responsibilities and current usage.
   - Contract: Navigation currently uses `Navigator.pushNamedAndRemoveUntil(..., (r) => false)` for both links.
 
 - `CustomFooter`
-  - Used by: Landing, Projects list page, Project detail page.
+  - Used by: Landing, Project summary page, Projects list page, Project detail page.
   - Responsibility: Shared social CTA and external links (LinkedIn, YouTube, GitHub).
   - Contract: Keep footer globally reusable and safe for both mobile and desktop.
 
@@ -196,7 +196,7 @@ This section maps widget responsibilities and current usage.
     - updated date pill + icon link buttons
 
 - `ProjectCompactCard`
-  - Used by: `ProjectHorizontalCarousel`.
+  - Used by: `ProjectHorizontalCarousel`, `ProjectTooltipWidget` (timeline tooltips).
   - Responsibility: Small clickable project tile with top media, type badge, and compact meta rows.
   - Notes: title/tools rows support automatic horizontal ticker behavior when content overflows; media area consumes remaining height after title/tools block.
 
@@ -205,7 +205,7 @@ This section maps widget responsibilities and current usage.
   - Responsibility: Full project content sections (meta, gallery, details, tools, tags, downloads), including internal section switchers.
 
 - `ProjectThumbnailPreview`
-  - Used by: Project preview/list, timeline tooltips.
+  - Used by: Project preview/list cards and detail contexts.
   - Responsibility: Shared thumbnail renderer for image-first, YouTube thumbnail fallback, or placeholder.
 
 ### Landing Domain Widgets (`lib/widgets/landing/`)
@@ -233,6 +233,7 @@ This section maps widget responsibilities and current usage.
 
 - `RangeTooltipWidget`, `ProjectTooltipWidget`, `HoverTooltipWidget` (`timeline_tooltips.dart`)
   - Responsibility: Shared hover tooltip system for timeline ranges and project nodes.
+  - Notes: `ProjectTooltipWidget` now reuses a smaller `ProjectCompactCard` visual and is non-clickable inside the tooltip overlay.
 
 ### Usage Map (Current)
 
@@ -282,7 +283,7 @@ This is the full widget file map under `lib/widgets/`.
 
 - `project_preview_card.dart`: grid-style project card, links to project detail route.
 - `project_list_item.dart`: list-style project row, links to project detail route.
-- `project_compact_card.dart`: compact clickable project tile used in landing skills carousel.
+- `project_compact_card.dart`: compact project tile used in landing skills/project summary carousels and timeline project tooltips.
 - `project_full_detail_card.dart`: full detail content renderer including gallery/details switchers.
 - `project_thumbnail_preview.dart`: thumbnail renderer for image/video placeholder.
 

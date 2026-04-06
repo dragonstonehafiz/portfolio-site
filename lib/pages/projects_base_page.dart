@@ -204,8 +204,6 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
             _buildHeader(context, isMobile),
             const SizedBox(height: 12),
             _buildSearchBar(context, isMobile),
-            const SizedBox(height: 16),
-            _buildDescription(context, projects.length, isMobile),
             const SizedBox(height: 20),
             _buildProjectsPreview(context, projects),
           ],
@@ -273,14 +271,6 @@ class _ProjectsBasePageState extends State<ProjectsBasePage> {
     }
 
     return controlsRow;
-  }
-
-  // Description row
-  Widget _buildDescription(BuildContext context, int count, bool isMobile) {
-    return Text(
-      ((widget.description ?? '')).replaceFirst('{count}', '$count'),
-      style: TextStyle(fontSize: isMobile ? 14 : 18, color: Colors.grey),
-    );
   }
 
   Widget _buildSearchBar(BuildContext context, bool isMobile) {

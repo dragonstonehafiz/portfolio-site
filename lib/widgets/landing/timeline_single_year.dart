@@ -384,9 +384,10 @@ class _TimelineSingleYearState extends State<TimelineSingleYear> {
           child: HoverTooltipWidget(
             content: ProjectTooltipWidget(
               title: entry.title,
-              subtitle: entry.subtitle,
               version: entry.version,
-              dateLabel: TimelineData.formatDayMonthYear(entry.start),
+              projectType: entry.projectType,
+              tools: entry.tools,
+              slug: entry.slug,
               thumbnailPath: entry.thumbnailPath,
               videoLink: entry.videoLink,
             ),

@@ -2,6 +2,7 @@ import '../data/pages/page_collection.dart';
 
 class AppRoutes {
   static const String landing = '/home';
+  static const String notFound = '/404';
   static const String projectSummarySlug = 'projects';
   static const String projectSummaryPath = '/projects/';
 

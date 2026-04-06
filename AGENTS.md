@@ -10,7 +10,7 @@ This document reflects how the codebase currently works.
 | Framework | Flutter (web target) |
 | UI | Material 3 (`useMaterial3: true`) |
 | Fonts | Google Fonts `Inter` |
-| Routing | `MaterialApp.onGenerateRoute` + path URL strategy |
+| Routing | `MaterialApp.onGenerateInitialRoutes` + `onGenerateRoute` + path URL strategy |
 | Assets/Data | JSON files in `assets/` |
 
 ## Startup and Routing
@@ -24,13 +24,17 @@ Startup flow in `lib/main.dart`:
 
 `AppRoutes.initialize()` in `lib/core/routes.dart` loads `PageCollection` and builds `genericPageSlugs` (`slug -> page_name`).
 
-Routing is handled in `MaterialApp.onGenerateRoute`:
+Routing is handled in `MaterialApp.onGenerateInitialRoutes` and `MaterialApp.onGenerateRoute`:
 
-- `/` -> redirects to `/home`
+- Initial URL canonicalization (single initial route, no extra `/` route in stack):
+  - `/` -> `/home`
+  - Any unknown path -> `/404`
 - `/home` -> `LandingPage`
+- `/404` -> `NotFoundPage`
 - `/projects` and `/projects/` -> `ProjectSummaryPage`
 - `/projects/<slug>` -> resolves slug from `AppRoutes.genericPageSlugs`, then builds `ProjectsBasePage`
 - `/project/<slug>` -> `ProjectDetailPage(slug: slug)`
+- Any unmatched runtime navigation route -> URL is replaced to `/404`, then `NotFoundPage` is shown
 
 Navigation UI is dynamic from `PageCollection` in `lib/widgets/ui/custom_app_bar.dart`.
 

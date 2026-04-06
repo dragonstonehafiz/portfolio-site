@@ -46,7 +46,7 @@ class _LandingPageState extends State<LandingPage> {
   @override
   Widget build(BuildContext context) {
     return GradientScaffold(
-      appBar: const CustomAppBar(),
+      appBar: const CustomAppBar(automaticallyImplyLeading: false),
       body: Column(
         children: [
           Expanded(

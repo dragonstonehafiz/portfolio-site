@@ -6,7 +6,12 @@ import '../../data/pages/page_collection.dart';
 import '../../data/pages/page_models.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomAppBar({super.key});
+  final bool automaticallyImplyLeading;
+
+  const CustomAppBar({
+    super.key,
+    this.automaticallyImplyLeading = true,
+  });
 
   static const EdgeInsets _navPadding = EdgeInsets.symmetric(horizontal: 10.0);
 
@@ -17,6 +22,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return Container(
       decoration: BoxDecoration(gradient: Theme.of(context).primaryGradient),
       child: AppBar(
+        automaticallyImplyLeading: automaticallyImplyLeading,
         titleSpacing: 16,
         title: const Text(
           'Muhd Hafiz',

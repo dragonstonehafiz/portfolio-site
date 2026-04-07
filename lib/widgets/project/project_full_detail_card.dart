@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../core/responsive_web_utils.dart';
 import '../../core/theme.dart';
 import '../../data/projects/project_data.dart';
 import '../generic/image_gallery.dart';
@@ -28,11 +29,13 @@ class ProjectDetailMainContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isMobile = ResponsiveWebUtils.isMobile(context);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (project.description?.isNotEmpty ?? false) ...[
-          _SectionHeader(title: 'About'),
+          _SectionHeader(title: 'About', projectType: project.projectType),
           const SizedBox(height: 12),
           _AboutSection(project: project),
         ],
@@ -59,6 +62,8 @@ class ProjectDetailMetaHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isMobile = ResponsiveWebUtils.isMobile(context);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -68,12 +73,18 @@ class ProjectDetailMetaHeader extends StatelessWidget {
           children: [
             Text(
               'Created ${ProjectDetailFormatter.formatDate(project.date)}',
-              style: const TextStyle(fontSize: 12, color: Colors.grey),
+              style: TextStyle(
+                fontSize: isMobile ? 11 : 12,
+                color: Colors.grey,
+              ),
             ),
             if (project.lastUpdate != null)
               Text(
                 'Updated ${ProjectDetailFormatter.formatDate(project.lastUpdate!)}',
-                style: const TextStyle(fontSize: 12, color: Colors.grey),
+                style: TextStyle(
+                  fontSize: isMobile ? 11 : 12,
+                  color: Colors.grey,
+                ),
               ),
           ],
         ),
@@ -211,19 +222,50 @@ class ProjectDetailMetaRail extends StatelessWidget {
 
 class _SectionHeader extends StatelessWidget {
   final String title;
+  final String? projectType;
 
-  const _SectionHeader({required this.title});
+  const _SectionHeader({required this.title, this.projectType});
 
   @override
   Widget build(BuildContext context) {
-    return Text(
+    final isMobile = ResponsiveWebUtils.isMobile(context);
+    final hasProjectType = projectType != null && projectType!.trim().isNotEmpty;
+    final titleWidget = Text(
       title,
-      style: const TextStyle(
-        fontSize: 22,
+      style: TextStyle(
+        fontSize: isMobile ? 18 : 22,
         fontWeight: FontWeight.bold,
         color: Colors.blueGrey,
       ),
     );
+
+    if (isMobile && hasProjectType) {
+      return Wrap(
+        crossAxisAlignment: WrapCrossAlignment.center,
+        spacing: 10,
+        runSpacing: 6,
+        children: [
+          titleWidget,
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            decoration: BoxDecoration(
+              color: AppColors.accent.withValues(alpha: 0.2),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Text(
+              projectType!,
+              style: const TextStyle(
+                fontSize: 12,
+                color: AppColors.primary,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+        ],
+      );
+    }
+
+    return titleWidget;
   }
 }
 
@@ -234,14 +276,15 @@ class _AboutSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isMobile = ResponsiveWebUtils.isMobile(context);
     final theme = Theme.of(context);
     final style = theme.textTheme.bodyMedium?.copyWith(
           height: 1.6,
-          fontSize: 16,
+          fontSize: isMobile ? 14 : 16,
           color: AppColors.textSecondary,
         ) ??
-        const TextStyle(
-          fontSize: 16,
+        TextStyle(
+          fontSize: isMobile ? 14 : 16,
           height: 1.6,
           color: AppColors.textSecondary,
         );

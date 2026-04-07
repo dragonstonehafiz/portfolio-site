@@ -7,6 +7,7 @@ import '../data/pages/page_collection.dart';
 import '../data/projects/project_data.dart';
 import '../data/projects/project_service.dart';
 import '../widgets/generic/project_horizontal_carousel.dart';
+import '../widgets/generic/tool_badge_compact.dart';
 import '../widgets/generic/tool_badge_list.dart';
 import '../widgets/ui/custom_app_bar.dart';
 import '../widgets/ui/custom_footer.dart';
@@ -66,8 +67,8 @@ class _ProjectSummarySection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isMobile = ResponsiveWebUtils.isMobile(context);
-    final cardWidth = isMobile ? 280.0 : 340.0;
-    final carouselHeight = isMobile ? 240.0 : 260.0;
+    final cardWidth = isMobile ? 240.0 : 340.0;
+    final carouselHeight = isMobile ? 220.0 : 260.0;
     final pageTools = _collectTools(projects);
     final countLabel =
         '${projects.length} project${projects.length == 1 ? '' : 's'}';
@@ -135,21 +136,36 @@ class _ProjectSummarySection extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             description.replaceFirst('{count}', '${projects.length}'),
+            textAlign: TextAlign.justify,
             style: TextStyle(
-              fontSize: isMobile ? 14 : 15,
+              fontSize: isMobile ? 13 : 15,
               color: AppColors.textSecondary,
               height: 1.4,
             ),
           ),
           if (pageTools.isNotEmpty) ...[
             const SizedBox(height: 12),
-            ToolBadgeList(
-              tools: pageTools,
-              showIcons: true,
-              fontSize: 12,
-              spacing: 8,
-              runSpacing: 8,
-            ),
+            if (isMobile)
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: pageTools
+                    .map(
+                      (tool) => ToolBadgeCompact(
+                        toolKey: tool,
+                        fontSize: 11,
+                      ),
+                    )
+                    .toList(),
+              )
+            else
+              ToolBadgeList(
+                tools: pageTools,
+                showIcons: true,
+                fontSize: 12,
+                spacing: 8,
+                runSpacing: 8,
+              ),
           ],
           const SizedBox(height: 14),
           if (projects.isEmpty)

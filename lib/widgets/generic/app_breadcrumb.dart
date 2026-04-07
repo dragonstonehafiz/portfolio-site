@@ -17,18 +17,23 @@ class AppBreadcrumb extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (items.isEmpty) return const SizedBox.shrink();
+    final isMobile = MediaQuery.of(context).size.width < 768;
+    final separatorStyle = TextStyle(
+      color: AppColors.textSecondary,
+      fontSize: isMobile ? 11 : 14,
+    );
 
     return Wrap(
       crossAxisAlignment: WrapCrossAlignment.center,
       children: [
         for (var i = 0; i < items.length; i++) ...[
-          _BreadcrumbLabel(item: items[i]),
+          _BreadcrumbLabel(item: items[i], isMobile: isMobile),
           if (i != items.length - 1)
-            const Padding(
+            Padding(
               padding: EdgeInsets.symmetric(horizontal: 6),
               child: Text(
                 '/',
-                style: TextStyle(color: AppColors.textSecondary),
+                style: separatorStyle,
               ),
             ),
         ],
@@ -39,8 +44,9 @@ class AppBreadcrumb extends StatelessWidget {
 
 class _BreadcrumbLabel extends StatelessWidget {
   final BreadcrumbItem item;
+  final bool isMobile;
 
-  const _BreadcrumbLabel({required this.item});
+  const _BreadcrumbLabel({required this.item, required this.isMobile});
 
   @override
   Widget build(BuildContext context) {
@@ -53,15 +59,16 @@ class _BreadcrumbLabel extends StatelessWidget {
           minimumSize: Size.zero,
           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
         ),
-        child: Text(item.label),
+        child: Text(item.label, style: TextStyle(fontSize: isMobile ? 11 : 14)),
       );
     }
 
     return Text(
       item.label,
-      style: const TextStyle(
+      style: TextStyle(
         fontWeight: FontWeight.w700,
         color: AppColors.textPrimary,
+        fontSize: isMobile ? 11 : 14,
       ),
     );
   }

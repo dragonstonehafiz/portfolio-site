@@ -8,6 +8,7 @@ import '../ui/animated_gradient.dart';
 import '../generic/project_horizontal_carousel.dart';
 import '../generic/shared_tabs.dart';
 import '../generic/tool_badge_list.dart';
+import '../generic/tool_badge_compact.dart';
 
 /// Landing page skills section with tabs for different skill categories
 class LandingSkillsSection extends StatefulWidget {
@@ -92,13 +93,27 @@ class _LandingSkillsSectionState extends State<LandingSkillsSection> {
                     ),
                     const SizedBox(height: 8),
                   ],
-                  ToolBadgeList(
-                    tools: filteredItems,
-                    showIcons: true,
-                    fontSize: 13,
-                    spacing: 8,
-                    runSpacing: 8,
-                  ),
+                  if (isMobile)
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: filteredItems
+                          .map(
+                            (tool) => ToolBadgeCompact(
+                              toolKey: tool,
+                              fontSize: 11,
+                            ),
+                          )
+                          .toList(),
+                    )
+                  else
+                    ToolBadgeList(
+                      tools: filteredItems,
+                      showIcons: true,
+                      fontSize: 13,
+                      spacing: 8,
+                      runSpacing: 8,
+                    ),
                   if (relatedProjects.isNotEmpty &&
                       filteredItems.isNotEmpty) ...[
                     const SizedBox(height: 12),

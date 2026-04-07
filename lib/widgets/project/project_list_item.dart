@@ -11,6 +11,12 @@ import 'project_thumbnail_preview.dart';
 /// A list item widget for displaying project information in list view.
 class ProjectListItem extends StatelessWidget {
   final ProjectData project;
+  static const LinearGradient _thumbnailWhiteGradient = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [Color(0xFFFFFFFF), Color(0xFFF6F9FC)],
+    stops: [0.0, 1.0],
+  );
 
   const ProjectListItem({required this.project, super.key});
 
@@ -55,24 +61,22 @@ class ProjectListItem extends StatelessWidget {
                   children: [
                     SizedBox(
                       width: mediaWidth,
-                      child: Container(
-                        height: mediaHeight,
-                        padding: const EdgeInsets.all(6),
-                        decoration: BoxDecoration(
-                          color: AppColors.primary.withValues(alpha: 0.06),
-                          borderRadius: BorderRadius.circular(6),
-                          border: Border.all(
-                            color: AppColors.primary.withValues(alpha: 0.18),
-                          ),
-                        ),
-                        child: ProjectThumbnailPreview(
-                          imgPaths: project.imgPaths.isNotEmpty
-                              ? project.imgPaths
-                              : null,
-                          videoLink: project.vidLink,
-                          width: mediaWidth,
+                      child: AnimatedGradient(
+                        gradient: _thumbnailWhiteGradient,
+                        borderRadius: BorderRadius.zero,
+                        duration: const Duration(seconds: 6),
+                        child: Container(
                           height: mediaHeight,
-                          borderRadius: BorderRadius.circular(4),
+                          padding: const EdgeInsets.all(6),
+                          child: ProjectThumbnailPreview(
+                            imgPaths: project.imgPaths.isNotEmpty
+                                ? project.imgPaths
+                                : null,
+                            videoLink: project.vidLink,
+                            width: mediaWidth,
+                            height: mediaHeight,
+                            borderRadius: BorderRadius.zero,
+                          ),
                         ),
                       ),
                     ),
@@ -94,21 +98,19 @@ class ProjectListItem extends StatelessWidget {
                     children: [
                       SizedBox(
                         width: mediaWidth,
-                        child: Container(
-                          padding: const EdgeInsets.all(6),
-                          decoration: BoxDecoration(
-                            color: AppColors.primary.withValues(alpha: 0.06),
-                            borderRadius: BorderRadius.circular(6),
-                            border: Border.all(
-                              color: AppColors.primary.withValues(alpha: 0.18),
+                        child: AnimatedGradient(
+                          gradient: _thumbnailWhiteGradient,
+                          borderRadius: BorderRadius.zero,
+                          duration: const Duration(seconds: 6),
+                          child: Container(
+                            padding: const EdgeInsets.all(6),
+                            child: ProjectThumbnailPreview(
+                              imgPaths: project.imgPaths.isNotEmpty
+                                  ? project.imgPaths
+                                  : null,
+                              videoLink: project.vidLink,
+                              borderRadius: BorderRadius.zero,
                             ),
-                          ),
-                          child: ProjectThumbnailPreview(
-                            imgPaths: project.imgPaths.isNotEmpty
-                                ? project.imgPaths
-                                : null,
-                            videoLink: project.vidLink,
-                            borderRadius: BorderRadius.circular(4),
                           ),
                         ),
                       ),
@@ -151,8 +153,9 @@ class ProjectListItem extends StatelessWidget {
           children: [
             Text(
               project.title,
+              textAlign: TextAlign.justify,
               style: TextStyle(
-                fontSize: isMobile ? 22 : 30,
+                fontSize: isMobile ? 18 : 30,
                 fontWeight: FontWeight.w700,
                 color: AppColors.textPrimary,
               ),
@@ -168,7 +171,7 @@ class ProjectListItem extends StatelessWidget {
             runSpacing: 6,
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
-              for (final tag in project.tags) _buildTagChip(tag),
+              for (final tag in project.tags) _buildTagChip(tag, isMobile: isMobile),
               for (final tool in project.tools) _buildToolBadge(tool),
             ],
           ),
@@ -177,8 +180,9 @@ class ProjectListItem extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             summaryText,
-            style: const TextStyle(
-              fontSize: 16,
+            textAlign: TextAlign.justify,
+            style: TextStyle(
+              fontSize: isMobile ? 14 : 16,
               height: 1.6,
               color: AppColors.textSecondary,
             ),
@@ -188,13 +192,14 @@ class ProjectListItem extends StatelessWidget {
         ],
         if (bulletItems.isNotEmpty) ...[
           const SizedBox(height: 8),
-          ...bulletItems.map(_buildBulletLine),
+          ...bulletItems.map((b) => _buildBulletLine(b, isMobile: isMobile)),
           if (extraCount > 0) ...[
             const SizedBox(height: 4),
             Text(
               '+$extraCount more',
+              textAlign: TextAlign.justify,
               style: TextStyle(
-                fontSize: 12,
+                fontSize: isMobile ? 11 : 12,
                 color: AppColors.textSecondary.withValues(alpha: 0.85),
                 fontWeight: FontWeight.w600,
               ),
@@ -251,6 +256,7 @@ class ProjectListItem extends StatelessWidget {
       ),
       child: Text(
         type.toUpperCase(),
+        textAlign: TextAlign.justify,
         style: TextStyle(
           fontSize: isMobile ? 11 : 12,
           fontWeight: FontWeight.w700,
@@ -261,16 +267,16 @@ class ProjectListItem extends StatelessWidget {
     );
   }
 
-  Widget _buildBulletLine(String text) {
+  Widget _buildBulletLine(String text, {required bool isMobile}) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 4),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            margin: const EdgeInsets.only(top: 8),
-            width: 6,
-            height: 6,
+            margin: EdgeInsets.only(top: isMobile ? 8 : 8),
+            width: isMobile ? 5 : 6,
+            height: isMobile ? 5 : 6,
             decoration: const BoxDecoration(
               color: AppColors.primary,
               shape: BoxShape.circle,
@@ -280,8 +286,9 @@ class ProjectListItem extends StatelessWidget {
           Expanded(
             child: Text(
               text.trim(),
-              style: const TextStyle(
-                fontSize: 16,
+              textAlign: TextAlign.justify,
+              style: TextStyle(
+                fontSize: isMobile ? 14 : 16,
                 height: 1.6,
                 color: AppColors.textSecondary,
               ),
@@ -292,9 +299,13 @@ class ProjectListItem extends StatelessWidget {
     );
   }
 
-  Widget _buildTagChip(String tag) {
+  Widget _buildTagChip(String tag, {required bool isMobile}) {
     return Chip(
-      label: Text(tag, style: const TextStyle(fontSize: 12)),
+      label: Text(
+        tag,
+        textAlign: TextAlign.justify,
+        style: TextStyle(fontSize: isMobile ? 11 : 12),
+      ),
       backgroundColor: AppColors.secondary.withValues(alpha: 0.1),
       side: BorderSide(
         color: AppColors.secondary.withValues(alpha: 0.3),
@@ -323,6 +334,7 @@ class ProjectListItem extends StatelessWidget {
           const SizedBox(width: 6),
           Text(
             'Updated $value',
+            textAlign: TextAlign.justify,
             style: TextStyle(
               fontSize: fontSize,
               fontWeight: FontWeight.w600,

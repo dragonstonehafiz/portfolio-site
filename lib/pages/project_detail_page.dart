@@ -172,6 +172,8 @@ class _LeftDetailCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isMobile = ResponsiveWebUtils.isMobile(context);
+
     return DecoratedBox(
       decoration: BoxDecoration(
         gradient: Theme.of(context).previewGradient,
@@ -186,7 +188,7 @@ class _LeftDetailCard extends StatelessWidget {
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.all(24),
+        padding: EdgeInsets.all(isMobile ? 16 : 24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -196,15 +198,20 @@ class _LeftDetailCard extends StatelessWidget {
                 Expanded(
                   child: Text(
                     version.title,
-                    style: const TextStyle(
-                      fontSize: 38,
+                    style: TextStyle(
+                      fontSize: isMobile ? 26 : 38,
                       fontWeight: FontWeight.bold,
                       color: Colors.blueGrey,
                     ),
                   ),
                 ),
-                const SizedBox(width: 12),
-                _ProjectTypePill(projectType: version.projectType),
+                if (!isMobile) ...[
+                  const SizedBox(width: 12),
+                  _ProjectTypePill(
+                    projectType: version.projectType,
+                    isMobile: false,
+                  ),
+                ],
               ],
             ),
             const SizedBox(height: 12),
@@ -284,21 +291,25 @@ class _LeftGalleryCard extends StatelessWidget {
 
 class _ProjectTypePill extends StatelessWidget {
   final String projectType;
+  final bool isMobile;
 
-  const _ProjectTypePill({required this.projectType});
+  const _ProjectTypePill({required this.projectType, required this.isMobile});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      padding: EdgeInsets.symmetric(
+        horizontal: isMobile ? 10 : 12,
+        vertical: isMobile ? 5 : 6,
+      ),
       decoration: BoxDecoration(
         color: AppColors.accent.withValues(alpha: 0.2),
         borderRadius: BorderRadius.circular(16),
       ),
       child: Text(
         projectType,
-        style: const TextStyle(
-          fontSize: 14,
+        style: TextStyle(
+          fontSize: isMobile ? 12 : 14,
           color: AppColors.primary,
           fontWeight: FontWeight.w500,
         ),

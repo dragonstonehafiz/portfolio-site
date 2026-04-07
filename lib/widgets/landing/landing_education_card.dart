@@ -17,16 +17,24 @@ class LandingEducationCard extends StatelessWidget {
     // Render education entry with full-width animated gradient background matching project previews
     final groups = edu.modules;
     final isMobile = ResponsiveWebUtils.isMobile(context);
+    final cardPadding = isMobile ? 12.0 : 16.0;
+    final iconSize = isMobile ? 34.0 : 48.0;
+    final schoolFontSize = isMobile ? 13.0 : 16.0;
+    final courseFontSize = isMobile ? 12.0 : 16.0;
+    final gpaFontSize = isMobile ? 12.0 : 22.0;
+    final dateFontSize = isMobile ? 11.0 : 12.0;
+    final modulesHeight = isMobile ? 108.0 : 120.0;
+    final chipFontSize = isMobile ? 12.0 : 14.0;
 
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.only(bottom: 2),
-      child: AnimatedGradient(
+        child: AnimatedGradient(
         gradient: Theme.of(context).previewGradient,
         borderRadius: BorderRadius.circular(12),
         duration: const Duration(seconds: 8),
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(cardPadding),
           child: SelectionArea(
             child: DefaultTextStyle(
               style: const TextStyle(color: Color(0xFF0F1724)),
@@ -40,14 +48,14 @@ class LandingEducationCard extends StatelessWidget {
                       // Icon on the left
                       if (edu.icon != null && edu.icon!.isNotEmpty)
                         SizedBox(
-                          width: isMobile ? 40 : 48,
-                          height: isMobile ? 40 : 48,
+                          width: iconSize,
+                          height: iconSize,
                           child: _buildIconWidget(edu.icon!),
                         )
                       else
                         SizedBox(
-                          width: isMobile ? 40 : 48,
-                          height: isMobile ? 40 : 48,
+                          width: iconSize,
+                          height: iconSize,
                           child: const Icon(
                             Icons.school_outlined,
                             color: Colors.blueGrey,
@@ -62,7 +70,7 @@ class LandingEducationCard extends StatelessWidget {
                             Text(
                               edu.school,
                               style: TextStyle(
-                                fontSize: isMobile ? 15 : 16,
+                                fontSize: schoolFontSize,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
@@ -70,7 +78,7 @@ class LandingEducationCard extends StatelessWidget {
                             Text(
                               edu.course,
                               style: TextStyle(
-                                fontSize: isMobile ? 14 : 16,
+                                fontSize: courseFontSize,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -84,7 +92,7 @@ class LandingEducationCard extends StatelessWidget {
                           child: Text(
                             'GPA: ${edu.gpa}',
                             style: TextStyle(
-                              fontSize: isMobile ? 16 : 22,
+                              fontSize: gpaFontSize,
                               fontWeight: FontWeight.w800,
                               color: AppColors.textPrimary,
                             ),
@@ -100,9 +108,9 @@ class LandingEducationCard extends StatelessWidget {
                       Expanded(
                         child: Text(
                           '${_formatMonthYear(edu.start)} - ${edu.end != null ? _formatMonthYear(edu.end) : 'Present'}',
-                          style: const TextStyle(
+                          style: TextStyle(
                             color: Colors.grey,
-                            fontSize: 12,
+                            fontSize: dateFontSize,
                           ),
                         ),
                       ),
@@ -121,7 +129,7 @@ class LandingEducationCard extends StatelessWidget {
                           const SizedBox(height: 8),
                           SizedBox(
                             // Fixed height for tab content
-                            height: 120,
+                            height: modulesHeight,
                             child: TabBarView(
                               children: groups.map((g) {
                                 return SingleChildScrollView(
@@ -130,7 +138,22 @@ class LandingEducationCard extends StatelessWidget {
                                     spacing: 8,
                                     runSpacing: 6,
                                     children: g.items
-                                        .map((it) => Chip(label: Text(it)))
+                                        .map(
+                                          (it) => Chip(
+                                            visualDensity: isMobile
+                                                ? VisualDensity.compact
+                                                : VisualDensity.standard,
+                                            materialTapTargetSize: isMobile
+                                                ? MaterialTapTargetSize.shrinkWrap
+                                                : MaterialTapTargetSize.padded,
+                                            label: Text(
+                                              it,
+                                              style: TextStyle(
+                                                fontSize: chipFontSize,
+                                              ),
+                                            ),
+                                          ),
+                                        )
                                         .toList(),
                                   ),
                                 );

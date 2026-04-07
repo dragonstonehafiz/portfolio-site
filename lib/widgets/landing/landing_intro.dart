@@ -30,7 +30,7 @@ class LandingIntro extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildPrimaryContent(theme),
+              _buildPrimaryContent(theme, isMobile: isMobile),
               const SizedBox(height: 16),
               const Divider(height: 1),
               const SizedBox(height: 12),
@@ -44,27 +44,27 @@ class LandingIntro extends StatelessWidget {
     return SelectionArea(
       child: _buildIntroCard(
         context,
-        child: IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                flex: 3,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 24),
-                  child: _buildPrimaryContent(theme),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              flex: 3,
+              child: Container(
+                decoration: const BoxDecoration(
+                  border: Border(right: BorderSide(color: Colors.black12)),
                 ),
+                padding: const EdgeInsets.only(right: 24),
+                child: _buildPrimaryContent(theme, isMobile: isMobile),
               ),
-              Container(width: 1, color: Colors.black12),
-              Expanded(
-                flex: 2,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 24),
-                  child: _buildQuickStats(theme),
-                ),
+            ),
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 24),
+                child: _buildQuickStats(theme),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -83,7 +83,16 @@ class LandingIntro extends StatelessWidget {
     );
   }
 
-  Widget _buildPrimaryContent(ThemeData theme) {
+  Widget _buildPrimaryContent(ThemeData theme, {required bool isMobile}) {
+    final headlineStyle = theme.textTheme.titleMedium;
+    final summaryStyle = isMobile
+        ? theme.textTheme.bodyMedium?.copyWith(
+            color: AppColors.textPrimary.withValues(alpha: 0.84),
+          )
+        : theme.textTheme.bodyLarge?.copyWith(
+            color: AppColors.textPrimary.withValues(alpha: 0.84),
+          );
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -94,13 +103,16 @@ class LandingIntro extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8),
-        Text(intro.headline, style: theme.textTheme.titleMedium),
+        Text(
+          intro.headline,
+          style: headlineStyle,
+          textAlign: TextAlign.justify,
+        ),
         const SizedBox(height: 12),
         Text(
           intro.summary,
-          style: theme.textTheme.bodyLarge?.copyWith(
-            color: AppColors.textPrimary.withValues(alpha: 0.84),
-          ),
+          style: summaryStyle,
+          textAlign: TextAlign.justify,
         ),
         const SizedBox(height: 12),
         Wrap(

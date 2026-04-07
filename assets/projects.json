@@ -895,14 +895,41 @@
     ]
   },
   "Personal-DiamondCityRadio": {
-    "default_version": "1.0",
+    "default_version": "Version 2.0 (Flutter)",
     "page_list": ["Personal Projects"],
     "show_in_timeline": true,
     "shown": true,
     "variable_name": "personal-diamond-city-radio",
     "versions": [
       {
-        "version": "1.0",
+        "version": "Version 2.0 (Flutter)",
+        "date": "2026-04-07",
+        "description": "A full remake of my original Diamond City Radio player, rebuilt in Flutter to make it actually usable day to day on phone and desktop. The first Java/LibGDX version proved the concept, but the UI quality was poor and background playback on mobile was not reliable enough for normal use.\n\nIn this version, I redesigned the app with a Pip-Boy-inspired interface, responsive desktop/mobile layouts, and a cleaner playback flow that rotates intros, songs, outros, and DJ reports. I also added persistent visual/audio settings (display color, scanlines, scanline width/distance/speed, and volume controls) and improved the overall architecture for queue/state management.\n\nNote: audio files are not included in the public repository.",
+        "download_paths": [],
+        "github_link": "https://github.com/dragonstonehafiz/diamond-city-radio",
+        "img_paths": [
+          "images/other/dcrVer2_1.png",
+          "images/other/dcrVer2_2.png",
+          "images/other/dcrVer2_3.png",
+          "images/other/dcrVer2_4.png"
+        ],
+        "last_update": "2026-04-07",
+        "project_type": "Miscellaneous",
+        "tags": ["frontend"],
+        "tools": ["flutter"],
+        "title": "Diamond City Radio (Fallout-Inspired Music Player)",
+        "vid_link": "https://youtu.be/1S1ZG7PbqqA",
+        "vignette": "A Fallout-inspired radio player that mixes songs and DJ reports with a Pip-Boy-style interface.",
+        "what_i_did": [
+          "Remade the original Java/LibGDX app in Flutter to fix UI quality and mobile background playback limitations.",
+          "Built a responsive Pip-Boy-style interface for both desktop and phone layouts.",
+          "Implemented radio-style set playback that interleaves intros, songs, outros, and DJ reports.",
+          "Added persistent visual and audio settings, including scanline controls and independent SFX/hum/main volume settings.",
+          "Refactored the app into reusable widgets and service/repository layers for cleaner state and playback management."
+        ]
+      },
+      {
+        "version": "Version 1.0 (Java)",
         "date": "2024-04-27",
         "description": "A Java-based music player inspired by Fallout 4's Diamond City Radio. It plays a mix of music tracks and DJ voice clips, inserting commentary between songs to recreate the feel of an in-game radio station.",
         "download_paths": [],

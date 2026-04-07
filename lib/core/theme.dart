@@ -54,7 +54,7 @@ class AppColors {
     stops: [0.0, 1.0],
   );
 
-  static const LinearGradient previewGradient = const LinearGradient(
+  static const LinearGradient previewGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [Color(0xFFEAF4FF), Color(0xFFDAEEFF), Color(0xFFCAE8FF)],
@@ -63,20 +63,23 @@ class AppColors {
 }
 
 ThemeData buildAppTheme() {
-  final base = ThemeData.light();
+  final colorScheme = ColorScheme.fromSeed(
+    seedColor: AppColors.primary,
+    primary: AppColors.primary,
+    secondary: AppColors.secondary,
+    tertiary: AppColors.accent,
+    surface: AppColors.surface,
+    onPrimary: Colors.white,
+    onSecondary: Colors.white,
+  );
+
+  final base = ThemeData.from(
+    colorScheme: colorScheme,
+    textTheme: GoogleFonts.interTextTheme(),
+    useMaterial3: true,
+  );
 
   return base.copyWith(
-    colorScheme: ColorScheme.fromSeed(
-      seedColor: AppColors.primary,
-      primary: AppColors.primary,
-      secondary: AppColors.secondary,
-      tertiary: AppColors.accent,
-      background: AppColors.background,
-      surface: AppColors.surface,
-      onPrimary: Colors.white,
-      onSecondary: Colors.white,
-    ),
-    useMaterial3: true,
     scaffoldBackgroundColor: Colors.transparent, // Changed to transparent for gradient
     // Use Google Fonts for a cleaner modern UI
     textTheme: TextTheme(

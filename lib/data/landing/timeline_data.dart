@@ -8,6 +8,7 @@ class TimelineEntry {
   final String subtitle;
   final String version;
   final String projectType;
+  final List<String> tools;
   final String slug;
   final String? thumbnailPath;
   final String? videoLink;
@@ -18,6 +19,7 @@ class TimelineEntry {
     required this.subtitle,
     required this.version,
     required this.projectType,
+    required this.tools,
     required this.slug,
     required this.thumbnailPath,
     required this.videoLink,
@@ -85,6 +87,7 @@ class TimelineData {
             subtitle: subtitle,
             version: version.version,
             projectType: projectType,
+            tools: List<String>.from(version.tools),
             slug: version.slug,
             thumbnailPath: thumbnailPath,
             videoLink: version.vidLink,

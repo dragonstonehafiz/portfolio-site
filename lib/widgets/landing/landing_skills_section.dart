@@ -5,9 +5,10 @@ import '../../data/landing/landing_page_data.dart';
 import '../../data/projects/project_data.dart';
 import '../../data/projects/project_collection.dart';
 import '../ui/animated_gradient.dart';
+import '../generic/project_horizontal_carousel.dart';
 import '../generic/shared_tabs.dart';
 import '../generic/tool_badge_list.dart';
-import 'landing_skills_carousel.dart';
+import '../generic/tool_badge_compact.dart';
 
 /// Landing page skills section with tabs for different skill categories
 class LandingSkillsSection extends StatefulWidget {
@@ -37,30 +38,26 @@ class _LandingSkillsSectionState extends State<LandingSkillsSection> {
 
     return DefaultTabController(
       length: categories.length,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SharedTabs(
-            labels: categories.map((e) => e.key).toList(),
-            onTap: (index) => setState(() => _tabIndex = index),
-          ),
-          const SizedBox(height: 12),
-          _buildSkillCategoryCard(currentEntry, isMobile),
-        ],
+      child: _buildSkillCategoryCard(
+        categories: categories,
+        currentEntry: currentEntry,
+        isMobile: isMobile,
       ),
     );
   }
 
-  Widget _buildSkillCategoryCard(
-    MapEntry<String, SkillCategory> entry,
-    bool isMobile,
-  ) {
-    final desc = entry.value.description;
+  Widget _buildSkillCategoryCard({
+    required List<MapEntry<String, SkillCategory>> categories,
+    required MapEntry<String, SkillCategory> currentEntry,
+    required bool isMobile,
+  }) {
+    final desc = currentEntry.value.description;
     final relatedProjects = _resolveRelatedProjects(
-      entry.value.relatedProjects,
+      currentEntry.value.relatedProjects,
     );
-    final carouselHeight = isMobile ? 420.0 : 430.0;
-    final filteredItems = entry.value.items;
+    final carouselHeight = isMobile ? 235.0 : 255.0;
+    final carouselCardWidth = isMobile ? 280.0 : 340.0;
+    final filteredItems = currentEntry.value.items;
 
     return Container(
       width: double.infinity,
@@ -77,6 +74,11 @@ class _LandingSkillsSectionState extends State<LandingSkillsSection> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  SharedTabs(
+                    labels: categories.map((e) => e.key).toList(),
+                    onTap: (index) => setState(() => _tabIndex = index),
+                  ),
+                  const SizedBox(height: 12),
                   if (desc.trim().isNotEmpty) ...[
                     Text(
                       desc,
@@ -91,19 +93,38 @@ class _LandingSkillsSectionState extends State<LandingSkillsSection> {
                     ),
                     const SizedBox(height: 8),
                   ],
-                  ToolBadgeList(
-                    tools: filteredItems,
-                    showIcons: true,
-                    fontSize: 13,
-                    spacing: 8,
-                    runSpacing: 8,
-                  ),
+                  if (isMobile)
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: filteredItems
+                          .map(
+                            (tool) => ToolBadgeCompact(
+                              toolKey: tool,
+                              fontSize: 11,
+                            ),
+                          )
+                          .toList(),
+                    )
+                  else
+                    ToolBadgeList(
+                      tools: filteredItems,
+                      showIcons: true,
+                      fontSize: 13,
+                      spacing: 8,
+                      runSpacing: 8,
+                    ),
                   if (relatedProjects.isNotEmpty &&
                       filteredItems.isNotEmpty) ...[
                     const SizedBox(height: 12),
                     SizedBox(
                       height: carouselHeight,
-                      child: LandingSkillsCarousel(projects: relatedProjects),
+                      child: SelectionContainer.disabled(
+                        child: ProjectHorizontalCarousel(
+                          projects: relatedProjects,
+                          cardWidth: carouselCardWidth,
+                        ),
+                      ),
                     ),
                   ],
                 ],

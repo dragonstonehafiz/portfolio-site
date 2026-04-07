@@ -59,8 +59,9 @@ class _TimelineSingleYearState extends State<TimelineSingleYear> {
         .toList();
 
     final titleStyle = TextStyle(
-      fontSize: isMobile ? 20 : 22,
-      fontWeight: FontWeight.bold,
+      fontSize: isMobile ? 13 : 14,
+      fontWeight: FontWeight.w700,
+      letterSpacing: 0.6,
       color: Colors.blueGrey,
     );
 
@@ -72,7 +73,7 @@ class _TimelineSingleYearState extends State<TimelineSingleYear> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('Timeline', style: titleStyle),
-        const SizedBox(height: 12),
+        const SizedBox(height: 8),
         AnimatedGradient(
           gradient: Theme.of(context).previewGradient,
           borderRadius: BorderRadius.circular(12),
@@ -383,15 +384,16 @@ class _TimelineSingleYearState extends State<TimelineSingleYear> {
           child: HoverTooltipWidget(
             content: ProjectTooltipWidget(
               title: entry.title,
-              subtitle: entry.subtitle,
               version: entry.version,
-              dateLabel: TimelineData.formatDayMonthYear(entry.start),
+              projectType: entry.projectType,
+              tools: entry.tools,
+              slug: entry.slug,
               thumbnailPath: entry.thumbnailPath,
               videoLink: entry.videoLink,
             ),
             child: GestureDetector(
               onTap: () =>
-                  Navigator.pushNamed(context, '/projects/${entry.slug}'),
+                  Navigator.pushNamed(context, '/project/${entry.slug}'),
               child: MouseRegion(
                 cursor: SystemMouseCursors.click,
                 child: _buildDot(dotColor),

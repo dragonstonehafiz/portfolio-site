@@ -48,7 +48,7 @@ class CustomFooter extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(
-        horizontal: isMobile ? 16.0 : 24.0,
+        horizontal: 0,
         vertical: isMobile ? 12.0 : 24.0,
       ),
       decoration: BoxDecoration(gradient: Theme.of(context).primaryGradient),

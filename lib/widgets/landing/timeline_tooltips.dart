@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../core/theme.dart';
 import '../../data/landing/timeline_data.dart';
-import '../project/project_thumbnail_preview.dart';
+import '../../data/projects/project_data.dart';
+import '../project/project_compact_card.dart';
 
 /// Tooltip content for work and education range segments.
 class RangeTooltipWidget extends StatelessWidget {
@@ -86,71 +87,45 @@ class RangeTooltipWidget extends StatelessWidget {
 /// Tooltip content for project release dots.
 class ProjectTooltipWidget extends StatelessWidget {
   final String title;
-  final String subtitle;
   final String version;
-  final String dateLabel;
+  final String projectType;
+  final List<String> tools;
+  final String slug;
   final String? thumbnailPath;
   final String? videoLink;
 
   const ProjectTooltipWidget({
     super.key,
     required this.title,
-    required this.subtitle,
     required this.version,
-    required this.dateLabel,
+    required this.projectType,
+    required this.tools,
+    required this.slug,
     required this.thumbnailPath,
     required this.videoLink,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(10),
-      elevation: 6,
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 240),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-          child: DefaultTextStyle(
-            style: const TextStyle(color: AppColors.textPrimary),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ProjectThumbnailPreview(
-                  imgPaths: thumbnailPath != null && thumbnailPath!.isNotEmpty
-                      ? [thumbnailPath!]
-                      : null,
-                  videoLink: videoLink,
-                  width: 220,
-                  height: 120,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  title,
-                  style: const TextStyle(fontWeight: FontWeight.w600),
-                ),
-                if (version.trim().isNotEmpty)
-                  Text(
-                    'Release: $version',
-                    style: const TextStyle(color: AppColors.textSecondary),
-                  ),
-                Text(
-                  subtitle,
-                  style: const TextStyle(color: AppColors.textSecondary),
-                ),
-                Text(
-                  dateLabel,
-                  style: const TextStyle(color: AppColors.textSecondary),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+    final tooltipProject = ProjectData(
+      variableName: slug,
+      title: title,
+      date: '',
+      imgPaths: thumbnailPath != null && thumbnailPath!.isNotEmpty
+          ? [thumbnailPath!]
+          : const [],
+      whatIDid: const [],
+      tools: tools,
+      tags: const [],
+      projectType: projectType,
+      version: version,
+      vignette: '',
+      pageList: const [],
+      downloadPaths: const [],
+      vidLink: videoLink,
     );
+
+    return ProjectCompactCard(project: tooltipProject, width: 250, height: 190);
   }
 }
 

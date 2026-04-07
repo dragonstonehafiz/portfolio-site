@@ -430,15 +430,16 @@ class _TimelineMultiYearState extends State<TimelineMultiYear> {
           child: HoverTooltipWidget(
             content: ProjectTooltipWidget(
               title: entry.title,
-              subtitle: entry.subtitle,
               version: entry.version,
-              dateLabel: TimelineData.formatDayMonthYear(entry.start),
+              projectType: entry.projectType,
+              tools: entry.tools,
+              slug: entry.slug,
               thumbnailPath: entry.thumbnailPath,
               videoLink: entry.videoLink,
             ),
             child: GestureDetector(
               onTap: () =>
-                  Navigator.pushNamed(context, '/projects/${entry.slug}'),
+                  Navigator.pushNamed(context, '/project/${entry.slug}'),
               child: MouseRegion(
                 cursor: SystemMouseCursors.click,
                 child: _buildDot(dotColor),

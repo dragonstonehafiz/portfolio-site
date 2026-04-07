@@ -924,8 +924,7 @@
           "Remade the original Java/LibGDX app in Flutter to fix UI quality and mobile background playback limitations.",
           "Built a responsive Pip-Boy-style interface for both desktop and phone layouts.",
           "Implemented radio-style set playback that interleaves intros, songs, outros, and DJ reports.",
-          "Added persistent visual and audio settings, including scanline controls and independent SFX/hum/main volume settings.",
-          "Refactored the app into reusable widgets and service/repository layers for cleaner state and playback management."
+          "Added persistent visual and audio settings, including scanline controls and independent SFX/hum/main volume settings."
         ]
       },
       {

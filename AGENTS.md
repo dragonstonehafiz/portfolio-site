@@ -199,6 +199,10 @@ This section maps widget responsibilities and current usage.
   - Used by: `ProjectHorizontalCarousel`, `ProjectTooltipWidget` (timeline tooltips).
   - Responsibility: Small clickable project tile with top media, type badge, and compact meta rows.
   - Notes: title/tools rows support automatic horizontal ticker behavior when content overflows; media area consumes remaining height after title/tools block.
+  - Current overlays/metadata:
+    - top-left badge: project type
+    - bottom-right badge: total project versions (`N VERSION(S)`)
+    - metadata text includes formatted last updated date (`DD Month YYYY`, from `last_update` fallback `date`)
 
 - `ProjectFullDetailCard`
   - Used by: Project detail page.
@@ -226,6 +230,7 @@ This section maps widget responsibilities and current usage.
 - `TimelineSingleYear`
   - Used by: landing page today.
   - Responsibility: Interactive year-based timeline with project dots + work/education ranges + legend filters.
+  - Notes: work/education ranges are day-aware and render through the end of the end month (not just to month start).
 
 - `TimelineMultiYear`
   - Present but not currently mounted in landing page.
@@ -234,6 +239,7 @@ This section maps widget responsibilities and current usage.
 - `RangeTooltipWidget`, `ProjectTooltipWidget`, `HoverTooltipWidget` (`timeline_tooltips.dart`)
   - Responsibility: Shared hover tooltip system for timeline ranges and project nodes.
   - Notes: `ProjectTooltipWidget` now reuses a smaller `ProjectCompactCard` visual and is non-clickable inside the tooltip overlay.
+  - Notes: timeline tooltip cards pass timeline `start` date into compact-card data so the compact card date label is populated (no `Unknown date`).
 
 ### Usage Map (Current)
 
@@ -250,7 +256,7 @@ This section maps widget responsibilities and current usage.
 - Project summary page (`project_summary_page.dart`)
   - `GradientScaffold` + `CustomAppBar` + `CustomFooter`
   - Per-page sections separated by divider lines
-  - Each section: heading + count + `View all ->`, description, `ToolBadgeList`, `ProjectHorizontalCarousel`
+  - Each section: heading + two count items (`N project(s)` and `N unique version(s)`) + `View all ->`, description, `ToolBadgeList`, `ProjectHorizontalCarousel`
 
 - Project detail page (`project_detail_page.dart`)
   - `GradientScaffold` + `CustomAppBar` + `CustomFooter`
@@ -311,7 +317,7 @@ This is the full widget file map under `lib/widgets/`.
 - Project summary page (`lib/pages/project_summary_page.dart`)
   - Shell: `GradientScaffold` -> `CustomAppBar` + `CustomFooter`
   - Body: per-page summary sections separated by divider lines
-  - Section: heading + count + `View all ->` link, description, deduplicated `ToolBadgeList`, `ProjectHorizontalCarousel`
+  - Section: heading + two count items (`N project(s)` and `N unique version(s)`) + `View all ->` link, description, deduplicated `ToolBadgeList`, `ProjectHorizontalCarousel`
 
 - Project detail (`lib/pages/project_detail_page.dart`)
   - Shell: `GradientScaffold` -> `CustomAppBar` + `CustomFooter`

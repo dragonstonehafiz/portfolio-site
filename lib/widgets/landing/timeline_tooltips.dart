@@ -88,6 +88,7 @@ class RangeTooltipWidget extends StatelessWidget {
 class ProjectTooltipWidget extends StatelessWidget {
   final String title;
   final String version;
+  final DateTime startDate;
   final String projectType;
   final List<String> tools;
   final String slug;
@@ -98,6 +99,7 @@ class ProjectTooltipWidget extends StatelessWidget {
     super.key,
     required this.title,
     required this.version,
+    required this.startDate,
     required this.projectType,
     required this.tools,
     required this.slug,
@@ -110,7 +112,7 @@ class ProjectTooltipWidget extends StatelessWidget {
     final tooltipProject = ProjectData(
       variableName: slug,
       title: title,
-      date: '',
+      date: startDate.toIso8601String(),
       imgPaths: thumbnailPath != null && thumbnailPath!.isNotEmpty
           ? [thumbnailPath!]
           : const [],

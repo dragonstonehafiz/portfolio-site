@@ -431,6 +431,7 @@ class _TimelineMultiYearState extends State<TimelineMultiYear> {
             content: ProjectTooltipWidget(
               title: entry.title,
               version: entry.version,
+              startDate: entry.start,
               projectType: entry.projectType,
               tools: entry.tools,
               slug: entry.slug,

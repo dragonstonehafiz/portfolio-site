@@ -285,11 +285,21 @@ class _TimelineSingleYearState extends State<TimelineSingleYear> {
 
       final startX = extendsPastJan
           ? janEdge
-          : _getMonthPosition(range.start.month, segmentWidth, startPadding);
+          : _getDatePosition(
+              range.start,
+              segmentWidth,
+              startPadding,
+              endOfDay: false,
+            );
 
       final endX = extendsPastDec
           ? decEdge
-          : _getMonthPosition(range.end.month, segmentWidth, startPadding);
+          : _getDatePosition(
+              range.end,
+              segmentWidth,
+              startPadding,
+              endOfDay: true,
+            );
 
       final left = startX < endX ? startX : endX;
       final width = (startX - endX).abs().clamp(4.0, double.infinity);
@@ -385,6 +395,7 @@ class _TimelineSingleYearState extends State<TimelineSingleYear> {
             content: ProjectTooltipWidget(
               title: entry.title,
               version: entry.version,
+              startDate: entry.start,
               projectType: entry.projectType,
               tools: entry.tools,
               slug: entry.slug,
@@ -415,6 +426,22 @@ class _TimelineSingleYearState extends State<TimelineSingleYear> {
     final monthIndex = month - 1;
     final monthPos = ((11 - monthIndex) + 0.5) / 12.0;
     return startPadding + (monthPos * segmentWidth);
+  }
+
+  double _getDatePosition(
+    DateTime date,
+    double segmentWidth,
+    double startPadding, {
+    required bool endOfDay,
+  }) {
+    final monthWidth = segmentWidth / 12;
+    final monthStartOffset = (12 - date.month) * monthWidth;
+    final monthRightEdge = startPadding + monthStartOffset + monthWidth;
+    final daysInMonth = DateTime(date.year, date.month + 1, 0).day;
+    final dayProgress = endOfDay
+        ? (date.day / daysInMonth)
+        : ((date.day - 1) / daysInMonth);
+    return monthRightEdge - (dayProgress * monthWidth);
   }
 
   Widget _buildDot(Color color) {

@@ -110,6 +110,17 @@ class ProjectCompactCard extends StatelessWidget {
                           ),
                         ),
                       ),
+                    const SizedBox(height: 4),
+                    Text(
+                      _formatLastUpdated(project),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 11,
+                        color: Colors.blueGrey,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -186,6 +197,57 @@ class ProjectCompactCard extends StatelessWidget {
   int _versionCount(ProjectData project) {
     final entry = ProjectService.getProjectEntryBySlug(project.slug);
     return entry?.versions.length ?? 1;
+  }
+
+  String _formatLastUpdated(ProjectData project) {
+    final parsed = _parseProjectDate(project.lastUpdate ?? project.date);
+    if (parsed == null) return 'Unknown date';
+
+    const months = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ];
+
+    final day = parsed.day.toString().padLeft(2, '0');
+    final month = months[parsed.month - 1];
+    final year = parsed.year.toString().padLeft(4, '0');
+    return '$day $month $year';
+  }
+
+  DateTime? _parseProjectDate(String? raw) {
+    if (raw == null || raw.trim().isEmpty) return null;
+    final trimmed = raw.trim();
+
+    final parsed = DateTime.tryParse(trimmed);
+    if (parsed != null) return parsed;
+
+    final yearOnly = RegExp(r'^\d{4}$');
+    if (yearOnly.hasMatch(trimmed)) {
+      final year = int.tryParse(trimmed);
+      if (year != null) return DateTime(year, 1, 1);
+    }
+
+    final yearMonth = RegExp(r'^(\d{4})-(\d{1,2})$');
+    final ym = yearMonth.firstMatch(trimmed);
+    if (ym != null) {
+      final year = int.tryParse(ym.group(1)!);
+      final month = int.tryParse(ym.group(2)!);
+      if (year != null && month != null && month >= 1 && month <= 12) {
+        return DateTime(year, month, 1);
+      }
+    }
+
+    return null;
   }
 
   String _shortType(String type) {

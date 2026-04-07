@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import '../../core/theme.dart';
 import '../../data/projects/project_data.dart';
+import '../../data/projects/project_service.dart';
 import '../generic/tool_badge_compact.dart';
 import '../ui/animated_gradient.dart';
 import '../ui/hover_card.dart';
@@ -120,6 +121,7 @@ class ProjectCompactCard extends StatelessWidget {
   }
 
   Widget _buildMedia(double mediaHeight) {
+    final versionCount = _versionCount(project);
     final hasMedia =
         project.imgPaths.isNotEmpty ||
         (project.vidLink != null && project.vidLink!.isNotEmpty);
@@ -157,8 +159,33 @@ class ProjectCompactCard extends StatelessWidget {
             ),
           ),
         ),
+        Positioned(
+          right: 8,
+          bottom: 8,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
+            decoration: BoxDecoration(
+              color: Colors.black.withValues(alpha: 0.35),
+              border: Border.all(color: Colors.white24),
+            ),
+            child: Text(
+              '$versionCount ${versionCount == 1 ? 'VERSION' : 'VERSIONS'}',
+              style: const TextStyle(
+                fontSize: 10,
+                fontWeight: FontWeight.w700,
+                color: Colors.white,
+                letterSpacing: 0.5,
+              ),
+            ),
+          ),
+        ),
       ],
     );
+  }
+
+  int _versionCount(ProjectData project) {
+    final entry = ProjectService.getProjectEntryBySlug(project.slug);
+    return entry?.versions.length ?? 1;
   }
 
   String _shortType(String type) {

@@ -70,8 +70,11 @@ class _ProjectSummarySection extends StatelessWidget {
     final cardWidth = isMobile ? 240.0 : 340.0;
     final carouselHeight = isMobile ? 220.0 : 260.0;
     final pageTools = _collectTools(projects);
-    final countLabel =
+    final uniqueVersionsCount = _countUniqueVersions(projects);
+    final projectsLabel =
         '${projects.length} project${projects.length == 1 ? '' : 's'}';
+    final versionsLabel =
+        '$uniqueVersionsCount unique version${uniqueVersionsCount == 1 ? '' : 's'}';
 
     return Container(
       width: double.infinity,
@@ -93,14 +96,9 @@ class _ProjectSummarySection extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: Text(
-                    countLabel,
-                    style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.textSecondary,
-                      letterSpacing: 0.4,
-                    ),
+                  child: _buildCountItems(
+                    projectsLabel: projectsLabel,
+                    versionsLabel: versionsLabel,
                   ),
                 ),
                 _buildViewAllButton(context),
@@ -120,14 +118,9 @@ class _ProjectSummarySection extends StatelessWidget {
                     ),
                   ),
                 ),
-                Text(
-                  countLabel,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.textSecondary,
-                    letterSpacing: 0.4,
-                  ),
+                _buildCountItems(
+                  projectsLabel: projectsLabel,
+                  versionsLabel: versionsLabel,
                 ),
                 const SizedBox(width: 12),
                 _buildViewAllButton(context),
@@ -151,10 +144,7 @@ class _ProjectSummarySection extends StatelessWidget {
                 runSpacing: 8,
                 children: pageTools
                     .map(
-                      (tool) => ToolBadgeCompact(
-                        toolKey: tool,
-                        fontSize: 11,
-                      ),
+                      (tool) => ToolBadgeCompact(toolKey: tool, fontSize: 11),
                     )
                     .toList(),
               )
@@ -216,6 +206,34 @@ class _ProjectSummarySection extends StatelessWidget {
     );
   }
 
+  Widget _buildCountItems({
+    required String projectsLabel,
+    required String versionsLabel,
+  }) {
+    return Wrap(
+      spacing: 12,
+      runSpacing: 4,
+      alignment: WrapAlignment.end,
+      crossAxisAlignment: WrapCrossAlignment.center,
+      children: [
+        _buildCountItem(projectsLabel),
+        _buildCountItem(versionsLabel),
+      ],
+    );
+  }
+
+  Widget _buildCountItem(String label) {
+    return Text(
+      label,
+      style: const TextStyle(
+        fontSize: 12,
+        fontWeight: FontWeight.w700,
+        color: AppColors.textSecondary,
+        letterSpacing: 0.4,
+      ),
+    );
+  }
+
   List<String> _collectTools(List<ProjectData> projects) {
     final seen = <String>{};
     final ordered = <String>[];
@@ -227,5 +245,14 @@ class _ProjectSummarySection extends StatelessWidget {
       }
     }
     return ordered;
+  }
+
+  int _countUniqueVersions(List<ProjectData> projects) {
+    var versionCount = 0;
+    for (final project in projects) {
+      final entry = ProjectService.getProjectEntryBySlug(project.slug);
+      versionCount += entry?.versions.length ?? 1;
+    }
+    return versionCount;
   }
 }

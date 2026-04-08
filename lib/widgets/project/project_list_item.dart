@@ -375,16 +375,11 @@ class ProjectListItem extends StatelessWidget {
     );
   }
 
-  String? _firstDownloadUrl(List<dynamic> downloadPaths) {
+  String? _firstDownloadUrl(List<ProjectDownload> downloadPaths) {
     for (final item in downloadPaths) {
-      if (item is String && item.trim().isNotEmpty) {
-        return item.trim();
-      }
-      if (item is Map) {
-        final url = item['url'];
-        if (url is String && url.trim().isNotEmpty) {
-          return url.trim();
-        }
+      final url = item.url.trim();
+      if (url.isNotEmpty) {
+        return url;
       }
     }
     return null;

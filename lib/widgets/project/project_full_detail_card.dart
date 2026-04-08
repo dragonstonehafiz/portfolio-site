@@ -29,8 +29,6 @@ class ProjectDetailMainContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isMobile = ResponsiveWebUtils.isMobile(context);
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -492,7 +490,9 @@ class _DownloadsBlock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final items = project.downloadPaths.map(ProjectDetailFormatter.parseDownload).toList();
+    final items = project.downloadPaths
+        .map((entry) => DownloadItem(label: entry.key, url: entry.url))
+        .toList();
 
     return Column(
       children: [
@@ -571,25 +571,6 @@ class ProjectDetailFormatter {
         .join('\n');
 
     return stripped.trim();
-  }
-
-  static DownloadItem parseDownload(dynamic entry) {
-    if (entry is Map<String, dynamic>) {
-      final url = entry['url']?.toString() ?? '';
-      final label = entry['key']?.toString() ?? _fallbackLabel(url);
-      return DownloadItem(label: label, url: url);
-    }
-    if (entry is String) {
-      return DownloadItem(label: _fallbackLabel(entry), url: entry);
-    }
-    final url = entry.toString();
-    return DownloadItem(label: _fallbackLabel(url), url: url);
-  }
-
-  static String _fallbackLabel(String url) {
-    if (url.isEmpty) return 'Download';
-    final parts = url.split('/');
-    return parts.isNotEmpty && parts.last.isNotEmpty ? parts.last : 'Download';
   }
 
   static Future<void> openLink(String url) async {

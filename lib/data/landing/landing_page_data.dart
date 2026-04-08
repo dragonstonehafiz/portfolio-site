@@ -167,17 +167,6 @@ class Skills {
     json.forEach((key, value) {
       if (value is Map<String, dynamic>) {
         categories[key] = SkillCategory.fromJson(value);
-      } else if (value is List) {
-        // Backward compatibility: plain list -> items with empty description.
-        try {
-          categories[key] = SkillCategory(
-            description: '',
-            relatedProjects: const [],
-            items: List<String>.from(value),
-          );
-        } catch (_) {
-          // ignore
-        }
       }
     });
     return Skills(categories: categories);

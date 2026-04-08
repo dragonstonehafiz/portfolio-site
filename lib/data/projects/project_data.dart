@@ -16,9 +16,8 @@ class ProjectData {
   final String version;
   final String vignette;
   final List<String> pageList;
-  // Each download entry is expected to be a map with keys 'key' and 'url'.
-  // For backward compatibility we still accept a list of string URLs.
-  final List<dynamic> downloadPaths;
+  // Each download entry must be a map with keys 'key' and 'url'.
+  final List<ProjectDownload> downloadPaths;
 
   ProjectData({
     required this.variableName,
@@ -62,8 +61,49 @@ class ProjectData {
       version: versionOverride ?? json['version']?.toString() ?? 'default',
       vignette: json['vignette']?.toString() ?? '',
       pageList: pageListOverride ?? List<String>.from(json['page_list'] ?? []),
-      downloadPaths: (json['download_paths'] as List<dynamic>?)?.toList() ?? [],
+      downloadPaths: _parseDownloadPaths(
+        json['download_paths'],
+        projectId: key,
+        versionId: versionOverride ?? json['version']?.toString() ?? 'default',
+      ),
     );
+  }
+
+  static List<ProjectDownload> _parseDownloadPaths(
+    dynamic raw, {
+    required String projectId,
+    required String versionId,
+  }) {
+    if (raw == null) return const [];
+    if (raw is! List) {
+      throw FormatException(
+        'Project "$projectId" version "$versionId" has invalid "download_paths"; expected a list.',
+      );
+    }
+
+    final downloads = <ProjectDownload>[];
+    for (final entry in raw) {
+      if (entry is! Map) {
+        throw FormatException(
+          'Project "$projectId" version "$versionId" has invalid download entry; expected an object with "key" and "url".',
+        );
+      }
+      final map = Map<String, dynamic>.from(entry);
+      final key = map['key'];
+      final url = map['url'];
+      if (key is! String || key.trim().isEmpty) {
+        throw FormatException(
+          'Project "$projectId" version "$versionId" has invalid download entry; "key" must be a non-empty string.',
+        );
+      }
+      if (url is! String || url.trim().isEmpty) {
+        throw FormatException(
+          'Project "$projectId" version "$versionId" has invalid download entry; "url" must be a non-empty string.',
+        );
+      }
+      downloads.add(ProjectDownload(key: key.trim(), url: url.trim()));
+    }
+    return downloads;
   }
 
   /// Return a URL-friendly slug for this project.
@@ -121,56 +161,48 @@ class ProjectEntry {
     final projectPageList = List<String>.from(json['page_list'] ?? []);
     final projectShown = json['shown'] == null ? true : json['shown'] == true;
     final showInTimeline = json['show_in_timeline'] == null ? true : json['show_in_timeline'] == true;
-    if (json.containsKey('versions')) {
-      final versionsRaw = (json['versions'] as List<dynamic>? ?? [])
-          .map((e) => Map<String, dynamic>.from(e as Map))
-          .toList();
-      final versions = <ProjectData>[];
-      for (final versionJson in versionsRaw) {
-        final versionId = versionJson['version']?.toString() ?? 'default';
-        versions.add(
-          ProjectData.fromJson(
-            id,
-            versionJson,
-            versionOverride: versionId,
-            variableNameOverride: projectVariableName,
-            pageListOverride: projectPageList,
-          ),
-        );
-      }
-      final fallback = versions.isNotEmpty ? versions.first.version : 'default';
-      final defaultVersion = json['default_version']?.toString();
-      final resolvedDefault = defaultVersion != null &&
-              versions.any((v) => v.version == defaultVersion)
-          ? defaultVersion
-          : fallback;
-      return ProjectEntry(
-        id: id,
-        defaultVersionId: resolvedDefault,
-        variableName: projectVariableName ?? id,
-        pageList: projectPageList,
-        shown: projectShown,
-        showInTimeline: showInTimeline,
-        versions: versions,
+    final versionsRaw = json['versions'];
+    if (versionsRaw is! List || versionsRaw.isEmpty) {
+      throw FormatException(
+        'Project "$id" is missing required non-empty "versions" array.',
       );
     }
 
-    final singleVersion =
+    final versions = <ProjectData>[];
+    for (final rawEntry in versionsRaw) {
+      if (rawEntry is! Map) {
+        throw FormatException(
+          'Project "$id" has invalid version entry; expected an object.',
+        );
+      }
+      final versionJson = Map<String, dynamic>.from(rawEntry);
+      final versionId = versionJson['version']?.toString() ?? 'default';
+      versions.add(
         ProjectData.fromJson(
           id,
-          json,
-          versionOverride: 'default',
+          versionJson,
+          versionOverride: versionId,
           variableNameOverride: projectVariableName,
           pageListOverride: projectPageList,
-        );
+        ),
+      );
+    }
+
+    final fallback = versions.first.version;
+    final defaultVersion = json['default_version']?.toString();
+    final resolvedDefault = defaultVersion != null &&
+            versions.any((v) => v.version == defaultVersion)
+        ? defaultVersion
+        : fallback;
+
     return ProjectEntry(
       id: id,
-      defaultVersionId: singleVersion.version,
-      variableName: projectVariableName ?? singleVersion.variableName,
+      defaultVersionId: resolvedDefault,
+      variableName: projectVariableName ?? id,
       pageList: projectPageList,
       shown: projectShown,
       showInTimeline: showInTimeline,
-      versions: [singleVersion],
+      versions: versions,
     );
   }
 
@@ -189,4 +221,11 @@ class ProjectEntry {
     }
     return null;
   }
+}
+
+class ProjectDownload {
+  final String key;
+  final String url;
+
+  const ProjectDownload({required this.key, required this.url});
 }

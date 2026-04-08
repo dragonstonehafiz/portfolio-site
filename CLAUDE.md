@@ -2,6 +2,12 @@
 
 This document reflects how the codebase currently works.
 
+## Compatibility Policy
+
+- Backward compatibility is intentionally not supported.
+- Data contracts in `assets/*.json` are strict; legacy shapes should not be parsed or preserved.
+- When implementing updates, do not spend effort on backward-compatible behavior.
+
 ## Stack
 
 | Layer | Technology |
@@ -366,7 +372,8 @@ This is the full widget file map under `lib/widgets/`.
 Notes:
 - Top-level key is project id (`AiGameProject` above).
 - Slug is derived from `variable_name`; do not rename it once links are live.
-- If `versions` is missing, parser falls back to single-version mode.
+- `versions` is required and must be a non-empty array.
+- `download_paths` entries must be objects with non-empty `key` and `url` strings.
 
 ### `assets/page_config.json` example (parsed by `ProjectPageData.fromJson`)
 
@@ -448,4 +455,4 @@ Notes:
 Notes:
 - Code expects `downloads[].label` (not `key`) in landing intro.
 - Experience/education keys are `start` and `end` in current parser.
-- Skills supports map-style categories; parser also has backward-compatible list handling.
+- Skills supports map-style categories only.

@@ -441,12 +441,39 @@
     ]
   },
   "Personal-PortfolioSite": {
-    "default_version": "Flutter Ver 1.2",
+    "default_version": "Flutter Ver 1.3",
     "page_list": ["Personal Projects"],
     "show_in_timeline": true,
     "shown": true,
     "variable_name": "personal-portfolio-site",
     "versions": [{
+        "version": "Flutter Ver 1.3",
+        "date": "2026-04-08",
+        "description": "Built with Flutter (Web) and deployed with Docker on Google Cloud, this is my personal portfolio site for hosting and organizing my work online.\n\nSince version 1.2, I made major usability and layout changes. The previous structure made it hard to browse all projects without excessive scrolling, so I introduced horizontal carousels to improve discoverability and scanning speed. While implementing that, I also refactored the overall page design into a more compact layout, replacing the heavier card-first presentation used across earlier versions.",
+        "download_paths": [],
+        "github_link": "https://github.com/dragonstonehafiz/portfolio-site",
+        "img_paths": [
+          "images/other/portfolioVer5_1.png",
+          "images/other/portfolioVer5_2.png",
+          "images/other/portfolioVer5_3.png",
+          "images/other/portfolioVer5_4.png",
+          "images/other/portfolioVer5_5.png"
+        ],
+        "last_update": "2026-04-08",
+        "project_type": "Productivity",
+        "tags": ["frontend", "data-processing"],
+        "tools": ["flutter", "docker"],
+        "title": "Personal Portfolio Website",
+        "vid_link": null,
+        "vignette": "A portfolio website built on Flutter.",
+        "what_i_did": [
+          "Implemented horizontal project carousels to reduce scrolling and improve browsing across project groups.",
+          "Added a dedicated project summary page with grouped sections for browsing by project categories.",
+          "Refactored the site layout into a more compact structure across landing, summary, projects, and detail pages.",
+          "Preserved Docker-based deployment on Google Cloud."
+        ]
+      },
+      {
         "version": "Flutter Ver 1.2",
         "date": "2026-01-25",
         "description": "Built with Flutter (Web) and deployed with Docker on Google Cloud, this is my personal portfolio site for hosting and organizing my work online.\n\nVersion 1.2 focused on restructuring the data model and improving the landing page. I updated how page data is stored so that projects now define which pages they belong to, instead of pages defining their projects which reduced the amount of cross-file editing needed when adding or updating projects. I also expanded the landing page with a personal history timeline that links to all my projects in chronological order, making it easier to see my work and education history at a glance.",        "download_paths": [],
@@ -466,12 +493,10 @@
         "vid_link": null,
         "vignette": "A portfolio website built on Flutter.",
         "what_i_did": [
-          "Built a Flutter Web portfolio with responsive layouts for desktop and mobile.",
-          "Structured project and page content as JSON for data-driven rendering.",
-          "Implemented multi-version project entries to track changes over time.",
-          "Packaged the site with Docker for consistent deployment.",
-          "Created a timeline on the landing page to showcase project history.",
-          "Hosted the deployed site on Google Cloud."
+          "Refactored project and page data flow so projects define their own page membership.",
+          "Implemented a year-based timeline section on the landing page to show project, work, and education history.",
+          "Reworked project list and detail layouts into a denser structure.",
+          "Maintained Docker-based deployment on Google Cloud."
         ]
       },
       {
@@ -494,11 +519,10 @@
         "vid_link": null,
         "vignette": "A portfolio website built on Flutter.",
         "what_i_did": [
-          "Built a Flutter Web portfolio with responsive layouts for desktop and mobile.",
-          "Structured project and page content as JSON for data-driven rendering.",
-          "Implemented multi-version project entries to track changes over time.",
-          "Packaged the site with Docker for consistent deployment.",
-          "Hosted the deployed site on Google Cloud."
+          "Upgraded the Flutter site styling with a stronger color system and richer card presentation.",
+          "Implemented multi-version project entries so each project can show version history in one detail view.",
+          "Improved projects-page controls with filtering, search, sorting, and list/grid browsing behavior.",
+          "Maintained Docker-based deployment on Google Cloud."
         ]
       },
       {

@@ -37,7 +37,7 @@
   },
   "NYP-Electronica": {
     "default_version": "Submission",
-    "page_list": ["Featured", "Nanyang Polytechnic Projects"],
+    "page_list": ["Nanyang Polytechnic Projects", "Featured"],
     "show_in_timeline": true,
     "shown": true,
     "variable_name": "nyp-electronica",
@@ -337,7 +337,7 @@
   },
   "SIT-BirdLaserTargeter": {
     "default_version": "Submission",
-    "page_list": ["Featured", "Singapore Institute of Technology Projects"],
+    "page_list": ["Singapore Institute of Technology Projects", "Featured"],
     "show_in_timeline": true,
     "shown": true,
     "variable_name": "sit-bird-laser-targeter",
@@ -578,7 +578,7 @@
   },
   "Personal-SpendingDashboard": {
     "default_version": "Vue.js + FastAPI",
-    "page_list": ["Featured", "Personal Projects"],
+    "page_list": ["Personal Projects", "Featured"],
     "show_in_timeline": true,
     "shown": true,
     "variable_name": "personal-spending-dashboard",
@@ -722,12 +722,16 @@
         "tools": ["angular", "fastapi", "python"],
         "download_paths": [
           {
-            "key": "Gakumas Lilja Step 2 Original JA Transcription",
-            "url": "https://drive.google.com/file/d/1lIjHiW8t4NQAQEOAOmNKltOcZgz-E1VY/view?usp=sharing"
-          }, 
+            "key": "Gakumas Lilja Main Story STEP3 English Translation",
+            "url": "https://youtu.be/xHGXHPq4nZY"
+          },
           {
-            "key": "Gakumas Lilja Step 2 EN Translation",
-            "url": "https://drive.google.com/file/d/1U7QGdhFqKM0Y5jqgYjH9UPO0Mq81esjs/view?usp=sharing"
+            "key": "Gakumas Lilja Main Story STEP2 English Translation",
+            "url": "https://youtu.be/wigz91b--Xc"
+          },
+          {
+            "key": "Makeine Roudoku Event Drama CD",
+            "url": "https://youtu.be/idU7PRCR_WI"
           }
         ],
         "title": "Translator Helper",
@@ -757,12 +761,8 @@
         "tools": ["angular", "fastapi", "python"],
         "download_paths": [
           {
-            "key": "Gakumas Lilja Step 1 Original JA Transcription",
-            "url": "https://drive.google.com/file/d/1G11AGhtz4hywHGwEzd8AoQggVDVyoBWT/view?usp=sharing"
-          }, 
-          {
-            "key": "Gakumas Lilja Step 1 EN Translation",
-            "url": "https://drive.google.com/file/d/19hHleqfErNXyzKS_zTfkzDEOzpnO9cOu/view?usp=sharing"
+            "key": "Gakumas Lilja Main Story STEP1 English Translation",
+            "url": "https://youtu.be/8Ncm2_M6FSI"
           }
         ],
         "title": "Translator Helper",
@@ -781,12 +781,12 @@
         "description": "An application that speeds up the process of transcribing and translating anime drama CDs using OpenAI\u2019s API and Whisper. It can generate a first-draft transcription and translation for an entire audio file, export the results into subtitle formats for review, and provide smaller tools for handling individual lines or short audio snippets when needed.",
         "download_paths": [
           {
-            "key": "Makeine Drama CD JA Transcription 2-1",
-            "url": "https://drive.google.com/file/d/1-gtoE0CmyUtvz0wtnbHEVt_iiHNdLke3/view?usp=sharing"
-          }, 
+            "key": "Makeine Drama CD 2.3 English Translation",
+            "url": "https://youtu.be/xhvKAjgbikQ"
+          },
           {
-            "key": "Makeine Drama CD EN Translation 2-1",
-            "url": "https://drive.google.com/file/d/1UG0m2f0NPHF9OZg1h-S9v9nCnCDvIxKj/view?usp=sharing"
+            "key": "Makeine Drama CD 2.2 English Translation",
+            "url": "https://youtu.be/7gY6SVu6fsw"
           }
         ],
         "github_link": "https://github.com/dragonstonehafiz/translator-helper",
@@ -816,12 +816,12 @@
         "description": "A personal tool for helping with transcribing and translating anime drama CDs using LLMs and Whisper. I made it because there are times when I can\u2019t clearly catch a line or I\u2019m unsure how to phrase a translation, so the app helps by generating transcripts, organizing context, and producing translation outputs in a few styles to compare.",
         "download_paths": [
           {
-            "key": "Makeine Drama CD JA Transcription 1-2",
-            "url": "https://drive.google.com/file/d/1mmFF-kUvl_Tmlog3-7QV9pUC8zsGgUth/view?usp=sharing"
-          }, 
+            "key": "Makeine Drama CD 1.3 English Translation",
+            "url": "https://youtu.be/vn_1bNIXBTU"
+          },
           {
-            "key": "Makeine Drama CD EN Translation 1-2",
-            "url": "https://drive.google.com/file/d/13dQoyXy0pLzUij2HGqpZFgnkgyZ0VXkP/view?usp=sharing"
+            "key": "Makeine Drama CD 1.2 English Translation",
+            "url": "https://youtu.be/KPy_66wKk34"
           }
         ],
         "github_link": "https://github.com/dragonstonehafiz/translator-helper",
@@ -969,43 +969,6 @@
           "Built the app in LibGDX (Java), including the UI and playback controls.",
           "Implemented audio loading and management for music tracks and voice clips.",
           "Created the radio-style playback flow that interleaves DJ commentary between songs."
-        ]
-      }
-    ]
-  },
-  "Personal-GakumasLiljaStep1": {
-    "default_version": "Release",
-    "page_list": ["Personal Projects"],
-    "show_in_timeline": true,
-    "shown": true,
-    "variable_name": "personal-gakumas-lilja-step-1",
-    "versions": [
-      {
-        "version": "Release",
-        "date": "2025-06-15",
-        "description": "Gakumas is a Japanese gacha game without a worldwide release. I transcribed and translated the main story for one of the idols in the game.",
-        "vignette": "Fan translation of a Japanese gacha game.",
-        "download_paths": [
-          {
-            "key": "English Subs",
-            "url": "https://drive.google.com/drive/folders/1R9dE90S6wdstnKVv8fyik21Ellj1HLb6?usp=sharing"
-          },
-          {
-            "key": "Japanese Subs",
-            "url": "https://drive.google.com/file/d/1G11AGhtz4hywHGwEzd8AoQggVDVyoBWT/view?usp=sharing"
-          }
-        ],
-        "github_link": null,
-        "img_paths": [],
-        "last_update": null,
-        "project_type": "Miscellaneous",
-        "tags": [],
-        "tools": [],
-        "title": "Gakuen Idolmaster: Lilja Step 1 Commyu",
-        "vid_link": "https://youtu.be/8Ncm2_M6FSI",
-        "what_i_did": [
-          "Created a clean line-by-line transcript from the in-game dialogue and timing.",
-          "Ran an AI translation pass, then rewrote lines for natural English and character tone."
         ]
       }
     ]

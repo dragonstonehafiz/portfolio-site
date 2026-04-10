@@ -82,10 +82,6 @@ class _ProjectSummarySection extends StatelessWidget {
         : Colors.black.withValues(alpha: 0.12);
     final titleColor = AppColors.textPrimary;
     final countColor = AppColors.textSecondary;
-    final dividerColor = isFeaturedSection
-        ? AppColors.featuredGold.withValues(alpha: 0.18)
-        : Colors.black.withValues(alpha: 0.12);
-
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.only(bottom: 20),
@@ -117,7 +113,6 @@ class _ProjectSummarySection extends StatelessWidget {
                     countColor: countColor,
                     projectsLabel: projectsLabel,
                     versionsLabel: versionsLabel,
-                    dividerColor: dividerColor,
                     pageTools: pageTools,
                     carouselHeight: carouselHeight,
                     cardWidth: cardWidth,
@@ -136,7 +131,6 @@ class _ProjectSummarySection extends StatelessWidget {
                     countColor: countColor,
                     projectsLabel: projectsLabel,
                     versionsLabel: versionsLabel,
-                    dividerColor: dividerColor,
                     pageTools: pageTools,
                     carouselHeight: carouselHeight,
                     cardWidth: cardWidth,
@@ -155,7 +149,6 @@ class _ProjectSummarySection extends StatelessWidget {
     required Color countColor,
     required String projectsLabel,
     required String versionsLabel,
-    required Color dividerColor,
     required List<String> pageTools,
     required double carouselHeight,
     required double cardWidth,
@@ -276,8 +269,6 @@ class _ProjectSummarySection extends StatelessWidget {
                 ),
               ),
             ),
-          const SizedBox(height: 16),
-          Divider(height: 1, color: dividerColor),
         ],
       ),
     );

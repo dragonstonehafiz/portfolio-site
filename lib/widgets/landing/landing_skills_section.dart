@@ -64,7 +64,7 @@ class _LandingSkillsSectionState extends State<LandingSkillsSection> {
       margin: const EdgeInsets.only(bottom: 16),
       child: AnimatedGradient(
         gradient: Theme.of(context).previewGradient,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.zero,
         duration: const Duration(seconds: 8),
         child: Padding(
           padding: const EdgeInsets.all(16.0),

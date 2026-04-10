@@ -73,7 +73,7 @@ class LandingIntro extends StatelessWidget {
   Widget _buildIntroCard(BuildContext context, {required Widget child}) {
     return AnimatedGradient(
       gradient: Theme.of(context).previewGradient,
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.zero,
       duration: const Duration(seconds: 8),
       child: Container(
       width: double.infinity,

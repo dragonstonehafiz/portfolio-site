@@ -61,7 +61,7 @@ class _TimelineMultiYearState extends State<TimelineMultiYear> {
         const SizedBox(height: 12),
         AnimatedGradient(
           gradient: Theme.of(context).previewGradient,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.zero,
           duration: const Duration(seconds: 8),
           child: Padding(
             padding: EdgeInsets.symmetric(

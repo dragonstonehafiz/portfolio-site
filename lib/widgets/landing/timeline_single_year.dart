@@ -76,7 +76,7 @@ class _TimelineSingleYearState extends State<TimelineSingleYear> {
         const SizedBox(height: 8),
         AnimatedGradient(
           gradient: Theme.of(context).previewGradient,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.zero,
           duration: const Duration(seconds: 8),
           child: Padding(
             padding: EdgeInsets.symmetric(

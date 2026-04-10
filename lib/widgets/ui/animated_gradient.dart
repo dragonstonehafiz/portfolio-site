@@ -11,6 +11,8 @@ class AnimatedGradient extends StatefulWidget {
   final Curve curve;
   final BorderRadius? borderRadius;
   final double? initialProgress;
+  final Color? borderColor;
+  final double borderWidth;
 
   const AnimatedGradient({
     super.key,
@@ -20,6 +22,8 @@ class AnimatedGradient extends StatefulWidget {
     this.curve = Curves.easeInOut,
     this.borderRadius,
     this.initialProgress,
+    this.borderColor,
+    this.borderWidth = 1,
   });
 
   @override
@@ -76,11 +80,10 @@ class _AnimatedGradientState extends State<AnimatedGradient>
         return Container(
           decoration: BoxDecoration(
             gradient: animated,
-            // Shared card containers are intentionally hard-edged.
-            borderRadius: BorderRadius.zero,
+            borderRadius: widget.borderRadius ?? BorderRadius.zero,
             border: Border.all(
-              color: Colors.black12,
-              width: 1,
+              color: widget.borderColor ?? Colors.black12,
+              width: widget.borderWidth,
             ),
           ),
           child: child,

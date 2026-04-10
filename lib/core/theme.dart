@@ -13,6 +13,10 @@ class AppColors {
   static const Color oceanBlue = Color(0xFF1565C0);    // Deep ocean blue
   static const Color oceanTeal = Color(0xFF00ACC1);    // Vibrant teal
   static const Color oceanGreen = Color(0xFF26A69A);   // Sea green
+  static const Color featuredGold = Color(0xFFC69214);
+  static const Color featuredGoldLight = Color(0xFFFFF8E7);
+  static const Color featuredGoldSurface = Color(0xFFFFF3CF);
+  static const Color featuredGoldDeep = Color(0xFFFFEDBE);
 
   // Neutral backgrounds and text
   static const Color background = Color(0xFFF6FBFF);
@@ -59,6 +63,13 @@ class AppColors {
     end: Alignment.bottomRight,
     colors: [Color(0xFFEAF4FF), Color(0xFFDAEEFF), Color(0xFFCAE8FF)],
     stops: [0.0, 0.5, 1.0],
+  );
+
+  static const LinearGradient featuredSectionGradient = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [featuredGoldLight, featuredGoldSurface, featuredGoldDeep],
+    stops: [0.0, 0.52, 1.0],
   );
 }
 
@@ -115,6 +126,7 @@ extension ThemeGradients on ThemeData {
   LinearGradient get cardGradient => AppColors.cardGradient;
   LinearGradient get previewGradient => AppColors.previewGradient;
   LinearGradient get headerFooterGradient => AppColors.headerFooterGradient;
+  LinearGradient get featuredSectionGradient => AppColors.featuredSectionGradient;
 }
 
 // Helper widget to wrap Scaffold content with gradient background

@@ -31,7 +31,7 @@ class LandingEducationCard extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 2),
         child: AnimatedGradient(
         gradient: Theme.of(context).previewGradient,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.zero,
         duration: const Duration(seconds: 8),
         child: Padding(
           padding: EdgeInsets.all(cardPadding),

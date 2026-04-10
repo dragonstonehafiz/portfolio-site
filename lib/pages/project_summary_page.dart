@@ -9,6 +9,7 @@ import '../data/projects/project_service.dart';
 import '../widgets/generic/project_horizontal_carousel.dart';
 import '../widgets/generic/tool_badge_compact.dart';
 import '../widgets/generic/tool_badge_list.dart';
+import '../widgets/ui/animated_gradient.dart';
 import '../widgets/ui/custom_app_bar.dart';
 import '../widgets/ui/custom_footer.dart';
 
@@ -67,6 +68,7 @@ class _ProjectSummarySection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isMobile = ResponsiveWebUtils.isMobile(context);
+    final isFeaturedSection = pageName.trim().toLowerCase() == 'featured';
     final cardWidth = isMobile ? 240.0 : 340.0;
     final carouselHeight = isMobile ? 220.0 : 260.0;
     final pageTools = _collectTools(projects);
@@ -75,20 +77,107 @@ class _ProjectSummarySection extends StatelessWidget {
         '${projects.length} project${projects.length == 1 ? '' : 's'}';
     final versionsLabel =
         '$uniqueVersionsCount unique version${uniqueVersionsCount == 1 ? '' : 's'}';
+    final sectionBorderColor = isFeaturedSection
+        ? AppColors.featuredGold.withValues(alpha: 0.24)
+        : Colors.black.withValues(alpha: 0.12);
+    final titleColor = AppColors.textPrimary;
+    final countColor = AppColors.textSecondary;
+    final dividerColor = isFeaturedSection
+        ? AppColors.featuredGold.withValues(alpha: 0.18)
+        : Colors.black.withValues(alpha: 0.12);
 
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.only(bottom: 20),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(18),
+          boxShadow: isFeaturedSection
+              ? [
+                  BoxShadow(
+                    color: AppColors.featuredGold.withValues(alpha: 0.06),
+                    blurRadius: 18,
+                    offset: const Offset(0, 8),
+                  ),
+                ]
+              : null,
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(18),
+          child: isFeaturedSection
+              ? AnimatedGradient(
+                  gradient: Theme.of(context).featuredSectionGradient,
+                  borderRadius: BorderRadius.circular(18),
+                  borderColor: sectionBorderColor,
+                  duration: const Duration(seconds: 7),
+                  child: _buildSectionContent(
+                    context: context,
+                    isMobile: isMobile,
+                    titleColor: titleColor,
+                    countColor: countColor,
+                    projectsLabel: projectsLabel,
+                    versionsLabel: versionsLabel,
+                    dividerColor: dividerColor,
+                    pageTools: pageTools,
+                    carouselHeight: carouselHeight,
+                    cardWidth: cardWidth,
+                    isFeaturedSection: isFeaturedSection,
+                  ),
+                )
+              : Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: sectionBorderColor),
+                    borderRadius: BorderRadius.circular(18),
+                  ),
+                  child: _buildSectionContent(
+                    context: context,
+                    isMobile: isMobile,
+                    titleColor: titleColor,
+                    countColor: countColor,
+                    projectsLabel: projectsLabel,
+                    versionsLabel: versionsLabel,
+                    dividerColor: dividerColor,
+                    pageTools: pageTools,
+                    carouselHeight: carouselHeight,
+                    cardWidth: cardWidth,
+                    isFeaturedSection: isFeaturedSection,
+                  ),
+                ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSectionContent({
+    required BuildContext context,
+    required bool isMobile,
+    required Color titleColor,
+    required Color countColor,
+    required String projectsLabel,
+    required String versionsLabel,
+    required Color dividerColor,
+    required List<String> pageTools,
+    required double carouselHeight,
+    required double cardWidth,
+    required bool isFeaturedSection,
+  }) {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(
+        isMobile ? 14 : 18,
+        isMobile ? 14 : 18,
+        isMobile ? 14 : 18,
+        isMobile ? 16 : 18,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (isMobile) ...[
             Text(
               pageName.toUpperCase(),
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
-                color: AppColors.textPrimary,
+                color: titleColor,
                 letterSpacing: 0.8,
               ),
             ),
@@ -99,9 +188,13 @@ class _ProjectSummarySection extends StatelessWidget {
                   child: _buildCountItems(
                     projectsLabel: projectsLabel,
                     versionsLabel: versionsLabel,
+                    textColor: countColor,
                   ),
                 ),
-                _buildViewAllButton(context),
+                _buildViewAllButton(
+                  context,
+                  foregroundColor: null,
+                ),
               ],
             ),
           ] else
@@ -110,10 +203,10 @@ class _ProjectSummarySection extends StatelessWidget {
                 Expanded(
                   child: Text(
                     pageName.toUpperCase(),
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
-                      color: AppColors.textPrimary,
+                      color: titleColor,
                       letterSpacing: 0.8,
                     ),
                   ),
@@ -121,9 +214,13 @@ class _ProjectSummarySection extends StatelessWidget {
                 _buildCountItems(
                   projectsLabel: projectsLabel,
                   versionsLabel: versionsLabel,
+                  textColor: countColor,
                 ),
                 const SizedBox(width: 12),
-                _buildViewAllButton(context),
+                _buildViewAllButton(
+                  context,
+                  foregroundColor: null,
+                ),
               ],
             ),
           const SizedBox(height: 8),
@@ -144,7 +241,8 @@ class _ProjectSummarySection extends StatelessWidget {
                 runSpacing: 8,
                 children: pageTools
                     .map(
-                      (tool) => ToolBadgeCompact(toolKey: tool, fontSize: 11),
+                      (tool) =>
+                          ToolBadgeCompact(toolKey: tool, fontSize: 11),
                     )
                     .toList(),
               )
@@ -179,13 +277,16 @@ class _ProjectSummarySection extends StatelessWidget {
               ),
             ),
           const SizedBox(height: 16),
-          Divider(height: 1, color: Colors.black.withValues(alpha: 0.12)),
+          Divider(height: 1, color: dividerColor),
         ],
       ),
     );
   }
 
-  Widget _buildViewAllButton(BuildContext context) {
+  Widget _buildViewAllButton(
+    BuildContext context, {
+    Color? foregroundColor,
+  }) {
     return TextButton(
       onPressed: () {
         Navigator.pushNamedAndRemoveUntil(
@@ -198,6 +299,7 @@ class _ProjectSummarySection extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
         minimumSize: Size.zero,
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        foregroundColor: foregroundColor,
       ),
       child: const Text(
         'View all ->',
@@ -209,6 +311,7 @@ class _ProjectSummarySection extends StatelessWidget {
   Widget _buildCountItems({
     required String projectsLabel,
     required String versionsLabel,
+    required Color textColor,
   }) {
     return Wrap(
       spacing: 12,
@@ -216,19 +319,19 @@ class _ProjectSummarySection extends StatelessWidget {
       alignment: WrapAlignment.end,
       crossAxisAlignment: WrapCrossAlignment.center,
       children: [
-        _buildCountItem(projectsLabel),
-        _buildCountItem(versionsLabel),
+        _buildCountItem(projectsLabel, textColor: textColor),
+        _buildCountItem(versionsLabel, textColor: textColor),
       ],
     );
   }
 
-  Widget _buildCountItem(String label) {
+  Widget _buildCountItem(String label, {required Color textColor}) {
     return Text(
       label,
-      style: const TextStyle(
+      style: TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.w700,
-        color: AppColors.textSecondary,
+        color: textColor,
         letterSpacing: 0.4,
       ),
     );

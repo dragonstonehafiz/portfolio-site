@@ -701,7 +701,7 @@
   },
   "Personal-TranslatorHelper": {
     "default_version": "Version 1.1.1 (Angular & Node.js)",
-    "page_list": ["Featured", "Personal Projects"],
+    "page_list": ["Personal Projects", "Featured"],
     "show_in_timeline": true,
     "shown": true,
     "variable_name": "personal-translator-helper",

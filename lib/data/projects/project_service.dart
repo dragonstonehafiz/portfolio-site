@@ -3,6 +3,10 @@ import '../pages/page_collection.dart';
 import 'project_collection.dart';
 
 class ProjectService {
+  static DateTime getProjectSortDate(ProjectData project) {
+    return _parseProjectDate(project.lastUpdate ?? project.date);
+  }
+
   static List<ProjectData> getProjectsForPage(
     String pageName, {
     bool descending = true,
@@ -20,8 +24,8 @@ class ProjectService {
 
     // Sort projects by lastUpdate (or created date) with the requested order.
     projects.sort((a, b) {
-      final da = _parseProjectDate(a.lastUpdate ?? a.date);
-      final db = _parseProjectDate(b.lastUpdate ?? b.date);
+      final da = getProjectSortDate(a);
+      final db = getProjectSortDate(b);
       final cmp = db.compareTo(da); // cmp > 0 when b is newer than a
       return descending ? cmp : -cmp;
     });

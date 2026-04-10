@@ -4,6 +4,7 @@ import '../../core/responsive_web_utils.dart';
 import '../../data/landing/landing_page_data.dart';
 import '../../data/projects/project_data.dart';
 import '../../data/projects/project_collection.dart';
+import '../../data/projects/project_service.dart';
 import '../ui/animated_gradient.dart';
 import '../generic/project_horizontal_carousel.dart';
 import '../generic/shared_tabs.dart';
@@ -156,6 +157,11 @@ class _LandingSkillsSectionState extends State<LandingSkillsSection> {
         }
       }
     }
+    projects.sort((a, b) {
+      final da = ProjectService.getProjectSortDate(a);
+      final db = ProjectService.getProjectSortDate(b);
+      return db.compareTo(da);
+    });
     return projects;
   }
 }

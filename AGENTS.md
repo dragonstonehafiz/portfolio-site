@@ -87,6 +87,7 @@ Current landing JSON keys expected by code:
 Primary project read API is `ProjectService` (`lib/data/projects/project_service.dart`):
 
 - `getProjectsForPage(pageName, descending: true)`
+- `getProjectSortDate(project)` returns the effective sort date (`last_update` fallback `date`)
 - `getProjectEntryBySlug(slug)`
 - `getProjectBySlug(slug)`
 - `searchProjects(query)`
@@ -144,7 +145,12 @@ This section maps widget responsibilities and current usage.
   - Used by: Project cards/list items, timeline containers, work/education/skills cards.
   - Responsibility: Reusable animated gradient background wrapper.
   - Contract: Visual only; should not contain business logic.
-  - Current behavior: hard-edged container (`BorderRadius.zero`) with a subtle 1px border.
+  - Current behavior: supports configurable `borderRadius`, `borderColor`, and `borderWidth`.
+  - Defaults: if not provided, it renders with `BorderRadius.zero`, `Colors.black12`, and `1px` border width.
+  - Styling intent:
+    - landing page section cards should stay hard-edged (`BorderRadius.zero`)
+    - project summary page sections currently use rounded corners
+    - use explicit parameters at call sites instead of wrapping `AnimatedGradient` in extra containers just to fake border styling
 
 - `HoverCardWidget`
   - Used by: `ProjectPreviewCard`, `ProjectListItem`, `ProjectCompactCard`.
@@ -232,6 +238,7 @@ This section maps widget responsibilities and current usage.
 - `LandingSkillsSection`
   - Responsibility: Skills category tabs, skill badges, related projects integration.
   - Notes: tabs render inside the skills card; related projects render via `ProjectHorizontalCarousel`.
+  - Notes: related projects are resolved from `skills.<category>.related_projects` and then sorted newest-first by effective project date (`last_update` fallback `date`), not by JSON list order.
 
 - `TimelineSingleYear`
   - Used by: landing page today.
@@ -263,6 +270,10 @@ This section maps widget responsibilities and current usage.
   - `GradientScaffold` + `CustomAppBar` + `CustomFooter`
   - Per-page sections separated by divider lines
   - Each section: heading + two count items (`N project(s)` and `N unique version(s)`) + `View all ->`, description, `ToolBadgeList`, `ProjectHorizontalCarousel`
+  - `Featured` section styling:
+    - uses a subtle light-yellow animated gradient from `AppColors.featuredSectionGradient`
+    - uses a softer gold border/shadow than normal sections
+    - keeps the same content structure as other sections; the differentiation is visual only
 
 - Project detail page (`project_detail_page.dart`)
   - `GradientScaffold` + `CustomAppBar` + `CustomFooter`
@@ -324,6 +335,7 @@ This is the full widget file map under `lib/widgets/`.
   - Shell: `GradientScaffold` -> `CustomAppBar` + `CustomFooter`
   - Body: per-page summary sections separated by divider lines
   - Section: heading + two count items (`N project(s)` and `N unique version(s)`) + `View all ->` link, description, deduplicated `ToolBadgeList`, `ProjectHorizontalCarousel`
+  - Visual rule: summary sections are rounded; landing-page section cards are not
 
 - Project detail (`lib/pages/project_detail_page.dart`)
   - Shell: `GradientScaffold` -> `CustomAppBar` + `CustomFooter`

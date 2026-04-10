@@ -1,16 +1,26 @@
-# Production-ready Dockerfile to serve Flutter web build via nginx
-# Build the web app locally: flutter build web --release
-# Then build this image in the project root (which contains build/web)
+# Build the Flutter web app inside Docker, including regenerated web icons,
+# then serve the static output with nginx.
+
+FROM ghcr.io/cirruslabs/flutter:stable AS builder
+
+WORKDIR /app
+
+COPY pubspec.yaml pubspec.lock ./
+RUN flutter pub get
+
+COPY lib/ lib/
+COPY web/ web/
+COPY assets/ assets/
+COPY SiteIcon.png ./
+
+RUN dart run flutter_launcher_icons
+RUN flutter build web --release
 
 FROM nginx:alpine
 
-# Remove default nginx static content
 RUN rm -rf /usr/share/nginx/html/*
 
-# Copy our SPA build output
-COPY build/web/ /usr/share/nginx/html/
-
-# Copy custom nginx config
+COPY --from=builder /app/build/web/ /usr/share/nginx/html/
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 8080

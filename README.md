@@ -65,37 +65,19 @@ The built web files can be hosted on any static hosting service:
 
 ### **Docker Container**
 
-You can also create a Docker container using the built web files:
+The repository includes a multi-stage Docker build that compiles the Flutter web app inside the container, regenerates the web icons from `SiteIcon.png`, and serves the final static site with nginx.
 
-1. **Build the Flutter web app:**
-   ```bash
-   flutter build web --release
-   ```
-
-2. **Create a Dockerfile**:
-   ```dockerfile
-   FROM python:3.9-slim
-   EXPOSE 8080
-   WORKDIR /app
-   COPY build/web/ ./
-   ENTRYPOINT ["python", "-m", "http.server", "8080"]
-   ```
-
-   **Alternative with nginx (more production-ready):**
-   ```dockerfile
-   FROM nginx:alpine
-   COPY build/web/ /usr/share/nginx/html/
-   EXPOSE 80
-   CMD ["nginx", "-g", "daemon off;"]
-   ```
-
-3. **Build and run the Docker container:**
+1. **Build the Docker image:**
    ```bash
    docker build -t portfolio .
+   ```
+
+2. **Run the container:**
+   ```bash
    docker run -p 8080:8080 portfolio
    ```
-   
-   The site will be available at `http://localhost:8080`.
+
+The site will be available at `http://localhost:8080`.
 
 ### **Google Cloud Deployment**
 

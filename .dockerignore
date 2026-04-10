@@ -3,12 +3,10 @@
 .DS_Store
 .idea
 .vscode
+.dart_tool
+.flutter-plugins
+.flutter-plugins-dependencies
+build
 **/node_modules
-**/build
 **/target
 **/*.log
-
-# Allow the top-level Flutter build output so it can be copied into Docker images
-!build/
-!build/web/
-!build/web/**

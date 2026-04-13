@@ -67,15 +67,12 @@ The built web files can be hosted on any static hosting service:
 
 The repository includes a multi-stage Docker build that compiles the Flutter web app inside the container, regenerates the web icons from `SiteIcon.png`, and serves the final static site with nginx.
 
-1. **Build the Docker image:**
-   ```bash
-   docker build -t portfolio .
-   ```
+Build the image and run the container:
 
-2. **Run the container:**
-   ```bash
-   docker run -p 8080:8080 portfolio
-   ```
+```bash
+docker build -t portfolio .
+docker run --name portfolio -p 8080:8080 portfolio
+```
 
 The site will be available at `http://localhost:8080`.
 

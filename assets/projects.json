@@ -586,7 +586,7 @@
       {
         "version": "Vue.js + FastAPI",
         "date": "2026-02-27",
-        "last_update": "2026-02-27",
+        "last_update": "2026-04-17",
         "description": "This version of Spending Dashboard is a full frontend-backend rebuild of my earlier PySide6 desktop app. I moved away from PySide6 because the app felt too slow to launch and navigate as the project grew. The new architecture uses a Vue.js frontend for the UI and a FastAPI backend for data processing and API endpoints, packaged in Docker so I can run it locally in a consistent environment. The result is a faster, more responsive workflow for loading, filtering, and visualizing spending data while keeping deployment simple on my own PC.",        "download_paths": [],
         "github_link": "https://github.com/dragonstonehafiz/budgeting-analysis",
         "img_paths": [

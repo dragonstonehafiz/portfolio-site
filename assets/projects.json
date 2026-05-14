@@ -735,16 +735,56 @@
     ]
   },
   "Personal-TranslatorHelper": {
-    "default_version": "Version 1.1.1 (Angular & Node.js)",
+    "default_version": "Version 1.2",
     "page_list": ["Personal Projects", "Featured"],
     "show_in_timeline": true,
     "shown": true,
     "variable_name": "personal-translator-helper",
     "versions": [
+            {
+        "version": "Version 1.2",
+        "date": "2026-05-14",
+        "description": "A fan translation tool for Japanese drama CDs and games. Transcription (Whisper/WhisperX) and LLM backends (Claude/ChatGPT/llama.cpp) are decoupled via interfaces, so adding a new provider or swapping implementations doesn't touch translation logic. The workflow: transcribe audio, build context (characters, synopsis, summary), translate with semantic batch planning, review against the original, and export corrected subtitles. \n\n Since v1.1, I rearchitected the backend for provider independence, added a review workflow for quality control, and streamlined the UI—unifying subtitle management across pages, removing the recap feature, and focusing the app on core translation work.",        
+        "github_link": "https://github.com/dragonstonehafiz/translator-helper",
+        "img_paths": [
+          "images/other/translatorHelperVer6_1.png",
+          "images/other/translatorHelperVer6_2.png",
+          "images/other/translatorHelperVer6_3.png",
+          "images/other/translatorHelperVer6_4.png"
+        ],
+        "last_update": null,
+        "project_type": "AI",
+        "tags": ["ai", "automation", "frontend"],
+        "tools": ["angular", "fastapi", "python"],
+        "download_paths": [
+          {
+            "key": "Gakumas Lilja Tokimeki Emotion Commyu English Translation",
+            "url": "https://youtu.be/txV4uhejbMI"
+          },
+          {
+            "key": "Gakumas Idols of Class 1-2 Commyu English Translation",
+            "url": "https://youtu.be/OVQMkiNOKSM"
+          },
+          {
+            "key": "Gakumas Hatsuboshi Hotsprings Commyu English Translation",
+            "url": "https://youtu.be/IH3YVIb4W54"
+          }
+        ],
+        "title": "Translator Helper",
+        "vid_link": "https://youtu.be/UQHwdxNiu9M",
+        "vignette": "A full-stack assistant for transcribing, and translating subtitle files with Angular and FastAPI.",
+        "what_i_did": [
+          "Built an Angular frontend with a FastAPI backend to manage transcription, context, and translation in one place.",
+          "Used Whisper to transcribe short voice snippets for individual lines when needed.",
+          "Generated translation context by parsing .srt/.ass files and pulling supporting web info.",
+          "Produced first-draft translations for entire subtitle files to speed up review and editing."
+        ]
+      },
       {
-        "version": "Version 1.1.1 (Angular & Node.js)",
+        "version": "Version 1.1.1",
         "date": "2026-02-08",
-        "description": "A tool I built to help with fan translations for Japanese drama CDs and games. It handles transcription, context-building, and subtitle translation in one workflow, so I can generate a first pass and then review and edit the results.\n\nSince v1.1, I refactored both transcription and LLM usage behind backend interfaces, which made it much easier to add or swap providers (for example local models and API-based models with different keys/configs). I also redesigned parts of the UI based on real day-to-day usage to improve flow and reduce friction, and removed lower-value features like Tavily search to keep the app focused on core translation work.",        "github_link": "https://github.com/dragonstonehafiz/translator-helper",
+        "description": "A tool I built to help with fan translations for Japanese drama CDs and games. It handles transcription, context-building, and subtitle translation in one workflow, so I can generate a first pass and then review and edit the results.\n\nSince v1.1, I refactored both transcription and LLM usage behind backend interfaces, which made it much easier to add or swap providers (for example local models and API-based models with different keys/configs). I also redesigned parts of the UI based on real day-to-day usage to improve flow and reduce friction, and removed lower-value features like Tavily search to keep the app focused on core translation work.",
+        "github_link": "https://github.com/dragonstonehafiz/translator-helper",
         "img_paths": [
           "images/other/translatorHelperVer5_1.png",
           "images/other/translatorHelperVer5_2.png",
@@ -780,7 +820,7 @@
         ]
       },
       {
-        "version": "Version 1.1 (Angular & Node.js)",
+        "version": "Version 1.1",
         "date": "2025-12-01",
         "description": "A tool I built to help with fan translations for Japanese drama CDs and games. It handles transcription, context-building, and subtitle translation in one workflow, so I can generate a first pass and then review and edit the results.\n\nI originally built this in Streamlit, but I found it wasn't very responsive, so I remade it with a proper frontend-backend split using Angular and FastAPI (Python) to make the app feel snappier.",        
         "github_link": "https://github.com/dragonstonehafiz/translator-helper",
@@ -811,7 +851,7 @@
         ]
       },
       {
-        "version": "Version 1.0.4 (Streamlit)",
+        "version": "Version 1.0.4",
         "date": "2025-10-27",
         "description": "An application that speeds up the process of transcribing and translating anime drama CDs using OpenAI\u2019s API and Whisper. It can generate a first-draft transcription and translation for an entire audio file, export the results into subtitle formats for review, and provide smaller tools for handling individual lines or short audio snippets when needed.",
         "download_paths": [
@@ -846,7 +886,7 @@
         ]
       },
       {
-        "version": "Version 1.0.2 (Streamlit)",
+        "version": "Version 1.0.2",
         "date": "2025-03-09",
         "description": "A personal tool for helping with transcribing and translating anime drama CDs using LLMs and Whisper. I made it because there are times when I can\u2019t clearly catch a line or I\u2019m unsure how to phrase a translation, so the app helps by generating transcripts, organizing context, and producing translation outputs in a few styles to compare.",
         "download_paths": [

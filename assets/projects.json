@@ -440,6 +440,41 @@
       }
     ]
   },
+  "SIT-EmbeddedCarProject": {
+    "default_version": "Submission",
+    "page_list": ["Singapore Institute of Technology Projects"],
+    "show_in_timeline": true,
+    "shown": true,
+    "variable_name": "sit-embedded-car-project",
+    "versions": [
+      {
+        "version": "Submission",
+        "date": "2024-11-06",
+        "last_update": null,
+        "description": "Developed a fully-integrated semi-autonomous robotic car powered by Raspberry Pi Pico with WiFi connectivity. The system combines remote control via gesture-based accelerometer input with autonomous features including line-following using IR sensors, barcode decoding, obstacle detection via ultrasonic sensors, and real-time speed/distance tracking through wheel encoders. The project emphasizes resource-constrained embedded systems design, requiring efficient firmware implementation and multi-component sensor integration.",
+        "vignette": "A WiFi-controlled robotic car with autonomous obstacle detection and line-following capabilities using embedded sensors and real-time control algorithms.",
+        "what_i_did": [
+          "Implemented IR-based wheel encoder drivers with GPIO interrupts for real-time speed calculation and distance tracking on both wheels, providing feedback for PID motor control.",
+          "Developed HC-SR04+ ultrasonic sensor integration with echo timing measurement, timeout handling, and Kalman filtering for accurate obstacle detection and collision avoidance.",
+          "Designed and implemented a 6-state finite state machine managing transitions between WiFi connection, remote control, and autonomous navigation with coordinated sensor polling and safety constraints.",
+          "Integrated dual-core architecture with Core 0 handling real-time control logic and Core 1 managing telemetry transmission to dashboard."
+        ],
+        "download_paths": [],
+        "github_link": "https://github.com/dragonstonehafiz/inf2004-project",
+        "img_paths": [
+          "images/sit/embedded-car01.png",
+          "images/sit/embedded-car02.png",
+          "images/sit/embedded-car03.png",
+          "images/sit/embedded-car04.png"
+        ],
+        "project_type": "Miscellaneous",
+        "tags": ["embedded"],
+        "tools": ["c"],
+        "title": "Embedded Car Project",
+        "vid_link": null
+      }
+    ]
+  },
   "Personal-PortfolioSite": {
     "default_version": "Flutter Ver 1.3",
     "page_list": ["Personal Projects"],

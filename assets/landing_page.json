@@ -134,7 +134,8 @@
     "Frontend": {
       "description": "I learned frontend work to make my apps easier to use, since web\u2011based UI programming was simpler than building app\u2011based UI.",
       "related_projects": [
-        "Personal-PortfolioSite",
+        "Mini-SubtitleShifter",
+        "Mini-HaloDialogueArchive",
         "Personal-TranslatorHelper",
         "Personal-SpendingDashboard",
         "Personal-DiamondCityRadio"

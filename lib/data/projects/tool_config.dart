@@ -159,6 +159,19 @@ const Map<String, ToolConfig> toolConfigs = {
     textColor: Color(0xFF000000),
     iconUrl: 'https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/firebase.svg',
   ),
+  'supabase': ToolConfig(
+    displayName: 'Supabase',
+    backgroundColor: Color(0xFF3ECF8E),
+    textColor: Color(0xFF000000),
+    iconUrl: 'https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/supabase.svg',
+  ),
+  'cloudflare': ToolConfig(
+    displayName: 'Cloudflare',
+    backgroundColor: Color(0xFFF48120),
+    textColor: Color(0xFF000000),
+    iconUrl:
+        'https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/cloudflare.svg',
+  ),
   'sqlite': ToolConfig(
     displayName: 'SQLite',
     backgroundColor: Color(0xFF003B57),

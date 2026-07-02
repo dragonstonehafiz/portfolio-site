@@ -14,7 +14,7 @@ COPY assets/ assets/
 COPY SiteIcon.png ./
 
 RUN dart run flutter_launcher_icons
-RUN flutter build web --release
+RUN flutter build web --release --pwa-strategy=none
 
 FROM nginx:alpine
 

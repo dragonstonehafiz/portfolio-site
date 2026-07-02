@@ -39,7 +39,11 @@ class PortfolioApp extends StatelessWidget {
         final rawPath = Uri.base.path;
         final canonicalPath = _canonicalizePath(rawPath);
         if (canonicalPath != rawPath) {
-          html.window.history.replaceState(null, '', canonicalPath);
+          html.window.history.replaceState(
+            html.window.history.state,
+            '',
+            canonicalPath,
+          );
         }
 
         return [
@@ -90,7 +94,11 @@ class PortfolioApp extends StatelessWidget {
 
     if (path == '/' || path == AppRoutes.landing) {
       if (path == '/') {
-        html.window.history.replaceState(null, '', AppRoutes.landing);
+        html.window.history.replaceState(
+          html.window.history.state,
+          '',
+          AppRoutes.landing,
+        );
       }
       return slideUpRoute(
         const LandingPage(),
@@ -128,7 +136,11 @@ class PortfolioApp extends StatelessWidget {
     }
 
     debugPrint("No route match for: $path");
-    html.window.history.replaceState(null, '', AppRoutes.notFound);
+    html.window.history.replaceState(
+      html.window.history.state,
+      '',
+      AppRoutes.notFound,
+    );
     return slideUpRoute(
       NotFoundPage(requestedPath: path),
       routeSettings: const RouteSettings(name: AppRoutes.notFound),

@@ -76,26 +76,7 @@ docker run --name portfolio -p 8080:8080 portfolio
 
 The site will be available at `http://localhost:8080`.
 
-### **Google Cloud Deployment**
-
-To deploy the Docker container to Google Cloud Run:
-
-1. **Build and tag the Docker image:**
-   ```bash
-   docker tag <image-id> <your-registry-url>/portfolio-image
-   ```
-
-2. **Push the image to Google Cloud Artifact Registry:**
-   ```bash
-   docker push <your-registry-url>/portfolio-image
-   ```
-
-3. **Deploy to Google Cloud Run:**
-   - Navigate to [Google Cloud Run Console](https://console.cloud.google.com/run).
-   - Select your project and deploy the new image.
-
-*Replace `<your-registry-url>` with the actual Google Cloud Artifact Registry URL.*  
-For detailed setup, refer to [Google Cloud's documentation](https://cloud.google.com/run/docs/deploying).
+This repository is deployed on Google Cloud Run, connected directly to this GitHub repo — pushes to `main` trigger an automatic build and deploy, so no manual Docker build/push is needed.
 
 ## Project Structure
 

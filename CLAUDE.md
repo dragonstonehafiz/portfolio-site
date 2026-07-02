@@ -5,7 +5,7 @@ This document reflects how the codebase currently works.
 ## Compatibility Policy
 
 - Backward compatibility is intentionally not supported.
-- Data contracts in `assets/*.json` are strict; legacy shapes should not be parsed or preserved.
+- Data contracts (the shape of rows in Supabase's `projects` table) are strict; legacy shapes should not be parsed or preserved.
 - When implementing updates, do not spend effort on backward-compatible behavior.
 
 ## Stack
@@ -17,7 +17,20 @@ This document reflects how the codebase currently works.
 | UI | Material 3 (`useMaterial3: true`) |
 | Fonts | Google Fonts `Inter` |
 | Routing | `MaterialApp.onGenerateInitialRoutes` + `onGenerateRoute` + path URL strategy |
-| Assets/Data | JSON files in `assets/` |
+| Data | Supabase Postgres table `projects`, read via raw PostgREST calls (`lib/data/supabase/supabase_rest.dart`), no `supabase_flutter` SDK |
+| Images | Supabase Storage (bucket `project-images`), served as public URLs; only 4 fixed UI icons remain bundled locally |
+
+## Data now lives in Supabase, not local assets
+
+As of this migration, `assets/projects/`, `assets/images/` (per-project folders), `assets/page_config.json`, and `assets/landing_page.json` **no longer exist in this repo**. All project metadata, page config, landing page content, and project/icon images are edited through a separate local tool (`portfolio-site-uploader`, a Flask app in a sibling repo) and pushed to Supabase from there. This app only ever *reads* from Supabase at runtime — there is no local editing path anymore, and no rebuild is needed to change content.
+
+- **Connection**: `lib/core/supabase_config.dart` hardcodes the project URL and the **publishable/anon key** (safe to be public — RLS restricts it to read-only).
+- **Client**: `lib/data/supabase/supabase_rest.dart` (`SupabaseRest.fetchAll`/`fetchById`) is a minimal hand-rolled PostgREST client using `package:http`, not the full `supabase_flutter` SDK — this project only needs read access, so the lighter dependency was chosen deliberately.
+- **Table shape**: single table `projects`, columns `id text primary key` and `data jsonb`. Most rows are actual projects (`id` = the project's slug). Two reserved rows hold site-wide content, using ids that can never collide with a real slug (slugs never start with `_`):
+  - `_page_config` → `data` shaped like the old `page_config.json` (`{ "project_pages": [...] }`)
+  - `_landing_page` → `data` shaped like the old `landing_page.json`
+- **RLS**: the `projects` table has Row Level Security enabled with a single `SELECT`-only policy for the `anon` role. The publishable key can read but never write. The uploader tool writes using the Supabase **secret key**, which bypasses RLS — that key only ever lives in the uploader's own `.env`, never in this repo.
+- Rows are only ever pushed by the uploader tool; this app's code has no write path to Supabase at all.
 
 ## Startup and Routing
 
@@ -25,7 +38,7 @@ Startup flow in `lib/main.dart`:
 
 1. `WidgetsFlutterBinding.ensureInitialized()`
 2. `usePathUrlStrategy()`
-3. `await Future.wait([ProjectsCollection.initializeFromAssets(), AppRoutes.initialize()])`
+3. `await Future.wait([ProjectsCollection.initializeFromSupabase(), AppRoutes.initialize()])`
 4. `runApp(const PortfolioApp())`
 
 `AppRoutes.initialize()` in `lib/core/routes.dart` loads `PageCollection` and builds `genericPageSlugs` (`slug -> page_name`).
@@ -51,36 +64,46 @@ Navigation UI in `lib/widgets/ui/custom_app_bar.dart` is currently fixed to two 
 
 ### Projects
 
-- Source: `assets/projects.json`
-- Loader: `ProjectsCollection.initializeFromAssets()`
+- Source: Supabase `projects` table, all rows except `_page_config`/`_landing_page`
+- Loader: `ProjectsCollection.initializeFromSupabase()`
 - Singleton: `ProjectsCollection.instance`
 - Models: `ProjectEntry` and `ProjectData` in `lib/data/projects/project_data.dart`
 
 Important behavior:
 
 - `ProjectEntry` supports multiple versions and a `default_version`
-- Slug comes from `ProjectData.slug`, which is based on `variable_name` (fallback `title`)
+- Slug comes from `ProjectData.slug`, which is based on `variable_name` (fallback `title`) — this is also the Supabase row's `id`
 - `shown` and `show_in_timeline` flags are enforced in UI/data assembly
+- `img_paths` on Supabase-sourced data are full `https://...supabase.co/storage/...` public URLs, not relative paths — see "Image loading" below
 
 ### Pages
 
-- Source: `assets/page_config.json`
-- Loader: `PageCollection.initializeFromAssets()`
+- Source: Supabase `projects` row `id = '_page_config'`
+- Loader: `PageCollection.initializeFromSupabase()`
 - Singleton: `PageCollection.instance`
 - Model: `ProjectPageData` (`page_name`, `description`, `all_projects`)
 
 ### Landing
 
-- Source: `assets/landing_page.json`
-- Loader: `LandingPageData.loadFromAssets()` (currently called from `LandingPage.initState`)
+- Source: Supabase `projects` row `id = '_landing_page'`
+- Loader: `LandingPageData.loadFromSupabase()` (currently called from `LandingPage.initState`)
 - Model: `lib/data/landing/landing_page_data.dart`
 
 Current landing JSON keys expected by code:
 
-- `introduction`: `name`, `headline`, `summary`, `downloads[{label,url,external}]`
+- `introduction`: `name`, `headline`, `summary`, `downloads[{label,url}]`
 - `experience[]`: `start`, `end`, `title`, `company`, `icon`, `bullets[]`
 - `education[]`: `start`, `end`, `school`, `course`, `final_gpa`, `icon`, `modules[{name,items[]}]`
-- `skills`: map of category -> `{description, related_projects[], items[]}`
+- `skills`: map of category -> `{description, related_projects[], items[]}` — `related_projects` values are project **slugs** (e.g. `"nyp-ai-game"`), not the old pre-migration `id` style (`"NYP-AIGame"`)
+- `experience[].icon` / `education[].icon`: either a Supabase Storage public URL (uploaded via the uploader tool) or empty string; the 4 originally-bundled icon PNGs were migrated to Storage — nothing under `assets/svg/` is referenced from landing data anymore
+
+## Image loading
+
+`lib/core/adaptive_image.dart` provides `buildAdaptiveImage()` and `buildAdaptiveSvg()`, used everywhere an `img_paths` entry or an `icon` field is rendered (`project_thumbnail_preview.dart`, `image_gallery.dart`, `landing_work_card.dart`, `landing_education_card.dart`, `timeline_tooltips.dart`). Each picks `Image.network`/`SvgPicture.network` vs `Image.asset`/`SvgPicture.asset` based on `isNetworkImagePath()` (starts with `http://`/`https://`). In practice, every path from Supabase is a network URL now — the asset-path branch is really only a safety fallback.
+
+`buildAdaptiveImage` uses `frameBuilder` (not `loadingBuilder`) to show a spinner while a network image decodes — `loadingBuilder`'s chunk-progress events don't fire reliably on Flutter Web, so `frameBuilder`'s `frame == null` check is used instead. Don't switch this back to `loadingBuilder` for the web-only "show a spinner while loading" behavior; it silently does nothing on web.
+
+Images are pushed as WebP (quality 90) by the uploader tool regardless of their local source format, with a 1-year `Cache-Control` — this app doesn't need to think about image format, just render whatever URL Supabase gives it.
 
 ## Service Layer
 
@@ -344,50 +367,53 @@ This is the full widget file map under `lib/widgets/`.
 
 ## Exact Data Contracts in Code (Not Aspirational)
 
-### `assets/projects.json` example (parsed by `ProjectEntry.fromJson` / `ProjectData.fromJson`)
+All three examples below are the `data` column of a row in Supabase's `projects` table (see "Data now lives in Supabase" above for the `id` scheme). `SupabaseRest.fetchAll('projects')` returns rows shaped `{ "id": "...", "data": {...} }`; the `data` value is what gets passed into each model's `fromJson`.
+
+### Project row (`id` = a project slug, e.g. `nyp-ai-game`) — parsed by `ProjectEntry.fromJson` / `ProjectData.fromJson`
 
 ```json
 {
-  "AiGameProject": {
-    "variable_name": "ai-game-project",
-    "page_list": ["Featured", "All Projects"],
-    "shown": true,
-    "show_in_timeline": true,
-    "default_version": "Submission",
-    "versions": [
-      {
-        "version": "Submission",
-        "title": "AI Game Project",
-        "description": "Built an AI-powered gameplay prototype.",
-        "date": "2024-10-01",
-        "last_update": "2025-01-15",
-        "vignette": "Prototype game using AI behaviors.",
-        "project_type": "Games",
-        "tags": ["ai", "games"],
-        "tools": ["c++", "unreal"],
-        "img_paths": ["images/games/aigame1.png", "images/games/aigame2.png"],
-        "vid_link": "https://youtu.be/abcdefghijk",
-        "github_link": "https://github.com/example/ai-game-project",
-        "download_paths": [
-          { "key": "Build", "url": "https://example.com/download/build.zip" }
-        ],
-        "what_i_did": [
-          "Implemented enemy behavior trees.",
-          "Integrated AI-assisted content pipeline."
-        ]
-      }
-    ]
-  }
+  "variable_name": "ai-game-project",
+  "page_list": ["Featured", "All Projects"],
+  "shown": true,
+  "show_in_timeline": true,
+  "default_version": "Submission",
+  "versions": [
+    {
+      "version": "Submission",
+      "title": "AI Game Project",
+      "description": "Built an AI-powered gameplay prototype.",
+      "date": "2024-10-01",
+      "last_update": "2025-01-15",
+      "vignette": "Prototype game using AI behaviors.",
+      "project_type": "Games",
+      "tags": ["ai", "games"],
+      "tools": ["c++", "unreal"],
+      "img_paths": [
+        "https://<project-ref>.supabase.co/storage/v1/object/public/project-images/ai-game-project/submission/1.webp"
+      ],
+      "vid_link": "https://youtu.be/abcdefghijk",
+      "github_link": "https://github.com/example/ai-game-project",
+      "download_paths": [
+        { "key": "Build", "url": "https://example.com/download/build.zip" }
+      ],
+      "what_i_did": [
+        "Implemented enemy behavior trees.",
+        "Integrated AI-assisted content pipeline."
+      ]
+    }
+  ]
 }
 ```
 
 Notes:
-- Top-level key is project id (`AiGameProject` above).
-- Slug is derived from `variable_name`; do not rename it once links are live.
+- No `id` field inside `data` anymore — `ProjectsCollection` uses the Supabase row's `id` column as the map key (`row['id']`), falling back to nothing meaningful if absent (there always is one, since it's the table's primary key).
+- Slug is derived from `variable_name`; do not rename it once links are live — renaming it via the uploader tool changes the Supabase row `id` too (it deletes the old row's images/moves them under the new slug's Storage path).
 - `versions` is required and must be a non-empty array.
 - `download_paths` entries must be objects with non-empty `key` and `url` strings.
+- `img_paths` entries are always full Supabase Storage public URLs (`.webp`) in practice — see "Image loading" above for how the UI renders these vs. hypothetical local paths.
 
-### `assets/page_config.json` example (parsed by `ProjectPageData.fromJson`)
+### `_page_config` row — parsed by `ProjectPageData.fromJson`
 
 ```json
 {
@@ -408,8 +434,9 @@ Notes:
 
 Notes:
 - `all_projects: true` ignores `page_list` filtering and includes all shown projects.
+- Which projects belong to a non-`all_projects` page is edited from the *page's* side in the uploader tool (a project multiselect per page), then written back into each project's own `page_list` — not edited from the project side.
 
-### `assets/landing_page.json` example (parsed by `LandingPageData.fromJson`)
+### `_landing_page` row — parsed by `LandingPageData.fromJson`
 
 ```json
 {
@@ -418,11 +445,7 @@ Notes:
     "headline": "Software Engineer / Game Developer",
     "summary": "I build software, games, and data-driven tools.",
     "downloads": [
-      {
-        "label": "Resume",
-        "url": "https://example.com/resume.pdf",
-        "external": true
-      }
+      { "label": "Resume", "url": "https://example.com/resume.pdf" }
     ]
   },
   "experience": [
@@ -431,7 +454,7 @@ Notes:
       "end": "2025-12",
       "title": "Software Engineer Intern",
       "company": "Example Corp",
-      "icon": "assets/svg/work-eon.png",
+      "icon": "https://<project-ref>.supabase.co/storage/v1/object/public/project-images/_icons/work-eon.webp",
       "bullets": [
         "Built internal tools in Flutter and Python.",
         "Improved CI build reliability."
@@ -445,7 +468,7 @@ Notes:
       "school": "Example Polytechnic",
       "course": "Diploma in AI and Analytics",
       "final_gpa": "3.80",
-      "icon": "assets/svg/school-nyp.png",
+      "icon": "https://<project-ref>.supabase.co/storage/v1/object/public/project-images/_icons/school-nyp.webp",
       "modules": [
         {
           "name": "Core",
@@ -468,3 +491,5 @@ Notes:
 - Code expects `downloads[].label` (not `key`) in landing intro.
 - Experience/education keys are `start` and `end` in current parser.
 - Skills supports map-style categories only.
+- `skills.<category>.related_projects` values are project **slugs**, matched against `ProjectData.variableName`/`slug` — see `LandingSkillsSection._resolveRelatedProjects` for the exact matching logic.
+- `experience[].icon` / `education[].icon` are Supabase Storage public URLs (or empty string) — never a bundled `assets/svg/...` path.

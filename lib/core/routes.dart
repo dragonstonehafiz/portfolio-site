@@ -12,7 +12,7 @@ class AppRoutes {
   /// Initialize AppRoutes by loading PageCollection data and preparing slug -> pageName mappings.
   static Future<void> initialize() async {
     // Make sure PageCollection is loaded with actual data first
-    await PageCollection.initializeFromAssets();
+    await PageCollection.initializeFromSupabase();
     
     final collection = PageCollection.instance;
     for (final page in collection.genericPages) {

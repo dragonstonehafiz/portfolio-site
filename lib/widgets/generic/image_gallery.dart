@@ -3,6 +3,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import '../../core/theme.dart';
+import '../../core/adaptive_image.dart';
+
+String _resolveImagePath(String raw) =>
+    isNetworkImagePath(raw) ? raw : 'assets/$raw';
 
 /// A reusable image gallery widget with auto-advancing carousel and thumbnail selector.
 /// Features:
@@ -113,7 +117,7 @@ class _ImageGalleryState extends State<ImageGallery> with SingleTickerProviderSt
             boundaryMargin: const EdgeInsets.all(20),
             minScale: 0.5,
             maxScale: 4.0,
-            child: Image.asset(
+            child: buildAdaptiveImage(
               assetPath,
               fit: BoxFit.contain,
               errorBuilder: (context, error, stackTrace) {
@@ -145,7 +149,7 @@ class _ImageGalleryState extends State<ImageGallery> with SingleTickerProviderSt
 
   @override
   Widget build(BuildContext context) {
-    final selectedPath = 'assets/${widget.imagePaths[_currentIndex]}';
+    final selectedPath = _resolveImagePath(widget.imagePaths[_currentIndex]);
     final showProgress = widget.imagePaths.length > 1;
 
     return LayoutBuilder(
@@ -258,7 +262,7 @@ class _ImageGalleryState extends State<ImageGallery> with SingleTickerProviderSt
             switchOutCurve: Curves.easeIn,
             transitionBuilder: (child, animation) =>
                 FadeTransition(opacity: animation, child: child),
-            child: Image.asset(
+            child: buildAdaptiveImage(
               selectedPath,
               key: ValueKey(selectedPath),
               fit: BoxFit.cover,
@@ -350,7 +354,7 @@ class _ImageGalleryState extends State<ImageGallery> with SingleTickerProviderSt
       controller: _thumbController,
       scrollDirection: scrollDirection,
       itemBuilder: (context, index) {
-        final assetPath = 'assets/${widget.imagePaths[index]}';
+        final assetPath = _resolveImagePath(widget.imagePaths[index]);
         final isActive = index == _currentIndex;
         return GestureDetector(
           onTap: () {
@@ -373,7 +377,7 @@ class _ImageGalleryState extends State<ImageGallery> with SingleTickerProviderSt
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(6),
-              child: Image.asset(
+              child: buildAdaptiveImage(
                 assetPath,
                 fit: BoxFit.cover,
                 errorBuilder: (context, error, stackTrace) {

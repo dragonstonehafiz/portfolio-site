@@ -18,10 +18,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   usePathUrlStrategy();
 
-  // Initialize singletons from assets and dynamic routes
+  // Initialize singletons from Supabase and dynamic routes
   await Future.wait([
-    ProjectsCollection.initializeFromAssets(),
-    AppRoutes.initialize(), 
+    ProjectsCollection.initializeFromSupabase(),
+    AppRoutes.initialize(),
   ]);
 
   runApp(const PortfolioApp());

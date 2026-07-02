@@ -1,6 +1,5 @@
-import 'dart:convert';
-import 'package:flutter/services.dart' show rootBundle;
 import 'page_models.dart';
+import '../supabase/supabase_rest.dart';
 
 class PageCollection {
   final List<ProjectPageData> _genericProjectPageData;
@@ -8,29 +7,33 @@ class PageCollection {
   static PageCollection? _instance;
   static bool get isInitialized => _instance != null;
 
-  PageCollection._({required List<ProjectPageData> projectPages}) : 
-  _genericProjectPageData = projectPages;
+  PageCollection._({required List<ProjectPageData> projectPages})
+    : _genericProjectPageData = projectPages;
 
   factory PageCollection._fromJson(Map<String, dynamic> json) {
     final pagesRaw = json['project_pages'] as List<dynamic>? ?? [];
-    final pages = pagesRaw.map((e) => ProjectPageData.fromJson(Map<String, dynamic>.from(e))).toList();
+    final pages = pagesRaw
+        .map((e) => ProjectPageData.fromJson(Map<String, dynamic>.from(e)))
+        .toList();
 
     return PageCollection._(projectPages: pages);
   }
-
-  static PageCollection _fromRawJson(String str) => PageCollection._fromJson(json.decode(str));
 
   static PageCollection get instance {
     return _instance ??= PageCollection._fromJson({});
   }
 
-  /// Initialize the singleton with JSON data from assets.
-  static Future<void> initializeFromAssets() async {
+  /// Initialize the singleton by loading the `_page_config` row from the
+  /// Supabase `projects` table.
+  static Future<void> initializeFromSupabase() async {
     if (_instance != null) return; // Already initialized
-    
+
     try {
-      final String raw = await rootBundle.loadString('assets/page_config.json');
-      _instance = PageCollection._fromRawJson(raw);
+      final row = await SupabaseRest.fetchById('projects', '_page_config');
+      final data = row == null
+          ? <String, dynamic>{}
+          : Map<String, dynamic>.from(row['data'] as Map);
+      _instance = PageCollection._fromJson(data);
     } catch (e) {
       // Fallback to empty collection if loading fails
       _instance = PageCollection._fromJson({});

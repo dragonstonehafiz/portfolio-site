@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../data/projects/project_data.dart';
 import '../../core/theme.dart';
+import '../../core/adaptive_image.dart';
 
 /// A flexible thumbnail preview widget that displays project images or video thumbnails.
 /// Sized based on width/height parameters provided by parent.
@@ -33,10 +34,12 @@ class ProjectThumbnailPreview extends StatelessWidget {
   }
 
   Widget _buildImageThumbnail() {
+    final rawPath = imgPaths!.first;
+    final resolvedPath = isNetworkImagePath(rawPath) ? rawPath : 'assets/$rawPath';
     return ClipRRect(
       borderRadius: borderRadius,
-      child: Image.asset(
-        'assets/${imgPaths!.first}',
+      child: buildAdaptiveImage(
+        resolvedPath,
         width: width,
         height: height,
         fit: BoxFit.cover,

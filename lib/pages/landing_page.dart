@@ -31,7 +31,7 @@ class _LandingPageState extends State<LandingPage> {
 
   Future<void> _loadData() async {
     try {
-      final d = await LandingPageData.loadFromAssets();
+      final d = await LandingPageData.loadFromSupabase();
       setState(() {
         _data = d;
         _loading = false;

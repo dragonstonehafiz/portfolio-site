@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import '../../core/theme.dart';
+import '../../core/adaptive_image.dart';
 import '../../data/landing/timeline_data.dart';
 import '../../data/projects/project_data.dart';
 import '../project/project_compact_card.dart';
@@ -28,19 +28,9 @@ class RangeTooltipWidget extends StatelessWidget {
     if (path != null && path.isNotEmpty) {
       final ext = path.toLowerCase().split('.').last;
       if (ext == 'svg') {
-        iconWidget = SvgPicture.asset(
-          path,
-          width: 28,
-          height: 28,
-          fit: BoxFit.contain,
-        );
+        iconWidget = buildAdaptiveSvg(path, width: 28, height: 28, fit: BoxFit.contain);
       } else {
-        iconWidget = Image.asset(
-          path,
-          width: 28,
-          height: 28,
-          fit: BoxFit.contain,
-        );
+        iconWidget = buildAdaptiveImage(path, width: 28, height: 28, fit: BoxFit.contain);
       }
     } else {
       iconWidget = Icon(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import '../../core/theme.dart';
+import '../../core/adaptive_image.dart';
 import '../../data/landing/landing_page_data.dart';
 import '../ui/animated_gradient.dart';
 
@@ -106,10 +106,10 @@ class LandingWorkCard extends StatelessWidget {
   Widget _buildIconWidget(String iconPath) {
     final extension = iconPath.toLowerCase().split('.').last;
     if (extension == 'svg') {
-      return SvgPicture.asset(iconPath, fit: BoxFit.contain);
+      return buildAdaptiveSvg(iconPath, fit: BoxFit.contain);
     } else {
       // PNG, JPG, etc.
-      return Image.asset(
+      return buildAdaptiveImage(
         iconPath,
         fit: BoxFit.contain,
         filterQuality: FilterQuality.high,

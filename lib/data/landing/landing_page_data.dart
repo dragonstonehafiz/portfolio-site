@@ -1,5 +1,4 @@
-import 'dart:convert';
-import 'package:flutter/services.dart' show rootBundle;
+import '../supabase/supabase_rest.dart';
 
 class LandingPageData {
   final Intro intro;
@@ -51,10 +50,12 @@ class LandingPageData {
     }
   }
 
-  static Future<LandingPageData> loadFromAssets([String path = 'assets/landing_page.json']) async {
-    final raw = await rootBundle.loadString(path);
-    final Map<String, dynamic> parsed = json.decode(raw) as Map<String, dynamic>;
-    return LandingPageData.fromJson(parsed);
+  static Future<LandingPageData> loadFromSupabase() async {
+    final row = await SupabaseRest.fetchById('projects', '_landing_page');
+    final data = row == null
+        ? <String, dynamic>{}
+        : Map<String, dynamic>.from(row['data'] as Map);
+    return LandingPageData.fromJson(data);
   }
 }
 

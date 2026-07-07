@@ -100,7 +100,7 @@ class TimelineData {
     for (final work in landingData.experience) {
       final start = parseDate(work.start);
       if (start == null) continue;
-      final end = parseDate(work.end, endOfMonth: true) ?? DateTime.now();
+      final end = parseDate(work.end, endOfMonth: true) ?? _endOfCurrentYear();
       allDates.add(start);
       allDates.add(end);
       final label = '${work.title}  ${work.company}';
@@ -117,7 +117,7 @@ class TimelineData {
     for (final edu in landingData.education) {
       final start = parseDate(edu.start);
       if (start == null) continue;
-      final end = parseDate(edu.end, endOfMonth: true) ?? DateTime.now();
+      final end = parseDate(edu.end, endOfMonth: true) ?? _endOfCurrentYear();
       allDates.add(start);
       allDates.add(end);
       final label = '${edu.course}  ${edu.school}';
@@ -142,6 +142,11 @@ class TimelineData {
       minDate: minDate,
       maxDate: maxDate,
     );
+  }
+
+  static DateTime _endOfCurrentYear() {
+    final now = DateTime.now();
+    return DateTime(now.year, 12, 31);
   }
 
   static DateTime? parseDate(String? raw, {bool endOfMonth = false}) {

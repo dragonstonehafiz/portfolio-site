@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../core/adaptive_image.dart';
 import '../../core/responsive_web_utils.dart';
 import '../../core/theme.dart';
 import '../../data/landing/landing_page_data.dart';
@@ -138,7 +139,9 @@ class LandingIntro extends StatelessWidget {
           subtitle: topExperience?.title ?? '-',
           meta: topExperience == null
               ? '-'
-              : '${_formatMonthYear(topExperience!.start)} - ${topExperience!.end != null ? _formatMonthYear(topExperience!.end) : 'Present'}',
+              : '${_formatMonthYear(topExperience!.start)} - ${(topExperience!.end != null && topExperience!.end!.isNotEmpty) ? _formatMonthYear(topExperience!.end) : 'Present'}',
+          iconPath: topExperience?.icon,
+          fallbackIcon: Icons.work_outline,
           theme: theme,
           showBottomDivider: true,
         ),
@@ -147,6 +150,8 @@ class LandingIntro extends StatelessWidget {
           title: topEducation?.school ?? '-',
           subtitle: topEducation?.course ?? '-',
           meta: _educationMeta(topEducation),
+          iconPath: topEducation?.icon,
+          fallbackIcon: Icons.school_outlined,
           theme: theme,
         ),
       ],
@@ -159,6 +164,8 @@ class LandingIntro extends StatelessWidget {
     required String subtitle,
     required String meta,
     required ThemeData theme,
+    String? iconPath,
+    IconData? fallbackIcon,
     bool showBottomDivider = false,
   }) {
     return Container(
@@ -169,35 +176,64 @@ class LandingIntro extends StatelessWidget {
               border: Border(bottom: BorderSide(color: Colors.black12)),
             )
           : null,
-      child: Column(
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            label,
-            style: theme.textTheme.labelSmall?.copyWith(
-              fontWeight: FontWeight.w600,
+          SizedBox(
+            width: 36,
+            height: 36,
+            child: (iconPath != null && iconPath.isNotEmpty)
+                ? _buildIconWidget(iconPath)
+                : Icon(fallbackIcon ?? Icons.info_outline, color: Colors.blueGrey),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  label,
+                  style: theme.textTheme.labelSmall?.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  title,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(subtitle, style: theme.textTheme.bodyMedium),
+                const SizedBox(height: 2),
+                Text(meta, style: theme.textTheme.bodySmall),
+              ],
             ),
           ),
-          const SizedBox(height: 4),
-          Text(
-            title,
-            style: theme.textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          const SizedBox(height: 2),
-          Text(subtitle, style: theme.textTheme.bodyMedium),
-          const SizedBox(height: 2),
-          Text(meta, style: theme.textTheme.bodySmall),
         ],
       ),
     );
   }
 
+  // Helper to render icon based on file extension (SVG or raster image)
+  Widget _buildIconWidget(String iconPath) {
+    final extension = iconPath.toLowerCase().split('.').last;
+    if (extension == 'svg') {
+      return buildAdaptiveSvg(iconPath, fit: BoxFit.contain);
+    } else {
+      return buildAdaptiveImage(
+        iconPath,
+        fit: BoxFit.contain,
+        filterQuality: FilterQuality.high,
+      );
+    }
+  }
+
   String _educationMeta(EducationItem? edu) {
     if (edu == null) return '-';
     final range =
-        '${_formatMonthYear(edu.start)} - ${edu.end != null ? _formatMonthYear(edu.end) : 'Present'}';
+        '${_formatMonthYear(edu.start)} - ${(edu.end != null && edu.end!.isNotEmpty) ? _formatMonthYear(edu.end) : 'Present'}';
     if (edu.gpa == null || edu.gpa!.isEmpty) return range;
     return '$range - GPA ${edu.gpa}';
   }

@@ -250,13 +250,17 @@ This section maps widget responsibilities and current usage.
 ### Landing Domain Widgets (`lib/widgets/landing/`)
 
 - `LandingIntro`
-  - Responsibility: Name/headline/summary/download actions.
+  - Responsibility: Name/headline/summary/download actions, plus a quick-stats block (top experience/education).
+  - Notes: quick-stats blocks render the experience/education `icon` (SVG or raster, same extension-based dispatch as `LandingWorkCard`/`LandingEducationCard`), falling back to `Icons.work_outline`/`Icons.school_outlined` when no icon is set.
+  - Notes: date ranges with no `end` (`null` or empty string) must render as "Present", not blank — check `end != null && end!.isNotEmpty` before formatting, since Supabase can return `""` instead of omitting the field.
 
 - `LandingWorkCard`
   - Responsibility: Work experience card rendering.
+  - Notes: same "Present" empty-string handling as `LandingIntro` applies to the date range line.
 
 - `LandingEducationCard`
   - Responsibility: Education card + module groups via `SharedTabs`.
+  - Notes: same "Present" empty-string handling as `LandingIntro` applies to the date range line.
 
 - `LandingSkillsSection`
   - Responsibility: Skills category tabs, skill badges, related projects integration.
@@ -267,10 +271,13 @@ This section maps widget responsibilities and current usage.
   - Used by: landing page today.
   - Responsibility: Interactive year-based timeline with project dots + work/education ranges + legend filters.
   - Notes: work/education ranges are day-aware and render through the end of the end month (not just to month start).
+  - Notes: range tooltips use `TimelineData.formatRangeDates(start, end, isOngoing: range.isOngoing)` — `TimelineRange.isOngoing` is true when the source `end` date failed to parse (open-ended role), so the tooltip shows "Present" instead of the internal `_endOfCurrentYear()` placeholder used for bar-width layout.
+  - Notes: axis reads standard left-to-right (Jan on the left, Dec on the right); month/date-to-x math lives in `_getMonthPosition`/`_getDatePosition` and must stay in sync — both anchor to month-center so range bars and project dots agree. Year navigation: left arrow = previous year, right arrow = next year. An ongoing range's visible bar length is clamped to today's date (not the full year) when the selected year is the current year.
 
 - `TimelineMultiYear`
   - Present but not currently mounted in landing page.
   - Responsibility: Horizontal multi-year timeline variant.
+  - Notes: same left-to-right convention as `TimelineSingleYear` — earlier years render left, later years render right (`years` list built ascending from `minYear` to `maxYear`); `_xForDate` and the dot month-position formula mirror `TimelineSingleYear`'s center-anchored math.
 
 - `RangeTooltipWidget`, `ProjectTooltipWidget`, `HoverTooltipWidget` (`timeline_tooltips.dart`)
   - Responsibility: Shared hover tooltip system for timeline ranges and project nodes.

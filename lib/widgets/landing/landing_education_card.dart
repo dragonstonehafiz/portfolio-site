@@ -107,7 +107,7 @@ class LandingEducationCard extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          '${_formatMonthYear(edu.start)} - ${edu.end != null ? _formatMonthYear(edu.end) : 'Present'}',
+                          '${_formatMonthYear(edu.start)} - ${(edu.end != null && edu.end!.isNotEmpty) ? _formatMonthYear(edu.end) : 'Present'}',
                           style: TextStyle(
                             color: Colors.grey,
                             fontSize: dateFontSize,

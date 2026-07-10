@@ -75,7 +75,7 @@ class LandingWorkCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 6),
                   Text(
-                    '${_formatMonthYear(work.start)} — ${work.end != null ? _formatMonthYear(work.end) : 'Present'}',
+                    '${_formatMonthYear(work.start)} — ${(work.end != null && work.end!.isNotEmpty) ? _formatMonthYear(work.end) : 'Present'}',
                     style: const TextStyle(color: Colors.grey, fontSize: 12),
                   ),
                   const SizedBox(height: 12),

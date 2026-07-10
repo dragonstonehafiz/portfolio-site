@@ -35,6 +35,7 @@ class TimelineRange {
   final RangeKind kind;
   final String label;
   final String? iconPath;
+  final bool isOngoing;
 
   TimelineRange({
     required this.start,
@@ -42,6 +43,7 @@ class TimelineRange {
     required this.kind,
     required this.label,
     this.iconPath,
+    this.isOngoing = false,
   });
 }
 
@@ -100,7 +102,8 @@ class TimelineData {
     for (final work in landingData.experience) {
       final start = parseDate(work.start);
       if (start == null) continue;
-      final end = parseDate(work.end, endOfMonth: true) ?? _endOfCurrentYear();
+      final parsedEnd = parseDate(work.end, endOfMonth: true);
+      final end = parsedEnd ?? _endOfCurrentYear();
       allDates.add(start);
       allDates.add(end);
       final label = '${work.title}  ${work.company}';
@@ -111,13 +114,15 @@ class TimelineData {
           kind: RangeKind.work,
           label: label,
           iconPath: work.icon,
+          isOngoing: parsedEnd == null,
         ),
       );
     }
     for (final edu in landingData.education) {
       final start = parseDate(edu.start);
       if (start == null) continue;
-      final end = parseDate(edu.end, endOfMonth: true) ?? _endOfCurrentYear();
+      final parsedEnd = parseDate(edu.end, endOfMonth: true);
+      final end = parsedEnd ?? _endOfCurrentYear();
       allDates.add(start);
       allDates.add(end);
       final label = '${edu.course}  ${edu.school}';
@@ -128,6 +133,7 @@ class TimelineData {
           kind: RangeKind.education,
           label: label,
           iconPath: edu.icon,
+          isOngoing: parsedEnd == null,
         ),
       );
     }
@@ -209,7 +215,12 @@ class TimelineData {
     return m.isEmpty ? '${date.year}' : '${date.day} $m ${date.year}';
   }
 
-  static String formatRangeDates(DateTime start, DateTime end) {
-    return '${formatMonthYear(start)}  ${formatMonthYear(end)}';
+  static String formatRangeDates(
+    DateTime start,
+    DateTime end, {
+    bool isOngoing = false,
+  }) {
+    final endLabel = isOngoing ? 'Present' : formatMonthYear(end);
+    return '${formatMonthYear(start)} — $endLabel';
   }
 }

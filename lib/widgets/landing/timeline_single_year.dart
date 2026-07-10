@@ -92,8 +92,8 @@ class _TimelineSingleYearState extends State<TimelineSingleYear> {
                   children: [
                     _buildYearButton(
                       icon: Icons.arrow_back_ios_new,
-                      onPressed: _selectedYear < _maxYear
-                          ? () => setState(() => _selectedYear++)
+                      onPressed: _selectedYear > _minYear
+                          ? () => setState(() => _selectedYear--)
                           : null,
                     ),
                     Text(
@@ -106,8 +106,8 @@ class _TimelineSingleYearState extends State<TimelineSingleYear> {
                     ),
                     _buildYearButton(
                       icon: Icons.arrow_forward_ios,
-                      onPressed: _selectedYear > _minYear
-                          ? () => setState(() => _selectedYear--)
+                      onPressed: _selectedYear < _maxYear
+                          ? () => setState(() => _selectedYear++)
                           : null,
                     ),
                   ],
@@ -188,13 +188,13 @@ class _TimelineSingleYearState extends State<TimelineSingleYear> {
     const monthTextY = lineY + 22;
     const labelWidth = 100.0;
 
-    // Jan, Apr, Jul, Oct, Dec — covers full span including the rightmost edge
-    final monthMarkers = [1, 4, 7, 10, 12];
+    // Jan, Mar, Jun, Sep, Dec
+    final monthMarkers = [1, 3, 6, 9, 12];
     final monthMarkerWidgets = <Widget>[];
 
     for (final month in monthMarkers) {
       final monthIndex = month - 1;
-      final monthPos = ((11 - monthIndex) + 0.5) / 12.0;
+      final monthPos = (monthIndex + 0.5) / 12.0;
       final x = startPadding + (monthPos * segmentWidth);
       final monthName = [
         'Jan',
@@ -272,19 +272,19 @@ class _TimelineSingleYearState extends State<TimelineSingleYear> {
     final workY = baseY + (offset * 2);
     final widgets = <Widget>[];
 
-    // Axis is reversed: Dec is on the LEFT (startPadding),
-    //                   Jan is on the RIGHT (startPadding + segmentWidth).
-    // When a range starts before selectedYear → clamp right end to Jan edge.
-    // When a range ends after selectedYear   → clamp left end to Dec edge.
-    final janEdge = startPadding + segmentWidth;
-    final decEdge = startPadding;
+    // Axis reads left-to-right: Jan is on the LEFT (startPadding),
+    //                            Dec is on the RIGHT (startPadding + segmentWidth).
+    // When a range starts before selectedYear → clamp left end to year-start edge.
+    // When a range ends after selectedYear    → clamp right end to year-end edge.
+    final yearStartEdge = startPadding;
+    final yearEndEdge = startPadding + segmentWidth;
 
     for (final range in ranges) {
-      final extendsPastJan = range.start.year < selectedYear;
-      final extendsPastDec = range.end.year > selectedYear;
+      final extendsBeforeYear = range.start.year < selectedYear;
+      final extendsAfterYear = range.end.year > selectedYear;
 
-      final startX = extendsPastJan
-          ? janEdge
+      final startX = extendsBeforeYear
+          ? yearStartEdge
           : _getDatePosition(
               range.start,
               segmentWidth,
@@ -292,8 +292,8 @@ class _TimelineSingleYearState extends State<TimelineSingleYear> {
               endOfDay: false,
             );
 
-      final endX = extendsPastDec
-          ? decEdge
+      final endX = extendsAfterYear
+          ? yearEndEdge
           : _getDatePosition(
               range.end,
               segmentWidth,
@@ -308,8 +308,8 @@ class _TimelineSingleYearState extends State<TimelineSingleYear> {
 
       // Square off ends that are clamped to the edge; round the actual ends.
       final borderRadius = BorderRadius.horizontal(
-        left: extendsPastDec ? Radius.zero : const Radius.circular(999),
-        right: extendsPastJan ? Radius.zero : const Radius.circular(999),
+        left: extendsBeforeYear ? Radius.zero : const Radius.circular(999),
+        right: extendsAfterYear ? Radius.zero : const Radius.circular(999),
       );
 
       widgets.add(
@@ -319,7 +319,11 @@ class _TimelineSingleYearState extends State<TimelineSingleYear> {
           child: HoverTooltipWidget(
             content: RangeTooltipWidget(
               title: range.label,
-              subtitle: TimelineData.formatRangeDates(range.start, range.end),
+              subtitle: TimelineData.formatRangeDates(
+                range.start,
+                range.end,
+                isOngoing: range.isOngoing,
+              ),
               iconPath: range.iconPath,
               kind: range.kind,
             ),
@@ -355,19 +359,19 @@ class _TimelineSingleYearState extends State<TimelineSingleYear> {
     final entriesWithPositions = <List<dynamic>>[];
     for (final entry in entries) {
       final x =
-          _getMonthPosition(entry.start.month, segmentWidth, startPadding) -
+          _getMonthPosition(entry.start.month, segmentWidth, startPadding) +
           ((entry.start.day - 1) /
                   DateTime(entry.start.year, entry.start.month + 1, 0).day) *
               (segmentWidth / 12);
       entriesWithPositions.add([entry, x]);
     }
 
-    // Sort by position (descending = right to left, older to newer)
+    // Sort by position (ascending = left to right, older to newer)
     entriesWithPositions.sort(
-      (a, b) => (b[1] as double).compareTo(a[1] as double),
+      (a, b) => (a[1] as double).compareTo(b[1] as double),
     );
 
-    // Adjust overlaps by moving more recent items (smaller x) further left
+    // Adjust overlaps by moving more recent items (larger x) further right
     for (var i = 0; i < entriesWithPositions.length - 1; i++) {
       final current = entriesWithPositions[i];
       final next = entriesWithPositions[i + 1];
@@ -376,7 +380,7 @@ class _TimelineSingleYearState extends State<TimelineSingleYear> {
       final distance = (currentX - nextX).abs();
 
       if (distance < dotSize) {
-        final newNextX = currentX - dotSize;
+        final newNextX = currentX + dotSize;
         next[1] = newNextX;
       }
     }
@@ -424,7 +428,7 @@ class _TimelineSingleYearState extends State<TimelineSingleYear> {
     double startPadding,
   ) {
     final monthIndex = month - 1;
-    final monthPos = ((11 - monthIndex) + 0.5) / 12.0;
+    final monthPos = (monthIndex + 0.5) / 12.0;
     return startPadding + (monthPos * segmentWidth);
   }
 
@@ -435,13 +439,13 @@ class _TimelineSingleYearState extends State<TimelineSingleYear> {
     required bool endOfDay,
   }) {
     final monthWidth = segmentWidth / 12;
-    final monthStartOffset = (12 - date.month) * monthWidth;
-    final monthRightEdge = startPadding + monthStartOffset + monthWidth;
+    final monthCenter = _getMonthPosition(date.month, segmentWidth, startPadding);
     final daysInMonth = DateTime(date.year, date.month + 1, 0).day;
     final dayProgress = endOfDay
         ? (date.day / daysInMonth)
         : ((date.day - 1) / daysInMonth);
-    return monthRightEdge - (dayProgress * monthWidth);
+    final x = monthCenter + (dayProgress * monthWidth);
+    return x.clamp(startPadding, startPadding + segmentWidth);
   }
 
   Widget _buildDot(Color color) {

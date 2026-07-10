@@ -145,7 +145,7 @@ class _TimelineMultiYearState extends State<TimelineMultiYear> {
     if (entries.isEmpty && ranges.isEmpty) return const SizedBox.shrink();
 
     final sorted = List<TimelineEntry>.from(entries)
-      ..sort((a, b) => b.start.compareTo(a.start));
+      ..sort((a, b) => a.start.compareTo(b.start));
 
     final allDates = <DateTime>[];
     for (final entry in sorted) {
@@ -168,7 +168,7 @@ class _TimelineMultiYearState extends State<TimelineMultiYear> {
     final minLabelSpacing = isMobile ? 70.0 : 90.0;
 
     final years = <int>[];
-    for (var y = maxYear; y >= minYear; y--) {
+    for (var y = minYear; y <= maxYear; y++) {
       years.add(y);
     }
     final projectYears = entries.map((e) => e.start.year).toSet();
@@ -226,9 +226,7 @@ class _TimelineMultiYearState extends State<TimelineMultiYear> {
               builder: (context) {
                 final year = years[i];
                 final left =
-                    (yearStarts[year]! + yearWidths[year]!) -
-                    (labelWidth / 4) -
-                    (gapWidth / 2);
+                    yearStarts[year]! - (labelWidth / 4) + (gapWidth / 2);
                 return Positioned(
                   top: yearTextY,
                   left: left,
@@ -334,7 +332,11 @@ class _TimelineMultiYearState extends State<TimelineMultiYear> {
           child: HoverTooltipWidget(
             content: RangeTooltipWidget(
               title: range.label,
-              subtitle: TimelineData.formatRangeDates(range.start, range.end),
+              subtitle: TimelineData.formatRangeDates(
+                range.start,
+                range.end,
+                isOngoing: range.isOngoing,
+              ),
               iconPath: range.iconPath,
               kind: range.kind,
             ),
@@ -368,11 +370,11 @@ class _TimelineMultiYearState extends State<TimelineMultiYear> {
     final daysInMonth = DateTime(date.year, date.month + 1, 0).day;
     final dayFraction =
         ((date.day - 1).clamp(0, daysInMonth - 1)) / daysInMonth;
-    final monthPos = ((11 - monthIndex) + dayFraction) / 12.0;
+    final monthPos = (monthIndex + 0.5 + dayFraction) / 12.0;
     final yearWidth = yearWidths[date.year] ?? segmentWidth;
     final offsetInYear = monthPos * yearWidth;
     final start = yearStarts[date.year] ?? startPadding;
-    return start + offsetInYear;
+    return (start + offsetInYear).clamp(start, start + yearWidth);
   }
 
   List<Widget> _buildPositionedDots({
@@ -406,7 +408,7 @@ class _TimelineMultiYearState extends State<TimelineMultiYear> {
 
     for (final entry in entries) {
       final monthIndex = entry.start.month - 1;
-      final monthPos = ((11 - monthIndex) + 0.5) / 12.0;
+      final monthPos = (monthIndex + 0.5) / 12.0;
       final yearWidth = yearWidths[entry.start.year] ?? segmentWidth;
       final offsetInYear = monthPos * yearWidth;
       final start = yearStarts[entry.start.year] ?? leadingGap;
